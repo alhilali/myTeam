@@ -23,6 +23,7 @@ export class EditProfilePage {
   user: any
   shown = false;
   toastMessage: any;
+  editSub: any;
 
   constructor(public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -52,26 +53,25 @@ export class EditProfilePage {
   }
 
   update(user) {
-    this.afAuth.authState.subscribe(data => {
-      const userRef = this.db.object('/users/'+data.uid+'/info/', { preserveSnapshot: true });
-      if (data && data.email && data.uid) {
-        userRef.subscribe(snap => {
-          if (snap.val().name != user.name) {
-            userRef.update({name: user.name})
-            this.updateNotification('الاسم');
-          }
-        })
-        userRef.subscribe(snap => {
-          if (snap.val().position != user.position) {
-            userRef.update({position: user.position})
-            this.updateNotification('المركز');
-          }
-        })
-        if (user.email != data.email) {
-          this.updateEmail(data.email, user.email);
+    const currUser = this.afAuth.auth.currentUser;
+    const userRef = this.db.object('/users/'+currUser.uid+'/info/', { preserveSnapshot: true });
+    if (currUser && currUser.email && currUser.uid) {
+      this.editSub = userRef.subscribe(snap => {
+        if (snap.val().name != user.name) {
+          userRef.update({name: user.name})
+          this.updateNotification('الاسم');
+          this.editSub.unsubscribe();
         }
+        if (snap.val().position != user.position) {
+          userRef.update({position: user.position})
+          this.updateNotification('المركز');
+          this.editSub.unsubscribe();
+        }
+      })
+      if (user.email != currUser.email) {
+        this.updateEmail(currUser.email, user.email);
       }
-    });
+    }
   }
 
   updateNotification(word) {
@@ -122,7 +122,12 @@ export class EditProfilePage {
     prompt.present();
   }
 
+  ionViewWillLeave() {
+    if (this.editSub) this.editSub.unsubscribe();
+  }
+
   logout() {
+    if (this.editSub) this.editSub.unsubscribe();
     this.afAuth.auth.signOut();
     this.navCtrl.popAll();
     this.app.getRootNav().setRoot(WelcomePage);

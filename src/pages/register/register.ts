@@ -53,11 +53,14 @@ export class RegisterPage {
           u.updateProfile({
             displayName: user.name
           })
+          const uname = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
+          uname.set({
+            username: user.username
+          });
           const userInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/info/');
           userInfo.set({
             name: user.name,
-            position: user.position || 'GK',
-            username: user.username
+            position: user.position || 'GK'
           });
           const usernameInfo = this.db.object('/usernames/'+user.username);
           usernameInfo.set({

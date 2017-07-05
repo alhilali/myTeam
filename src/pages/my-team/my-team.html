@@ -19,25 +19,25 @@
 
 
 <ion-content>
-  <ion-item-group *ngIf="hasRequests == true">
+  <ion-item-group *ngIf="(teamsRequest | async)?.length > 0">
     <ion-item-divider color="light">طلبات الانضمام</ion-item-divider>
-    <ion-card *ngFor="let team of teamsRequest">
-      <div (click)='openTeam(team)'>
-        <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
-      </div>
+    <ion-card *ngFor="let team of teamsRequest | async">
+      <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>
-        <h2>{{team.id}}</h2>
-        <p>{{team.dateRequested}}</p>
+        <h2 item-start>{{team.name}}</h2>
+        <p item-end>{{team.dateRequested}}</p>
+      </ion-item>
+      <ion-item text-center>
+        <button (click)="acceptTeam(team)" ion-button clear>موافق</button>
+        <button ion-button color="danger" clear>إلغاء</button>
       </ion-item>
     </ion-card>
   </ion-item-group>
-  <div *ngIf="hasTeam == true">
-    <ion-item-divider color="light">الفرق منتمي لها</ion-item-divider>
+  <div *ngIf="(myTeams | async)?.length > 0">
+    <ion-item-divider color="light">فرق منتمي اليها</ion-item-divider>
     <ion-card *ngFor="let team of myTeams | async">
-      <div (click)='openTeam(team)'>
-        <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
-      </div>
+      <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>
         <h2>{{team.name}}</h2>

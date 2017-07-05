@@ -54,7 +54,6 @@ export class WelcomePage {
     const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email,
        user.password);
        if (result) this.navCtrl.setRoot(TabsPage);
-       console.log(result);
      }
      catch (e) {
        this.toast.create({

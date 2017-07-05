@@ -50,6 +50,8 @@ export class StartTeamPage {
         })
         const userInfo = this.db.object('/users/'+data.uid+'/myTeams/'+newKey);
         userInfo.set({name: team.name});
+        const playersList = this.db.object('/teams/'+newKey+'/players/'+data.uid);
+        playersList.set({position: 'NA'});
         saveSub.unsubscribe();
         this.closeModal();
       }

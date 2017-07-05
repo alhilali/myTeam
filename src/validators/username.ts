@@ -5,54 +5,45 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UsernameValidator {
   valid = false;
+  usersSub: any
   constructor(
     public db: AngularFireDatabase) {
   }
 
   checkUsername(control: FormControl) {
     return new Promise(resolve => {
-      const usernames = this.db.list('usernames/', { preserveSnapshot: true});
-      usernames.subscribe(snap => {
-        let found = false;
-        let counter = 0;
-        const len = snap.length;
-        snap.forEach(snap => {
-          let currentUsername : string = snap.key;
-          if (control.value.toLowerCase() == currentUsername.toLowerCase()) {
-            found = true;
-            resolve({
-              "username taken": true
-            });
-          }
-          counter++;
-          if (counter == len && (!found)) resolve(null);
-        })
+      let found = false;
+      const users = this.db.list('usernames/', {
+        query: {
+          orderByKey: true,
+          equalTo: control.value.toLowerCase()
+        }
+      }).subscribe(data => {
+        if (data.length > 0) {
+          resolve({
+            "username taken": true
+          });
+        } else resolve(null);
       })
     })
   }
 
   checkValidUsername(control: FormControl) {
     return new Promise(resolve => {
-      const usernames = this.db.list('usernames/', { preserveSnapshot: true});
-      usernames.subscribe(snap => {
-        let found = false;
-        let counter = 0;
-        const len = snap.length;
-        snap.forEach(snap => {
-          let currentUsername : string = snap.key;
-          if (control.value.toLowerCase() == currentUsername.toLowerCase()) {
-            found = true;
-            resolve(null);
-          }
-          counter++;
-          if (counter == len && (!found)) {
-            resolve({
-              "message": "اسم المستخدم غير صحيح، الرجاء التأكد."
-            });
-          } else if (counter == len && (found)) {
-            resolve(null);
-          }
-        })
+      let found = false;
+      const users = this.db.list('usernames/', {
+        query: {
+          orderByKey: true,
+          equalTo: control.value.toLowerCase()
+        }
+      }).subscribe(data => {
+        if (data.length > 0) {
+          resolve(null);
+        } else {
+          resolve({
+            "message": "اسم المستخدم غير صحيح، الرجاء التأكد."
+          });
+        };
       })
     })
   }

@@ -22,6 +22,8 @@ export class TeamPage {
   isCaptin = false;
   players: FirebaseListObservable<any>;
   captinId: FirebaseObjectObservable<any>;
+  teamInfo: FirebaseObjectObservable<any>;
+  sub: any
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -35,14 +37,19 @@ export class TeamPage {
   ionViewWillLoad () {
     this.players = this.db.list('/teams/'+this.team.id+'/players/');
     this.captinId = this.db.object('/teams/'+this.team.id, { preserveSnapshot: true });
-    this.captinId.subscribe(snapshot => {
+    this.sub = this.captinId.subscribe(snapshot => {
       if (snapshot.val().captin == this.afAuth.auth.currentUser.uid)
         this.isCaptin = true;
+        this.sub.unsubscribe();
     });
   }
 
+  ionViewWillLeave() {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
   addPlayer() {
-    const myModal = this.modal.create(AddPlayerPage, {teamId: this.team.id});
+    const myModal = this.modal.create(AddPlayerPage, {teamId: this.team.id, name: this.team.name});
     myModal.present();
   }
 

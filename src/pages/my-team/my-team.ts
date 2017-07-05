@@ -21,7 +21,7 @@ export class MyTeamPage {
   hasTeam: boolean;
   hasRequests: boolean;
   myTeams: FirebaseListObservable<any>;
-  teamsRequest: [any];
+  teamsRequest: FirebaseListObservable<any>;
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -31,23 +31,44 @@ export class MyTeamPage {
     private teamDB: MyTeamDB) {
   }
 
-  ionViewWillLoad () {
+  async ionViewWillLoad () {
     this.hasTeam = false;
     const currUser = this.afAuth.auth.currentUser;
     if (currUser && currUser.uid) {
       this.myTeams = this.db.list('/users/'+currUser.uid+'/myTeams/');
       this.hasTeam = true; // need to work on logic of enrolled in team
 
-      this.teamDB.getRequests(currUser.uid).then(list => {
-        this.teamsRequest = list;
-        if (this.teamsRequest) this.hasRequests = true;
-      })
+      this.teamsRequest = this.db.list('/users/'+currUser.uid+'/requests/');
+      this.hasRequests = true;
     }
+  }
+
+  async acceptTeam(team) {
+    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
+    '/requests/'+team.$key).remove();
+    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
+    '/myTeams/'+team.$key).set({
+      name: team.name,
+      dateJoined: new Date().toDateString()
+    })
+    let user;
+    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid)
+    .then(u => {
+      user = u;
+    })
+    this.db.object('teams/'+team.$key+'/players/'+this.afAuth.auth.currentUser.uid)
+    .set({
+      name: user.name
+    })
+    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
+    .remove();
+
   }
 
   ionViewWillLeave() {
     this.teamDB.unsubscribeAll();
   }
+
   startTeam() {
     const myModal = this.modal.create(StartTeamPage);
     myModal.present();

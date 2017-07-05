@@ -43,24 +43,25 @@ export class AddPlayerPage {
   }
 
   async requestAddPlayer(player) {
-    const uid = await this.teamDB.findUID(player.username);
-    let userInfo;
-    if (this.requestPlayerForm.valid && uid) {
-      await this.teamDB.getInfo(uid).then(user => {
-        userInfo = user;
-      })
+    let uid;
+    await this.teamDB.findUID(player.username).then(data => {
+      uid = data;
+    })
+    if (this.requestPlayerForm.valid && uid.$key) {
 
       const teamRequests = this.db.object('/teams/'+
-      this.navParams.get('teamId')+'/requests/'+uid);
+      this.navParams.get('teamId')+'/requests/'+uid.$key);
       teamRequests.set({
         dateRequested: new Date().toDateString(),
       });
 
       const userRequests = this.db.object('/users/'+
-      uid+'/requests/'+this.navParams.get('teamId'));
+      uid.$key+'/requests/'+this.navParams.get('teamId'));
       userRequests.set({
+        name: this.navParams.get('name'),
         dateRequested: new Date().toDateString(),
       });
+      this.teamDB.unsubscribeAll();
       this.view.dismiss();
     }
   }

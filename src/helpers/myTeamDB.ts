@@ -1,42 +1,32 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Request } from '../models/request';
+import { Team } from '../models/team';
 
 @Injectable()
 export class MyTeamDB {
   reqSub: any
   usersSub: any
   usrInfoSub: any
-  infoSub: any
+  teamInfoSub: any
   constructor(
     public db: AngularFireDatabase) {
   }
 
   findUID(username: string) {
-    const users = this.db.list('users/', { preserveSnapshot: true});
     return new Promise(resolve => {
-        this.usersSub = users.subscribe(snap => {
         let found = false;
-        let counter = 0;
-        const len = snap.length;
-        snap.forEach(snap => {
-          const uid = snap.key;
-          const info = this.db.object('users/'+uid+'/info/');
-          this.infoSub = info.subscribe(data=>{
-            if (username.toLowerCase() == data.username.toLowerCase()) {
-              found = true;
-              this.usersSub.unsubscribe();
-              resolve(uid);
-            }
-            counter++;
-            if (counter == len && (!found)) {
-              this.usersSub.unsubscribe();
-              this.infoSub.unsubscribe();
-              resolve(null);
-            }
-          })
+        const users = this.db.list('users/', {
+          query: {
+            orderByChild: 'username',
+            equalTo: username
+          }
+        });
+        this.usersSub = users.subscribe(data => {
+          this.usersSub.unsubscribe();
+          console.log(data[0]);
+          resolve(data[0]);
         })
-      })
     })
   }
 
@@ -59,33 +49,48 @@ export class MyTeamDB {
     const requests = this.db.list('users/'+uid+'/requests/');
     return new Promise(resolve => {
         this.reqSub = requests.subscribe(snap => {
-        requestsList = [];
-        let counter = 0;
-        const len = snap.length;
-        snap.forEach(data=> {
-          requestsList.push({
-            teamId: data.key,
-            dateRequested: data.dateRequested
+          requestsList = [];
+          let counter = 0;
+          const len = snap.length;
+          snap.forEach(data=> {
+            requestsList.push({
+              teamId: data.$key,
+              dateRequested: data.dateRequested,
+              name: data.name
+            })
+            counter++;
+            if (counter == len) {
+              this.reqSub.unsubscribe();
+              resolve(requestsList);
+            }
+            else if (len == 0) {
+              this.reqSub.unsubscribe();
+              resolve(null);
+            }
           })
-          counter++;
-          if (counter == len) {
-            resolve(requestsList);
-            this.reqSub.unsubscribe();
-          }
-          else if (len == 0) {
-            resolve(null);
-            this.reqSub.unsubscribe();
-          }
-        })
       })
     })
   }
 
+  getTeamInfo(teamId): Promise<any> {
+    const teamInfo = this.db.object('teams/'+teamId);
+    return new Promise(resolve => {
+        this.teamInfoSub = teamInfo.subscribe(data => {
+        this.teamInfoSub.unsubscribe();
+        resolve(data);
+      })
+    })
+  }
+
+  ionViewWillLeave() {
+    this.unsubscribeAll();
+  }
+
   unsubscribeAll() {
     if(this.reqSub) this.reqSub.unsubscribe();
-    if(this.usersSub) this.usersSub.unsubscribe();
     if(this.usrInfoSub) this.usrInfoSub.unsubscribe();
-    if(this.infoSub) this.infoSub.unsubscribe();
+    if(this.usersSub) this.usersSub.unsubscribe();
+    if(this.teamInfoSub) this.teamInfoSub.unsubscribe();
   }
 
 }
