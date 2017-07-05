@@ -1,0 +1,20 @@
+<ion-content padding no-bounce>
+
+  <h1 dir="rtl">
+    مرحباً!
+  </h1>
+  <div class="bottom">
+    <ion-item>
+      <ion-label floating>البريد الإلكتروني</ion-label>
+      <ion-input dir="ltr" type="text" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>الرقم السري</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+    <button ion-button block (click)="login(user)">سجل دخول</button>
+    <button ion-button block (click)="register()" color="light">حساب جديد</button>
+  </div>
+
+</ion-content>
