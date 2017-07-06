@@ -24,20 +24,19 @@ export class MyTeamDB {
         });
         this.usersSub = users.subscribe(data => {
           this.usersSub.unsubscribe();
-          console.log(data[0]);
           resolve(data[0]);
         })
     })
   }
 
   getInfo(uid): Promise<any> {
-    const userInfo = this.db.object('users/'+uid+'/info');
+    const userInfo = this.db.object('users/'+uid);
     return new Promise(resolve => {
         this.usrInfoSub = userInfo.subscribe(data => {
         resolve({
           name: data.name,
           position: data.position,
-          username: data.username
+          username: data.originialUsername
         })
         this.usrInfoSub.unsubscribe();
       })

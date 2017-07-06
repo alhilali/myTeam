@@ -50,19 +50,14 @@ export class RegisterPage {
       try {
         const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email,
         user.password).then((u) => {
-          u.updateProfile({
-            displayName: user.name
-          })
-          const uname = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
-          uname.set({
-            username: user.username
-          });
-          const userInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/info/');
+          const userInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
           userInfo.set({
+            originialUsername: user.username,
+            username: user.username.toLowerCase(),
             name: user.name,
             position: user.position || 'GK'
           });
-          const usernameInfo = this.db.object('/usernames/'+user.username);
+          const usernameInfo = this.db.object('/usernames/'+user.username.toLowerCase());
           usernameInfo.set({
             exists: true
           });

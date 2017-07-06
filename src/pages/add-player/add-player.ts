@@ -34,7 +34,7 @@ export class AddPlayerPage {
           return unameValid.checkValidUsername(control);
       };
       this.requestPlayerForm = _form.group({
-        "username": ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]*')]), usernameValidator]
+        "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator]
       })
   }
 
@@ -44,7 +44,7 @@ export class AddPlayerPage {
 
   async requestAddPlayer(player) {
     let uid;
-    await this.teamDB.findUID(player.username).then(data => {
+    await this.teamDB.findUID(player.username.toLowerCase()).then(data => {
       uid = data;
     })
     if (this.requestPlayerForm.valid && uid.$key) {

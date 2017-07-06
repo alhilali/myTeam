@@ -54,7 +54,7 @@ export class EditProfilePage {
 
   update(user) {
     const currUser = this.afAuth.auth.currentUser;
-    const userRef = this.db.object('/users/'+currUser.uid+'/info/', { preserveSnapshot: true });
+    const userRef = this.db.object('/users/'+currUser.uid, { preserveSnapshot: true });
     if (currUser && currUser.email && currUser.uid) {
       this.editSub = userRef.subscribe(snap => {
         if (snap.val().name != user.name) {

@@ -75,7 +75,14 @@ export class MyTeamPage {
   }
 
   openTeam(team) {
-    this.navCtrl.push(TeamPage, {id: team.$key, name: team.name})
+    this.teamDB.getTeamInfo(team.$key).then(data=>{
+      this.navCtrl.push(TeamPage, {
+        id: team.$key,
+        name: data.name,
+        captin: data.captin,
+        city: data.city
+       })
+    })
   }
 
 }
