@@ -51,7 +51,7 @@ export class SearchPage {
   getItems(ev: any) {
     // set val to the value of the searchbar
     this.queryString = ev.target.value;
-    if (this.type == 'players') this.queryString = this.queryString.toLowerCase();
+    if (this.queryString && this.type == 'players') this.queryString = this.queryString.toLowerCase();
     this.query.next(this.queryString)
   }
 
@@ -61,8 +61,10 @@ export class SearchPage {
   }
 
   segmentChanged(ev: any) {
+    this.query.next("العياف")
     if (ev.value == 'teams') this.searchTeams();
     if (ev.value == 'players') this.searchPlayers();
+    //this.query.next(this.queryString)
   }
 
 }

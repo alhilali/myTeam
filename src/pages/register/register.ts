@@ -52,7 +52,7 @@ export class RegisterPage {
         user.password).then((u) => {
           const userInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
           userInfo.set({
-            originialUsername: user.username,
+            originalUsername: user.username,
             username: user.username.toLowerCase(),
             name: user.name,
             position: user.position || 'GK'

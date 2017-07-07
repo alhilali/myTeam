@@ -7,6 +7,11 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons *ngIf='currentUser' end>
+      <button (click)="openModal(player)" ion-button icon-only>
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>الملف الشخصي</ion-title>
   </ion-navbar>
 
@@ -18,7 +23,7 @@
     <div class="content">
       <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
       <h3><a class="light">{{player.name}}</a></h3>
-      <h4>{{player.username}}@</h4>
+      <h4>{{player.originalUsername}}@</h4>
     </div>
   </div>
 

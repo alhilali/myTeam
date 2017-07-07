@@ -33,11 +33,7 @@ export class MyTeamDB {
     return new Promise(resolve => {
       const userInfo = this.db.object('users/'+uid);
       this.usrInfoSub = userInfo.subscribe(data => {
-      resolve({
-        name: data.name,
-        position: data.position,
-        username: data.originialUsername
-      })
+      resolve(data);
       this.usrInfoSub.unsubscribe();
       })
     })

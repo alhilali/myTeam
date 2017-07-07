@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController,
+   NavParams, ModalController } from 'ionic-angular';
 import { User } from '../../models/user';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { EditProfilePage } from '../edit-profile/edit-profile'
 /**
  * Generated class for the PlayerPage page.
  *
@@ -13,10 +16,20 @@ import { User } from '../../models/user';
   templateUrl: 'player.html',
 })
 export class PlayerPage {
-  player: User
+  player: any
+  currentUser: boolean = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams,
+     private afAuth: AngularFireAuth,
+     private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
+    console.log(this.player)
+    if(this.player.$key == afAuth.auth.currentUser.uid) this.currentUser = true;
+  }
+
+  openModal() {
+    this.modlCtrl.create(EditProfilePage).present();
   }
 
 }

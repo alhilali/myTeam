@@ -65,7 +65,7 @@ export class EditProfilePage {
     this.user.email = this.afAuth.auth.currentUser.email;
     this.user.position = userInfo.position;
     this.user.name = userInfo.name;
-    this.user.username = userInfo.username;
+    this.user.username = userInfo.originalUsername;
     this.currentUsername = this.user.username;
   }
 
@@ -98,7 +98,7 @@ export class EditProfilePage {
       && this.editForm.controls.username.valid && currUser) {
         this.db.object('/users/'+currUser.uid)
         .update({
-          originialUsername: user.username,
+          originalUsername: user.username,
           username: user.username.toLowerCase()
         })
 
