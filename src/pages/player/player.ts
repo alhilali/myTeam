@@ -24,12 +24,12 @@ export class PlayerPage {
      private afAuth: AngularFireAuth,
      private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
-    console.log(this.player)
     if(this.player.$key == afAuth.auth.currentUser.uid) this.currentUser = true;
   }
 
   openModal() {
-    this.modlCtrl.create(EditProfilePage).present();
+    let modal = this.modlCtrl.create(EditProfilePage, {player: this.player});
+    modal.present();
   }
 
 }

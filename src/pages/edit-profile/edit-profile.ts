@@ -45,6 +45,7 @@ export class EditProfilePage {
       let usernameValidator = (control) => {
           return unameValid.checkUsername(control);
       };
+      this.user = this.navParams.get('player');
       this.editForm = this._form.group({
         "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
         "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
@@ -58,15 +59,8 @@ export class EditProfilePage {
   }
 
   async ionViewWillLoad() {
-    let userInfo;
-    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid).then(user => {
-      userInfo = user;
-    })
-    this.user.email = this.afAuth.auth.currentUser.email;
-    this.user.position = userInfo.position;
-    this.user.name = userInfo.name;
-    this.user.username = userInfo.originalUsername;
     this.currentUsername = this.user.username;
+    this.user.email = this.afAuth.auth.currentUser.email;
   }
 
   update(user) {
@@ -78,13 +72,13 @@ export class EditProfilePage {
         this.editSub = userRef.subscribe(snap => {
           if (snap.val().name != user.name) {
             userRef.update({name: user.name})
+            this.user.name = user.name;
             this.updateNotification('الاسم');
-            this.editSub.unsubscribe();
           }
           if (snap.val().position != user.position) {
             userRef.update({position: user.position})
+            this.user.position = user.position;
             this.updateNotification('المركز');
-            this.editSub.unsubscribe();
           }
           this.editSub.unsubscribe();
         })
@@ -103,6 +97,7 @@ export class EditProfilePage {
         })
 
         this.updateNotification('المعرف الشخصي');
+        this.user.originalUsername = user.username
         this.db.object('usernames/'+user.username.toLowerCase()).set({exists: true});
         this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
         this.currentUsername = user.username;

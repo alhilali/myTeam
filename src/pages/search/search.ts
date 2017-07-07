@@ -61,7 +61,6 @@ export class SearchPage {
   }
 
   segmentChanged(ev: any) {
-    this.query.next("العياف")
     if (ev.value == 'teams') this.searchTeams();
     if (ev.value == 'players') this.searchPlayers();
     //this.query.next(this.queryString)

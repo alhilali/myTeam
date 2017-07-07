@@ -58,12 +58,7 @@ export class MyTeamDB {
     let teamPlayersInfo: any[] = [];
     for (let i = 0; i < teamPlayers.length; i++) {
       await this.getInfo(teamPlayers[i].$key).then(data => {
-        teamPlayersInfo.push({
-          name: data.name,
-          username: data.username,
-          position: data.position,
-          id: teamPlayers[i].$key
-        });
+        teamPlayersInfo.push(data);
       })
     }
     return new Promise(resolve => {
