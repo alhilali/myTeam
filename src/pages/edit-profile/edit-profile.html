@@ -20,30 +20,44 @@
 
 
 <ion-content>
-  <ion-list>
+  <form name="editForm" novalidate>
+    <div [formGroup]='editForm'>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
+      </ion-item>
+      <ion-item dir="ltr">
+        <ion-label>
+          <h1>@</h1></ion-label>
+        <ion-input type="text" [(ngModel)]="user.username" formControlName='username' placeholder="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>المركز</ion-label>
+        <ion-select [(ngModel)]="user.position" formControlName='position' name="position" interface='popover'>
+          <ion-option value="GK" selected>حارس</ion-option>
+          <ion-option value="DF">دفاع</ion-option>
+          <ion-option value="CM">وسط</ion-option>
+          <ion-option value="AT">مهاجم</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input dir='ltr' type="text" [(ngModel)]="user.email" formControlName='email' placeholder="البريد الالكتروني"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-input type="text" [(ngModel)]="user.name"></ion-input>
-    </ion-item>
-    <ion-item dir="ltr">
-      <ion-label>
-        <h1>@</h1></ion-label>
-      <ion-input type="text" [(ngModel)]="user.username" placeholder="username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input dir="ltr" type="text" [(ngModel)]="user.email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>المركز</ion-label>
-      <ion-select [(ngModel)]="user.position" name="position" interface='popover'>
-        <ion-option value="GK">حارس</ion-option>
-        <ion-option value="DF">دفاع</ion-option>
-        <ion-option value="CM">وسط</ion-option>
-        <ion-option value="AT">مهاجم</ion-option>
-      </ion-select>
-    </ion-item>
-
-  </ion-list>
+      <div padding>
+        <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>
+        <p *ngIf="currentUsername != user.username && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">
+          اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
+        </p>
+        <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>
+        <p *ngIf="usedEmail" style="color: #ea6153;">
+          الايميل مستخدم من قبل شخص آخر.
+        </p>
+        <p *ngIf="editForm.controls.username.pending">
+          جاري التأكد من اسم المستخدم...
+        </p>
+      </div>
+    </div>
+  </form>
 
 </ion-content>
 

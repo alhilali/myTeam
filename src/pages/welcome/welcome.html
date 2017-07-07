@@ -1,8 +1,11 @@
-<ion-content padding no-bounce>
+<ion-content no-bounce>
 
   <h1 dir="rtl">
     مرحباً!
   </h1>
+  <p text-center>
+    7/6/2017
+  </p>
   <div class="bottom">
     <ion-item>
       <ion-label floating>البريد الإلكتروني</ion-label>
@@ -15,6 +18,7 @@
     </ion-item>
     <button ion-button block (click)="login(user)">سجل دخول</button>
     <button ion-button block (click)="register()" color="light">حساب جديد</button>
+    <button ion-button (click)="resetPassword()" clear>نسيت الرقم السري؟</button>
   </div>
 
 </ion-content>

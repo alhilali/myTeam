@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController,
+   NavParams, ToastController, AlertController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -19,34 +20,11 @@ import { TabsPage } from '../tabs/tabs';
 export class WelcomePage {
 
   user = {} as User;
-  slides = [
-    {
-      title: "Welcome to the Docs!",
-      description: "The <b>Ionic Component Documentation</b> showcases a number of useful components that are included out of the box with Ionic.",
-      image: "assets/img/ica-slidebox-img-1.png",
-    },
-    {
-      title: "What is Ionic?",
-      description: "<b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.",
-      image: "assets/img/ica-slidebox-img-2.png",
-    },
-    {
-      title: "What is Ionic Cloud?",
-      description: "The <b>Ionic Cloud</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.",
-      image: "assets/img/ica-slidebox-img-3.png",
-    }
-  ];
-  constructor(private afAuth: AngularFireAuth,
-    private toast: ToastController,
-    public navCtrl: NavController, public navParams: NavParams) {
-  }
 
-  ionViewWillLoad() {
-    this.afAuth.authState.subscribe(data => {
-      if (data && data.email && data.uid) {
-        this.navCtrl.setRoot(TabsPage);
-      }
-    });
+  constructor(private afAuth: AngularFireAuth,
+    private loadingCtrl: LoadingController,
+    private toast: ToastController,private alertCtrl: AlertController,
+    public navCtrl: NavController, public navParams: NavParams) {
   }
 
   async login(user: User) {
@@ -69,6 +47,74 @@ export class WelcomePage {
 
   register() {
     this.navCtrl.push(RegisterPage);
+  }
+
+  resetPassword() {
+    let alert = this.alertCtrl.create({
+      title: 'نسيت الرقم السري؟',
+      message: 'سوف يتم ارسال رقم سري جديد لعنوانك البريدي',
+      inputs: [
+        {
+          name: 'email',
+          placeholder: 'البريد الإلكتروني'
+        }
+      ],
+      buttons: [
+        {
+          text: 'ارسال رقم سري جديد',
+          handler: data => {
+
+            let loading = this.loadingCtrl.create({
+              dismissOnPageChange: true,
+              content: 'إعادة تعيين الرقم السري..'
+            });
+            loading.present();
+
+            this.afAuth.auth.sendPasswordResetEmail(data.email).then(() => {
+              loading.dismiss().then(() => {
+                this.alertUserSuccess('راجع بريدك الالكتروني', 'تم إعادة تعيين الرقم السري')
+              })
+            }, error => {
+              this.alertUserError(error);
+              loading.dismiss();
+            })
+          }
+        },
+        {
+          text: 'إلغاء',
+          role: 'cancel',
+          handler: data => {
+            //console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  alertUserError(error) {
+    let message = error;
+    switch (error.code) {
+      case 'auth/invalid-email':
+      message = 'الرجاء التأكد من صيغة الايميل.'
+      break;
+      case 'auth/user-not-found':
+      message = 'لا يوجد حساب مسجل بهذا البريد الالكتروني.'
+      break;
+    }
+    this.alertCtrl.create({
+      title: 'خطأ في اعادة تعيين الرقم السري',
+      subTitle: message,
+      buttons: ['حسناً'],
+    }).present()
+  }
+
+  alertUserSuccess(title, message) {
+    this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['حسناً'],
+    }).present();
   }
 
 }

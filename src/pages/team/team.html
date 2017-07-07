@@ -27,19 +27,21 @@
         اللاعبين
       </h2>
     </ion-list-header>
-    <ion-item-sliding *ngFor="let player of playersList">
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
-        </ion-avatar>
-        <h2>{{player.name}}</h2>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="danger">
-        <ion-icon name="trash"></ion-icon>
-        حذف
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
+    <div *ngFor="let player of playersList">
+      <ion-item-sliding (ionSwipe)="removePlayer(player)">
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
+          </ion-avatar>
+          <h2>{{player.name}}</h2>
+        </ion-item>
+        <ion-item-options *ngIf="isCaptin == true" side="right">
+          <button expandable ion-button (click)="removePlayer(player)" color="danger">
+          <ion-icon name="trash"></ion-icon>
+          حذف
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </div>
   </ion-list>
 </ion-content>

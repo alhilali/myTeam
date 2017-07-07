@@ -9,6 +9,7 @@ export class MyTeamDB {
   usersSub: any
   usrInfoSub: any
   teamInfoSub: any
+  teamPlayersSub: any
   constructor(
     public db: AngularFireDatabase) {
   }
@@ -30,17 +31,55 @@ export class MyTeamDB {
   }
 
   getInfo(uid): Promise<any> {
-    const userInfo = this.db.object('users/'+uid);
     return new Promise(resolve => {
-        this.usrInfoSub = userInfo.subscribe(data => {
-        resolve({
-          name: data.name,
-          position: data.position,
-          username: data.originialUsername
-        })
-        this.usrInfoSub.unsubscribe();
+      const userInfo = this.db.object('users/'+uid);
+      this.usrInfoSub = userInfo.subscribe(data => {
+      resolve({
+        name: data.name,
+        position: data.position,
+        username: data.originialUsername
+      })
+      this.usrInfoSub.unsubscribe();
       })
     })
+  }
+
+  getTeamPlayers(teamId): Promise<any> {
+    return new Promise(resolve => {
+      const teamPlayers = this.db.list('/teams/'+teamId+'/players/');
+      let playersList: any[] = []
+      this.teamPlayersSub = teamPlayers.subscribe(data => {
+        resolve(data);
+        this.teamPlayersSub.unsubscribe();
+      })
+    })
+  }
+
+  async getTeamPlayersWithInfo(teamId): Promise<any> {
+    let teamPlayers;
+    await this.getTeamPlayers(teamId).then(data => {
+      teamPlayers = data;
+    })
+    let teamPlayersInfo: any[] = [];
+    for (let i = 0; i < teamPlayers.length; i++) {
+      await this.getInfo(teamPlayers[i].$key).then(data => {
+        teamPlayersInfo.push({
+          name: data.name,
+          username: data.username,
+          position: data.position,
+          id: teamPlayers[i].$key
+        });
+      })
+    }
+    return new Promise(resolve => {
+      resolve(teamPlayersInfo)
+    })
+  }
+
+  unsubscribeUserInfo() {
+    console.log("here")
+    console.log(this.usrInfoSub);
+    this.usrInfoSub.unsubscribe();
   }
 
   getRequests(uid): Promise<any> {
