@@ -43,7 +43,7 @@ export class StartTeamPage {
     const saveSub = this.afAuth.authState.subscribe(data => {
       if (data && data.email && data.uid) {
         ref.set({
-          captin: data.uid,
+          captain: data.uid,
           name: team.name,
           city: team.city || 'riyadh',
           estDate: new Date().toDateString()

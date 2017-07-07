@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ContactPage } from '../contact/contact';
+import { SearchPage } from '../search/search';
 import { HomePage } from '../home/home';
 import { MyTeamPage } from '../my-team/my-team'
 
@@ -11,7 +11,7 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = MyTeamPage;
-  tab3Root = ContactPage;
+  tab3Root = SearchPage;
 
   constructor() {
 

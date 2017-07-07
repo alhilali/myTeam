@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
+import { PlayerPage } from '../player/player';
 
 /**
  * Generated class for the TeamPage page.
@@ -21,8 +22,7 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
 })
 export class TeamPage {
   team = {} as Team;
-  isCaptin = false;
-  players: FirebaseListObservable<any>;
+  isCaptain = false;
   playersList: any[] = []
   sub: any
 
@@ -33,14 +33,11 @@ export class TeamPage {
       private modal: ModalController,
       private teamDB: MyTeamDB,
       private alertCtrl: AlertController) {
-    this.team.name = navParams.get('name');
-    this.team.id = navParams.get('id');
-    this.team.captin = navParams.get('captin');
+    this.team = navParams.get('team');
   }
 
   ionViewWillLoad () {
-    if (this.team.captin == this.afAuth.auth.currentUser.uid) this.isCaptin = true;
-    this.players = this.db.list('/teams/'+this.team.id+'/players/');
+    if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
   }
 
   async ionViewDidEnter () {
@@ -49,7 +46,7 @@ export class TeamPage {
 
   async setPlayersList() {
     if (this.playersList.length > 0) this.playersList = [];
-    await this.teamDB.getTeamPlayersWithInfo(this.team.id).then(data=> {
+    await this.teamDB.getTeamPlayersWithInfo(this.team.$key).then(data=> {
       this.playersList = data;
     })
 
@@ -73,8 +70,8 @@ export class TeamPage {
         {
           text: 'متأكد',
           handler: () => {
-            this.db.object('teams/'+this.team.id+'/players/'+player.id).remove();
-            this.db.object('users/'+player.id+'/myTeams/'+this.team.id).remove();
+            this.db.object('teams/'+this.team.$key+'/players/'+player.id).remove();
+            this.db.object('users/'+player.id+'/myTeams/'+this.team.$key).remove();
             this.setPlayersList();
           }
         }
@@ -87,9 +84,11 @@ export class TeamPage {
     this.teamDB.unsubscribeAll();
   }
 
-
+  showPlayer(player) {
+    this.navCtrl.push(PlayerPage, {player: player})
+  }
   addPlayer() {
-    const myModal = this.modal.create(AddPlayerPage, {teamId: this.team.id, name: this.team.name});
+    const myModal = this.modal.create(AddPlayerPage, {teamId: this.team.$key, name: this.team.name});
     myModal.present();
   }
 

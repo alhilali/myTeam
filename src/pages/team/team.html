@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <ion-title>{{team.name}}</ion-title>
-    <div *ngIf="isCaptin == true">
+    <div *ngIf="isCaptain == true">
       <ion-buttons end>
         <button (click)='addPlayer()' ion-button icon-only color="royal">
           <ion-icon name="person-add"></ion-icon>
@@ -20,7 +20,14 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="outer-content">
+  <div class="hero" style="background-image: url('http://www.alhilal.com/ar/logos/newsenphoto-2911.jpg');">
+    <div class="content">
+      <div class="avatar" style="background-image: url('http://up.n4hr.com/ups/uploads/fceaa78230.jpg');"></div>
+      <h3><a class="light">{{team.name}}</a></h3>
+      <h4>المباراة القادمة:</h4>
+    </div>
+  </div>
   <ion-list>
     <ion-list-header>
       <h2>
@@ -33,12 +40,14 @@
           <ion-avatar item-start>
             <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
           </ion-avatar>
-          <h2>{{player.name}}</h2>
+          <button ion-button clear (click)='showPlayer(player)'>
+            <h2>{{player.name}}</h2>
+          </button>
+          <span *ngIf="this.team.captain == player.id" item-end><h6>كابتن الفريق</h6></span>
         </ion-item>
-        <ion-item-options *ngIf="isCaptin == true" side="right">
-          <button expandable ion-button (click)="removePlayer(player)" color="danger">
-          <ion-icon name="trash"></ion-icon>
-          حذف
+        <ion-item-options *ngIf="isCaptain == true" side="right">
+          <button expandable ion-button (click)="removePlayer(player)" color="danger" icon-start>
+          <ion-icon name="trash"></ion-icon>حذف
           </button>
         </ion-item-options>
       </ion-item-sliding>

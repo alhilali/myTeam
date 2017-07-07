@@ -15,6 +15,8 @@ import { MyTeamPage } from '../pages/my-team/my-team';
 import { StartTeamPage } from '../pages/start-team/start-team'
 import { TeamPage } from '../pages/team/team';
 import { AddPlayerPage } from '../pages/add-player/add-player';
+import { PlayerPage } from '../pages/player/player'
+import { SearchPage } from '../pages/search/search'
 
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
@@ -48,7 +50,9 @@ const cloudSettings: CloudSettings = {
     MyTeamPage,
     StartTeamPage,
     TeamPage,
-    AddPlayerPage
+    AddPlayerPage,
+    PlayerPage,
+    SearchPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,9 @@ const cloudSettings: CloudSettings = {
     MyTeamPage,
     StartTeamPage,
     TeamPage,
-    AddPlayerPage
+    AddPlayerPage,
+    PlayerPage,
+    SearchPage
   ],
   providers: [
     StatusBar,

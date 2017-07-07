@@ -2,6 +2,7 @@ export interface Team {
   id: string;
   name: string;
   city: string;
-  captin: string;
+  captain: string;
   players: [any];
+  $key: string;
 }

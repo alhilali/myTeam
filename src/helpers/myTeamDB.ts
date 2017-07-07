@@ -1,7 +1,6 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Request } from '../models/request';
-import { Team } from '../models/team';
 
 @Injectable()
 export class MyTeamDB {
@@ -129,6 +128,7 @@ export class MyTeamDB {
     if(this.usrInfoSub) this.usrInfoSub.unsubscribe();
     if(this.usersSub) this.usersSub.unsubscribe();
     if(this.teamInfoSub) this.teamInfoSub.unsubscribe();
+    if(this.teamPlayersSub) this.teamPlayersSub.unsubscribe();
   }
 
 }
