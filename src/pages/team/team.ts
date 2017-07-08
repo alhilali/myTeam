@@ -34,13 +34,14 @@ export class TeamPage {
       private teamDB: MyTeamDB,
       private alertCtrl: AlertController) {
     this.team = navParams.get('team');
-  }
-
-  ionViewWillLoad () {
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
   }
 
-  async ionViewDidEnter () {
+  ionViewWillLoad () {
+  }
+
+  ionViewDidEnter () {
+    if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
     this.setPlayersList();
   }
 
@@ -87,8 +88,9 @@ export class TeamPage {
   showPlayer(player) {
     this.navCtrl.push(PlayerPage, {player: player})
   }
+  
   addPlayer() {
-    const myModal = this.modal.create(AddPlayerPage, {teamId: this.team.$key, name: this.team.name});
+    const myModal = this.modal.create(AddPlayerPage, {team: this.team});
     myModal.present();
   }
 

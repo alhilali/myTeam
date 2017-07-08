@@ -20,8 +20,8 @@ import { MyTeamDB } from '../../helpers/myTeamDB'
 export class MyTeamPage {
   hasTeam: boolean;
   hasRequests: boolean;
-  myTeams: FirebaseListObservable<any>;
-  teamsRequest: FirebaseListObservable<any>;
+  myTeams: any[] = []
+  teamsRequest: any = [];
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -29,40 +29,64 @@ export class MyTeamPage {
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
     private teamDB: MyTeamDB) {
+
   }
 
   async ionViewWillLoad () {
-    this.hasTeam = false;
-    const currUser = this.afAuth.auth.currentUser;
-    if (currUser && currUser.uid) {
-      this.myTeams = this.db.list('/users/'+currUser.uid+'/myTeams/');
-      this.hasTeam = true; // need to work on logic of enrolled in team
-
-      this.teamsRequest = this.db.list('/users/'+currUser.uid+'/requests/');
-      this.hasRequests = true;
-    }
   }
 
-  async acceptTeam(team) {
+  ionViewDidEnter () {
+
+    this.getMyTeams()
+    this.getRequests()
+  }
+
+  getMyTeams() {
+    this.teamDB.getMyTeams(this.afAuth.auth.currentUser.uid).then((data) => {
+      this.myTeams = data;
+    })
+  }
+
+  getRequests() {
+    this.teamDB.getRequests(this.afAuth.auth.currentUser.uid).then((data) => {
+      this.teamsRequest = data;
+    })
+  }
+
+  acceptTeam(team) {
+    // Remove request from player
     this.db.object('users/'+this.afAuth.auth.currentUser.uid+
     '/requests/'+team.$key).remove();
-    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
-    '/myTeams/'+team.$key).set({
-      name: team.name,
-      dateJoined: new Date().toDateString()
-    })
-    let user;
-    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid)
-    .then(u => {
-      user = u;
-    })
-    this.db.object('teams/'+team.$key+'/players/'+this.afAuth.auth.currentUser.uid)
-    .set({
-      name: user.name
-    })
-    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
-    .remove();
 
+    // Update request status from team
+    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
+    .update({status: 'approved'})
+
+    // Add team to my teams
+    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
+    '/myTeams/'+team.$key).set({dateJoined: new Date().toDateString()})
+
+    // Add player to team players
+    this.db.object('teams/'+team.$key+'/players/'+this.afAuth.auth.currentUser.uid)
+    .set({dateJoined: new Date().toDateString()})
+
+    // Update data
+    this.getRequests();
+    this.getMyTeams();
+  }
+
+  declineTeam(team) {
+    // Remove request from player
+    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
+    '/requests/'+team.$key).remove();
+
+    // Update request status from team
+    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
+    .update({status: 'declined'})
+
+    // Update data
+    this.getRequests();
+    this.getMyTeams();
   }
 
   ionViewWillLeave() {
@@ -75,9 +99,7 @@ export class MyTeamPage {
   }
 
   openTeam(team) {
-    this.teamDB.getTeamInfo(team.$key).then(data=>{
-      this.navCtrl.push(TeamPage, {team: data})
-    })
+    this.navCtrl.push(TeamPage, {team: team})
   }
 
 }

@@ -21,6 +21,7 @@ import { UsernameValidator } from '../../validators/username'
 export class AddPlayerPage {
   player = {};
   user = {} as User;
+  team: any
   public requestPlayerForm: any;
 
   constructor(private view: ViewController,
@@ -30,11 +31,19 @@ export class AddPlayerPage {
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
     private unameValid: UsernameValidator) {
+      this.team = navParams.get('team');
+      console.log(this.team)
       let usernameValidator = (control) => {
           return unameValid.checkValidUsername(control);
       };
+      let teamValidator = (control) => {
+          return unameValid.checkTeam(control, this.team.players);
+      };
       this.requestPlayerForm = _form.group({
-        "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator]
+        "username": ['',
+        Validators.compose([Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.-]*$')]),
+        Validators.composeAsync([usernameValidator, teamValidator])]
       })
   }
 

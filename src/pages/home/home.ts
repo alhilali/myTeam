@@ -11,21 +11,19 @@ import { PlayerPage } from '../player/player';
 })
 export class HomePage {
 
-  user: any
   constructor(private afAuth: AngularFireAuth,
     private teamDB: MyTeamDB,
     public navCtrl: NavController) {
-
   }
 
   async ionViewWillLoad() {
-    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid).then(user => {
-      this.user = user;
-    })
+
   }
 
-  openModal() {
-    this.navCtrl.push(PlayerPage, {player: this.user});
+  async openModal() {
+    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid).then(user => {
+      this.navCtrl.push(PlayerPage, {player: user});
+    })
   }
 
   logout() {

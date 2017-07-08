@@ -1,14 +1,15 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
-import { Request } from '../models/request';
 
 @Injectable()
 export class MyTeamDB {
   reqSub: any
   usersSub: any
-  usrInfoSub: any
+  public usrInfoSub: any
   teamInfoSub: any
   teamPlayersSub: any
+  teammInfoSub: any
+  myTeamsSub: any
   constructor(
     public db: AngularFireDatabase) {
   }
@@ -30,12 +31,13 @@ export class MyTeamDB {
   }
 
   getInfo(uid): Promise<any> {
+    if(this.usrInfoSub) this.usrInfoSub.unsubscribe();
     return new Promise(resolve => {
       const userInfo = this.db.object('users/'+uid);
-      this.usrInfoSub = userInfo.subscribe(data => {
-      resolve(data);
-      this.usrInfoSub.unsubscribe();
-      })
+        this.usrInfoSub = userInfo.subscribe(data => {
+          resolve(data);
+          this.usrInfoSub.unsubscribe();
+        })
     })
   }
 
@@ -66,46 +68,84 @@ export class MyTeamDB {
     })
   }
 
-  unsubscribeUserInfo() {
-    console.log("here")
-    console.log(this.usrInfoSub);
-    this.usrInfoSub.unsubscribe();
-  }
-
-  getRequests(uid): Promise<any> {
-    let requestsList: Request[] = [];
-    const requests = this.db.list('users/'+uid+'/requests/');
+  getMyTeamsIds(userId): Promise<any> {
+    if (this.myTeamsSub) this.myTeamsSub.unsubscribe();
     return new Promise(resolve => {
-        this.reqSub = requests.subscribe(snap => {
-          requestsList = [];
-          let counter = 0;
-          const len = snap.length;
-          snap.forEach(data=> {
-            requestsList.push({
-              teamId: data.$key,
-              dateRequested: data.dateRequested,
-              name: data.name
-            })
-            counter++;
-            if (counter == len) {
-              this.reqSub.unsubscribe();
-              resolve(requestsList);
-            }
-            else if (len == 0) {
-              this.reqSub.unsubscribe();
-              resolve(null);
-            }
-          })
+      const myTeams = this.db.list('/users/'+userId+'/myTeams/');
+      this.myTeamsSub = myTeams.subscribe(data => {
+        resolve(data);
+        this.myTeamsSub.unsubscribe();
       })
     })
   }
 
+  async getMyTeams(userId): Promise<any> {
+    let myTeams;
+    await this.getMyTeamsIds(userId).then(data => {
+      myTeams = data;
+    })
+    let myTeamsInfo: any[] = [];
+    let i;
+    for (i = 0; i < myTeams.length; i++) {
+      await this.getTeamInfo(myTeams[i].$key).then(data => {
+        myTeamsInfo.push(data);
+      })
+      if (i == myTeams.length-1) {
+        return new Promise(resolve => {
+          resolve(myTeamsInfo)
+        })
+      }
+    }
+  }
+
+  getRequestsId(userId): Promise<any> {
+    if (this.reqSub) this.reqSub.unsubscribe();
+    return new Promise(resolve => {
+      const myTeams = this.db.list('/users/'+userId+'/requests/');
+      this.reqSub = myTeams.subscribe(data => {
+        resolve(data);
+        this.reqSub.unsubscribe();
+      })
+    })
+  }
+
+  async getRequests(userId): Promise<any> {
+    let requests;
+    await this.getRequestsId(userId).then(data => {
+      requests = data;
+    })
+    let myRequestsInfo: any[] = [];
+    let i;
+    for (i = 0; i < requests.length; i++) {
+      await this.gettTeamInfo(requests[i].$key).then(data => {
+        myRequestsInfo.push(data);
+      })
+      if (i == requests.length-1) {
+        return new Promise(resolve => {
+          resolve(myRequestsInfo)
+        })
+      }
+    }
+  }
+
   getTeamInfo(teamId): Promise<any> {
+    if (this.teamInfoSub) this.teamInfoSub.unsubscribe();
     const teamInfo = this.db.object('teams/'+teamId);
     return new Promise(resolve => {
-        this.teamInfoSub = teamInfo.subscribe(data => {
-        this.teamInfoSub.unsubscribe();
+      this.teamInfoSub = teamInfo.subscribe(data => {
         resolve(data);
+        this.teamInfoSub.unsubscribe();
+      })
+    })
+  }
+
+  gettTeamInfo(teamId): Promise<any> {
+    if (this.teammInfoSub) this.teamInfoSub.unsubscribe();
+    const teamInfo = this.db.object('teams/'+teamId);
+    return new Promise(resolve => {
+      this.teammInfoSub = teamInfo.subscribe(data => {
+        resolve(data);
+        this.teammInfoSub.unsubscribe();
       })
     })
   }
@@ -120,6 +160,8 @@ export class MyTeamDB {
     if(this.usersSub) this.usersSub.unsubscribe();
     if(this.teamInfoSub) this.teamInfoSub.unsubscribe();
     if(this.teamPlayersSub) this.teamPlayersSub.unsubscribe();
+    if(this.myTeamsSub) this.myTeamsSub.unsubscribe();
+    if(this.teammInfoSub) this.teammInfoSub.unsubscribe();
   }
 
 }

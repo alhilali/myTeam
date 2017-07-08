@@ -9,7 +9,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username'
-
+import { User } from '../../models/user'
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -22,14 +22,16 @@ import { UsernameValidator } from '../../validators/username'
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-  user: any = {}
+  user = {} as User
+  cpyUser: any = {}
   shown = false;
   toastMessage: any;
   editSub: any;
   editUnameSub: any;
-  public editForm: any;
+  editForm: any;
   submitAttempt: boolean = false;
   currentUsername: string
+  same: boolean = true
 
   constructor(public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -46,6 +48,7 @@ export class EditProfilePage {
           return unameValid.checkUsername(control);
       };
       this.user = this.navParams.get('player');
+      this.cpyUser = Object.assign({}, this.user)
       this.editForm = this._form.group({
         "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
         "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
@@ -55,11 +58,16 @@ export class EditProfilePage {
   }
 
   closeModal() {
+    if (!this.submitAttempt) {
+      this.user.name = this.cpyUser.name;
+      this.user.originalUsername = this.cpyUser.originalUsername;
+      this.user.position = this.cpyUser.position;
+    }
     this.view.dismiss();
   }
 
-  async ionViewWillLoad() {
-    this.currentUsername = this.user.username;
+  ionViewWillLoad() {
+    this.currentUsername = this.user.originalUsername
     this.user.email = this.afAuth.auth.currentUser.email;
   }
 
@@ -76,8 +84,8 @@ export class EditProfilePage {
             this.updateNotification('الاسم');
           }
           if (snap.val().position != user.position) {
-            userRef.update({position: user.position})
-            this.user.position = user.position;
+            userRef.update({position: user.position}).then()
+            //this.user.position = user.position;
             this.updateNotification('المركز');
           }
           this.editSub.unsubscribe();
@@ -88,19 +96,17 @@ export class EditProfilePage {
       }
     }
 
-    if (this.currentUsername != this.user.username
-      && this.editForm.controls.username.valid && currUser) {
-        this.db.object('/users/'+currUser.uid)
-        .update({
-          originalUsername: user.username,
-          username: user.username.toLowerCase()
-        })
+    if (this.editForm.controls.username.valid && currUser) {
+      this.db.object('/users/'+currUser.uid)
+      .update({
+        originalUsername: user.originalUsername,
+        username: user.originalUsername.toLowerCase()
+      })
 
-        this.updateNotification('المعرف الشخصي');
-        this.user.originalUsername = user.username
-        this.db.object('usernames/'+user.username.toLowerCase()).set({exists: true});
-        this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
-        this.currentUsername = user.username;
+      this.updateNotification('المعرف الشخصي');
+      this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({exists: true});
+      this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
+      this.currentUsername = user.originalUsername;
     }
   }
 
@@ -115,8 +121,6 @@ export class EditProfilePage {
     this.toastMessage.present();
     this.shown = true;
   }
-
-
 
   updateEmail(oldEmail, newEmail) {
     let prompt = this.alertCtrl.create({
@@ -185,15 +189,6 @@ export class EditProfilePage {
       subTitle: message,
       buttons: ['حسناً'],
     }).present();
-  }
-
-  logout() {
-    if (this.editSub) this.editSub.unsubscribe();
-    if (this.editUnameSub) this.editUnameSub.unsubscribe();
-    this.afAuth.auth.signOut();
-    this.navCtrl.popAll();
-    this.app.getRootNav().setRoot(WelcomePage);
-    //this.view.dismiss();
   }
 
 }

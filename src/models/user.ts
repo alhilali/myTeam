@@ -2,6 +2,8 @@ export interface User {
   name: string;
   email: string;
   username: string;
+  originalUsername: string;
   password: string;
   position: string;
+  myTeams: any[];
 }

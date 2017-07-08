@@ -43,7 +43,7 @@
           <button ion-button clear (click)='showPlayer(player)'>
             <h2>{{player.name}}</h2>
           </button>
-          <span *ngIf="this.team.captain == player.id" item-end><h6>كابتن الفريق</h6></span>
+          <span *ngIf="this.team.captain == player.$key" item-end><h6>كابتن الفريق</h6></span>
         </ion-item>
         <ion-item-options *ngIf="isCaptain == true" side="right">
           <button expandable ion-button (click)="removePlayer(player)" color="danger" icon-start>

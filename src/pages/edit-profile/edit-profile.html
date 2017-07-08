@@ -10,11 +10,7 @@
     <ion-buttons start>
       <button ion-button (click)="closeModal()">إغلاق</button>
     </ion-buttons>
-    <ion-title>تعديل معلوماتك</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="update(user)">حفظ</button>
-    </ion-buttons>
-
+    <ion-title>تعديل بياناتي</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -28,7 +24,7 @@
       <ion-item dir="ltr">
         <ion-label>
           <h1>@</h1></ion-label>
-        <ion-input type="text" [(ngModel)]="user.username" formControlName='username' placeholder="username"></ion-input>
+        <ion-input type="text" [(ngModel)]="user.originalUsername" formControlName='username' placeholder="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>المركز</ion-label>
@@ -45,7 +41,7 @@
 
       <div padding>
         <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>
-        <p *ngIf="currentUsername != user.username && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">
+        <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">
           اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
         </p>
         <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>
@@ -65,6 +61,6 @@
 
 <ion-footer no-shadow>
   <ion-toolbar position="bottom">
-    <button ion-button block color="danger" (click)="logout()">تسجيل خروج</button>
+    <button ion-button block color="secondary" (click)="update(user)">تحديث</button>
   </ion-toolbar>
 </ion-footer>

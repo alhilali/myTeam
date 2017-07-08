@@ -46,10 +46,11 @@ export class StartTeamPage {
           captain: data.uid,
           name: team.name,
           city: team.city || 'riyadh',
+          num: 1,
           estDate: new Date().toDateString()
         })
         const userInfo = this.db.object('/users/'+data.uid+'/myTeams/'+newKey);
-        userInfo.set({name: team.name});
+        userInfo.set({approved: true});
         const playersList = this.db.object('/teams/'+newKey+'/players/'+data.uid);
         playersList.set({position: 'NA'});
         saveSub.unsubscribe();

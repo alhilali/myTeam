@@ -24,7 +24,10 @@ export class PlayerPage {
      private afAuth: AngularFireAuth,
      private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
-    if(this.player.$key == afAuth.auth.currentUser.uid) this.currentUser = true;
+  }
+
+  async ionViewWillLoad() {
+    if(this.player.$key == this.afAuth.auth.currentUser.uid) this.currentUser = true;
   }
 
   openModal() {
