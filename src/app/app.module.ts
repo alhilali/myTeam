@@ -57,7 +57,8 @@ const cloudSettings: CloudSettings = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
-      backButtonText: 'الرجوع'
+      backButtonText: 'الرجوع',
+      swipeBackEnabled: true
     }),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,

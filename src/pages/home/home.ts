@@ -16,8 +16,7 @@ export class HomePage {
     public navCtrl: NavController) {
   }
 
-  async ionViewWillLoad() {
-
+  ionViewWillLoad() {
   }
 
   async openModal() {

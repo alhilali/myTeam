@@ -10,6 +10,7 @@ export class MyTeamDB {
   teamPlayersSub: any
   teammInfoSub: any
   myTeamsSub: any
+  usernamesSub: any
   constructor(
     public db: AngularFireDatabase) {
   }
@@ -27,6 +28,24 @@ export class MyTeamDB {
           this.usersSub.unsubscribe();
           resolve(data[0]);
         })
+    })
+  }
+
+  findEmail(username): Promise<any> {
+    if(this.usernamesSub) this.usernamesSub.unsubscribe();
+    return new Promise(resolve => {
+      let found = false;
+      const users = this.db.list('usernames/', {
+        query: {
+          orderByKey: true,
+          equalTo: username.toLowerCase()
+        }
+      });
+      this.usernamesSub = users.subscribe(data => {
+        if (data[0]) resolve(data[0].email);
+        else resolve(null)
+        this.usernamesSub.unsubscribe();
+      })
     })
   }
 
@@ -80,22 +99,21 @@ export class MyTeamDB {
   }
 
   async getMyTeams(userId): Promise<any> {
-    let myTeams;
-    await this.getMyTeamsIds(userId).then(data => {
-      myTeams = data;
-    })
-    let myTeamsInfo: any[] = [];
-    let i;
-    for (i = 0; i < myTeams.length; i++) {
-      await this.getTeamInfo(myTeams[i].$key).then(data => {
-        myTeamsInfo.push(data);
+    if(this.myTeamsSub) this.myTeamsSub.unsubscribe();
+    return new Promise(resolve => {
+      let found = false;
+      console.log(userId)
+      const teams = this.db.list('teams/', {
+        query: {
+          orderByChild: userId,
+          equalTo: true
+        }
+      });
+      this.myTeamsSub = teams.subscribe(data => {
+        console.log(data)
+        this.myTeamsSub.unsubscribe();
       })
-      if (i == myTeams.length-1) {
-        return new Promise(resolve => {
-          resolve(myTeamsInfo)
-        })
-      }
-    }
+    })
   }
 
   getRequestsId(userId): Promise<any> {
@@ -140,7 +158,7 @@ export class MyTeamDB {
   }
 
   gettTeamInfo(teamId): Promise<any> {
-    if (this.teammInfoSub) this.teamInfoSub.unsubscribe();
+    if (this.teammInfoSub) this.teammInfoSub.unsubscribe();
     const teamInfo = this.db.object('teams/'+teamId);
     return new Promise(resolve => {
       this.teammInfoSub = teamInfo.subscribe(data => {

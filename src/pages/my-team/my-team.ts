@@ -20,8 +20,8 @@ import { MyTeamDB } from '../../helpers/myTeamDB'
 export class MyTeamPage {
   hasTeam: boolean;
   hasRequests: boolean;
-  myTeams: any[] = []
-  teamsRequest: any = [];
+  myTeams: FirebaseListObservable<any[]>
+  teamsRequest: FirebaseListObservable<any[]>
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -29,64 +29,53 @@ export class MyTeamPage {
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
     private teamDB: MyTeamDB) {
-
   }
 
-  async ionViewWillLoad () {
-  }
-
-  ionViewDidEnter () {
-
+  ionViewWillLoad () {
     this.getMyTeams()
     this.getRequests()
   }
 
   getMyTeams() {
-    this.teamDB.getMyTeams(this.afAuth.auth.currentUser.uid).then((data) => {
-      this.myTeams = data;
-    })
+    this.myTeams = this.db.list('teams/', {
+      query: {
+        orderByChild: this.afAuth.auth.currentUser.uid,
+        equalTo: true
+      }
+    });
   }
 
   getRequests() {
-    this.teamDB.getRequests(this.afAuth.auth.currentUser.uid).then((data) => {
-      this.teamsRequest = data;
-    })
+    this.teamsRequest = this.db.list('teams/', {
+      query: {
+        orderByChild: this.afAuth.auth.currentUser.uid,
+        equalTo: false
+      }
+    });
   }
 
   acceptTeam(team) {
-    // Remove request from player
-    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
-    '/requests/'+team.$key).remove();
+    const uid = this.afAuth.auth.currentUser.uid;
 
     // Update request status from team
-    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
-    .update({status: 'approved'})
+    this.db.object('teams/'+team.$key)
+    .update({[uid]: true})
 
-    // Add team to my teams
-    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
-    '/myTeams/'+team.$key).set({dateJoined: new Date().toDateString()})
-
-    // Add player to team players
-    this.db.object('teams/'+team.$key+'/players/'+this.afAuth.auth.currentUser.uid)
-    .set({dateJoined: new Date().toDateString()})
-
-    // Update data
-    this.getRequests();
-    this.getMyTeams();
+    // Add player to team players list
+    this.db.object('/playersList/'+team.$key+'/')
+    .update({[uid]: true});
   }
 
   declineTeam(team) {
-    // Remove request from player
-    this.db.object('users/'+this.afAuth.auth.currentUser.uid+
-    '/requests/'+team.$key).remove();
+    const uid = this.afAuth.auth.currentUser.uid;
 
     // Update request status from team
-    this.db.object('teams/'+team.$key+'/requests/'+this.afAuth.auth.currentUser.uid)
-    .update({status: 'declined'})
+    this.db.object('teams/'+team.$key)
+    .update({[uid]: null})
 
-    // Update data
-    this.getRequests();
-    this.getMyTeams();
+    // Remove player from team players list
+    this.db.object('/playersList/'+team.$key+'/')
+    .update({[uid]: null});
   }
 
   ionViewWillLeave() {

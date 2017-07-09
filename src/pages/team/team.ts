@@ -38,6 +38,7 @@ export class TeamPage {
   }
 
   ionViewWillLoad () {
+    console.log(this.navCtrl.swipeBackEnabled)
   }
 
   ionViewDidEnter () {
@@ -88,7 +89,7 @@ export class TeamPage {
   showPlayer(player) {
     this.navCtrl.push(PlayerPage, {player: player})
   }
-  
+
   addPlayer() {
     const myModal = this.modal.create(AddPlayerPage, {team: this.team});
     myModal.present();

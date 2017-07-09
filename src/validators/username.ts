@@ -32,7 +32,6 @@ export class UsernameValidator {
   async checkTeam(control: FormControl, playersList) {
     let found = false;
     let count = 0;
-    console.log(playersList)
     for(let player in playersList) {
       let playerInfo;
       await this.teamDB.getInfo(player).then(data=>{

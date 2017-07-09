@@ -59,7 +59,7 @@ export class RegisterPage {
           });
           const usernameInfo = this.db.object('/usernames/'+user.username.toLowerCase());
           usernameInfo.set({
-            exists: true
+            email: user.email
           });
         })
         if (result) this.navCtrl.setRoot(TabsPage);
@@ -70,6 +70,7 @@ export class RegisterPage {
         }).present();
       }
       catch (e) {
+        if (e.code == 'auth/email-already-in-use') this.usedEmail = true;
       }
     }
   }

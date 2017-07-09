@@ -5,6 +5,7 @@ import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
+import { MyTeamDB } from '../../helpers/myTeamDB'
 
 /**
  * Generated class for the WelcomePage page.
@@ -24,25 +25,36 @@ export class WelcomePage {
   constructor(private afAuth: AngularFireAuth,
     private loadingCtrl: LoadingController,
     private toast: ToastController,private alertCtrl: AlertController,
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, public navParams: NavParams,
+    private myTeamDB: MyTeamDB) {
   }
 
   async login(user: User) {
     try {
-    const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email,
+      await this.afAuth.auth.signInWithEmailAndPassword(user.email,
        user.password);
-       if (result) this.navCtrl.setRoot(TabsPage);
      }
      catch (e) {
-       this.toast.create({
-         message: 'الرجاء التأكد من الايميل او الرقم السري',
-         duration: 1500,
-         showCloseButton: true,
-         dismissOnPageChange: true,
-         closeButtonText: 'حسناً'
-       }).present();
-       console.error(e);
+       this.myTeamDB.findEmail(user.email).then(data=> {
+         this.afAuth.auth.signInWithEmailAndPassword(data,
+            user.password)
+            .catch(err=>{
+              this.showErrorToast()
+            })
+       }).catch(()=> {
+         this.showErrorToast()
+       })
      }
+  }
+
+  showErrorToast() {
+    this.toast.create({
+      message: 'الرجاء التأكد من الايميل او الرقم السري',
+      duration: 1500,
+      showCloseButton: true,
+      dismissOnPageChange: true,
+      closeButtonText: 'حسناً'
+    }).present();
   }
 
   register() {

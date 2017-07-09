@@ -19,9 +19,9 @@
 
 
 <ion-content>
-  <ion-item-group *ngIf="(teamsRequest)?.length > 0">
+  <ion-item-group *ngIf="(teamsRequest | async)?.length > 0">
     <ion-item-divider color="light">طلبات الانضمام</ion-item-divider>
-    <ion-card *ngFor="let team of teamsRequest">
+    <ion-card *ngFor="let team of teamsRequest | async">
       <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>
@@ -34,9 +34,9 @@
       </ion-item>
     </ion-card>
   </ion-item-group>
-  <div *ngIf="(myTeams)?.length > 0">
+  <div *ngIf="(myTeams | async)?.length > 0 ">
     <ion-item-divider color="light">فرق منتمي اليها</ion-item-divider>
-    <ion-card *ngFor="let team of myTeams">
+    <ion-card *ngFor="let team of myTeams | async">
       <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>

@@ -42,17 +42,17 @@ export class StartTeamPage {
     const ref = this.db.object('/teams/'+newKey);
     const saveSub = this.afAuth.authState.subscribe(data => {
       if (data && data.email && data.uid) {
+        let uid = data.uid
         ref.set({
-          captain: data.uid,
+          captain: uid,
           name: team.name,
-          city: team.city || 'riyadh',
+          city: team.city || 'الرياض',
           num: 1,
-          estDate: new Date().toDateString()
+          estDate: new Date().toDateString(),
+          [uid]: true
         })
-        const userInfo = this.db.object('/users/'+data.uid+'/myTeams/'+newKey);
-        userInfo.set({approved: true});
-        const playersList = this.db.object('/teams/'+newKey+'/players/'+data.uid);
-        playersList.set({position: 'NA'});
+        const playersList = this.db.object('/playersList/'+newKey+'/');
+        playersList.set({[uid]: true});
         saveSub.unsubscribe();
         this.closeModal();
       }

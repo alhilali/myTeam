@@ -32,7 +32,6 @@ export class AddPlayerPage {
     private _form: FormBuilder,
     private unameValid: UsernameValidator) {
       this.team = navParams.get('team');
-      console.log(this.team)
       let usernameValidator = (control) => {
           return unameValid.checkValidUsername(control);
       };
@@ -52,24 +51,16 @@ export class AddPlayerPage {
   }
 
   async requestAddPlayer(player) {
-    let uid;
+    let user;
     await this.teamDB.findUID(player.username.toLowerCase()).then(data => {
-      uid = data;
+      user = data;
     })
-    if (this.requestPlayerForm.valid && uid.$key) {
+    if (this.requestPlayerForm.valid && user.$key) {
 
-      const teamRequests = this.db.object('/teams/'+
-      this.navParams.get('teamId')+'/requests/'+uid.$key);
-      teamRequests.set({
-        dateRequested: new Date().toDateString(),
-      });
+      // Add request to team
+      this.db.object('/teams/'+this.team.$key)
+      .update({[user.$key]: false});
 
-      const userRequests = this.db.object('/users/'+
-      uid.$key+'/requests/'+this.navParams.get('teamId'));
-      userRequests.set({
-        name: this.navParams.get('name'),
-        dateRequested: new Date().toDateString(),
-      });
       this.teamDB.unsubscribeAll();
       this.view.dismiss();
     }
