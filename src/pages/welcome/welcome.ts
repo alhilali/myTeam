@@ -64,7 +64,7 @@ export class WelcomePage {
   resetPassword() {
     let alert = this.alertCtrl.create({
       title: 'نسيت الرقم السري؟',
-      message: 'سوف يتم ارسال رقم سري جديد لعنوانك البريدي',
+      message: 'سيتم ارسال رقم سري جديد الى بريدك الالكتروني',
       inputs: [
         {
           name: 'email',
@@ -73,7 +73,7 @@ export class WelcomePage {
       ],
       buttons: [
         {
-          text: 'ارسال رقم سري جديد',
+          text: 'تم',
           handler: data => {
 
             let loading = this.loadingCtrl.create({

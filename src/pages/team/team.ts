@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -24,7 +24,7 @@ export class TeamPage {
   team = {} as Team;
   isCaptain = false;
   playersList: any[] = []
-  sub: any
+  playersListSub: any
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -37,25 +37,28 @@ export class TeamPage {
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
   }
 
-  ionViewWillLoad () {
-    console.log(this.navCtrl.swipeBackEnabled)
-  }
-
   ionViewDidEnter () {
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
-    this.setPlayersList();
-  }
-
-  async setPlayersList() {
-    if (this.playersList.length > 0) this.playersList = [];
-    await this.teamDB.getTeamPlayersWithInfo(this.team.$key).then(data=> {
-      this.playersList = data;
+    this.playersListSub = this.db.list('playersList/'+this.team.$key)
+    .subscribe(data=>{
+      this.playersList = []
+      let i;
+      for(i = 0; i < data.length; i++) {
+        this.db.object('users/'+data[i].uid).take(1).subscribe(user=>{
+          this.playersList.push(user);
+        })
+      }
     })
-
   }
 
   removePlayer(player) {
-    this.showConfirm(player)
+    if(player.$key == this.team.captain) {
+      this.alertCtrl.create({
+        title: 'خطأ في حذف لاعب',
+        subTitle: 'لا يمكنك حذف كابتن الفريق',
+        buttons: ['حسناً'],
+      }).present();
+    } else this.showConfirm(player)
   }
 
   showConfirm(player) {
@@ -66,15 +69,14 @@ export class TeamPage {
         {
           text: 'إلغاء',
           handler: () => {
-            console.log('Agree clicked');
+            //console.log('Cancel clicked');
           }
         },
         {
           text: 'متأكد',
           handler: () => {
-            this.db.object('teams/'+this.team.$key+'/players/'+player.id).remove();
-            this.db.object('users/'+player.id+'/myTeams/'+this.team.$key).remove();
-            this.setPlayersList();
+            this.db.object('users/'+player.$key+'/myTeams/'+this.team.$key).remove();
+            this.db.object('playersList/'+this.team.$key+'/'+player.$key).remove();
           }
         }
       ]
@@ -83,6 +85,7 @@ export class TeamPage {
   }
 
   ionViewWillLeave() {
+    this.playersListSub.unsubscribe();
     this.teamDB.unsubscribeAll();
   }
 

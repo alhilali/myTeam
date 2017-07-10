@@ -36,7 +36,7 @@ export class AddPlayerPage {
           return unameValid.checkValidUsername(control);
       };
       let teamValidator = (control) => {
-          return unameValid.checkTeam(control, this.team.players);
+          return unameValid.checkTeam(control, this.team.$key);
       };
       this.requestPlayerForm = _form.group({
         "username": ['',
@@ -57,9 +57,12 @@ export class AddPlayerPage {
     })
     if (this.requestPlayerForm.valid && user.$key) {
 
-      // Add request to team
-      this.db.object('/teams/'+this.team.$key)
-      .update({[user.$key]: false});
+      // Add request to player
+      this.db.object('/users/'+user.$key+'/requests/'+this.team.$key)
+      .set({
+        teamId: this.team.$key,
+        dateRequested: new Date().toDateString()
+      });
 
       this.teamDB.unsubscribeAll();
       this.view.dismiss();

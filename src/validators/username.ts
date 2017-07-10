@@ -29,28 +29,26 @@ export class UsernameValidator {
     })
   }
 
-  async checkTeam(control: FormControl, playersList) {
-    let found = false;
-    let count = 0;
-    for(let player in playersList) {
-      let playerInfo;
-      await this.teamDB.getInfo(player).then(data=>{
-        playerInfo = data
-      })
-      count++;
-      if (playerInfo.username == control.value.toLowerCase()) {
-        found = true
-        return new Promise(resolve => {
-          resolve({
-            "message": "اللاعب متواجد في الفريق حالياً"
-          });
-        })
-      }
-    }
-    return new Promise(resolve => {
-      resolve(null);
+  async checkTeam(control: FormControl, teamId) {
+    let user;
+    await this.teamDB.findUID(control.value.toLowerCase()).then(data=>{
+      user = data;
     })
-
+    return new Promise(resolve => {
+      if (user) {
+        const players = this.db.list('playersList/'+teamId, {
+          query: {
+            orderByChild: 'uid',
+            equalTo: user.$key
+          }
+        }).subscribe(data => {
+          if (data.length>0) resolve({"message": "اللاعب متواجد في الفريق حالياً"})
+          else resolve(null);
+        })
+      } else {
+        resolve(null)
+      }
+    })
   }
 
   checkValidUsername(control: FormControl) {

@@ -25,8 +25,9 @@ export class MyTeamDB {
           }
         });
         this.usersSub = users.subscribe(data => {
+          if (data && data.length>0) resolve(data[0]);
+          else resolve(null)
           this.usersSub.unsubscribe();
-          resolve(data[0]);
         })
     })
   }
@@ -98,22 +99,7 @@ export class MyTeamDB {
     })
   }
 
-  async getMyTeams(userId): Promise<any> {
-    if(this.myTeamsSub) this.myTeamsSub.unsubscribe();
-    return new Promise(resolve => {
-      let found = false;
-      console.log(userId)
-      const teams = this.db.list('teams/', {
-        query: {
-          orderByChild: userId,
-          equalTo: true
-        }
-      });
-      this.myTeamsSub = teams.subscribe(data => {
-        console.log(data)
-        this.myTeamsSub.unsubscribe();
-      })
-    })
+  getMyTeams(userId){
   }
 
   getRequestsId(userId): Promise<any> {

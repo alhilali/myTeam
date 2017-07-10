@@ -21,6 +21,7 @@ export class SearchPage {
   query: Subject<any>;
   type: string = 'teams'
   items: FirebaseListObservable<any[]>;
+  nameResults: FirebaseListObservable<any[]>;
   queryString: string = ''
 
 

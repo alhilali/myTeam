@@ -88,7 +88,6 @@ export class EditProfilePage {
             //this.user.position = user.position;
             this.updateNotification('المركز');
           }
-          this.editSub.unsubscribe();
         })
         if (user.email != currUser.email) {
           this.updateEmail(currUser.email, user.email);
@@ -104,7 +103,7 @@ export class EditProfilePage {
       })
 
       this.updateNotification('المعرف الشخصي');
-      this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({exists: true});
+      this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({email: user.email});
       this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
       this.currentUsername = user.originalUsername;
     }

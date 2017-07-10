@@ -19,9 +19,9 @@
 
 
 <ion-content>
-  <ion-item-group *ngIf="(teamsRequest | async)?.length > 0">
+  <ion-item-group *ngIf="teamsRequest?.length > 0">
     <ion-item-divider color="light">طلبات الانضمام</ion-item-divider>
-    <ion-card *ngFor="let team of teamsRequest | async">
+    <ion-card *ngFor="let team of teamsRequest">
       <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>
@@ -34,20 +34,22 @@
       </ion-item>
     </ion-card>
   </ion-item-group>
-  <div *ngIf="(myTeams | async)?.length > 0 ">
+  <ion-item-group *ngIf="myTeams?.length > 0 ">
     <ion-item-divider color="light">فرق منتمي اليها</ion-item-divider>
-    <ion-card *ngFor="let team of myTeams | async">
+    <ion-card *ngFor="let team of myTeams">
       <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
       <ion-item>
         <ion-icon name="football" item-start large></ion-icon>
         <h2>{{team.name}}</h2>
         <p>{{team.city}}</p>
+        <button ion-button (click)='presentActionSheet(team)' item-end large clear>
+          <ion-icon name="md-more"></ion-icon>
+        </button>
       </ion-item>
     </ion-card>
-  </div>
-  <div *ngIf="hasTeam == false">
+  </ion-item-group>
+  <div *ngIf="myTeams?.length == 0">
     <button ion-button (click)='startTeam()' block>إبدأ فريقك</button>
-    <button ion-button block color="light">إنضم لفريق</button>
   </div>
 
 </ion-content>

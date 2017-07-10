@@ -29,7 +29,7 @@ export class StartTeamPage {
       this.team = {};
       this.teamForm = this._form.group({
         "name":["",Validators.required],
-        "city":["riyadh"]
+        "city":["الرياض"]
       })
   }
 
@@ -47,12 +47,17 @@ export class StartTeamPage {
           captain: uid,
           name: team.name,
           city: team.city || 'الرياض',
-          num: 1,
-          estDate: new Date().toDateString(),
-          [uid]: true
+          playersNum: 1,
+          estDate: new Date().toDateString()
         })
-        const playersList = this.db.object('/playersList/'+newKey+'/');
-        playersList.set({[uid]: true});
+
+        // Add player to players list DB
+        const playersList = this.db.object('/playersList/'+newKey+'/'+uid);
+        playersList.set({uid: uid});
+
+        // Add team to user list DB
+        this.db.object('/users/'+uid+'/myTeams/'+newKey)
+        .set({teamId: newKey});
         saveSub.unsubscribe();
         this.closeModal();
       }
