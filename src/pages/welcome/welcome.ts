@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, LoadingController,
-   NavParams, ToastController, AlertController } from 'ionic-angular';
+   NavParams, ToastController, AlertController,
+   Slides} from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
-import { MyTeamDB } from '../../helpers/myTeamDB'
+import { MyTeamDB } from '../../helpers/myTeamDB';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UsernameValidator } from '../../validators/username';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 /**
  * Generated class for the WelcomePage page.
@@ -19,14 +23,36 @@ import { MyTeamDB } from '../../helpers/myTeamDB'
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
-
+  @ViewChild(Slides) slides: Slides;
   user = {} as User;
+  registerForm: any;
+  submitAttempt: boolean = false;
+  usedEmail: boolean = false;
+  splash = true;
 
   constructor(private afAuth: AngularFireAuth,
     private loadingCtrl: LoadingController,
     private toast: ToastController,private alertCtrl: AlertController,
     public navCtrl: NavController, public navParams: NavParams,
-    private myTeamDB: MyTeamDB) {
+    private myTeamDB: MyTeamDB, private _form: FormBuilder,
+    private unameValid: UsernameValidator, private db: AngularFireDatabase) {
+      let usernameValidator = (control) => {
+          return unameValid.checkUsername(control);
+      };
+      this.registerForm = this._form.group({
+        "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
+        "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
+        "email": ["",Validators.email],
+        "password": ["",Validators.compose([Validators.minLength(6), Validators.required])]
+      })
+  }
+
+  ionViewDidLoad() {
+    setTimeout(() => this.splash = false, 4000);
+  }
+
+  goToSlide() {
+    this.slides.slideTo(1, 500);
   }
 
   async login(user: User) {
@@ -57,8 +83,40 @@ export class WelcomePage {
     }).present();
   }
 
-  register() {
-    this.navCtrl.push(RegisterPage);
+  slideRegister() {
+    this.slides.slideTo(2, 500);
+  }
+
+  async register(user: User) {
+    this.submitAttempt = true;
+    if (this.registerForm.valid) {
+      try {
+        const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email,
+        user.password).then((u) => {
+          const userInfo = this.db.object('/users/'+this.afAuth.auth.currentUser.uid);
+          userInfo.set({
+            originalUsername: user.username,
+            username: user.username.toLowerCase(),
+            name: user.name,
+            position: 'GK'
+          });
+          const usernameInfo = this.db.object('/usernames/'+user.username.toLowerCase());
+          usernameInfo.set({
+            email: user.email
+          });
+        })
+        if (result) this.navCtrl.setRoot(TabsPage);
+        this.toast.create({
+         message: ' مرحباً بك '+user.name,
+         duration: 3000,
+         position: 'middle'
+        }).present();
+      }
+      catch (e) {
+        if (e.code == 'auth/email-already-in-use') this.usedEmail = true;
+        setTimeout(()=> {this.usedEmail = false}, 2000);
+      }
+    }
   }
 
   resetPassword() {

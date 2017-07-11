@@ -53,7 +53,8 @@ export class SearchPage {
     // set val to the value of the searchbar
     this.queryString = ev.target.value;
     if (this.queryString && this.type == 'players') this.queryString = this.queryString.toLowerCase();
-    this.query.next(this.queryString)
+    if(this.queryString) this.query.next(this.queryString)
+    else this.query.next("")
   }
 
   open(item) {

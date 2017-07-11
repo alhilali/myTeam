@@ -18,6 +18,9 @@
 <ion-content>
   <form name="editForm" novalidate>
     <div [formGroup]='editForm'>
+      <ion-item text-center>
+        <div on-tap='changePhoto()' class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
+      </ion-item>
       <ion-item>
         <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
       </ion-item>

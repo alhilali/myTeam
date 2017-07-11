@@ -23,6 +23,8 @@ export class MyTeamPage {
   teamsRequest: any[] = []
   myTeamsSub: any
   requestsSub: any
+  currentLength: number = 0
+  hasNoTeams: boolean = false
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -34,15 +36,19 @@ export class MyTeamPage {
     private alertCtrl: AlertController) {
   }
 
-  ionViewDidLoad () {
+  ionViewDidEnter () {
     this.myTeamsSub = this.db.list('users/'+this.afAuth.auth.currentUser.uid
     +'/myTeams').subscribe(data=>{
-      this.myTeams = []
-      data.forEach(team=>{
-        this.db.object('teams/'+team.teamId).take(1).subscribe(teamInfo=>{
-          this.myTeams.push(teamInfo)
+      if (data.length == 0) this.hasNoTeams = true;
+      if (this.currentLength != data.length) {
+        this.myTeams = []
+        data.forEach(team=>{
+          this.db.object('teams/'+team.teamId).take(1).subscribe(teamInfo=>{
+            this.myTeams.push(teamInfo)
+          })
         })
-      })
+      }
+      this.currentLength = data.length;
     })
 
     this.requestsSub = this.db.list('users/'+this.afAuth.auth.currentUser.uid
@@ -97,7 +103,7 @@ export class MyTeamPage {
           handler: () => {
           }
         },{
-          text: 'Cancel',
+          text: 'إلغاء',
           role: 'cancel',
           handler: () => {
           }
@@ -119,7 +125,7 @@ export class MyTeamPage {
           handler: () => {
           }
         },{
-          text: 'Cancel',
+          text: 'إلغاء',
           role: 'cancel',
           handler: () => {
           }
@@ -148,11 +154,9 @@ export class MyTeamPage {
             this.db.list('playersList/'+team.$key).take(1).subscribe(data=>{
               let i;
               for (i=0; i < data.length; i++) {
-                console.log(data[i].uid)
                 dataToDelete['users/'+data[i].uid+'/myTeams/'+team.$key] = null;
 
                 if (i == data.length - 1) {
-                  console.log("done")
                   this.db.object('/').update(dataToDelete);
                 }
               }

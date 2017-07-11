@@ -1,27 +1,95 @@
-<ion-content no-bounce>
+<div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
+  <div class="flb">
+    <div class="Aligner-item Aligner-item--top"></div>
+    <img src="http://image.ibb.co/hKqonv/logo_main.png">
+    <div class="Aligner-item Aligner-item--bottom"></div>
+  </div>
+</div>
 
-  <h1 dir="rtl">
-    مرحباً!
-  </h1>
-  <p padding item-start text-center>
-    Saud, 123123
-  </p>
-  <p padding item-start text-center>
-    July 10
-  </p>
-  <div class="bottom">
-    <ion-item>
-      <ion-label floating>اسم المستخدم/البريد الالكتروني</ion-label>
-      <ion-input dir="ltr" type="text" [(ngModel)]="user.email"></ion-input>
-    </ion-item>
 
-    <ion-item>
-      <ion-label floating>الرقم السري</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-    </ion-item>
-    <button ion-button block (click)="login(user)">سجل دخول</button>
-    <button ion-button block (click)="register()" color="light">حساب جديد</button>
-    <button ion-button (click)="resetPassword()" clear>نسيت الرقم السري؟</button>
+<ion-content class='welcomePage' no-bounce>
+  <div class='wave -one'></div>
+  <div class='wave -two'></div>
+  <div class='wave -three'></div>
+  <div class="welcomeTop">
+    <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">
   </div>
 
-</ion-content>
+  <ion-slides pager class="welcomeSlides" dir="rtl">
+    <ion-slide>
+      <h3>هل انت جاهز لتحدي العمر؟</h3>
+      <div class="welcomeBtns">
+        <button color="orange" ion-button block (click)="slideRegister()">حساب جديد</button>
+        <p text-right>
+          لديك حساب؟ <button id="loginBtn" ion-button clear (click)="goToSlide()" small>سجل دخول</button>
+        </p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="login">
+        <ion-item dir="ltr">
+          <ion-label>
+            <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="user.email" placeholder="Username/Email"></ion-input>
+        </ion-item>
+
+        <ion-item dir="ltr">
+          <ion-label>
+            <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
+          </ion-label>
+          <ion-input type="password" [(ngModel)]="user.password" placeholder="Password"></ion-input>
+        </ion-item>
+        <button color="lightBlue" ion-button block (click)="login(user)">الدخول</button>
+        <p text-right style="margin: 0px;">
+          <button ion-button clear (click)="resetPassword()" small>هل نسيت الرقم السري؟</button>
+        </p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <form name="registerForm" novalidate>
+        <div class="register" [formGroup]='registerForm'>
+          <div class="errorMessages">
+            <p *ngIf="user.username != '' && !registerForm.controls.username.valid && !registerForm.controls.username.pending && (submitAttempt || registerForm.controls.username.dirty)" style="color: #ea6153;">
+              <ion-icon name="bug"></ion-icon>
+              اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
+            </p>
+            <p *ngIf="!registerForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">
+              <ion-icon name="bug"></ion-icon>
+              الرجاء ادخال ايميل صحيح.</p>
+            <p *ngIf="usedEmail" style="color: #ea6153;">
+              <ion-icon name="bug"></ion-icon>
+              الايميل مستخدم من قبل شخص آخر.
+            </p>
+            <p *ngIf="!registerForm.controls.password.valid && (submitAttempt)" style="color: #ea6153;">
+              <ion-icon name="bug"></ion-icon>
+              يجب ان يكون الرقم السري اكثر من ٦ احرف/ارقام.</p>
+          </div>
+          <ion-item>
+            <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!registerForm.controls.name.valid && (registerForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
+          </ion-item>
+          <ion-item dir="ltr">
+            <ion-label>
+              <h2>@</h2></ion-label>
+            <ion-input type="text" [(ngModel)]="user.username" [class.invalid]="!registerForm.controls.username.valid && (registerForm.controls.username.dirty || submitAttempt)" formControlName='username' placeholder="Username"></ion-input>
+          </ion-item>
+          <ion-item dir="ltr">
+            <ion-label>
+              <ion-icon name="ios-mail-outline"></ion-icon>
+            </ion-label>
+            <ion-input class="email" type="text" [(ngModel)]="user.email" [class.invalid]="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" formControlName='email' placeholder="Email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="password" [(ngModel)]="user.password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" formControlName='password' placeholder="الرقم السري"></ion-input>
+          </ion-item>
+
+          <button ion-button block (click)="register(user)" color="gold">اتمام التسجيل</button>
+        </div>
+      </form>
+    </ion-slide>
+  </ion-slides>
+  <!--<p *ngIf="!registerForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>
+  <p *ngIf="registerForm.controls.username.pending">
+    جاري التأكد من اسم المستخدم...
+  </p>
+-->

@@ -28,10 +28,7 @@
     <button ion-item clear *ngFor="let item of items | async" (click)="open(item)">
         <h2>{{ item.name }}</h2>
     </button>
-    <button ion-item clear *ngFor="let item of nameResults | async" (click)="open(item)">
-        <h2>{{ item.name }}</h2>
-    </button>
-    <p text-center *ngIf='((nameResults | async)?.length == 0) && ((items | async)?.length == 0) && (queryString.length != 0)'>
+    <p text-center *ngIf='((items | async)?.length == 0) && queryString && (queryString.length != 0)'>
       لا يوجد نتائج
     </p>
   </ion-list>

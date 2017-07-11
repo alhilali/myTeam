@@ -3,6 +3,7 @@ import { App,
   IonicPage, NavController,
   NavParams, ViewController,
   ToastController, AlertController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { WelcomePage } from '../welcome/welcome';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -43,11 +44,12 @@ export class EditProfilePage {
     private toast: ToastController,
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
-    private unameValid: UsernameValidator) {
-      let usernameValidator = (control) => {
-          return unameValid.checkUsername(control);
-      };
+    private unameValid: UsernameValidator,
+    private camera: Camera) {
       this.user = this.navParams.get('player');
+      let usernameValidator = (control) => {
+          return unameValid.checkEditUsername(control, this.user.username);
+      };
       this.cpyUser = Object.assign({}, this.user)
       this.editForm = this._form.group({
         "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
@@ -103,9 +105,11 @@ export class EditProfilePage {
       })
 
       this.updateNotification('المعرف الشخصي');
-      this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({email: user.email});
-      this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
-      this.currentUsername = user.originalUsername;
+      if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()){
+        this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({email: user.email});
+        this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
+        this.currentUsername = user.originalUsername;
+      }
     }
   }
 
@@ -188,6 +192,22 @@ export class EditProfilePage {
       subTitle: message,
       buttons: ['حسناً'],
     }).present();
+  }
+
+  changePhoto() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+     // Handle error
+    });
   }
 
 }

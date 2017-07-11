@@ -48,7 +48,7 @@
       </ion-item>
     </ion-card>
   </ion-item-group>
-  <div *ngIf="myTeams?.length == 0">
+  <div *ngIf="hasNoTeams">
     <button ion-button (click)='startTeam()' block>إبدأ فريقك</button>
   </div>
 

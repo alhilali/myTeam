@@ -26,9 +26,9 @@
       <p>عدد الفرق: {{myTeams.length}}</p>
     </div>
   </div>
-  <ion-row *ngIf="myTeams?.length > 0 ">
+  <ion-row wrap *ngIf="myTeams?.length > 0 ">
     <ion-item-divider text-center color="#ffff">My teams</ion-item-divider>
-    <ion-col *ngFor="let team of myTeams">
+    <ion-col width-33 *ngFor="let team of myTeams">
       <ion-card class="profileCards">
         <img on-tap='openTeam(team)' src="https://s-media-cache-ak0.pinimg.com/originals/0e/da/ec/0edaec258266cf651b9124a92f389c6b.png">
       </ion-card>

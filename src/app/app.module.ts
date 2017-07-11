@@ -28,6 +28,8 @@ import { FIREBASE_CONFIG } from './app.firebase.config'
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
+import { Camera } from '@ionic-native/camera';
+
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 const cloudSettings: CloudSettings = {
@@ -89,6 +91,7 @@ const cloudSettings: CloudSettings = {
     SplashScreen,
     MyTeamDB,
     UsernameValidator,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
