@@ -7,7 +7,8 @@
 </div>
 
 
-<ion-content class='welcomePage' no-bounce>
+<ion-content no-bounce scroll="false">
+
   <div class='wave -one'></div>
   <div class='wave -two'></div>
   <div class='wave -three'></div>
@@ -15,7 +16,7 @@
     <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">
   </div>
 
-  <ion-slides pager class="welcomeSlides" dir="rtl">
+  <ion-slides pager class="welcomeSlides" ion-fixed dir="rtl">
     <ion-slide>
       <h3>هل انت جاهز لتحدي العمر؟</h3>
       <div class="welcomeBtns">
@@ -27,23 +28,25 @@
     </ion-slide>
     <ion-slide>
       <div class="login">
-        <ion-item dir="ltr">
-          <ion-label>
-            <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
-          </ion-label>
-          <ion-input type="text" [(ngModel)]="user.email" placeholder="Username/Email"></ion-input>
-        </ion-item>
+        <form [formGroup]="loginForm" novalidate>
+          <ion-item dir="ltr">
+            <ion-label>
+              <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
+            </ion-label>
+            <ion-input type="text" [(ngModel)]="user.email" formControlName='email' placeholder="Username/Email"></ion-input>
+          </ion-item>
 
-        <ion-item dir="ltr">
-          <ion-label>
-            <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
-          </ion-label>
-          <ion-input type="password" [(ngModel)]="user.password" placeholder="Password"></ion-input>
-        </ion-item>
-        <button color="lightBlue" ion-button block (click)="login(user)">الدخول</button>
-        <p text-right style="margin: 0px;">
-          <button ion-button clear (click)="resetPassword()" small>هل نسيت الرقم السري؟</button>
-        </p>
+          <ion-item dir="ltr">
+            <ion-label>
+              <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
+            </ion-label>
+            <ion-input type="password" [(ngModel)]="user.password" formControlName='password' placeholder="Password"></ion-input>
+          </ion-item>
+          <button color="lightBlue" ion-button block (click)="login(user)">الدخول</button>
+          <p text-right style="margin: 0px;">
+            <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>
+          </p>
+        </form>
       </div>
     </ion-slide>
     <ion-slide>
@@ -54,9 +57,6 @@
               <ion-icon name="bug"></ion-icon>
               اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
             </p>
-            <p *ngIf="!registerForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">
-              <ion-icon name="bug"></ion-icon>
-              الرجاء ادخال ايميل صحيح.</p>
             <p *ngIf="usedEmail" style="color: #ea6153;">
               <ion-icon name="bug"></ion-icon>
               الايميل مستخدم من قبل شخص آخر.
@@ -83,13 +83,9 @@
             <ion-input type="password" [(ngModel)]="user.password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" formControlName='password' placeholder="الرقم السري"></ion-input>
           </ion-item>
 
-          <button ion-button block (click)="register(user)" color="gold">اتمام التسجيل</button>
+          <button ion-button block (click)="register(user)" color="gold">التسجيل</button>
         </div>
       </form>
     </ion-slide>
   </ion-slides>
-  <!--<p *ngIf="!registerForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>
-  <p *ngIf="registerForm.controls.username.pending">
-    جاري التأكد من اسم المستخدم...
-  </p>
--->
+</ion-content>

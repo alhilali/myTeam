@@ -7,7 +7,7 @@ import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username';
 import { AngularFireDatabase } from 'angularfire2/database';
 
@@ -26,6 +26,7 @@ export class WelcomePage {
   @ViewChild(Slides) slides: Slides;
   user = {} as User;
   registerForm: any;
+  loginForm: FormGroup;
   submitAttempt: boolean = false;
   usedEmail: boolean = false;
   splash = true;
@@ -42,6 +43,10 @@ export class WelcomePage {
       this.registerForm = this._form.group({
         "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
         "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
+        "email": ["",Validators.email],
+        "password": ["",Validators.compose([Validators.minLength(6), Validators.required])]
+      })
+      this.loginForm = this._form.group({
         "email": ["",Validators.email],
         "password": ["",Validators.compose([Validators.minLength(6), Validators.required])]
       })
