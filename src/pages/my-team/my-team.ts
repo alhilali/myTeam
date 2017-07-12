@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController,
    ModalController, ActionSheetController } from 'ionic-angular';
 import { StartTeamPage } from '../start-team/start-team';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TeamPage } from '../team/team';
 import { MyTeamDB } from '../../helpers/myTeamDB'
@@ -41,6 +41,7 @@ export class MyTeamPage {
     +'/myTeams').subscribe(data=>{
       if (data.length == 0) this.hasNoTeams = true;
       if (this.currentLength != data.length) {
+        this.hasNoTeams = false;
         this.myTeams = []
         data.forEach(team=>{
           this.db.object('teams/'+team.teamId).take(1).subscribe(teamInfo=>{
@@ -67,7 +68,7 @@ export class MyTeamPage {
 
     // Add player to players list DB
     const playersList = this.db.object('/playersList/'+team.$key+'/'+uid);
-    playersList.set({uid: uid});
+    playersList.set({uid: uid, status: 'enrolled'});
 
     // Add team to user list DB
     this.db.object('/users/'+uid+'/myTeams/'+team.$key)
@@ -155,7 +156,7 @@ export class MyTeamPage {
               let i;
               for (i=0; i < data.length; i++) {
                 dataToDelete['users/'+data[i].uid+'/myTeams/'+team.$key] = null;
-
+                dataToDelete['users/'+data[i].uid+'/requests/'+team.$key] = null;
                 if (i == data.length - 1) {
                   this.db.object('/').update(dataToDelete);
                 }

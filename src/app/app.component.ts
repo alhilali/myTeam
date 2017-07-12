@@ -8,14 +8,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { Keyboard } from '@ionic-native/keyboard';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = WelcomePage;
+  rootPage:any;
 
   constructor(private afAuth: AngularFireAuth,
-    platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
+     private keyboard: Keyboard) {
     afAuth.auth.onAuthStateChanged(user => {
       if (!user) {
         this.rootPage = WelcomePage;
@@ -26,6 +29,9 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      if (this.keyboard) {
+        this.keyboard.hideKeyboardAccessoryBar(false);
+      }
       statusBar.styleDefault();
       //splashScreen.hide();
     });

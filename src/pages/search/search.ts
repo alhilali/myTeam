@@ -35,7 +35,7 @@ export class SearchPage {
     this.items = this.db.list('teams/', {
       query: {
         orderByChild: 'name',
-        equalTo: this.query
+        startAt: this.query
       }
     });
   }

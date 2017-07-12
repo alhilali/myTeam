@@ -4,7 +4,7 @@ import { IonicPage, NavController,
 import { AngularFireDatabase } from 'angularfire2/database';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 import { User } from '../../models/user';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username'
 
 /**
@@ -63,6 +63,10 @@ export class AddPlayerPage {
         teamId: this.team.$key,
         dateRequested: new Date().toDateString()
       });
+
+      // Add player to playersList temporary
+      const playersList = this.db.object('/playersList/'+this.team.$key+'/'+user.$key);
+      playersList.set({uid: user.$key, status: 'pending'});
 
       this.teamDB.unsubscribeAll();
       this.view.dismiss();

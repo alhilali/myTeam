@@ -17,7 +17,6 @@ export class MyTeamDB {
 
   findUID(username: string) {
     return new Promise(resolve => {
-        let found = false;
         const users = this.db.list('users/', {
           query: {
             orderByChild: 'username',
@@ -35,7 +34,6 @@ export class MyTeamDB {
   findEmail(username): Promise<any> {
     if(this.usernamesSub) this.usernamesSub.unsubscribe();
     return new Promise(resolve => {
-      let found = false;
       const users = this.db.list('usernames/', {
         query: {
           orderByKey: true,
@@ -64,7 +62,6 @@ export class MyTeamDB {
   getTeamPlayers(teamId): Promise<any> {
     return new Promise(resolve => {
       const teamPlayers = this.db.list('/teams/'+teamId+'/players/');
-      let playersList: any[] = []
       this.teamPlayersSub = teamPlayers.subscribe(data => {
         resolve(data);
         this.teamPlayersSub.unsubscribe();

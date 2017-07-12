@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <div padding>
-      <ion-segment [(ngModel)]="type" color="primary" (ionChange)="segmentChanged($event)">
+      <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="teams">
           فريق
         </ion-segment-button>

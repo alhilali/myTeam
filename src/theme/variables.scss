@@ -21,6 +21,21 @@ $app-direction: rtl;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
+$toolbar-background: #0072BB;
+$toolbar-border-color: #DD8121;
+
+$tabs-background: url("https://www.transparenttextures.com/patterns/white-diamond.png");
+
+$tabs-ios-tab-icon-color-active: #DD8121;
+$tabs-ios-tab-text-color-active: #DD8121;
+
+$segment-button-ios-text-color: #f4f4f4;
+$segment-button-ios-background-color-activated: #DD8121;
+$segment-button-ios-background-color: #F8E2C9;
+$segment-button-ios-opacity-hover: .7;
+
+$searchbar-ios-background-color: rgba(#0072bb, 0.22);
+$list-ios-header-background-color: rgba(#0072bb, 0.22);
 
 
 
@@ -41,6 +56,8 @@ $colors: (
   lightBlue: #0072BB,
   darkBlue: #355074,
   orange: #FF4C3B,
+  lightOrange: #DD8121,
+  darkOrange: #AF6916,
   gold: #FFD034,
 );
 

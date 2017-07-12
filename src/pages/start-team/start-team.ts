@@ -53,7 +53,7 @@ export class StartTeamPage {
 
         // Add player to players list DB
         const playersList = this.db.object('/playersList/'+newKey+'/'+uid);
-        playersList.set({uid: uid});
+        playersList.set({uid: uid, status: 'enrolled'});
 
         // Add team to user list DB
         this.db.object('/users/'+uid+'/myTeams/'+newKey)

@@ -13,7 +13,7 @@ export class UsernameValidator {
 
   checkUsername(control: FormControl) {
     return new Promise(resolve => {
-      const users = this.db.list('usernames/', {
+      this.db.list('usernames/', {
         query: {
           orderByKey: true,
           equalTo: control.value.toLowerCase()
@@ -30,7 +30,7 @@ export class UsernameValidator {
 
   checkEditUsername(control: FormControl, currentUsername) {
     return new Promise(resolve => {
-      const users = this.db.list('usernames/', {
+      this.db.list('usernames/', {
         query: {
           orderByKey: true,
           equalTo: control.value.toLowerCase()
@@ -52,12 +52,12 @@ export class UsernameValidator {
     })
     return new Promise(resolve => {
       if (user) {
-        const players = this.db.list('playersList/'+teamId, {
+        this.db.list('playersList/'+teamId, {
           query: {
             orderByChild: 'uid',
             equalTo: user.$key
           }
-        }).subscribe(data => {
+        }).take(1).subscribe(data => {
           if (data.length>0) resolve({"message": "اللاعب متواجد في الفريق حالياً"})
           else resolve(null);
         })
@@ -69,8 +69,7 @@ export class UsernameValidator {
 
   checkValidUsername(control: FormControl) {
     return new Promise(resolve => {
-      let found = false;
-      const users = this.db.list('usernames/', {
+      this.db.list('usernames/', {
         query: {
           orderByKey: true,
           equalTo: control.value.toLowerCase()

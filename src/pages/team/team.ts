@@ -1,9 +1,9 @@
 
-import { Component } from '@angular/core';
-import { IonicPage, NavController,
+import { Component, ViewChildren, QueryList } from '@angular/core';
+import { IonicPage, NavController, Slides,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -25,6 +25,9 @@ export class TeamPage {
   isCaptain = false;
   playersList: any[] = []
   playersListSub: any
+  @ViewChildren(Slides) slides: QueryList<Slides>;
+  bottomSlides: Slides
+  activebutton: number = 1
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -37,6 +40,18 @@ export class TeamPage {
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
   }
 
+  ngAfterViewInit() {
+    this.bottomSlides = this.slides.toArray()[1];
+    this.bottomSlides.lockSwipes(true);
+  }
+
+  swipe(index: number) {
+    this.bottomSlides.lockSwipes(false);
+    this.bottomSlides.slideTo(index, 500)
+    this.bottomSlides.lockSwipes(true);
+    this.activebutton = index + 1;
+  }
+
   ionViewDidEnter () {
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
     this.playersListSub = this.db.list('playersList/'+this.team.$key)
@@ -44,9 +59,11 @@ export class TeamPage {
       this.playersList = []
       let i;
       for(i = 0; i < data.length; i++) {
-        this.db.object('users/'+data[i].uid).take(1).subscribe(user=>{
-          this.playersList.push(user);
-        })
+        if (data[i].status != 'pending') {
+          this.db.object('users/'+data[i].uid).take(1).subscribe(user=>{
+            this.playersList.push(user);
+          })
+        }
       }
     })
   }

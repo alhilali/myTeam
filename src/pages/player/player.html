@@ -7,35 +7,86 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-buttons *ngIf='currentUser' end>
-      <button (click)="openModal(player)" ion-button icon-only>
+    <ion-buttons *ngIf='!currentUser' end>
+      <button (click)="addPlayer()" ion-button icon-only>
         <ion-icon name="person-add"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>الملف الشخصي</ion-title>
+    <ion-title>{{player.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <div class="hero" style="background-image: url('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');">
-    <div class="content">
-      <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
-      <h3><a class="light">{{player.name}}</a> - {{player.originalUsername}}@</h3>
-      <p>عدد الفرق: {{myTeams.length}}</p>
-    </div>
-  </div>
-  <ion-row wrap *ngIf="myTeams?.length > 0 ">
-    <ion-item-divider text-center color="#ffff">My teams</ion-item-divider>
-    <ion-col width-33 *ngFor="let team of myTeams">
-      <ion-card class="profileCards">
-        <img on-tap='openTeam(team)' src="https://s-media-cache-ak0.pinimg.com/originals/0e/da/ec/0edaec258266cf651b9124a92f389c6b.png">
-      </ion-card>
-    </ion-col>
-  </ion-row>
-  <ion-item-group *ngIf="myTeams?.length > 0 ">
 
-  </ion-item-group>
+  <div class="hero" style="background-image: url('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');">
+  </div>
+  <div class="content">
+    <ion-slides class="topSlides" pager dir="rtl">
+      <ion-slide>
+        <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
+        <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" name="ios-cog-outline"></ion-icon>
+        <h3 class="white bold">{{player.name}}</h3>
+        <h5 class="white">{{player.originalUsername}}@</h5>
+      </ion-slide>
+      <ion-slide>
+        <ion-chip color="gold">
+          <ion-label>{{player.position}}</ion-label>
+        </ion-chip>
+        <ion-chip color="lightBlue">
+          <ion-label>صانع العاب</ion-label>
+        </ion-chip>
+        <ion-chip color="darkBlue">
+          <ion-label>مهاري</ion-label>
+        </ion-chip>
+      </ion-slide>
+      <ion-slide>
+        <h5 class="white">تواصل معي:</h5>
+        <div class="socialIcons">
+          <ion-icon class="largeIcon" name="logo-twitter"></ion-icon>
+          <ion-icon class="largeIcon" name="logo-facebook"></ion-icon>
+          <ion-icon class="largeIcon" name="logo-instagram"></ion-icon>
+          <ion-icon class="largeIcon" name="logo-snapchat"></ion-icon>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="profileBottom">
+    <ion-row>
+      <ion-col class="noPadding" col-xl-3>
+        <button class="tabButton" (click)="swipe(0)" [ngClass]="{'activeBtn': activebutton === 1 }" ion-button icon-only color="lightBlue" full>
+          <ion-icon name="md-football"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col class="noPadding" col-xl-3>
+        <button class="tabButton" (click)="swipe(1)" [ngClass]="{'activeBtn': activebutton === 2 }" ion-button icon-only color="lightBlue" full>
+          <ion-icon name="md-trophy"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col class="noPadding" col-xl-3>
+        <button class="tabButton" (click)="swipe(2)" [ngClass]="{'activeBtn': activebutton === 3 }" ion-button icon-only color="lightBlue" full>
+          <ion-icon name="md-medal"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-slides dir="rtl">
+      <ion-slide>
+        <ion-row align-items-start *ngIf="myTeams?.length > 0">
+          <ion-col col-3 col-sm class="noPadding" wrap *ngFor="let team of myTeams">
+            <ion-card class="profileCards">
+              <img on-tap='openTeam(team)' src="https://s-media-cache-ak0.pinimg.com/originals/0e/da/ec/0edaec258266cf651b9124a92f389c6b.png">
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+      <ion-slide>
+        <h2>تاب</h2>
+      </ion-slide>
+      <ion-slide>
+        <h2>تاب</h2>
+      </ion-slide>
+    </ion-slides>
+  </div>
 
 </ion-content>

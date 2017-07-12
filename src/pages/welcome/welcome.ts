@@ -2,15 +2,13 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, LoadingController,
    NavParams, ToastController, AlertController,
    Slides} from 'ionic-angular';
-import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TabsPage } from '../tabs/tabs';
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username';
 import { AngularFireDatabase } from 'angularfire2/database';
-
 /**
  * Generated class for the WelcomePage page.
  *

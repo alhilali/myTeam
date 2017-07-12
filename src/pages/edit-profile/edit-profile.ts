@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { App,
-  IonicPage, NavController,
+import {IonicPage, NavController,
   NavParams, ViewController,
   ToastController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { WelcomePage } from '../welcome/welcome';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username'
 import { User } from '../../models/user'
 /**
@@ -37,7 +35,6 @@ export class EditProfilePage {
   constructor(public alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private app: App,
     private view: ViewController,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -104,7 +101,7 @@ export class EditProfilePage {
         username: user.originalUsername.toLowerCase()
       })
 
-      this.updateNotification('المعرف الشخصي');
+      if (this.currentUsername != user.originalUsername) this.updateNotification('المعرف الشخصي');
       if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()){
         this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({email: user.email});
         this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();

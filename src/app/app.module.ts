@@ -17,7 +17,7 @@ import { TeamPage } from '../pages/team/team';
 import { AddPlayerPage } from '../pages/add-player/add-player';
 import { PlayerPage } from '../pages/player/player'
 import { SearchPage } from '../pages/search/search'
-
+import { AddPlayerToTeamPage } from '../pages/add-player-to-team/add-player-to-team'
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
 
@@ -29,6 +29,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { Camera } from '@ionic-native/camera';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
@@ -54,7 +55,8 @@ const cloudSettings: CloudSettings = {
     TeamPage,
     AddPlayerPage,
     PlayerPage,
-    SearchPage
+    SearchPage,
+    AddPlayerToTeamPage
   ],
   imports: [
     BrowserModule,
@@ -92,6 +94,7 @@ const cloudSettings: CloudSettings = {
     MyTeamDB,
     UsernameValidator,
     Camera,
+    Keyboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
