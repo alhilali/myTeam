@@ -32,6 +32,7 @@ import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { ParallaxHeaderDirective } from '../directives/parallax-header/parallax-header';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -56,7 +57,8 @@ const cloudSettings: CloudSettings = {
     AddPlayerPage,
     PlayerPage,
     SearchPage,
-    AddPlayerToTeamPage
+    AddPlayerToTeamPage,
+    ParallaxHeaderDirective
   ],
   imports: [
     BrowserModule,

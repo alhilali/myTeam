@@ -34,8 +34,9 @@
           <ion-option value="الدمام">الدمام</ion-option>
         </ion-select>
       </ion-item>
-
-      <button ion-button block color='primary' [disabled]='!teamForm.valid' (click)="saveTeam(team)">حفظ</button>
+      <p style="padding: 30px" text-center>
+        <button full ion-button color='orange' [disabled]='!teamForm.valid' (click)="saveTeam(team)">حفظ</button>
+      </p>
     </ion-list>
   </form>
 </ion-content>

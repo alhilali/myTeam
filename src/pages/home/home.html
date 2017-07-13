@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons end>
       <button (click)="openModal()" ion-button icon-only>
-        <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
+        <div class="avatar" style="background-image: url('https://igx.4sqi.net/img/user/130x130/1049643-T3WSSSGRGU5YVFSR.jpg');"></div>
       </button>
     </ion-buttons>
     <ion-buttons start>
@@ -14,5 +14,62 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">
+
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-item-divider color="light">اخر الاحداث</ion-item-divider>
+  <ion-list>
+    <ion-item class="item-thumbnail-left">
+      <img src="http://s.weltsport.net/bilder/teamfotos/640x360/543.jpg">
+      <h2>محمد</h2>
+      <p>انشئ فريق جديد</p>
+      <p></p>
+      <div class="socialIcons">
+        <ion-icon name="md-thumbs-up"></ion-icon>
+        <ion-icon name="md-chatboxes"></ion-icon>
+        <ion-icon name="md-share"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item class="item-thumbnail-left">
+      <img src="http://i2.mirror.co.uk/incoming/article6456386.ece/ALTERNATES/s615/youngfifa16main.jpg">
+      <h2>فيصل</h2>
+      <p>يبحث عن نادي</p>
+      <p></p>
+      <div class="socialIcons">
+        <ion-icon name="md-thumbs-up"></ion-icon>
+        <ion-icon name="md-chatboxes"></ion-icon>
+        <ion-icon name="md-share"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-item-divider color="light">October 25, 2016</ion-item-divider>
+  <ion-list>
+    <ion-item class="item-thumbnail-left">
+      <img src="http://images.mid-day.com/images/2017/may/champions-trophy.jpg">
+      <h2>بطولة ابطال الرياض</h2>
+      <p>شارك مع فريقك التحدي</p>
+      <p></p>
+      <div class="socialIcons">
+        <ion-icon color="secondary" name="md-thumbs-up"></ion-icon>
+        <ion-icon name="md-chatboxes"></ion-icon>
+        <ion-icon name="md-share"></ion-icon>
+      </div>
+    </ion-item>
+    <ion-item class="item-thumbnail-left">
+      <img src="http://i2.mirror.co.uk/incoming/article6456386.ece/ALTERNATES/s615/youngfifa16main.jpg">
+      <h2>خالد</h2>
+      <p>يبحث عن نادي</p>
+      <p></p>
+      <div class="socialIcons">
+        <ion-icon name="md-thumbs-up"></ion-icon>
+        <ion-icon name="md-chatboxes"></ion-icon>
+        <ion-icon name="md-share"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>

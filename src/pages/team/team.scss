@@ -1,29 +1,24 @@
 page-team {
-
   .hero {
     background-size: cover;
-    box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
-    height: 200px;
+    height: 35vh;
     position: absolute;
-    text-align: center;
-    -webkit-transition: all 1s cubic-bezier(0.55, 0, 0.1, 1);
-    transition: all 1s cubic-bezier(0.55, 0, 0.1, 1);
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
     width: 100%;
-    transform: scale(1.08);
-    filter: blur(2px) brightness(0.8);
+    //transform: scale(1.3); // Doesn't work on iphone.
+    filter: blur(1px) brightness(0.8);
     // Browser Specific
-    -webkit-filter: blur(2px) brightness(0.8);
-    -moz-filter: blur(2px) brightness(0.8);
-    -o-filter: blur(2px) brightness(0.8);
-    -ms-filter: blur(2px) brightness(0.8);
+    -webkit-filter: blur(1px) brightness(0.8);
+    -moz-filter: blur(1px) brightness(0.8);
+    -o-filter: blur(1px) brightness(0.8);
+    -ms-filter: blur(1px) brightness(0.8);
+    z-index: -3;
+    margin-top: -65px;
+    zoom: 130%;
+    transform: scale(1.1);
   }
 
-  .content {
-    position: absolute;
-    left: 0;
-    right: 0;
+  .topContent {
+    height: 25vh;
   }
 
   .avatar {
@@ -38,19 +33,16 @@ page-team {
     width: 78px;
   }
 
-  .listAvatar {
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-    height: 50px;
-    left: auto;
-    position: relative;
-    width: 50px;
-    margin-top: 2px;
+  ion-scroll > .scroll-content{
+    //height: 300px;
+    height: 55vh;
   }
 
-  .topSlides ion-slide {
-    padding-top: 30px;
+  ion-scroll { white-space: nowrap; }
+
+
+  .no-scroll > .scroll-content{
+     overflow: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -108,13 +100,17 @@ page-team {
   }
 
   .profileBottom {
+    padding-top: 45px;
     position: absolute;
     width: 100%;
-    top: 198px;
+    top: 199px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: -2;
   }
 
   .activeBtn {
-    background: #0072BB;
     box-shadow: 0px 3px #FF4C3B;
   }
 
@@ -127,8 +123,20 @@ page-team {
     padding: 0px;
   }
 
-  .tabButton {
-
+  .activeIcon {
+    color: #DD8121;
   }
+
+  .listAvatar {
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 50px;
+    left: auto;
+    position: relative;
+    width: 50px;
+    margin-top: 2px;
+  }
+
 
 }

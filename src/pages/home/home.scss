@@ -9,4 +9,17 @@ page-home {
     width: 30px;
   }
 
+  ion-list {
+    margin-bottom: 0px !important;
+  }
+
+  ion-refresher {
+    margin-top: 8px;
+  }
+
+  .socialIcons {
+    letter-spacing: 20px;
+    text-align: center;
+    font-size: 20px;
+  }
 }

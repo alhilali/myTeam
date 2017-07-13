@@ -18,17 +18,16 @@
 //.content-ios:not([no-bounce])>.scroll-content::before { bottom: 0; }
 @import url('https://fonts.googleapis.com/css?family=Cairo:400');
 
-
 @font-face {
-  font-family: 'Cairo', sans-serif;
-  letter-spacing: normal;
+  font-family: "Helvetica Neue";
+  src: url("../assets/fonts/HelveticaNeueLTArabic-Light.ttf");
 }
-
 * {
-  font-family: 'Cairo', sans-serif;
-  letter-spacing: normal;
+  font-family: "Helvetica Neue";
 }
-
+.mdIcon {
+  font-size: 20px;
+}
 .largeIcon {
   font-size: 30px;
 }

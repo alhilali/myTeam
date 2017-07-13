@@ -20,15 +20,14 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content parallax-header>
 
   <div class="hero" style="background-image: url('http://www.alhilal.com/ar/logos/newsenphoto-2911.jpg');">
   </div>
-  <div class="content">
+  <div class="topContent">
     <ion-slides class="topSlides" pager dir="rtl">
       <ion-slide>
         <div class="avatar" style="background-image: url('http://up.n4hr.com/ups/uploads/fceaa78230.jpg');"></div>
-        <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" name="ios-cog-outline"></ion-icon>
         <h3 class="white bold">{{team.name}}</h3>
         <h5 class="white">{{team.city}}</h5>
       </ion-slide>
@@ -48,53 +47,56 @@
       </ion-slide>
     </ion-slides>
   </div>
-  <div class="profileBottom">
+
+  <div class="tabs" style="z-index: -1">
     <ion-row>
-      <ion-col class="noPadding" col-xl-3>
-        <button class="tabButton" (click)="swipe(0)" [ngClass]="{'activeBtn': activebutton === 1 }" ion-button icon-only color="lightBlue" full>
-          <ion-icon name="md-football"></ion-icon>
+      <ion-col class="noPadding">
+        <button (click)="swipe(0)" [ngClass]="{'activeBtn': activebutton === 1 }" ion-button icon-only color="light" full>
+          <ion-icon class="xlIcon" color="grey" class="largeIcon" [ngClass]="{'activeIcon': activebutton === 1 }" name="ios-people"></ion-icon>
         </button>
       </ion-col>
-      <ion-col class="noPadding" col-xl-3>
-        <button class="tabButton" (click)="swipe(1)" [ngClass]="{'activeBtn': activebutton === 2 }" ion-button icon-only color="lightBlue" full>
-          <ion-icon name="md-medal"></ion-icon>
+      <ion-col class="noPadding">
+        <button class="tabButton" (click)="swipe(1)" [ngClass]="{'activeBtn': activebutton === 2 }" ion-button icon-only color="light" full>
+          <ion-icon color="grey" [ngClass]="{'activeIcon': activebutton === 2 }" name="md-trophy"></ion-icon>
         </button>
       </ion-col>
-      <ion-col class="noPadding" col-xl-3>
-        <button class="tabButton" (click)="swipe(2)" [ngClass]="{'activeBtn': activebutton === 3 }" ion-button icon-only color="lightBlue" full>
-          <ion-icon name="md-calendar"></ion-icon>
+      <ion-col class="noPadding">
+        <button class="tabButton" (click)="swipe(2)" [ngClass]="{'activeBtn': activebutton === 3 }" ion-button icon-only color="light" full>
+          <ion-icon color="grey" [ngClass]="{'activeIcon': activebutton === 3 }"name="md-calendar"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
+  </div>
+  <div class="profileBottom">
     <ion-slides dir="rtl">
       <ion-slide>
         <div *ngFor="let player of playersList">
           <ion-item-sliding (ionSwipe)="removePlayer(player)">
             <ion-item style="height: 55px;">
               <span item-start>
-                <div class="listAvatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
-              </span>
+                  <div class="listAvatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
+                </span>
               <span item-content>
-                <button ion-button clear (click)='showPlayer(player)'>
-                  <h2>{{player.name}}</h2>
-                </button>
-                <ion-chip color="orange">
-                  <ion-label>{{player.position}}</ion-label>
-                </ion-chip>
-              </span>
+                  <button ion-button clear (click)='showPlayer(player)'>
+                    <h2>{{player.name}}</h2>
+                  </button>
+                  <ion-chip color="orange">
+                    <ion-label>{{player.position}}</ion-label>
+                  </ion-chip>
+                </span>
               <span *ngIf="this.team.captain == player.$key" item-end>
-                <ion-chip color="gold">
-                  <ion-label>كابتن</ion-label>
-                </ion-chip>
-              </span>
+                  <ion-chip color="gold">
+                    <ion-label>كابتن</ion-label>
+                  </ion-chip>
+                </span>
               <span *ngIf="this.team.captain != player.$key && isCaptain == true" item-end>
-                <ion-icon (click)="removePlayer(player)" class="largeIcon" name="ios-cog-outline"></ion-icon>
-              </span>
+                  <ion-icon (click)="removePlayer(player)" color="grey" class="largeIcon" name="ios-cog"></ion-icon>
+                </span>
             </ion-item>
             <ion-item-options *ngIf="isCaptain == true" side="right">
               <button expandable ion-button (click)="removePlayer(player)" color="danger" icon-start>
-              <ion-icon name="trash"></ion-icon>حذف
-              </button>
+                <ion-icon name="trash"></ion-icon>حذف
+                </button>
             </ion-item-options>
           </ion-item-sliding>
         </div>

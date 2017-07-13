@@ -1,6 +1,6 @@
-import { Component, ViewChildren, QueryList} from '@angular/core';
+import { Component, ViewChildren, QueryList, ViewChild} from '@angular/core';
 import { IonicPage, NavController,
-   NavParams, ModalController, Slides } from 'ionic-angular';
+   NavParams, ModalController, Slides, Content } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -34,7 +34,7 @@ export class PlayerPage {
      private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
   }
-
+  
   ngAfterViewInit() {
     this.bottomSlides = this.slides.toArray()[1];
     this.bottomSlides.lockSwipes(true);

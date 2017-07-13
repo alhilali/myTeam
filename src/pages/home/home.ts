@@ -15,7 +15,13 @@ export class HomePage {
     public navCtrl: NavController) {
   }
 
-  ionViewWillLoad() {
+  doRefresh(refresher) {
+    //console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      //console.log('Async operation has ended');
+      refresher.complete();
+    }, 3000);
   }
 
   async openModal() {
