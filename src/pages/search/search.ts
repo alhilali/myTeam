@@ -22,7 +22,7 @@ export class SearchPage {
   type: string = 'teams'
   items: FirebaseListObservable<any[]>;
   nameResults: FirebaseListObservable<any[]>;
-  queryString: string = ''
+  queryString: string
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -51,10 +51,9 @@ export class SearchPage {
 
   getItems(ev: any) {
     // set val to the value of the searchbar
-    this.queryString = ev.target.value;
-    if (this.queryString && this.type == 'players') this.queryString = this.queryString.toLowerCase();
-    if(this.queryString) this.query.next(this.queryString)
-    else this.query.next("")
+    let query = ev.target.value;
+    if (query && this.type == 'players') query = query.toLowerCase();
+    if(query) this.query.next(query)
   }
 
   open(item) {
@@ -63,6 +62,7 @@ export class SearchPage {
   }
 
   segmentChanged(ev: any) {
+    this.queryString = ''
     if (ev.value == 'teams') this.searchTeams();
     if (ev.value == 'players') this.searchPlayers();
     //this.query.next(this.queryString)

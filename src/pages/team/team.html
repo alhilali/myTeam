@@ -48,7 +48,7 @@
     </ion-slides>
   </div>
 
-  <div class="tabs" style="z-index: -1">
+  <div class="tabs">
     <ion-row>
       <ion-col class="noPadding">
         <button (click)="swipe(0)" [ngClass]="{'activeBtn': activebutton === 1 }" ion-button icon-only color="light" full>
@@ -75,7 +75,7 @@
             <ion-item style="height: 55px;">
               <span item-start>
                   <div class="listAvatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
-                </span>
+              </span>
               <span item-content>
                   <button ion-button clear (click)='showPlayer(player)'>
                     <h2>{{player.name}}</h2>
@@ -83,15 +83,15 @@
                   <ion-chip color="orange">
                     <ion-label>{{player.position}}</ion-label>
                   </ion-chip>
-                </span>
+              </span>
               <span *ngIf="this.team.captain == player.$key" item-end>
                   <ion-chip color="gold">
                     <ion-label>كابتن</ion-label>
                   </ion-chip>
-                </span>
+              </span>
               <span *ngIf="this.team.captain != player.$key && isCaptain == true" item-end>
-                  <ion-icon (click)="removePlayer(player)" color="grey" class="largeIcon" name="ios-cog"></ion-icon>
-                </span>
+                  <ion-icon (click)="removePlayer(player)" color="danger" class="largeIcon" name="trash"></ion-icon>
+              </span>
             </ion-item>
             <ion-item-options *ngIf="isCaptain == true" side="right">
               <button expandable ion-button (click)="removePlayer(player)" color="danger" icon-start>

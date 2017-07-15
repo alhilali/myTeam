@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { PlayerPage } from '../player/player';
@@ -11,7 +11,7 @@ import { PlayerPage } from '../player/player';
 export class HomePage {
 
   constructor(private afAuth: AngularFireAuth,
-    private teamDB: MyTeamDB,
+    private teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
   }
 
@@ -26,12 +26,34 @@ export class HomePage {
 
   async openModal() {
     await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid).then(user => {
-      this.navCtrl.push(PlayerPage, {player: user});
+      this.navCtrl.push(PlayerPage, { player: user });
     })
   }
 
-  logout() {
-    this.afAuth.auth.signOut();
+  compose() {
+    this.actionSheetCtrl.create({
+      title: 'طلب جديد',
+      buttons: [
+        {
+          text: 'ابحث عن فريق',
+          handler: () => {
+          }
+        }, {
+          text: 'ابحث عن مباراة',
+          handler: () => {
+          }
+        }, {
+          text: 'ابحث عن بطولة',
+          handler: () => {
+          }
+        }, {
+          text: 'إلغاء',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    }).present()
   }
 
 }

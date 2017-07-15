@@ -7,12 +7,31 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>AddPlayerToTeam</ion-title>
+    <ion-title>طلب اضافة لاعب</ion-title>
+    <button start (click)="closeModel()" ion-button clear icon-only>
+      <ion-icon color="light" name="close"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <h4>اختر الفريق الذي ترغب بإضافة اللاعب له</h4>
+  <ion-item-group class="teamsList" *ngIf="myTeams?.length > 0 ">
+    <ion-slides pager dir="rtl" slidesPerView="3">
+      <ion-slide *ngFor="let team of myTeams">
+        <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>
+        <ion-card>
+          <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
+          <h2 text-center>{{team.name}}</h2>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </ion-item-group>
+
+  <button padding block ion-button color="secondary" (click)="requestAddPlayer()">ارسال طلب الاضافة
+    <ion-icon padding name="person-add"></ion-icon>
+  </button>
 
 </ion-content>

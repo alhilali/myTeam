@@ -7,8 +7,8 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-buttons *ngIf='!currentUser' end>
-      <button (click)="addPlayer()" ion-button icon-only>
+    <ion-buttons end>
+      <button *ngIf='!currentUser' (click)="addPlayer()" ion-button icon-only>
         <ion-icon name="person-add"></ion-icon>
       </button>
     </ion-buttons>
@@ -53,7 +53,7 @@
       </ion-slide>
     </ion-slides>
   </div>
-  <div class="tabs" style="z-index: -1">
+  <div class="tabs">
     <ion-row>
       <ion-col class="noPadding">
         <button class="tabButton" (click)="swipe(0)" [ngClass]="{'activeBtn': activebutton === 1 }" ion-button icon-only color="light" full>

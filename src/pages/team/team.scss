@@ -1,19 +1,19 @@
 page-team {
   .hero {
-    background-size: cover;
-    height: 35vh;
+    //background-size: cover;
+    height: 25vh;
     position: absolute;
     width: 100%;
     //transform: scale(1.3); // Doesn't work on iphone.
-    filter: blur(1px) brightness(0.8);
+    filter: blur(1.7px) brightness(0.8);
     // Browser Specific
-    -webkit-filter: blur(1px) brightness(0.8);
-    -moz-filter: blur(1px) brightness(0.8);
-    -o-filter: blur(1px) brightness(0.8);
-    -ms-filter: blur(1px) brightness(0.8);
+    -webkit-filter: blur(1.7px) brightness(0.8);
+    -moz-filter: blur(1.7px) brightness(0.8);
+    -o-filter: blur(1.7px) brightness(0.8);
+    -ms-filter: blur(1.7px) brightness(0.8);
     z-index: -3;
-    margin-top: -65px;
-    zoom: 130%;
+    //margin-top: -65px;
+    //zoom: 130%;
     transform: scale(1.1);
   }
 
@@ -100,10 +100,8 @@ page-team {
   }
 
   .profileBottom {
-    padding-top: 45px;
     position: absolute;
     width: 100%;
-    top: 199px;
     left: 0;
     right: 0;
     background-color: white;
@@ -125,6 +123,11 @@ page-team {
 
   .activeIcon {
     color: #DD8121;
+  }
+
+  .tabs {
+    background-color: #f4f4f4;
+    z-index: -1
   }
 
   .listAvatar {

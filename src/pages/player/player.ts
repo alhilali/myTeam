@@ -34,7 +34,7 @@ export class PlayerPage {
      private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
   }
-  
+
   ngAfterViewInit() {
     this.bottomSlides = this.slides.toArray()[1];
     this.bottomSlides.lockSwipes(true);
@@ -74,6 +74,7 @@ export class PlayerPage {
   }
 
   openModal() {
+    this.myTeamsSub.unsubscribe();
     let modal = this.modlCtrl.create(EditProfilePage, {player: this.player});
     modal.present();
   }

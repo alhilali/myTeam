@@ -55,7 +55,10 @@
     "description": "An Ionic project",
     "cordova": {
         "plugins": {
-            "cordova-plugin-camera": {},
+            "cordova-plugin-camera": {
+                "CAMERA_USAGE_DESCRIPTION": "Choose photos for profile and team pictures",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "Choose photos for profile and team pictures"
+            },
             "cordova-plugin-console": {},
             "cordova-plugin-device": {},
             "cordova-plugin-splashscreen": {},

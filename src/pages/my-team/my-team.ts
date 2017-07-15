@@ -20,9 +20,7 @@ import { MyTeamDB } from '../../helpers/myTeamDB'
 })
 export class MyTeamPage {
   myTeams: any[] = []
-  teamsRequest: any[] = []
   myTeamsSub: any
-  requestsSub: any
   currentLength: number = 0
   hasNoTeams: boolean = false
 
@@ -51,38 +49,6 @@ export class MyTeamPage {
       }
       this.currentLength = data.length;
     })
-
-    this.requestsSub = this.db.list('users/'+this.afAuth.auth.currentUser.uid
-    +'/requests').subscribe(data=>{
-      this.teamsRequest = []
-      data.forEach(team=>{
-        this.db.object('teams/'+team.teamId).take(1).subscribe(teamInfo=>{
-          this.teamsRequest.push(teamInfo)
-        })
-      })
-    })
-  }
-
-  acceptTeam(team) {
-    const uid = this.afAuth.auth.currentUser.uid;
-
-    // Add player to players list DB
-    const playersList = this.db.object('/playersList/'+team.$key+'/'+uid);
-    playersList.set({uid: uid, status: 'enrolled'});
-
-    // Add team to user list DB
-    this.db.object('/users/'+uid+'/myTeams/'+team.$key)
-    .update({teamId: team.$key});
-
-    // Remove request from user list DB
-    this.db.object('users/'+uid+'/requests/'+team.$key).remove();
-  }
-
-  declineTeam(team) {
-    const uid = this.afAuth.auth.currentUser.uid;
-
-    // Remove request from user list DB
-    this.db.object('users/'+uid+'/requests/'+team.$key).remove();
   }
 
   presentActionSheet(team) {
@@ -203,7 +169,6 @@ export class MyTeamPage {
 
   ionViewWillLeave() {
     this.myTeamsSub.unsubscribe();
-    this.requestsSub.unsubscribe();
     this.teamDB.unsubscribeAll();
   }
 

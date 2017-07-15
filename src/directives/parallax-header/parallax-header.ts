@@ -53,7 +53,7 @@ export class ParallaxHeaderDirective {
   updateParallaxHeader(ev) {
 
     if (ev.scrollTop >= 0) {
-      this.translateAmt = ev.scrollTop / 2;
+      this.translateAmt = ev.scrollTop / 6;
       this.scaleAmt = 1.1;
     } else {
       this.translateAmt = 0;

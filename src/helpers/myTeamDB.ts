@@ -1,4 +1,5 @@
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -11,8 +12,8 @@ export class MyTeamDB {
   teammInfoSub: any
   myTeamsSub: any
   usernamesSub: any
-  constructor(
-    public db: AngularFireDatabase) {
+  constructor(public db: AngularFireDatabase,
+    private afAuth: AngularFireAuth) {
   }
 
   findUID(username: string) {
@@ -96,7 +97,43 @@ export class MyTeamDB {
     })
   }
 
-  getMyTeams(userId){
+  getMyTeams(): Promise<any>{
+    return new Promise(resolve => {
+      let myTeams = []
+      this.db.list('users/'+this.afAuth.auth.currentUser.uid
+      +'/myTeams').take(1).subscribe(data=>{
+        if (data.length == 0) resolve(null);
+        let i = 0;
+        for (i=0; i <data.length; i++) {
+          this.db.object('teams/'+data[i].teamId).take(1).subscribe(teamInfo=>{
+            myTeams.push(teamInfo)
+          })
+          if (i == data.length-1) resolve(myTeams)
+        }
+      })
+    })
+  }
+
+  getMyTeamsCaptain(): Promise<any>{
+    return new Promise(resolve => {
+      let myTeams = []
+      const teams = this.db.list('teams/', {
+        query: {
+          orderByChild: 'captain',
+          equalTo: this.afAuth.auth.currentUser.uid
+        }
+      });
+      teams.take(1).subscribe(data=>{
+        if (data.length == 0) resolve(null);
+        let i = 0;
+        for (i=0; i <data.length; i++) {
+          this.db.object('teams/'+data[i].$key).take(1).subscribe(teamInfo=>{
+            myTeams.push(teamInfo)
+          })
+          if (i == data.length-1) resolve(myTeams)
+        }
+      })
+    })
   }
 
   getRequestsId(userId): Promise<any> {
@@ -148,6 +185,33 @@ export class MyTeamDB {
         resolve(data);
         this.teammInfoSub.unsubscribe();
       })
+    })
+  }
+
+  sendRequestToPlayer(playerID, teamID) {
+    // Add request to player
+    this.db.object('/users/'+playerID+'/requests/'+teamID)
+    .set({
+      teamId: teamID,
+      dateRequested: new Date().toDateString()
+    });
+
+    // Add player to playersList temporary
+    const playersList = this.db.object('/playersList/'+teamID+'/'+playerID);
+    playersList.set({uid: playerID, status: 'pending'});
+  }
+
+  async checkTeamPlayers(teamId, playerID) {
+    return new Promise(resolve => {
+        this.db.list('playersList/'+teamId, {
+          query: {
+            orderByChild: 'uid',
+            equalTo: playerID
+          }
+        }).take(1).subscribe(data => {
+          if (data.length>0) resolve({"message": "اللاعب متواجد في الفريق حالياً"})
+          else resolve(null);
+        })
     })
   }
 

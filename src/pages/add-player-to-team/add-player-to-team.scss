@@ -1,3 +1,21 @@
 page-add-player-to-team {
+  .teamsList {
+    height: 23vh;
+  }
+
+  .checkbox-ios {
+    height: 0px;
+    position: absolute;
+    right: 5px;
+  }
+
+  .swiper-slide img {
+    max-height: 55px !important;
+  }
+
+  ion-card {
+    max-width: 95px !important;
+    max-height: 95px !important;
+  }
 
 }

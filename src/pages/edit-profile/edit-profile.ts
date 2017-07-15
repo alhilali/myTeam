@@ -196,7 +196,9 @@ export class EditProfilePage {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true
     }
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
@@ -205,6 +207,13 @@ export class EditProfilePage {
     }, (err) => {
      // Handle error
     });
+  }
+
+  logout() {
+    if (this.editSub) this.editSub.unsubscribe();
+    if (this.editUnameSub) this.editUnameSub.unsubscribe();
+    this.view.dismiss();
+    this.afAuth.auth.signOut();
   }
 
 }

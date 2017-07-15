@@ -35,3 +35,15 @@
 .toolbar-title-ios {
   letter-spacing: normal !important;
 }
+
+.noPadding {
+  padding: 0px;
+}
+
+ion-item-divider {
+  height: 45px;
+}
+
+ion-refresher {
+  margin-top: 8px;
+}
