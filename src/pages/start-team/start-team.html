@@ -17,26 +17,33 @@
 
 
 <ion-content>
-  <form name="myForm" novalidate>
-    <ion-list [formGroup]='teamForm'>
+  <ion-card>
+    <ion-card-header>
+      فريق جديد
+    </ion-card-header>
+
+    <form name="myForm" novalidate>
+      <ion-list [formGroup]='teamForm'>
 
 
-      <ion-item>
-        <ion-input [(ngModel)]="team.name" name="name" formControlName='name' type="text" placeholder="اسم فريقك" required>
-        </ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-input [(ngModel)]="team.name" name="name" formControlName='name' type="text" placeholder="اسم فريقك" required>
+          </ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label>المدينة</ion-label>
-        <ion-select [(ngModel)]="team.city" name="city" formControlName='city' interface='popover'>
-          <ion-option value="الرياض" selected>الرياض</ion-option>
-          <ion-option value="جده">جده</ion-option>
-          <ion-option value="الدمام">الدمام</ion-option>
-        </ion-select>
-      </ion-item>
-      <p style="padding: 30px" text-center>
-        <button full ion-button color='orange' [disabled]='!teamForm.valid' (click)="saveTeam(team)">حفظ</button>
-      </p>
-    </ion-list>
-  </form>
+        <ion-item>
+          <ion-label>المدينة</ion-label>
+          <ion-select [(ngModel)]="team.city" name="city" formControlName='city' interface='popover'>
+            <ion-option value="الرياض" selected>الرياض</ion-option>
+            <ion-option value="جده">جده</ion-option>
+            <ion-option value="الدمام">الدمام</ion-option>
+          </ion-select>
+        </ion-item>
+        <p style="padding: 30px" text-center>
+          <button full ion-button color='orange' [disabled]='!teamForm.valid' (click)="saveTeam(team)">حفظ</button>
+        </p>
+      </ion-list>
+    </form>
+
+  </ion-card>
 </ion-content>

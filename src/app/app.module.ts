@@ -19,6 +19,7 @@ import { PlayerPage } from '../pages/player/player'
 import { SearchPage } from '../pages/search/search'
 import { AddPlayerToTeamPage } from '../pages/add-player-to-team/add-player-to-team'
 import { NotificationPage } from '../pages/notification/notification'
+import { RequestMatchPage } from '../pages/request-match/request-match'
 
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
@@ -61,6 +62,7 @@ const cloudSettings: CloudSettings = {
     SearchPage,
     AddPlayerToTeamPage,
     NotificationPage,
+    RequestMatchPage,
     ParallaxHeaderDirective
   ],
   imports: [
@@ -93,7 +95,8 @@ const cloudSettings: CloudSettings = {
     PlayerPage,
     SearchPage,
     AddPlayerToTeamPage,
-    NotificationPage
+    NotificationPage,
+    RequestMatchPage
   ],
   providers: [
     StatusBar,

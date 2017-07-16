@@ -53,11 +53,11 @@ export class ParallaxHeaderDirective {
   updateParallaxHeader(ev) {
 
     if (ev.scrollTop >= 0) {
-      this.translateAmt = ev.scrollTop / 6;
-      this.scaleAmt = 1.1;
+      this.translateAmt = ev.scrollTop / 2;
+      this.scaleAmt = 1.2;
     } else {
       this.translateAmt = 0;
-      this.scaleAmt = -ev.scrollTop / this.headerHeight + 1.1;
+      this.scaleAmt = -ev.scrollTop / this.headerHeight + 1.2;
     }
 
     this.renderer.setElementStyle(this.header, 'webkitTransform', 'translate3d(0,' + this.translateAmt + 'px,0) scale(' + this.scaleAmt + ',' + this.scaleAmt + ')');

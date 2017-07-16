@@ -8,13 +8,14 @@
 
   <ion-navbar>
     <ion-title>{{team.name}}</ion-title>
-    <div *ngIf="isCaptain == true">
-      <ion-buttons end>
-        <button (click)='addPlayer()' ion-button icon-only color="royal">
+    <ion-buttons end>
+      <button *ngIf="isCaptain" (click)='addPlayer()' ion-button icon-only color="royal">
           <ion-icon name="person-add"></ion-icon>
-        </button>
-      </ion-buttons>
-    </div>
+      </button>
+      <button *ngIf="!isCaptain" (click)='requestMatch()' ion-button icon-only color="royal">
+          <ion-icon name="md-calendar"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -70,8 +71,8 @@
   <div class="profileBottom">
     <ion-slides dir="rtl">
       <ion-slide>
-        <div *ngFor="let player of playersList">
-          <ion-item-sliding (ionSwipe)="removePlayer(player)">
+        <ion-card>
+          <div *ngFor="let player of playersList">
             <ion-item style="height: 55px;">
               <span item-start>
                   <div class="listAvatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
@@ -93,21 +94,20 @@
                   <ion-icon (click)="removePlayer(player)" color="danger" class="largeIcon" name="trash"></ion-icon>
               </span>
             </ion-item>
-            <ion-item-options *ngIf="isCaptain == true" side="right">
-              <button expandable ion-button (click)="removePlayer(player)" color="danger" icon-start>
-                <ion-icon name="trash"></ion-icon>حذف
-                </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </div>
+          </div>
+        </ion-card>
       </ion-slide>
       <ion-slide>
-        <h2>البطولات</h2>
-        <h6>قريباً</h6>
+        <ion-card>
+          <h2>البطولات</h2>
+          <h6>قريباً</h6>
+        </ion-card>
       </ion-slide>
       <ion-slide>
-        <h2>التقويم</h2>
-        <h6>قريباً</h6>
+        <ion-card>
+          <h2>التقويم</h2>
+          <h6>قريباً</h6>
+        </ion-card>
       </ion-slide>
     </ion-slides>
   </div>

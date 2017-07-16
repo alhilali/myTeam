@@ -10,12 +10,18 @@ page-home {
   }
 
   ion-list {
-    margin-bottom: 0px !important;
+    margin-bottom: 10px !important;
   }
 
   .socialIcons {
     letter-spacing: 20px;
     text-align: center;
     font-size: 20px;
+  }
+
+  ion-content {
+    background-image: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-6-full.jpg");
+    height:100%;
+    width:100%;
   }
 }

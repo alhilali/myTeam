@@ -8,6 +8,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { PlayerPage } from '../player/player';
+import { RequestMatchPage } from '../request-match/request-match';
 
 /**
  * Generated class for the TeamPage page.
@@ -112,6 +113,11 @@ export class TeamPage {
 
   addPlayer() {
     const myModal = this.modal.create(AddPlayerPage, {team: this.team});
+    myModal.present();
+  }
+
+  requestMatch() {
+    const myModal = this.modal.create(RequestMatchPage, {team: this.team});
     myModal.present();
   }
 

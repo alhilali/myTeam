@@ -28,25 +28,29 @@
     </ion-slide>
     <ion-slide>
       <div class="login">
-        <form [formGroup]="loginForm" novalidate>
-          <ion-item dir="ltr">
-            <ion-label>
-              <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
-            </ion-label>
-            <ion-input type="text" [(ngModel)]="user.email" formControlName='email' placeholder="Username/Email"></ion-input>
-          </ion-item>
+        <ion-card>
+          <form [formGroup]="loginForm" novalidate>
+            <ion-item dir="ltr">
+              <ion-label>
+                <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
+              </ion-label>
+              <ion-input type="text" [(ngModel)]="user.email" formControlName='email' placeholder="Username/Email"></ion-input>
+            </ion-item>
 
-          <ion-item dir="ltr">
-            <ion-label>
-              <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
-            </ion-label>
-            <ion-input type="password" [(ngModel)]="user.password" formControlName='password' placeholder="Password"></ion-input>
-          </ion-item>
-          <button color="lightBlue" ion-button block (click)="login(user)">الدخول</button>
-          <p text-right style="margin: 0px;">
-            <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>
-          </p>
-        </form>
+            <ion-item dir="ltr">
+              <ion-label>
+                <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
+              </ion-label>
+              <ion-input type="password" [(ngModel)]="user.password" formControlName='password' placeholder="Password"></ion-input>
+            </ion-item>
+            <div style="padding: 0 40px;">
+              <button color="orange" ion-button block (click)="login(user)">الدخول</button>
+            </div>
+            <p text-right style="margin: 0px;">
+              <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>
+            </p>
+          </form>
+        </ion-card>
       </div>
     </ion-slide>
     <ion-slide>
