@@ -17,14 +17,14 @@
 
 
 <ion-content>
-  <ion-card>
+  <ion-card class="card1">
     <ion-card-header>
-      مباراة جديده
+      تفاصيل المباراة
     </ion-card-header>
     <ion-list>
       <ion-item>
         <ion-label>فريقي</ion-label>
-        <ion-select [(ngModel)]="teamSelected" placeholder="اختر الفريق">
+        <ion-select [(ngModel)]="selectedTeam" placeholder="اختر الفريق">
           <ion-option *ngFor="let team of myTeams" [value]="team">{{team.name}}</ion-option>
         </ion-select>
       </ion-item>
@@ -40,7 +40,7 @@
       </ion-item>
       <ion-item>
         <ion-label>الملعب</ion-label>
-        <ion-input type="text" placeholder="اين ستقام المباراة" value=""></ion-input>
+        <ion-input type="text" [(ngModel)]="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>
       </ion-item>
       <p text-center>
         <button padding ion-button color="secondary" (click)="sendRequest()">إرسال الطلب

@@ -1,3 +1,31 @@
 page-notification {
 
+  .fixedList {
+    border-bottom: 0.55px solid #c8c7cc !important;
+  }
+
+  .fixedList > .item-inner{
+    border-bottom: 0 !important;
+  }
+
+  .listAvatar {
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 50px;
+    left: auto;
+    position: relative;
+    width: 50px;
+    margin-top: 2px;
+  }
+
+  .item-ios h2:last-child,
+  .item-ios h3:last-child,
+  .item-ios h4:last-child,
+  .item-ios h5:last-child,
+  .item-ios h6:last-child,
+  .item-ios p:last-child {
+    margin-bottom: 4px;
+  }
+
 }

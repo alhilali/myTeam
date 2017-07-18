@@ -29,7 +29,7 @@
   font-size: 20px;
 }
 .largeIcon {
-  font-size: 30px;
+  font-size: 30px !important;
 }
 
 .toolbar-title-ios {
@@ -50,10 +50,16 @@ ion-refresher {
 
 ion-card-header {
   font-size: 1.7rem !important;
-  background-color: rgba(56, 145, 202, 0.09);
+  background-color: rgba(#0072bb, 0.14);
 }
 
-ion-card {
+.card1 {
   border-radius: 6px !important;
   box-shadow: 0px 20px 150px #d6dee4 !important;
+}
+
+.card2 {
+    border-radius: 6px !important;
+    -webkit-box-shadow: 0px 20px 150px #d6dee4 !important;
+    box-shadow: 0px 20px 60px #d6dee4 !important;
 }

@@ -20,6 +20,7 @@ import { SearchPage } from '../pages/search/search'
 import { AddPlayerToTeamPage } from '../pages/add-player-to-team/add-player-to-team'
 import { NotificationPage } from '../pages/notification/notification'
 import { RequestMatchPage } from '../pages/request-match/request-match'
+import { MatchPage } from '../pages/match/match'
 
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
@@ -36,6 +37,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { ParallaxHeaderDirective } from '../directives/parallax-header/parallax-header';
+import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -63,7 +65,9 @@ const cloudSettings: CloudSettings = {
     AddPlayerToTeamPage,
     NotificationPage,
     RequestMatchPage,
-    ParallaxHeaderDirective
+    MatchPage,
+    ParallaxHeaderDirective,
+    ShrinkingSegmentHeader
   ],
   imports: [
     BrowserModule,
@@ -96,7 +100,8 @@ const cloudSettings: CloudSettings = {
     SearchPage,
     AddPlayerToTeamPage,
     NotificationPage,
-    RequestMatchPage
+    RequestMatchPage,
+    MatchPage
   ],
   providers: [
     StatusBar,

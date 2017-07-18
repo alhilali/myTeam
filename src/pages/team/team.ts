@@ -1,5 +1,5 @@
 
-import { Component, ViewChildren, QueryList } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, Slides,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
@@ -26,9 +26,7 @@ export class TeamPage {
   isCaptain = false;
   playersList: any[] = []
   playersListSub: any
-  @ViewChildren(Slides) slides: QueryList<Slides>;
-  bottomSlides: Slides
-  activebutton: number = 1
+  section: string = 'one';
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -39,18 +37,6 @@ export class TeamPage {
       private alertCtrl: AlertController) {
     this.team = navParams.get('team');
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
-  }
-
-  ngAfterViewInit() {
-    this.bottomSlides = this.slides.toArray()[1];
-    this.bottomSlides.lockSwipes(true);
-  }
-
-  swipe(index: number) {
-    this.bottomSlides.lockSwipes(false);
-    this.bottomSlides.slideTo(index, 500)
-    this.bottomSlides.lockSwipes(true);
-    this.activebutton = index + 1;
   }
 
   ionViewDidEnter () {

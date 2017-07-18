@@ -21,21 +21,35 @@
   </ion-refresher>
   <h6 text-center *ngIf="teamsRequest?.length == 0">لا يوجد تنبيهات <span>😴</span></h6>
   <ion-item-group *ngIf="teamsRequest?.length > 0">
-    <ion-item-divider color="light">طلبات الانضمام</ion-item-divider>
-    <ion-card *ngFor="let team of teamsRequest">
-      <img on-tap='openTeam(team.teamInfo)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
-      <ion-item>
-        <ion-row>
-          <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
-          <h2 item-start>{{team.teamInfo.name}}</h2>
-          <p item-end>{{team.dateRequested}}</p>
-        </ion-row>
-        <p text-center>
-          <button (click)="acceptTeam(team.teamInfo)" ion-button clear>موافق</button>
-          <button (click)="declineTeam(team.teamInfo)" ion-button color="danger" clear>إلغاء</button>
-        </p>
+    <ion-item-divider color="light">الانضمام</ion-item-divider>
+    <ion-list no-margin>
+      <ion-item class="fixedList" *ngFor="let team of teamsRequest">
+        <span item-start>
+          <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
+        </span>
+        <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
+        <h2>{{team.teamInfo.name}}</h2>
+        <span item-end>
+          <button (click)="acceptTeam(team.teamInfo)" ion-button color="secondary">موافق</button>
+          <button (click)="declineTeam(team.teamInfo)" ion-button color="danger" outline>إلغاء</button>
+        </span>
       </ion-item>
-    </ion-card>
+    </ion-list>
+  </ion-item-group>
+  <ion-item-group *ngIf="matchRequests?.length > 0">
+    <ion-item-divider color="light">المباريات</ion-item-divider>
+    <ion-list no-margin>
+      <ion-item class="fixedList" *ngFor="let team of matchRequests">
+        <span item-start>
+          <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
+        </span>
+        <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>
+        <h2>{{team.teamInfo.name}}</h2>
+        <span item-end>
+          <button (click)="openMatchRequest(team.request)" ion-button outline>تفاصيل المباراة</button>
+        </span>
+      </ion-item>
+    </ion-list>
   </ion-item-group>
 
 </ion-content>

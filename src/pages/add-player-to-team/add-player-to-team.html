@@ -17,7 +17,7 @@
 
 
 <ion-content>
-  <ion-card>
+  <ion-card class="card1">
     <ion-card-header>
       اختر الفريق الذي ترغب بإضافة اللاعب اليه
     </ion-card-header>
@@ -25,7 +25,7 @@
       <ion-slides pager dir="rtl" slidesPerView="3">
         <ion-slide *ngFor="let team of myTeams">
           <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>
-          <ion-card class="teamCard">
+          <ion-card class="card1 teamCard">
             <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
             <h2 text-center>{{team.name}}</h2>
           </ion-card>

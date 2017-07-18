@@ -1,4 +1,4 @@
-import { Component, ViewChildren, QueryList, ViewChild} from '@angular/core';
+import { Component, QueryList, ViewChild} from '@angular/core';
 import { IonicPage, NavController,
    NavParams, ModalController, Slides, Content } from 'ionic-angular';
 import { User } from '../../models/user';
@@ -23,9 +23,7 @@ export class PlayerPage {
   currentUser: boolean = false
   myTeams: any[] = []
   myTeamsSub: any
-  @ViewChildren(Slides) slides: QueryList<Slides>;
-  bottomSlides: Slides
-  activebutton: number = 1
+  section: string = 'one';
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -33,18 +31,6 @@ export class PlayerPage {
      private db: AngularFireDatabase,
      private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
-  }
-
-  ngAfterViewInit() {
-    this.bottomSlides = this.slides.toArray()[1];
-    this.bottomSlides.lockSwipes(true);
-  }
-
-  swipe(index: number) {
-    this.bottomSlides.lockSwipes(false);
-    this.bottomSlides.slideTo(index, 500)
-    this.bottomSlides.lockSwipes(true);
-    this.activebutton = index + 1;
   }
 
   ionViewWillLoad() {

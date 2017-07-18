@@ -15,15 +15,18 @@ import { MyTeamDB } from '../../helpers/myTeamDB'
   templateUrl: 'request-match.html',
 })
 export class RequestMatchPage {
-  teamSelected: any
+  selectedTeam: any
   myTeams: any[] = []
   date: String = new Date().toISOString();
   time: number
+  stadium: string
+  awayTeam: any
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public view: ViewController,
     private teamDB: MyTeamDB) {
+      this.awayTeam = navParams.get('team');
   }
 
   async ionViewDidLoad() {
@@ -33,7 +36,15 @@ export class RequestMatchPage {
   }
 
   sendRequest() {
-    console.log(this.teamSelected)
+    this.teamDB.sendMatchRequest({
+      fromUID: this.selectedTeam.captain,
+      toUID: this.awayTeam.captain,
+      homeTeam: this.selectedTeam.$key,
+      awayTeam: this.awayTeam.$key,
+      date: this.date,
+      time: this.time,
+      stadium: this.stadium
+    });
   }
 
   closeModel() {

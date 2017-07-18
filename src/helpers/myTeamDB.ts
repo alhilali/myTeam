@@ -49,13 +49,11 @@ export class MyTeamDB {
     })
   }
 
-  getInfo(uid): Promise<any> {
-    if(this.usrInfoSub) this.usrInfoSub.unsubscribe();
+  getUserInfo(uid): Promise<any> {
     return new Promise(resolve => {
-      const userInfo = this.db.object('users/'+uid);
-        this.usrInfoSub = userInfo.subscribe(data => {
+      const userInfo = this.db.object('users/'+uid)
+      .take(1).subscribe(data => {
           resolve(data);
-          this.usrInfoSub.unsubscribe();
         })
     })
   }
@@ -77,7 +75,7 @@ export class MyTeamDB {
     })
     let teamPlayersInfo: any[] = [];
     for (let i = 0; i < teamPlayers.length; i++) {
-      await this.getInfo(teamPlayers[i].$key).then(data => {
+      await this.getUserInfo(teamPlayers[i].$key).then(data => {
         teamPlayersInfo.push(data);
       })
     }
@@ -167,12 +165,10 @@ export class MyTeamDB {
   }
 
   getTeamInfo(teamId): Promise<any> {
-    if (this.teamInfoSub) this.teamInfoSub.unsubscribe();
-    const teamInfo = this.db.object('teams/'+teamId);
     return new Promise(resolve => {
-      this.teamInfoSub = teamInfo.subscribe(data => {
+      this.db.object('teams/'+teamId)
+      .take(1).subscribe(data => {
         resolve(data);
-        this.teamInfoSub.unsubscribe();
       })
     })
   }
@@ -213,6 +209,11 @@ export class MyTeamDB {
           else resolve(null);
         })
     })
+  }
+
+  sendMatchRequest(matchInfo) {
+    const ref = this.db.list("/matchRequests/");
+    ref.push(matchInfo)
   }
 
   ionViewWillLeave() {

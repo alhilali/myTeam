@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { TeamPage } from '../team/team'
+import { MatchPage } from '../match/match'
 import { Events } from 'ionic-angular';
 
 /**
@@ -20,16 +21,25 @@ export class NotificationPage {
 
   teamsRequest: any[] = []
   requestsSub: any
+  matchRequests: any[] = []
+  matchSub: any
 
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-     private db: AngularFireDatabase,
-    private afAuth: AngularFireAuth, public events: Events) {
+    public navParams: NavParams,
+    private db: AngularFireDatabase,
+    private afAuth: AngularFireAuth,
+    public events: Events,
+    private modlCtrl: ModalController) {
   }
 
-  ionViewDidEnter() {
-    this.requestsSub = this.db.list('users/' + this.afAuth.auth.currentUser.uid
-      + '/requests').subscribe(data => {
+  ionViewDidLoad() {
+    this.loadTeamRequests();
+    this.loadMatchRequests();
+  }
+
+  loadTeamRequests() {
+    this.db.list('users/' + this.afAuth.auth.currentUser.uid
+      + '/requests').take(1).subscribe(data => {
         this.teamsRequest = []
         this.events.publish("tabs-page:badge-update", data.length);
         data.forEach(team => {
@@ -40,11 +50,25 @@ export class NotificationPage {
       })
   }
 
-  doRefresh(refresher) {
-    //console.log('Begin async operation', refresher);
+  loadMatchRequests() {
+    const ref = this.db.list('matchRequests/', {
+      query: {
+        orderByChild: 'toUID',
+        equalTo: this.afAuth.auth.currentUser.uid
+      }
+    }).take(1).subscribe(data => {
+        this.matchRequests = []
+        data.forEach(request => {
+          this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
+            this.matchRequests.push({teamInfo: teamInfo, request: request})
+          })
+        })
+      })
+  }
 
+  doRefresh(refresher) {
+    this.loadTeamRequests();
     setTimeout(() => {
-      //console.log('Async operation has ended');
       refresher.complete();
     }, 3000);
   }
@@ -75,8 +99,13 @@ export class NotificationPage {
     this.navCtrl.push(TeamPage, {team: team})
   }
 
+  openMatchRequest(request) {
+    let modal = this.modlCtrl.create(MatchPage, {request: request});
+    modal.present();
+  }
+
   ionViewWillLeave() {
-    this.requestsSub.unsubscribe();
+    //this.requestsSub.unsubscribe();
   }
 
 }

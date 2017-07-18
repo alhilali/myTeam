@@ -25,7 +25,7 @@ export class HomePage {
   }
 
   async openModal() {
-    await this.teamDB.getInfo(this.afAuth.auth.currentUser.uid).then(user => {
+    await this.teamDB.getUserInfo(this.afAuth.auth.currentUser.uid).then(user => {
       this.navCtrl.push(PlayerPage, { player: user });
     })
   }
