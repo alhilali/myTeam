@@ -38,10 +38,11 @@ export class NotificationPage {
   }
 
   loadTeamRequests() {
-    this.db.list('users/' + this.afAuth.auth.currentUser.uid
-      + '/requests').take(1).subscribe(data => {
+    const ref = this.db.list('users/' + this.afAuth.auth.currentUser.uid
+      + '/requests')
+      this.requestsSub = ref.subscribe(data => {
         this.teamsRequest = []
-        this.events.publish("tabs-page:badge-update", data.length);
+        this.events.publish("tabs-page:badge-update", 'user');
         data.forEach(team => {
           this.db.object('teams/' + team.teamId).take(1).subscribe(teamInfo => {
             this.teamsRequest.push({teamInfo: teamInfo, dateRequested: team.dateRequested})
@@ -51,23 +52,24 @@ export class NotificationPage {
   }
 
   loadMatchRequests() {
-    const ref = this.db.list('matchRequests/', {
+    const ref = this.db.list('matches/', {
       query: {
         orderByChild: 'toUID',
         equalTo: this.afAuth.auth.currentUser.uid
       }
-    }).take(1).subscribe(data => {
-        this.matchRequests = []
-        data.forEach(request => {
-          this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
-            this.matchRequests.push({teamInfo: teamInfo, request: request})
-          })
+    })
+    this.matchSub = ref.subscribe(data => {
+      this.events.publish("tabs-page:badge-update", 'match');
+      this.matchRequests = []
+      data.forEach(request => {
+        this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
+          this.matchRequests.push({teamInfo: teamInfo, request: request})
         })
       })
+    })
   }
 
   doRefresh(refresher) {
-    this.loadTeamRequests();
     setTimeout(() => {
       refresher.complete();
     }, 3000);
@@ -93,6 +95,9 @@ export class NotificationPage {
 
     // Remove request from user list DB
     this.db.object('users/' + uid + '/requests/' + team.$key).remove();
+
+    // Remove player from players list DB
+    this.db.object('/playersList/' + team.$key + '/' + uid).remove();
   }
 
   openTeam(team) {
@@ -105,7 +110,8 @@ export class NotificationPage {
   }
 
   ionViewWillLeave() {
-    //this.requestsSub.unsubscribe();
+    this.requestsSub.unsubscribe();
+    this.matchSub.unsubscribe();
   }
 
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
  * Generated class for the MatchPage page.
@@ -19,14 +21,20 @@ export class MatchPage {
   date: any
   time: any
   stadium: any
-  requsetInfo: any
+  requestInfo: any
+  request: FirebaseObjectObservable<any>;
+  previousGames: any[] = []
+  currentUser: boolean = false
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private view: ViewController,
-    private teamDB: MyTeamDB) {
-      this.requsetInfo = this.navParams.get('request');
-      console.log(this.requsetInfo)
+    private teamDB: MyTeamDB,
+    public db: AngularFireDatabase,
+    public afAuth: AngularFireAuth) {
+      this.requestInfo = this.navParams.get('request');
+      this.request = this.db.object('/matches/'+this.requestInfo.$key)
+      if (this.afAuth.auth.currentUser.uid == this.requestInfo.toUID) this.currentUser = true;
   }
 
   ionViewDidLoad() {
@@ -34,13 +42,22 @@ export class MatchPage {
   }
 
   async initData() {
-    await this.teamDB.getTeamInfo(this.requsetInfo.homeTeam).then(data=>{
+    await this.teamDB.getTeamInfo(this.requestInfo.homeTeam).then(data=>{
       this.homeTeam = data;
     })
 
-    await this.teamDB.getTeamInfo(this.requsetInfo.awayTeam).then(data=>{
+    await this.teamDB.getTeamInfo(this.requestInfo.awayTeam).then(data=>{
       this.awayTeam = data;
     })
+  }
+
+  acceptMatch() {
+    this.db.object('/matches/'+this.requestInfo.$key).update({status: 'approved'})
+  }
+
+  declineMatch() {
+    this.view.dismiss();
+    this.db.object('/matches/'+this.requestInfo.$key).remove();
   }
 
   closeModel() {

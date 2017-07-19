@@ -212,8 +212,31 @@ export class MyTeamDB {
   }
 
   sendMatchRequest(matchInfo) {
-    const ref = this.db.list("/matchRequests/");
+    const ref = this.db.list("/matches/");
     ref.push(matchInfo)
+  }
+
+  getTeamHomeGames(teamID) {
+    return new Promise(resolve => {
+      let games: any[] = []
+      const ref = this.db.list("/matches/", {
+        query: {
+          orderByChild: 'homeTeam',
+          equalTo: teamID
+        }
+      }).take(1).subscribe(request=>{
+        if (request.length == 0) resolve(null)
+        for (let i = 0; i < request.length; i++) {
+          if (request[i].status != 'pending') {
+            this.db.object('teams/'+request[i].awayTeam)
+            .take(1).subscribe(data => {
+              games.push({requestInfo: request[i], teamInfo: data})
+            })
+          }
+          if (i == request.length - 1) resolve(games);
+        }
+      })
+    })
   }
 
   ionViewWillLeave() {

@@ -61,13 +61,23 @@ export class AddPlayerToTeamPage {
       })
       if (!this.error) this.teamDB.sendRequestToPlayer(playerID, this.teamsSelected[i].$key)
     }
-    if (!this.error) this.view.dismiss();
+    if (this.teamsSelected.length == 0) this.alert()
+    else if (!this.error) this.view.dismiss();
   }
 
   presentAlert(teamName) {
     let alert = this.alertCtrl.create({
       title: 'خطأ',
       subTitle: 'سبق وتم اضافة اللاعب في فريق '+ teamName +"، الرجاء ازالة اختيار الفريق لإتمام العملية",
+      buttons: ['حسناً']
+    });
+    alert.present();
+  }
+
+  alert() {
+    let alert = this.alertCtrl.create({
+      title: 'خطأ',
+      subTitle: "الرجاء اختيار فريق واحد على الأقل",
       buttons: ['حسناً']
     });
     alert.present();

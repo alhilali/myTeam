@@ -17,22 +17,47 @@
 
 
 <ion-content>
+  <ion-row *ngIf="(request | async)?.status == 'pending' && currentUser" align-items-stretch>
+    <ion-col col-7>
+      <p text-start>هل ترغب بالموافقه على المباراة؟</p>
+    </ion-col>
+    <ion-col no-padding style="padding-left: 10px">
+      <p text-left>
+        <button (click)="acceptMatch()" ion-button color="secondary" small>موافق</button>
+        <button (click)="declineMatch()" ion-button color="danger" outline small>إلغاء</button>
+      </p>
+    </ion-col>
+  </ion-row>
   <ion-card class="card1">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
           <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/f/f8/Al-Hilal_newlogo.png" alt=""> {{homeTeam.name}}
+          <h1>0</h1>
         </ion-col>
-        <ion-col text-center padding-vertical>
+        <ion-col text-center style="padding-top: 60px;">
           <h3>VS</h3>
-          <h2>{{requsetInfo.date}}</h2>
-          <p>{{requsetInfo.time}}</p>
-          <p>{{requsetInfo.stadium}}</p>
+          <p>{{(request | async)?.date}}<br> {{(request | async)?.time}}<br> {{(request | async)?.stadium}}
+          </p>
         </ion-col>
         <ion-col text-center>
           <img class="logo" src="https://seeklogo.com/images/M/manchester-united-logo-F14DA1FCCD-seeklogo.com.png" alt=""> {{awayTeam.name}}
+          <h1>0</h1>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
+  <ion-item-divider>
+    المباريات السابقه
+  </ion-item-divider>
+  <ion-list no-margin>
+    <ion-item class="fixedBorder">
+      <div *ngIf="previousGames.length == 0" text-center>
+        لا توجد مباريات سابقة
+      </div>
+      <ion-item *ngIf="previousGames.length != 0" class="fixedBorder">
+
+      </ion-item>
+    </ion-item>
+  </ion-list>
 </ion-content>

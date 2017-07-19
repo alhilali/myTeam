@@ -9,6 +9,7 @@ import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { PlayerPage } from '../player/player';
 import { RequestMatchPage } from '../request-match/request-match';
+import { MatchPage } from '../match/match'
 
 /**
  * Generated class for the TeamPage page.
@@ -26,7 +27,8 @@ export class TeamPage {
   isCaptain = false;
   playersList: any[] = []
   playersListSub: any
-  section: string = 'one';
+  section: string = 'one'
+  matches: any[] = []
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -34,7 +36,8 @@ export class TeamPage {
       private afAuth: AngularFireAuth,
       private modal: ModalController,
       private teamDB: MyTeamDB,
-      private alertCtrl: AlertController) {
+      private alertCtrl: AlertController,
+      private modlCtrl: ModalController) {
     this.team = navParams.get('team');
     if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
   }
@@ -53,6 +56,23 @@ export class TeamPage {
         }
       }
     })
+  }
+
+  segmentChanged(event) {
+    if (event.value == 'three') this.loadGames();
+  }
+
+  async loadGames() {
+    let result;
+    await this.teamDB.getTeamHomeGames(this.team.$key).then(data=>{
+      result = data;
+    })
+    if (result) this.matches = result;
+  }
+
+  openMatchRequest(request) {
+    let modal = this.modlCtrl.create(MatchPage, {request: request});
+    modal.present();
   }
 
   removePlayer(player) {

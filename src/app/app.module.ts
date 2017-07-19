@@ -34,6 +34,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
+import { CalendarModule } from "ion2-calendar";
 
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { ParallaxHeaderDirective } from '../directives/parallax-header/parallax-header';
@@ -78,6 +79,7 @@ const cloudSettings: CloudSettings = {
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    CalendarModule,
 
     CloudModule.forRoot(cloudSettings)
   ],

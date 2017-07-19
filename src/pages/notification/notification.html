@@ -19,17 +19,17 @@
 
     </ion-refresher-content>
   </ion-refresher>
-  <h6 text-center *ngIf="teamsRequest?.length == 0">لا يوجد تنبيهات <span>😴</span></h6>
+  <h6 text-center *ngIf="teamsRequest?.length == 0 && matchRequests?.length == 0">لا يوجد تنبيهات <span>😴</span></h6>
   <ion-item-group *ngIf="teamsRequest?.length > 0">
     <ion-item-divider color="light">الانضمام</ion-item-divider>
     <ion-list no-margin>
-      <ion-item class="fixedList" *ngFor="let team of teamsRequest">
+      <ion-item class="fixedBorder" *ngFor="let team of teamsRequest">
         <span item-start>
           <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
         </span>
         <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
         <h2>{{team.teamInfo.name}}</h2>
-        <span item-end>
+        <span item-end style="margin-bottom: 16px;">
           <button (click)="acceptTeam(team.teamInfo)" ion-button color="secondary">موافق</button>
           <button (click)="declineTeam(team.teamInfo)" ion-button color="danger" outline>إلغاء</button>
         </span>
@@ -39,15 +39,15 @@
   <ion-item-group *ngIf="matchRequests?.length > 0">
     <ion-item-divider color="light">المباريات</ion-item-divider>
     <ion-list no-margin>
-      <ion-item class="fixedList" *ngFor="let team of matchRequests">
+      <ion-item class="fixedBorder" *ngFor="let team of matchRequests">
         <span item-start>
-          <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
-        </span>
+            <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
+          </span>
         <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>
         <h2>{{team.teamInfo.name}}</h2>
-        <span item-end>
-          <button (click)="openMatchRequest(team.request)" ion-button outline>تفاصيل المباراة</button>
-        </span>
+        <span item-end style="margin-bottom: 16px;">
+            <button (click)="openMatchRequest(team.request)" ion-button small outline>تفاصيل المباراة</button>
+          </span>
       </ion-item>
     </ion-list>
   </ion-item-group>

@@ -20,7 +20,7 @@ export class ShrinkingSegmentHeader {
     this.renderer.setElementStyle(this.element.nativeElement, 'height', this.headerHeight + 'px');
 
     this.scrollArea.ionScroll.subscribe((ev) => {
-      this.resizeHeader(ev);
+      if (ev.scrollTop >= 0) this.resizeHeader(ev);
     });
 
   }

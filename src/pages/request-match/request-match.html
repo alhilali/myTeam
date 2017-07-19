@@ -21,32 +21,42 @@
     <ion-card-header>
       تفاصيل المباراة
     </ion-card-header>
-    <ion-list>
-      <ion-item>
-        <ion-label>فريقي</ion-label>
-        <ion-select [(ngModel)]="selectedTeam" placeholder="اختر الفريق">
-          <ion-option *ngFor="let team of myTeams" [value]="team">{{team.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>التاريخ</ion-label>
-        <ion-datetime [(ngModel)]="date" min="2017" displayFormat="M/D/YY">
-        </ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>الساعة</ion-label>
-        <ion-datetime dir="ltr" [(ngModel)]="time" displayFormat="h:mm A">
-        </ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>الملعب</ion-label>
-        <ion-input type="text" [(ngModel)]="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>
-      </ion-item>
-      <p text-center>
-        <button padding ion-button color="secondary" (click)="sendRequest()">إرسال الطلب
-          <ion-icon padding name="ios-calendar-outline"></ion-icon>
-        </button>
-      </p>
-    </ion-list>
+    <form name="matchForm" novalidate>
+      <div class="register" [formGroup]='matchForm'>
+        <ion-list>
+          <ion-item>
+            <ion-label>فريقي</ion-label>
+            <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">
+              <ion-option *ngFor="let team of myTeams" [value]="team">{{team.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <button ion-item (click)="openCalendar()">
+        <ion-row>
+          <ion-col>
+            التاريخ
+          </ion-col>
+          <ion-col text-end>
+            {{dateFormated}}
+          </ion-col>
+        </ion-row>
+      </button>
+          <ion-item>
+            <ion-label>الساعة</ion-label>
+            <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">
+            </ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>الملعب</ion-label>
+            <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>
+          </ion-item>
+          <p text-center>
+            <button padding ion-button color="secondary" [disabled]="matchForm.invalid" (click)="sendRequest()">إرسال الطلب
+              <ion-icon padding name="ios-calendar-outline"></ion-icon>
+            </button>
+          </p>
+        </ion-list>
+      </div>
+    </form>
   </ion-card>
 </ion-content>

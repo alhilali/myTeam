@@ -45,7 +45,7 @@
   </shrinking-segment-header>
 
   <ion-toolbar no-padding color="white" mode="md">
-    <ion-segment color="orange" mode="md" [(ngModel)]="section">
+    <ion-segment color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="one">
         <ion-icon class="largeIcon" name="ios-people"></ion-icon>
       </ion-segment-button>
@@ -66,7 +66,7 @@
     <div *ngSwitchCase="'one'">
       <ion-item-divider>لاعبي الفريق</ion-item-divider>
       <ion-list no-margin>
-        <ion-item class="playerItem" *ngFor="let player of playersList">
+        <ion-item class="fixedBorder" *ngFor="let player of playersList">
           <span item-start>
             <div class="listAvatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
           </span>
@@ -90,12 +90,27 @@
       </ion-list>
     </div>
     <div *ngSwitchCase="'two'">
-      <h2>البطولات</h2>
-      <h6>قريباً</h6>
+      <ion-item-divider>
+        البطولات
+      </ion-item-divider>
+      <h6 text-center>قريباً</h6>
     </div>
     <div *ngSwitchCase="'three'">
-      <h2>التقويم</h2>
-      <h6>قريباً</h6>
+      <ion-item-divider>
+        التقويم
+      </ion-item-divider>
+      <div *ngIf="matches.length > 0">
+        <ion-list no-margin>
+          <ion-item *ngFor="let match of matches" class="fixedBorder" (click)="openMatchRequest(match.requestInfo)">
+            <h2 text-center>
+                {{team.name}} vs {{match.teamInfo.name}}
+              </h2>
+            <p text-center>
+              {{match.requestInfo.date}}
+            </p>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
   </div>
 </ion-content>
