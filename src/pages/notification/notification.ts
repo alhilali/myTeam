@@ -62,9 +62,11 @@ export class NotificationPage {
       this.events.publish("tabs-page:badge-update", 'match');
       this.matchRequests = []
       data.forEach(request => {
-        this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
-          this.matchRequests.push({teamInfo: teamInfo, request: request})
-        })
+        if (request.status == 'pending') {
+          this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
+            this.matchRequests.push({teamInfo: teamInfo, request: request})
+          })
+        }
       })
     })
   }

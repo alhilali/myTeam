@@ -17,8 +17,8 @@ export class TabsPage {
   tab3Root = NotificationPage;
   tab4Root = SearchPage;
   notificationNum: number;
-  userRequestsNum: number;
-  matchRequestsNum: number;
+  userRequestsNum: number = 0;
+  matchRequestsNum: number = 0;
 
   constructor(public events: Events, private db: AngularFireDatabase,
   private afAuth: AngularFireAuth) {
@@ -54,8 +54,14 @@ export class TabsPage {
         equalTo: this.afAuth.auth.currentUser.uid
       }
     }).take(1).subscribe(data=>{
-      this.matchRequestsNum = data.length;
-      this.updateBadge();
+      let count = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].status == 'pending') count++;
+        if (i == data.length -1) {
+          this.matchRequestsNum = count;
+          this.updateBadge();
+        }
+      }
     })
   }
 

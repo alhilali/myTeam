@@ -27,7 +27,9 @@
           <ion-item>
             <ion-label>فريقي</ion-label>
             <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">
-              <ion-option *ngFor="let team of myTeams" [value]="team">{{team.name}}</ion-option>
+              <span *ngFor="let team of myTeams">
+                <ion-option *ngIf="team.$key != awayTeam.$key"  [value]="team">{{team.name}}</ion-option>
+              </span>
             </ion-select>
           </ion-item>
 

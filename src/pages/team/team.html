@@ -9,10 +9,7 @@
   <ion-navbar>
     <ion-title>{{team.name}}</ion-title>
     <ion-buttons end>
-      <button *ngIf="isCaptain" (click)='addPlayer()' ion-button icon-only color="royal">
-          <ion-icon name="person-add"></ion-icon>
-      </button>
-      <button *ngIf="!isCaptain" (click)='requestMatch()' ion-button icon-only color="royal">
+      <button (click)='requestMatch()' ion-button icon-only color="royal">
           <ion-icon name="md-calendar"></ion-icon>
       </button>
     </ion-buttons>
@@ -25,6 +22,9 @@
           <div class="avatar" style="background-image: url('http://up.n4hr.com/ups/uploads/fceaa78230.jpg');"></div>
           <h3 class="white bold">{{team.name}}</h3>
           <h5 class="white">{{team.city}}</h5>
+          <button style="    position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only color="white">
+              <ion-icon name="person-add"></ion-icon>
+          </button>
         </ion-slide>
         <ion-slide>
           <ion-chip color="gold">
@@ -99,18 +99,19 @@
       <ion-item-divider>
         التقويم
       </ion-item-divider>
-      <div *ngIf="matches.length > 0">
-        <ion-list no-margin>
-          <ion-item *ngFor="let match of matches" class="fixedBorder" (click)="openMatchRequest(match.requestInfo)">
-            <h2 text-center>
-                {{team.name}} vs {{match.teamInfo.name}}
-              </h2>
-            <p text-center>
-              {{match.requestInfo.date}}
-            </p>
+      <ion-list no-margin>
+        <span *ngFor="let month of months">
+        <ion-item-divider class="monthLabel">
+          {{month.name}}
+        </ion-item-divider>
+        <span *ngFor="let match of matches | async">
+          <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
+            <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
+            <date text-center requestID="{{match.$key}}" day="true"></date>
           </ion-item>
-        </ion-list>
-      </div>
+        </span>
+        </span>
+      </ion-list>
     </div>
   </div>
 </ion-content>

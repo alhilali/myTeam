@@ -1,15 +1,15 @@
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Slides,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { PlayerPage } from '../player/player';
 import { RequestMatchPage } from '../request-match/request-match';
 import { MatchPage } from '../match/match'
+import * as moment from 'moment';
 
 /**
  * Generated class for the TeamPage page.
@@ -28,7 +28,8 @@ export class TeamPage {
   playersList: any[] = []
   playersListSub: any
   section: string = 'one'
-  matches: any[] = []
+  matches: FirebaseListObservable<any[]>;
+  months: any[] = [];
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -62,12 +63,22 @@ export class TeamPage {
     if (event.value == 'three') this.loadGames();
   }
 
-  async loadGames() {
-    let result;
-    await this.teamDB.getTeamHomeGames(this.team.$key).then(data=>{
-      result = data;
+  loadGames() {
+    this.matches = this.db.list('/teams/'+this.team.$key+'/upcomingMatches/')
+    this.setUpMonths();
+  }
+
+  setUpMonths() {
+    this.matches.take(1).subscribe(data=>{
+      data.forEach(match => {
+        this.db.object('matches/'+match.$key).take(1).subscribe(matchInfo=>{
+          const monthNum = matchInfo.date.substring(0, 2);
+          const monthName = moment(monthNum, 'MM').format('MMMM');
+          const index = this.months.map(e=> {return e.num}).indexOf(monthNum);
+          if (index == -1) this.months.push({name:monthName, num:monthNum})
+        })
+      });
     })
-    if (result) this.matches = result;
   }
 
   openMatchRequest(request) {

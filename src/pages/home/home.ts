@@ -32,18 +32,18 @@ export class HomePage {
 
   compose() {
     this.actionSheetCtrl.create({
-      title: 'طلب جديد',
+      title: 'ابحث عن..',
       buttons: [
         {
-          text: 'ابحث عن فريق',
+          text: 'فريق',
           handler: () => {
           }
         }, {
-          text: 'ابحث عن مباراة',
+          text: 'مباراة',
           handler: () => {
           }
         }, {
-          text: 'ابحث عن بطولة',
+          text: 'بطولة',
           handler: () => {
           }
         }, {

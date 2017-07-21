@@ -19,6 +19,9 @@
 
 
 <ion-content>
+  <ion-item-divider>
+    جميع الفرق المشارك فيها
+  </ion-item-divider>
   <ion-item-group *ngIf="myTeams?.length > 0 ">
     <ion-row align-items-start>
       <ion-col col-6 col-md class="noPadding" wrap *ngFor="let team of myTeams">
@@ -40,5 +43,21 @@
     <button padding ion-button color="orange" (click)="startTeam()">إبدأ فريقك
     </button>
   </div>
+  <ion-item-divider>
+    مبارياتي القادمة
+  </ion-item-divider>
+  <ion-list no-margin>
+    <span *ngFor="let month of months">
+    <ion-item-divider class="monthLabel">
+      {{month.name}}
+    </ion-item-divider>
+    <span *ngFor="let match of matches">
+      <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
+        <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
+        <date text-center requestID="{{match.$key}}" day="true"></date>
+      </ion-item>
+    </span>
+    </span>
+  </ion-list>
 
 </ion-content>

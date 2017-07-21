@@ -239,6 +239,54 @@ export class MyTeamDB {
     })
   }
 
+  getTeamAwayGames(teamID) {
+    return new Promise(resolve => {
+      let games: any[] = []
+      const ref = this.db.list("/matches/", {
+        query: {
+          orderByChild: 'awayTeam',
+          equalTo: teamID
+        }
+      }).take(1).subscribe(request=>{
+        if (request.length == 0) resolve(null)
+        for (let i = 0; i < request.length; i++) {
+          if (request[i].status != 'pending') {
+            this.db.object('teams/'+request[i].awayTeam)
+            .take(1).subscribe(data => {
+              games.push({requestInfo: request[i], teamInfo: data})
+            })
+          }
+          if (i == request.length - 1) resolve(games);
+        }
+      })
+    })
+  }
+
+  getAllGames(teamID) {
+    return new Promise(resolve => {
+      let games: any[] = []
+      const ref = this.db.list("/matches/")
+      .take(1).subscribe(request=>{
+        if (request.length == 0) resolve(null)
+        for (let i = 0; i < request.length; i++) {
+          if (request[i].status != 'pending' && request[i].homeTeam == teamID) {
+            this.db.object('teams/'+request[i].awayTeam)
+            .take(1).subscribe(data => {
+              games.push({requestInfo: request[i], teamInfo: data, home: true})
+            })
+          }
+          if (request[i].status != 'pending' && request[i].awayTeam == teamID) {
+            this.db.object('teams/'+request[i].homeTeam)
+            .take(1).subscribe(data => {
+              games.push({requestInfo: request[i], teamInfo: data, home: false})
+            })
+          }
+          if (i == request.length - 1) resolve(games);
+        }
+      })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

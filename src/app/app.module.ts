@@ -39,6 +39,8 @@ import { CalendarModule } from "ion2-calendar";
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { ParallaxHeaderDirective } from '../directives/parallax-header/parallax-header';
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
+import { MatchItemComponent } from '../components/match-item/match-item';
+import { DateComponent } from '../components/date/date';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -68,7 +70,9 @@ const cloudSettings: CloudSettings = {
     RequestMatchPage,
     MatchPage,
     ParallaxHeaderDirective,
-    ShrinkingSegmentHeader
+    ShrinkingSegmentHeader,
+    MatchItemComponent,
+    DateComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { TeamPage } from '../team/team';
 
 /**
  * Generated class for the MatchPage page.
@@ -52,12 +53,33 @@ export class MatchPage {
   }
 
   acceptMatch() {
+    // Update request status
     this.db.object('/matches/'+this.requestInfo.$key).update({status: 'approved'})
+
+    // Add match to home team DB
+    this.db.object('/teams/'+this.requestInfo.homeTeam+'/upcomingMatches/'
+    +this.requestInfo.$key).set({
+      homeTeam: this.requestInfo.homeTeam,
+      awayTeam: this.requestInfo.awayTeam,
+      date: this.requestInfo.date
+    })
+
+    // Add match to away team DB
+    this.db.object('/teams/'+this.requestInfo.awayTeam+'/upcomingMatches/'
+    +this.requestInfo.$key).set({
+      homeTeam: this.requestInfo.homeTeam,
+      awayTeam: this.requestInfo.awayTeam,
+      date: this.requestInfo.date
+    })
   }
 
   declineMatch() {
     this.view.dismiss();
     this.db.object('/matches/'+this.requestInfo.$key).remove();
+  }
+
+  openTeam(team) {
+    this.navCtrl.push(TeamPage, {team: team})
   }
 
   closeModel() {
