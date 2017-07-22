@@ -21,7 +21,7 @@ export class DateComponent {
   constructor(private db: AngularFireDatabase) {
   }
 
-  async ngAfterViewInit () {
+  ngAfterViewInit () {
     Promise.resolve().then(() => {
       if (this.date) {
         if (this.day !== null && this.day == "true") this.formatedDate = moment(this.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " "

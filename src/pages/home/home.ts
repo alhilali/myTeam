@@ -9,10 +9,11 @@ import { PlayerPage } from '../player/player';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  currentUser: any
   constructor(private afAuth: AngularFireAuth,
     private teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
+      this.currentUser = this.afAuth.auth.currentUser;
   }
 
   doRefresh(refresher) {

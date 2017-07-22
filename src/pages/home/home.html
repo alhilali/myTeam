@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons end>
       <button (click)="openModal()" ion-button icon-only>
-        <div class="avatar" style="background-image: url('https://igx.4sqi.net/img/user/130x130/1049643-T3WSSSGRGU5YVFSR.jpg');"></div>
+        <profile-pic userID="{{currentUser.uid}}"></profile-pic>
       </button>
     </ion-buttons>
     <ion-buttons start>
@@ -24,7 +24,7 @@
     <ion-card class="card1">
       <ion-item>
         <ion-avatar item-start>
-          <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
+          <profile-pic userID="null"></profile-pic>
         </ion-avatar>
         <h2>محمد</h2>
         <p>Mohammed@</p>
@@ -56,7 +56,7 @@
     <ion-card class="card1">
       <ion-item>
         <ion-avatar item-start>
-          <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
+          <profile-pic userID="null"></profile-pic>
         </ion-avatar>
         <h2>فيصل</h2>
         <p>Faisal@</p>
@@ -116,7 +116,7 @@
     <ion-card class="card1">
       <ion-item>
         <ion-avatar item-start>
-          <img src="https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg">
+          <profile-pic userID="null"></profile-pic>
         </ion-avatar>
         <h2>مشعل</h2>
         <p>Mishaal@</p>

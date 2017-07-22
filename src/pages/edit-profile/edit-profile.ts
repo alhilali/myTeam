@@ -9,6 +9,7 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username'
 import { User } from '../../models/user'
+import firebase from 'firebase';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -198,14 +199,42 @@ export class EditProfilePage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      allowEdit: true
+      allowEdit: true,
+      targetWidth: 300,
+      targetHeight: 300
     }
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI
      // If it's base64:
      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+     let storageRef = firebase.storage().ref();
+     const filename = this.afAuth.auth.currentUser.uid;
+     const imageRef = storageRef.child(`profilePics/${filename}.jpg`)
+
+     imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
+     .then((snap)=>{
+       this.db.object('/users/'+this.afAuth.auth.currentUser.uid)
+       .update({profilePic: snap.downloadURL})
+       this.user.profilePic = snap.downloadURL;
+       this.updateNotification('الصورة الشخصية')
+     })
     }, (err) => {
      // Handle error
+    });
+  }
+
+  deleteProfilePic() {
+    let storageRef = firebase.storage().ref();
+    const filename = this.afAuth.auth.currentUser.uid;
+    const imageRef = storageRef.child(`profilePics/${filename}.jpg`)
+    imageRef.delete().then(()=> {
+      this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/profilePic')
+      .remove();
+      this.user.profilePic = null;
+
+    }).catch((error)=> {
+      // Uh-oh, an error occurred!
     });
   }
 

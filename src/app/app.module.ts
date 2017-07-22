@@ -27,6 +27,8 @@ import { MyTeamDB } from '../helpers/myTeamDB'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { AngularFireModule } from 'angularfire2';
 import { FIREBASE_CONFIG } from './app.firebase.config'
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -36,11 +38,11 @@ import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
 import { CalendarModule } from "ion2-calendar";
 
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { ParallaxHeaderDirective } from '../directives/parallax-header/parallax-header';
 import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/shrinking-segment-header';
 import { MatchItemComponent } from '../components/match-item/match-item';
 import { DateComponent } from '../components/date/date';
+import { ProfilePicComponent } from '../components/profile-pic/profile-pic';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -72,7 +74,8 @@ const cloudSettings: CloudSettings = {
     ParallaxHeaderDirective,
     ShrinkingSegmentHeader,
     MatchItemComponent,
-    DateComponent
+    DateComponent,
+    ProfilePicComponent
   ],
   imports: [
     BrowserModule,

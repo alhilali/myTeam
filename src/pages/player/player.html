@@ -19,7 +19,7 @@
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
-          <div class="avatar" style="background-image: url('https://pbs.twimg.com/profile_images/869460661180542976/KjsN06DG_400x400.jpg');"></div>
+          <profile-pic userID="{{player.$key}}"></profile-pic>
           <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" color="light" name="ios-cog"></ion-icon>
           <h3 class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>
@@ -49,7 +49,7 @@
   </shrinking-segment-header>
 
   <ion-toolbar no-padding color="white" mode="md">
-    <ion-segment color="orange" mode="md" [(ngModel)]="section">
+    <ion-segment class="segment" color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="one">
         <ion-icon name="md-football"></ion-icon>
       </ion-segment-button>

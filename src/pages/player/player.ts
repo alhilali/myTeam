@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChild} from '@angular/core';
+import { Component, ElementRef} from '@angular/core';
 import { IonicPage, NavController,
    NavParams, ModalController, Slides, Content } from 'ionic-angular';
 import { User } from '../../models/user';
@@ -29,7 +29,8 @@ export class PlayerPage {
      public navParams: NavParams,
      private afAuth: AngularFireAuth,
      private db: AngularFireDatabase,
-     private modlCtrl: ModalController) {
+     private modlCtrl: ModalController,
+     public element: ElementRef) {
     this.player = this.navParams.get('player');
   }
 
@@ -48,6 +49,11 @@ export class PlayerPage {
         })
       }
     })
+  }
+
+  segmentChanged(event) {
+    console.log("here")
+    console.log(this.element.nativeElement)
   }
 
   addPlayer() {

@@ -3,6 +3,6 @@ export const FIREBASE_CONFIG = {
     authDomain: "myteam-29a5b.firebaseapp.com",
     databaseURL: "https://myteam-29a5b.firebaseio.com",
     projectId: "myteam-29a5b",
-    storageBucket: "",
+    storageBucket: "myteam-29a5b.appspot.com",
     messagingSenderId: "1091890097761"
   };

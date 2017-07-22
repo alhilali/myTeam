@@ -6,4 +6,5 @@ export interface User {
   password: string;
   position: string;
   myTeams: any[];
+  profilePic: string;
 }

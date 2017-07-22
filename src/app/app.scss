@@ -71,3 +71,13 @@ ion-card-header {
 .fixedBorder > .item-inner{
   border-bottom: 0 !important;
 }
+
+// Hopefully temp until bug gets fixed (pushing page from modal cuts statusbar)
+.toolbar-ios {
+  height: 44px + $cordova-ios-statusbar-padding;
+  padding-top: $cordova-ios-statusbar-padding;
+}
+
+.toolbar-title-ios {
+  padding-top: $cordova-ios-statusbar-padding;
+}
