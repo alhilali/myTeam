@@ -51,11 +51,6 @@ export class PlayerPage {
     })
   }
 
-  segmentChanged(event) {
-    console.log("here")
-    console.log(this.element.nativeElement)
-  }
-
   addPlayer() {
     let modal = this.modlCtrl.create(AddPlayerToTeamPage, {player: this.player});
     modal.present();

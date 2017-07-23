@@ -4,5 +4,7 @@ export interface Team {
   city: string;
   captain: string;
   players: [any];
+  logo: string;
+  bg: string;
   $key: string;
 }

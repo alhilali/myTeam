@@ -21,6 +21,7 @@ import { AddPlayerToTeamPage } from '../pages/add-player-to-team/add-player-to-t
 import { NotificationPage } from '../pages/notification/notification'
 import { RequestMatchPage } from '../pages/request-match/request-match'
 import { MatchPage } from '../pages/match/match'
+import { EditTeamPage } from '../pages/edit-team/edit-team';
 
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
@@ -71,6 +72,7 @@ const cloudSettings: CloudSettings = {
     NotificationPage,
     RequestMatchPage,
     MatchPage,
+    EditTeamPage,
     ParallaxHeaderDirective,
     ShrinkingSegmentHeader,
     MatchItemComponent,
@@ -110,7 +112,8 @@ const cloudSettings: CloudSettings = {
     AddPlayerToTeamPage,
     NotificationPage,
     RequestMatchPage,
-    MatchPage
+    MatchPage,
+    EditTeamPage
   ],
   providers: [
     StatusBar,

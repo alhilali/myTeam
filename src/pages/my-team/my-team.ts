@@ -7,6 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { TeamPage } from '../team/team';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 import { MatchPage } from '../match/match'
+import { EditTeamPage } from '../edit-team/edit-team';
 import * as moment from 'moment';
 
 /**
@@ -39,6 +40,11 @@ export class MyTeamPage {
   }
 
   ionViewDidLoad () {
+    this.loadTeams();
+    this.loadGames()
+  }
+
+  loadTeams() {
     this.myTeamsSub = this.db.list('users/'+this.afAuth.auth.currentUser.uid
     +'/myTeams').subscribe(data=>{
       if (data.length == 0) this.hasNoTeams = true;
@@ -50,8 +56,6 @@ export class MyTeamPage {
           })
         })
     })
-
-    this.loadGames()
   }
 
   loadGames() {
@@ -72,9 +76,12 @@ export class MyTeamPage {
     })
   }
 
-  openMatchRequest(request) {
-    let modal = this.modal.create(MatchPage, {request: request});
-    modal.present();
+  doRefresh(refresher) {
+    this.loadGames();
+    this.loadTeams();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
   presentActionSheet(team) {
@@ -83,6 +90,21 @@ export class MyTeamPage {
     if (team.captain == this.afAuth.auth.currentUser.uid) {
       btns = [
         {
+          text: 'اجعل الفريق المفضل',
+          handler: () => {
+          }
+        },
+        {
+          text: 'إعدادات الفريق',
+          handler: () => {
+            const editModal = this.modal.create(EditTeamPage, {team: team})
+            editModal.present()
+            editModal.onWillDismiss(data=>{
+              this.loadTeams();
+            })
+          }
+        },
+        {
           text: 'حذف الفريق',
           role: 'destructive',
           handler: () => {
@@ -90,10 +112,6 @@ export class MyTeamPage {
               this.deleteTeam(team)
             })
             return false;
-          }
-        },{
-          text: 'اجعل الفريق المفضل',
-          handler: () => {
           }
         },{
           text: 'إلغاء',
@@ -193,11 +211,6 @@ export class MyTeamPage {
     confirm.present();
   }
 
-  ionViewWillLeave() {
-    this.myTeamsSub.unsubscribe();
-    this.teamDB.unsubscribeAll();
-  }
-
   startTeam() {
     const myModal = this.modal.create(StartTeamPage);
     myModal.present();
@@ -205,6 +218,16 @@ export class MyTeamPage {
 
   openTeam(team) {
     this.navCtrl.push(TeamPage, {team: team})
+  }
+
+  openMatchRequest(request) {
+    let modal = this.modal.create(MatchPage, {request: request});
+    modal.present();
+  }
+
+  ionViewWillLeave() {
+    this.myTeamsSub.unsubscribe();
+    this.teamDB.unsubscribeAll();
   }
 
 }

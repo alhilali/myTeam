@@ -20,11 +20,7 @@ export class MyApp {
     platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
      private keyboard: Keyboard) {
     afAuth.auth.onAuthStateChanged(user => {
-      if (!user) {
-        this.rootPage = WelcomePage;
-      } else {
-        this.rootPage = TabsPage;
-      }
+      this.rootPage = user ? TabsPage : WelcomePage;
     })
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -33,6 +29,9 @@ export class MyApp {
         this.keyboard.hideKeyboardAccessoryBar(false);
       }
       statusBar.styleDefault();
+      setTimeout(() => {
+        splashScreen.hide();
+      }, 650);
       //splashScreen.hide();
     });
   }

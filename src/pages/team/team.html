@@ -15,16 +15,18 @@
     </ion-buttons>
   </ion-navbar>
 
-  <shrinking-segment-header [scrollArea]="myContent" headerHeight="185" class="hero" style="background-image: url('http://www.alhilal.com/ar/logos/newsenphoto-2911.jpg');">
+  <shrinking-segment-header [scrollArea]="myContent" headerHeight="185" class="hero" [ngStyle]="{ 'background-image': 'url(' + team.bg + ')'}">
     <div class="topContent">
       <ion-slides class="topSlides" pager dir="rtl">
         <ion-slide>
-          <div class="teamAvatar" style="background-image: url('http://up.n4hr.com/ups/uploads/fceaa78230.jpg');"></div>
-          <h3 class="white bold">{{team.name}}</h3>
-          <h5 class="white">{{team.city}}</h5>
-          <button style="    position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only color="white">
-              <ion-icon name="person-add"></ion-icon>
-          </button>
+          <div class="teamAvatar" [ngStyle]="{ 'background-image': 'url(' + team.logo + ')'}"></div>
+          <div class="infoSlideBottom">
+            <h3 class="white bold">{{team.name}}</h3>
+            <h5 class="white">{{team.city}}</h5>
+            <button style="    position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only color="white">
+                <ion-icon name="person-add"></ion-icon>
+            </button>
+          </div>
         </ion-slide>
         <ion-slide>
           <ion-chip color="gold">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController,
   NavParams, ViewController,
-  ToastController, AlertController } from 'ionic-angular';
+  ToastController, AlertController, ActionSheetController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -43,6 +43,7 @@ export class EditProfilePage {
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
     private unameValid: UsernameValidator,
+    private actionSheetCtrl: ActionSheetController,
     private camera: Camera) {
       this.user = this.navParams.get('player');
       let usernameValidator = (control) => {
@@ -235,7 +236,34 @@ export class EditProfilePage {
 
     }).catch((error)=> {
       // Uh-oh, an error occurred!
+      console.log(error)
     });
+  }
+
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'إعدادات الفريق',
+      buttons: [
+        {
+          text: 'تغيير صورة الحساب',
+          handler: () => {
+            this.changePhoto();
+          }
+        },{
+          text: 'حذف الصورة',
+          role: 'destructive',
+          handler: () => {
+            this.deleteProfilePic();
+          }
+        },{
+          text: 'إلغاء',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    })
+    actionSheet.present()
   }
 
   logout() {

@@ -32,7 +32,7 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <img class="logo" on-tap='openTeam(homeTeam)' src="https://upload.wikimedia.org/wikipedia/en/f/f8/Al-Hilal_newlogo.png" alt=""> {{homeTeam.name}}
+          <img class="logo" on-tap='openTeam(homeTeam)' src="{{homeTeam.logo}}" alt=""> {{homeTeam.name}}
           <h1>0</h1>
         </ion-col>
         <ion-col text-center style="padding-top: 60px;">
@@ -42,7 +42,7 @@
           </p>
         </ion-col>
         <ion-col text-center>
-          <img class="logo" on-tap='openTeam(awayTeam)' src="https://seeklogo.com/images/M/manchester-united-logo-F14DA1FCCD-seeklogo.com.png" alt=""> {{awayTeam.name}}
+          <img class="logo" on-tap='openTeam(awayTeam)' src="{{awayTeam.logo}}" alt=""> {{awayTeam.name}}
           <h1>0</h1>
         </ion-col>
       </ion-row>

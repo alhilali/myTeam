@@ -47,7 +47,7 @@ export class StartTeamPage {
           captain: uid,
           name: team.name,
           city: team.city || 'الرياض',
-          playersNum: 1,
+          logo: 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png',
           estDate: new Date().toDateString()
         })
 

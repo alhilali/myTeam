@@ -27,6 +27,7 @@ export class TeamPage {
   isCaptain = false;
   playersList: any[] = []
   playersListSub: any
+  teamSub: any
   section: string = 'one'
   matches: FirebaseListObservable<any[]>;
   months: any[] = [];
@@ -39,13 +40,25 @@ export class TeamPage {
       private teamDB: MyTeamDB,
       private alertCtrl: AlertController,
       private modlCtrl: ModalController) {
-    this.team = navParams.get('team');
-    if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
+    this.team.logo = '';
+    this.team.bg = '';
   }
 
   ionViewDidEnter () {
-    if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
-    this.playersListSub = this.db.list('playersList/'+this.team.$key)
+    this.loadTeam();
+    this.loadPlayers();
+  }
+
+  loadTeam() {
+    this.teamSub = this.db.object('teams/'+this.navParams.get('team').$key).subscribe(data=>{
+      this.team = data;
+      if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
+      if (!this.team.bg) this.team.bg = 'http://2.bp.blogspot.com/-IxU2acVSDds/UPPNBOwulyI/AAAAAAAACGU/3RaskOb8upk/s1600/Old+Trafford+wallpapers+12.jpg';
+    })
+  }
+
+  loadPlayers() {
+    this.playersListSub = this.db.list('playersList/'+this.navParams.get('team').$key)
     .subscribe(data=>{
       this.playersList = []
       let i;
@@ -121,6 +134,7 @@ export class TeamPage {
 
   ionViewWillLeave() {
     this.playersListSub.unsubscribe();
+    this.teamSub.unsubscribe();
     this.teamDB.unsubscribeAll();
   }
 

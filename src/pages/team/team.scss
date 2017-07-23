@@ -4,20 +4,25 @@ page-team {
     width: 100%;
   }
   .topContent {
-    height: 26vh;
+    height: 185px;
     background-color: rgba(0, 0, 0, 0.3);
   }
 
   .teamAvatar {
+    background-color: white;
     background-position: center;
     background-size: cover;
     border: solid 2px rgba(255, 255, 255, 255);
     border-radius: 50%;
-    display: inline-block;
     height: 78px;
-    left: auto;
-    position: relative;
     width: 78px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 70px; right: 0;
+  }
+
+  .infoSlideBottom {
+    margin-top: 60px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -72,6 +77,7 @@ page-team {
   }
 
   .avatar {
+    background-color: white;
     background-position: center;
     background-size: cover;
     border-radius: 50%;

@@ -19,6 +19,11 @@
 
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">
+
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-item-divider>
     جميع الفرق المشارك فيها
   </ion-item-divider>
@@ -26,7 +31,9 @@
     <ion-row align-items-start>
       <ion-col col-6 col-md class="noPadding" wrap *ngFor="let team of myTeams">
         <ion-card class="card1">
-          <img on-tap='openTeam(team)' src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
+          <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
+          <img *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
+          <img *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
           <ion-item>
             <h2>{{team.name}}</h2>
             <p>{{team.city}}</p>

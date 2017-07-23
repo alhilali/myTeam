@@ -68,19 +68,31 @@
 <ion-content fullscreen #myContent>
   <div class="profileBottom" [ngSwitch]="section">
     <div *ngSwitchCase="'one'">
+      <ion-item-divider>فرق اللاعب</ion-item-divider>
       <ion-row align-items-start *ngIf="myTeams?.length > 0">
-        <ion-col col-3 col-sm class="noPadding" wrap *ngFor="let team of myTeams">
+        <ion-col col-4 col-sm class="noPadding" wrap *ngFor="let team of myTeams">
           <ion-card class="profileCards">
-            <img on-tap='openTeam(team)' src="https://s-media-cache-ak0.pinimg.com/originals/0e/da/ec/0edaec258266cf651b9124a92f389c6b.png">
+            <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
+            <img *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
+            <img *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
+            <ion-item>
+              <h2 padding-bottom>{{team.name}}</h2>
+            </ion-item>
           </ion-card>
         </ion-col>
       </ion-row>
     </div>
     <div *ngSwitchCase="'two'">
-      تاب ٢
+      <ion-item-divider>
+        احصائيات اللاعب
+      </ion-item-divider>
+      <h6 text-center>قريباً</h6>
     </div>
     <div *ngSwitchCase="'three'">
-      تاب ٣
+      <ion-item-divider>
+        ميداليات اللاعب
+      </ion-item-divider>
+      <h6 text-center>قريباً</h6>
     </div>
   </div>
 </ion-content>
