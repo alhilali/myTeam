@@ -60,7 +60,17 @@
     </ion-item-divider>
     <span *ngFor="let match of matches">
       <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
-        <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
+        <ion-row justify-content-center>
+          <ion-col col-2>
+            <profile-pic className="matchLogo" ID="{{match.homeTeam}}" type="team"></profile-pic>
+          </ion-col>
+          <ion-col col-6>
+            <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
+          </ion-col>
+          <ion-col col-2>
+            <profile-pic className="matchLogo" ID="{{match.awayTeam}}" type="team"></profile-pic>
+          </ion-col>
+        </ion-row>
         <date text-center requestID="{{match.$key}}" day="true"></date>
       </ion-item>
     </span>

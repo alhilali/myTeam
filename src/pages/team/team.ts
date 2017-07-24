@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { IonicPage, NavController, Slides,
    NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Team } from '../../models/team';
@@ -28,9 +28,11 @@ export class TeamPage {
   playersList: any[] = []
   playersListSub: any
   teamSub: any
-  section: string = 'one'
+  section: string = '0'
   matches: FirebaseListObservable<any[]>;
   months: any[] = [];
+  @ViewChildren(Slides) slides: QueryList<Slides>;
+  bottomSlides: Slides
 
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
@@ -42,6 +44,10 @@ export class TeamPage {
       private modlCtrl: ModalController) {
     this.team.logo = '';
     this.team.bg = '';
+  }
+
+  ngAfterViewInit() {
+    this.bottomSlides = this.slides.toArray()[1];
   }
 
   ionViewDidEnter () {
@@ -73,7 +79,14 @@ export class TeamPage {
   }
 
   segmentChanged(event) {
-    if (event.value == 'three') this.loadGames();
+    if (event.value == '2') this.loadGames();
+    this.bottomSlides.slideTo(event.value, 500);
+  }
+
+  slideChanged() {
+    let currentIndex = this.bottomSlides.getActiveIndex();
+    this.section = currentIndex +'';
+    if (currentIndex == 2) this.loadGames();
   }
 
   loadGames() {
@@ -95,8 +108,7 @@ export class TeamPage {
   }
 
   openMatchRequest(request) {
-    let modal = this.modlCtrl.create(MatchPage, {request: request});
-    modal.present();
+    this.navCtrl.push(MatchPage, {request: request})
   }
 
   removePlayer(player) {

@@ -72,9 +72,11 @@ export class NotificationPage {
   }
 
   doRefresh(refresher) {
+    this.loadTeamRequests();
+    this.loadMatchRequests();
     setTimeout(() => {
       refresher.complete();
-    }, 3000);
+    }, 1000);
   }
 
   acceptTeam(team) {
@@ -107,8 +109,7 @@ export class NotificationPage {
   }
 
   openMatchRequest(request) {
-    let modal = this.modlCtrl.create(MatchPage, {request: request});
-    modal.present();
+    this.navCtrl.push(MatchPage, {request: request})
   }
 
   ionViewWillLeave() {

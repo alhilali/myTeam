@@ -48,13 +48,13 @@
 
   <ion-toolbar no-padding color="white" mode="md">
     <ion-segment color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="one">
+      <ion-segment-button value="0">
         <ion-icon class="largeIcon" name="ios-people"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="two">
+      <ion-segment-button value="1">
         <ion-icon class="largeIcon" name="md-trophy"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="three">
+      <ion-segment-button value="2">
         <ion-icon class="largeIcon" name="md-calendar"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -64,54 +64,68 @@
 
 
 <ion-content fullscreen #myContent>
-  <div class="profileBottom" [ngSwitch]="section">
-    <ion-list *ngSwitchCase="'one'" no-margin>
-      <ion-item-divider>لاعبي الفريق</ion-item-divider>
-      <ion-item class="fixedBorder" *ngFor="let player of playersList">
-        <span item-start>
-            <profile-pic userID="{{player.$key}}"></profile-pic>
-          </span>
-        <span item-content>
-            <ion-chip color="orange">
-              <ion-label>{{player.position}}</ion-label>
-            </ion-chip>
-            <button ion-button clear (click)='showPlayer(player)'>
-              <h2>{{player.name}}</h2>
-            </button>
-          </span>
-        <span *ngIf="this.team.captain == player.$key" item-end>
-            <ion-chip color="gold">
-              <ion-label>كابتن</ion-label>
-            </ion-chip>
-          </span>
-        <span *ngIf="this.team.captain != player.$key && isCaptain == true" item-end>
-            <ion-icon (click)="removePlayer(player)" color="danger" class="largeIcon" name="trash"></ion-icon>
-          </span>
-      </ion-item>
-    </ion-list>
-    <div *ngSwitchCase="'two'">
-      <ion-item-divider>
-        البطولات
-      </ion-item-divider>
-      <h6 text-center>قريباً</h6>
-    </div>
-    <div *ngSwitchCase="'three'">
-      <ion-item-divider>
-        التقويم
-      </ion-item-divider>
-      <ion-list no-margin>
-        <span *ngFor="let month of months">
-        <ion-item-divider class="monthLabel">
-          {{month.name}}
-        </ion-item-divider>
-        <span *ngFor="let match of matches | async">
-          <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
-            <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
-            <date text-center requestID="{{match.$key}}" day="true"></date>
+  <div class="profileBottom">
+    <ion-slides dir="rtl" parallax="true" (ionSlideWillChange)="slideChanged()">
+      <ion-slide>
+        <ion-list no-margin>
+          <ion-item-divider>لاعبي الفريق</ion-item-divider>
+          <ion-item class="fixedBorder" *ngFor="let player of playersList">
+            <span item-start>
+                <profile-pic className="avatar" ID="{{player.$key}}" type="user"></profile-pic>
+              </span>
+            <span item-content>
+                <ion-chip color="orange">
+                  <ion-label>{{player.position}}</ion-label>
+                </ion-chip>
+                <button ion-button clear (click)='showPlayer(player)'>
+                  <h2>{{player.name}}</h2>
+                </button>
+              </span>
+            <span *ngIf="this.team.captain == player.$key" item-end>
+                <ion-chip color="gold">
+                  <ion-label>كابتن</ion-label>
+                </ion-chip>
+              </span>
+            <span *ngIf="this.team.captain != player.$key && isCaptain == true" item-end>
+                <ion-icon (click)="removePlayer(player)" color="danger" class="largeIcon" name="trash"></ion-icon>
+              </span>
           </ion-item>
-        </span>
-        </span>
-      </ion-list>
-    </div>
+        </ion-list>
+      </ion-slide>
+      <ion-slide>
+        <ion-item-divider>
+          البطولات
+        </ion-item-divider>
+        <h6 text-center>قريباً</h6>
+      </ion-slide>
+      <ion-slide>
+        <ion-list no-margin>
+          <ion-item-divider>
+            التقويم
+          </ion-item-divider>
+          <span *ngFor="let month of months">
+            <ion-item-divider class="monthLabel">
+              {{month.name}}
+            </ion-item-divider>
+            <span *ngFor="let match of matches | async">
+              <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
+                <ion-row justify-content-center>
+                  <ion-col col-2>
+                    <profile-pic className="matchLogo" ID="{{match.homeTeam}}" type="team"></profile-pic>
+                  </ion-col>
+                  <ion-col col-6>
+                    <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
+                  </ion-col>
+                  <ion-col col-2>
+                    <profile-pic className="matchLogo" ID="{{match.awayTeam}}" type="team"></profile-pic>
+                  </ion-col>
+                </ion-row>
+                <date text-center requestID="{{match.$key}}" day="true"></date>
+              </ion-item>
+            </span>
+          </span>
+        </ion-list>
+      </ion-slide>
+    </ion-slides>
   </div>
 </ion-content>

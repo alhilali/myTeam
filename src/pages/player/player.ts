@@ -1,4 +1,4 @@
-import { Component, ElementRef} from '@angular/core';
+import { Component, ViewChildren, QueryList} from '@angular/core';
 import { IonicPage, NavController,
    NavParams, ModalController, Slides, Content } from 'ionic-angular';
 import { User } from '../../models/user';
@@ -23,19 +23,24 @@ export class PlayerPage {
   currentUser: boolean = false
   myTeams: any[] = []
   myTeamsSub: any
-  section: string = 'one';
+  section: string = '0';
+  @ViewChildren(Slides) slides: QueryList<Slides>;
+  bottomSlides: Slides
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private afAuth: AngularFireAuth,
      private db: AngularFireDatabase,
-     private modlCtrl: ModalController,
-     public element: ElementRef) {
+     private modlCtrl: ModalController) {
     this.player = this.navParams.get('player');
   }
 
   ionViewWillLoad() {
     if(this.player.$key == this.afAuth.auth.currentUser.uid) this.currentUser = true;
+  }
+
+  ngAfterViewInit() {
+    this.bottomSlides = this.slides.toArray()[1];
   }
 
   ionViewDidLoad () {
@@ -49,6 +54,15 @@ export class PlayerPage {
         })
       }
     })
+  }
+
+  segmentChanged(event) {
+    this.bottomSlides.slideTo(event.value, 500);
+  }
+
+  slideChanged() {
+    let currentIndex = this.bottomSlides.getActiveIndex();
+    this.section = currentIndex +'';
   }
 
   addPlayer() {

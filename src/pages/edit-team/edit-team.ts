@@ -50,8 +50,8 @@ export class EditTeamPage {
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
-      targetWidth: 800,
-      targetHeight: 500
+      targetWidth: 600,
+      targetHeight: 300
     }
     this.camera.getPicture(options).then((imageData) => {
      // imageData is either a base64 encoded string or a file URI

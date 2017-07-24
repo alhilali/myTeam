@@ -24,20 +24,30 @@
   <ion-card class="card1">
     <form name="editForm" novalidate>
       <div [formGroup]='editForm'>
-        <ion-item text-center>
-          <div *ngIf="user.profilePic" on-tap='presentActionSheet()' class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.profilePic + ')'}"></div>
-          <div *ngIf="!user.profilePic" on-tap='presentActionSheet()' class="avatar" style="background-image: url('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');"></div>
-        </ion-item>
+        <button ion-item (click)="presentActionSheet('profilePic')">
+          <div *ngIf="user.profilePic" class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.profilePic + ')'}"></div>
+          <div *ngIf="!user.profilePic" class="avatar" style="background-image: url('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');"></div>
+        </button>
+        <button ion-item (click)="presentActionSheet('bg')">
+          <div *ngIf="user.bg" class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.bg + ')'}"></div>
+          <div *ngIf="!user.bg" class="avatar" style="background-image: url('https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png');"></div>
+        </button>
         <ion-item>
+          <ion-label>
+            <ion-icon class="largeIcon" name="ios-person"></ion-icon>
+          </ion-label>
           <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
         </ion-item>
-        <ion-item dir="ltr">
+        <ion-item>
           <ion-label>
-            <h1>@</h1></ion-label>
-          <ion-input type="text" [(ngModel)]="user.originalUsername" formControlName='username' placeholder="username"></ion-input>
+            <ion-icon class="largeIcon" name="ios-at"></ion-icon>
+          </ion-label>
+          <ion-input dir="ltr" type="text" [(ngModel)]="user.originalUsername" formControlName='username' placeholder="username"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>المركز</ion-label>
+          <ion-label>
+            <ion-icon class="largeIcon" name="ios-analytics"></ion-icon>
+          </ion-label>
           <ion-select [(ngModel)]="user.position" formControlName='position' name="position" interface='popover'>
             <ion-option value="GK" selected>حارس</ion-option>
             <ion-option value="DF">دفاع</ion-option>
@@ -46,6 +56,9 @@
           </ion-select>
         </ion-item>
         <ion-item>
+          <ion-label>
+            <ion-icon class="largeIcon" name="ios-mail"></ion-icon>
+          </ion-label>
           <ion-input dir='ltr' type="text" [(ngModel)]="user.email" formControlName='email' placeholder="البريد الالكتروني"></ion-input>
         </ion-item>
 

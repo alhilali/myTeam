@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons end>
       <button (click)="openModal()" ion-button icon-only>
-        <profile-pic userID="{{currentUser.uid}}"></profile-pic>
+        <profile-pic className="avatar" type="user" ID="{{currentUserId}}"></profile-pic>
       </button>
     </ion-buttons>
     <ion-buttons start>
@@ -21,129 +21,6 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-card class="card1">
-      <ion-item>
-        <ion-avatar item-start>
-          <profile-pic userID="null"></profile-pic>
-        </ion-avatar>
-        <h2>محمد</h2>
-        <p>Mohammed@</p>
-      </ion-item>
-      <img src="http://s.weltsport.net/bilder/teamfotos/640x360/543.jpg">
-      <ion-card-content>
-        <p>يبحث عن نادي</p>
-      </ion-card-content>
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <ion-card class="card1">
-      <ion-item>
-        <ion-avatar item-start>
-          <profile-pic userID="null"></profile-pic>
-        </ion-avatar>
-        <h2>فيصل</h2>
-        <p>Faisal@</p>
-      </ion-item>
-      <img src="http://i2.mirror.co.uk/incoming/article6456386.ece/ALTERNATES/s615/youngfifa16main.jpg">
-      <ion-card-content>
-        <p>انشئ فريق جديد</p>
-      </ion-card-content>
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </ion-list>
-  <ion-list>
-    <ion-card class="card1">
-      <img src="http://images.mid-day.com/images/2017/may/champions-trophy.jpg">
-      <ion-card-content>
-        <h2>بطولة ابطال الرياض</h2>
-        <p>شارك مع فريقك التحدي</p>
-      </ion-card-content>
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <ion-card class="card1">
-      <ion-item>
-        <ion-avatar item-start>
-          <profile-pic userID="null"></profile-pic>
-        </ion-avatar>
-        <h2>مشعل</h2>
-        <p>Mishaal@</p>
-      </ion-item>
-      <img src="http://s.weltsport.net/bilder/teamfotos/640x360/543.jpg">
-      <ion-card-content>
-        <p>يبحث عن نادي</p>
-      </ion-card-content>
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-card>
+    <post *ngFor="let post of posts" [post]="post"></post>
   </ion-list>
 </ion-content>

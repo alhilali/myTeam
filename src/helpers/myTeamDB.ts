@@ -287,6 +287,19 @@ export class MyTeamDB {
     })
   }
 
+  getPosts() {
+    return new Promise(resolve => {
+      const ref = this.db.list("timeline/", {
+        query: {
+          orderByChild: 'timestamp'
+        }
+      })
+      .take(1).subscribe(posts=>{
+        resolve(posts)
+      })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

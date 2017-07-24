@@ -22,6 +22,8 @@ import { NotificationPage } from '../pages/notification/notification'
 import { RequestMatchPage } from '../pages/request-match/request-match'
 import { MatchPage } from '../pages/match/match'
 import { EditTeamPage } from '../pages/edit-team/edit-team';
+import { ComposePage } from '../pages/compose/compose';
+import { PostPage } from '../pages/post/post';
 
 import { UsernameValidator } from '../validators/username'
 import { MyTeamDB } from '../helpers/myTeamDB'
@@ -44,6 +46,7 @@ import { ShrinkingSegmentHeader } from '../components/shrinking-segment-header/s
 import { MatchItemComponent } from '../components/match-item/match-item';
 import { DateComponent } from '../components/date/date';
 import { ProfilePicComponent } from '../components/profile-pic/profile-pic';
+import { PostComponent } from '../components/post/post';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -73,17 +76,20 @@ const cloudSettings: CloudSettings = {
     RequestMatchPage,
     MatchPage,
     EditTeamPage,
+    ComposePage,
+    PostPage,
     ParallaxHeaderDirective,
     ShrinkingSegmentHeader,
     MatchItemComponent,
     DateComponent,
-    ProfilePicComponent
+    ProfilePicComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
-      backButtonText: 'الرجوع',
-      swipeBackEnabled: true
+      backButtonText: '',
+      swipeBackEnabled: true,
     }),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
@@ -113,7 +119,9 @@ const cloudSettings: CloudSettings = {
     NotificationPage,
     RequestMatchPage,
     MatchPage,
-    EditTeamPage
+    EditTeamPage,
+    ComposePage,
+    PostPage
   ],
   providers: [
     StatusBar,

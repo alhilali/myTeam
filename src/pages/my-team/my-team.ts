@@ -221,8 +221,7 @@ export class MyTeamPage {
   }
 
   openMatchRequest(request) {
-    let modal = this.modal.create(MatchPage, {request: request});
-    modal.present();
+    this.navCtrl.push(MatchPage, {request: request})
   }
 
   ionViewWillLeave() {

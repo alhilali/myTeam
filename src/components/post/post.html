@@ -1,0 +1,33 @@
+<!-- Generated template for the PostComponent component -->
+<ion-card [ngClass]="className ? className : 'card1'">
+  <ion-item>
+    <ion-avatar item-start>
+      <profile-pic ID="{{postInfo.by}}" type="user" on-tap="openPlayer()"></profile-pic>
+    </ion-avatar>
+    <h2>{{user.name}}</h2>
+    <p>{{user.originalUsername}}@</p>
+  </ion-item>
+  <ion-card-content>
+    <h2>{{postInfo.title}}</h2>
+    <ng-content></ng-content>
+  </ion-card-content>
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>12</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button (click)="openPost()" ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>4</div>
+      </button>
+    </ion-col>
+    <ion-col center text-center>
+      <ion-note>
+        {{date}}
+      </ion-note>
+    </ion-col>
+  </ion-row>
+</ion-card>

@@ -193,7 +193,7 @@ export class EditProfilePage {
     }).present();
   }
 
-  changePhoto() {
+  changePhoto(type) {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -211,13 +211,14 @@ export class EditProfilePage {
 
      let storageRef = firebase.storage().ref();
      const filename = this.afAuth.auth.currentUser.uid;
-     const imageRef = storageRef.child(`profilePics/${filename}.jpg`)
+     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
 
      imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
      .then((snap)=>{
-       this.db.object('/users/'+this.afAuth.auth.currentUser.uid)
-       .update({profilePic: snap.downloadURL})
-       this.user.profilePic = snap.downloadURL;
+       const ref = this.db.object('/users/'+this.afAuth.auth.currentUser.uid)
+
+       if (type == 'profilePic') ref.update({profilePic: snap.downloadURL})
+       else ref.update({bg: snap.downloadURL})
        this.updateNotification('الصورة الشخصية')
      })
     }, (err) => {
@@ -225,35 +226,42 @@ export class EditProfilePage {
     });
   }
 
-  deleteProfilePic() {
+  deletePic(type) {
     let storageRef = firebase.storage().ref();
     const filename = this.afAuth.auth.currentUser.uid;
-    const imageRef = storageRef.child(`profilePics/${filename}.jpg`)
+    const imageRef = storageRef.child(`${filename}/${type}.jpg`)
     imageRef.delete().then(()=> {
       this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/profilePic')
       .remove();
       this.user.profilePic = null;
-
+      if (type == 'profilePic') {
+        this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/profilePic')
+        .set('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');
+      }
+      else {
+        this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/bg')
+        .set('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');
+      }
     }).catch((error)=> {
       // Uh-oh, an error occurred!
       console.log(error)
     });
   }
 
-  presentActionSheet() {
+  presentActionSheet(type) {
+    let typeConverted = type == 'bg' ? 'خلفية الحساب' : 'الصورة الشخصية'
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'إعدادات الفريق',
       buttons: [
         {
-          text: 'تغيير صورة الحساب',
+          text: 'تغيير '+typeConverted,
           handler: () => {
-            this.changePhoto();
+            this.changePhoto(type);
           }
         },{
           text: 'حذف الصورة',
           role: 'destructive',
           handler: () => {
-            this.deleteProfilePic();
+            this.deletePic(type);
           }
         },{
           text: 'إلغاء',

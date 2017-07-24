@@ -19,7 +19,7 @@
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
-          <profile-pic userID="{{player.$key}}"></profile-pic>
+          <profile-pic className="avatar" ID="{{player.$key}}" type="user"></profile-pic>
           <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" color="light" name="ios-cog"></ion-icon>
           <h3 class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>
@@ -50,13 +50,13 @@
 
   <ion-toolbar no-padding color="white" mode="md">
     <ion-segment class="segment" color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="one">
+      <ion-segment-button value="0">
         <ion-icon name="md-football"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="two">
+      <ion-segment-button value="1">
         <ion-icon name="md-trophy"></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="three">
+      <ion-segment-button value="2">
         <ion-icon name="md-medal"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -66,33 +66,35 @@
 
 
 <ion-content fullscreen #myContent>
-  <div class="profileBottom" [ngSwitch]="section">
-    <div *ngSwitchCase="'one'">
-      <ion-item-divider>فرق اللاعب</ion-item-divider>
-      <ion-row align-items-start *ngIf="myTeams?.length > 0">
-        <ion-col col-4 col-sm class="noPadding" wrap *ngFor="let team of myTeams">
-          <ion-card class="profileCards">
-            <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
-            <img *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
-            <img *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
-            <ion-item>
-              <h2 padding-bottom>{{team.name}}</h2>
-            </ion-item>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </div>
-    <div *ngSwitchCase="'two'">
-      <ion-item-divider>
-        احصائيات اللاعب
-      </ion-item-divider>
-      <h6 text-center>قريباً</h6>
-    </div>
-    <div *ngSwitchCase="'three'">
-      <ion-item-divider>
-        ميداليات اللاعب
-      </ion-item-divider>
-      <h6 text-center>قريباً</h6>
-    </div>
+  <div class="profileBottom">
+    <ion-slides dir="rtl" parallax="true" (ionSlideWillChange)="slideChanged()">
+      <ion-slide>
+        <ion-item-divider>فرق اللاعب</ion-item-divider>
+        <ion-row align-items-start *ngIf="myTeams?.length > 0">
+          <ion-col col-4 col-sm class="noPadding" wrap *ngFor="let team of myTeams">
+            <ion-card class="profileCards">
+              <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
+              <img *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
+              <img *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
+              <ion-item>
+                <h2 padding-bottom>{{team.name}}</h2>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+      <ion-slide>
+        <ion-item-divider>
+          احصائيات اللاعب
+        </ion-item-divider>
+        <h6 text-center>قريباً</h6>
+      </ion-slide>
+      <ion-slide>
+        <ion-item-divider>
+          ميداليات اللاعب
+        </ion-item-divider>
+        <h6 text-center>قريباً</h6>
+      </ion-slide>
+    </ion-slides>
   </div>
 </ion-content>

@@ -12,20 +12,34 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
   templateUrl: 'profile-pic.html'
 })
 export class ProfilePicComponent {
-  @Input('userID') userID: any;
+  @Input('ID') id: any;
+  @Input('className') className: any;
+  @Input('type') type: any;
+  @Input('url') url: any;
   profilePic: string = ''
 
   constructor(private teamDB: MyTeamDB) {
   }
 
   async ngAfterViewInit () {
-    let userInfo;
-    await this.teamDB.getUserInfo(this.userID).then(user=>{
-      userInfo = user;
-    })
+    let info;
+    if (this.type == 'user') {
+      if (this.id) {
+        await this.teamDB.getUserInfo(this.id).then(user=>{
+          info = user;
+        })
+      }
+    } else if (this.type == 'team') {
+      if (this.id) {
+        await this.teamDB.getTeamInfo(this.id).then(user=>{
+          info = user;
+        })
+      }
+    }
     Promise.resolve().then(() => {
-      if (userInfo.profilePic) this.profilePic = userInfo.profilePic;
-      else this.profilePic = 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg';
+      if (this.id && this.type == 'user' && info.profilePic) this.profilePic = info.profilePic;
+      else if (this.id && this.type == 'team') this.profilePic = info.logo;
+      else this.profilePic = this.url;
     });
   }
 }
