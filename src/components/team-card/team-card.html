@@ -1,0 +1,43 @@
+<!-- Generated template for the TeamCardComponent component -->
+<ion-card [ngClass]="className ? className : 'card1'">
+  <ion-item>
+    <ion-avatar item-start>
+      <img on-tap='openTeam(teamInfo)' src="{{teamInfo.logo}}" alt="">
+    </ion-avatar>
+    <h2>{{teamInfo.name}}</h2>
+    <p>{{teamInfo.city}}</p>
+    <div class="more" text-left>
+      <button ion-button (click)='presentActionSheet(teamInfo)' clear>
+        <ion-icon class="mdIcon" name="md-more"></ion-icon>
+      </button>
+    </div>
+  </ion-item>
+  <div *ngIf='teamInfo.bg' class="bg" on-tap='openTeam(teamInfo)' [ngStyle]="{ 'background-image': 'url(' + teamInfo.bg + ')'}">
+
+  </div>
+  <div *ngIf='!teamInfo.bg' class="bg" on-tap='openTeam(teamInfo)' style="background-image: url(https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
+
+  </div>
+  <div class="card-content" text-center>
+    <ion-row justify-content-center>
+      <ion-icon padding-horizontal class="largeIcon" name="ios-people" color='lightBlue'></ion-icon>
+      <ion-icon padding-horizontal class="largeIcon" name="md-trophy" color='gold'></ion-icon>
+    </ion-row>
+    <ion-row justify-content-center class="numsInfo">
+      <ion-col col-2>
+        <p>
+          <span *ngIf="playersNum == 0">لا يوجد</span>
+          <span *ngIf="playersNum > 0">{{playersNum}}</span>
+        </p>
+      </ion-col>
+      <p style="font-weight: bold; font-size: large;">
+        &middot;
+      </p>
+      <ion-col col-2>
+        <p>
+          لا يوجد
+        </p>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-card>

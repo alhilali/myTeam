@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { SearchPage } from '../search/search';
 import { HomePage } from '../home/home';
-import { MyTeamPage } from '../my-team/my-team'
 import { NotificationPage } from '../notification/notification'
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -13,9 +12,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = MyTeamPage;
-  tab3Root = NotificationPage;
-  tab4Root = SearchPage;
+  tab2Root = 'MyTeamPage';
+  tab3Root = 'NotificationPage';
+  tab4Root = 'SearchPage';
   notificationNum: number;
   userRequestsNum: number = 0;
   matchRequestsNum: number = 0;

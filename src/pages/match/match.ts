@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { TeamPage } from '../team/team';
 
 /**
  * Generated class for the MatchPage page.
@@ -79,7 +78,7 @@ export class MatchPage {
   }
 
   openTeam(team) {
-    this.navCtrl.push(TeamPage, {team: team})
+    this.navCtrl.push('TeamPage', {team: team})
   }
 
   closeModel() {

@@ -47,6 +47,8 @@ import { MatchItemComponent } from '../components/match-item/match-item';
 import { DateComponent } from '../components/date/date';
 import { ProfilePicComponent } from '../components/profile-pic/profile-pic';
 import { PostComponent } from '../components/post/post';
+import { TeamCardComponent } from '../components/team-card/team-card';
+import { ComponentsModule } from '../components/components.module'
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -57,33 +59,8 @@ const cloudSettings: CloudSettings = {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
-    WelcomePage,
-    LoginPage,
-    RegisterPage,
-    EditProfilePage,
-    MyTeamPage,
-    StartTeamPage,
-    TeamPage,
-    AddPlayerPage,
-    PlayerPage,
-    SearchPage,
-    AddPlayerToTeamPage,
-    NotificationPage,
-    RequestMatchPage,
-    MatchPage,
-    EditTeamPage,
-    ComposePage,
-    PostPage,
-    ParallaxHeaderDirective,
-    ShrinkingSegmentHeader,
-    MatchItemComponent,
-    DateComponent,
-    ProfilePicComponent,
-    PostComponent
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -95,33 +72,14 @@ const cloudSettings: CloudSettings = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     CalendarModule,
-
+    ComponentsModule,
     CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
     TabsPage,
-    WelcomePage,
-    LoginPage,
-    RegisterPage,
-    EditProfilePage,
-    MyTeamPage,
-    StartTeamPage,
-    TeamPage,
-    AddPlayerPage,
-    PlayerPage,
-    SearchPage,
-    AddPlayerToTeamPage,
-    NotificationPage,
-    RequestMatchPage,
-    MatchPage,
-    EditTeamPage,
-    ComposePage,
-    PostPage
+    HomePage
   ],
   providers: [
     StatusBar,

@@ -4,9 +4,7 @@ import { IonicPage, NavController,
 import { User } from '../../models/user';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { EditProfilePage } from '../edit-profile/edit-profile'
-import { TeamPage } from '../team/team';
-import { AddPlayerToTeamPage } from '../add-player-to-team/add-player-to-team'
+
 /**
  * Generated class for the PlayerPage page.
  *
@@ -19,10 +17,11 @@ import { AddPlayerToTeamPage } from '../add-player-to-team/add-player-to-team'
   templateUrl: 'player.html',
 })
 export class PlayerPage {
-  player: any
+  player = {} as User
+  prmPlayer: any = {}
+  playerSub: any
   currentUser: boolean = false
   myTeams: any[] = []
-  myTeamsSub: any
   section: string = '0';
   @ViewChildren(Slides) slides: QueryList<Slides>;
   bottomSlides: Slides
@@ -32,32 +31,51 @@ export class PlayerPage {
      private afAuth: AngularFireAuth,
      private db: AngularFireDatabase,
      private modlCtrl: ModalController) {
-    this.player = this.navParams.get('player');
+       this.prmPlayer = navParams.get('player');
+       this.player.bg = '';
   }
 
   ionViewWillLoad() {
-    if(this.player.$key == this.afAuth.auth.currentUser.uid) this.currentUser = true;
+    if(this.navParams.get('player').$key == this.afAuth.auth.currentUser.uid) this.currentUser = true;
+    this.loadPlayer();
   }
 
   ngAfterViewInit() {
     this.bottomSlides = this.slides.toArray()[1];
+    this.bottomSlides.lockSwipes(true);
   }
 
   ionViewDidLoad () {
-    this.myTeamsSub = this.db.list('users/'+this.player.$key
-    +'/myTeams').subscribe(data=>{
-      this.myTeams = []
-      let i;
-      for(i = 0; i<data.length; i++) {
-        this.db.object('teams/'+data[i].teamId).take(1).subscribe(team=>{
-          this.myTeams.push(team)
-        })
-      }
+    this.loadPlayer();
+    this.loadMyTeams();
+  }
+
+  loadPlayer() {
+    if (this.playerSub) this.playerSub.unsubscribe();
+    this.playerSub = this.db.object('users/'+this.navParams.get('player').$key)
+    .subscribe(data=>{
+      this.player = data;
+      if (!this.player.bg) this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
     })
   }
 
+  loadMyTeams() {
+    this.db.list('users/'+this.navParams.get('player').$key
+   +'/myTeams').take(1).subscribe(data=>{
+     this.myTeams = []
+     let i;
+     for(i = 0; i<data.length; i++) {
+       this.db.object('teams/'+data[i].teamId).take(1).subscribe(team=>{
+         this.myTeams.push(team)
+       })
+     }
+   })
+  }
+
   segmentChanged(event) {
+    this.bottomSlides.lockSwipes(false);
     this.bottomSlides.slideTo(event.value, 500);
+    this.bottomSlides.lockSwipes(true);
   }
 
   slideChanged() {
@@ -66,22 +84,22 @@ export class PlayerPage {
   }
 
   addPlayer() {
-    let modal = this.modlCtrl.create(AddPlayerToTeamPage, {player: this.player});
+    let modal = this.modlCtrl.create('AddPlayerToTeamPage', {player: this.player});
     modal.present();
   }
 
   ionViewWillLeave() {
-    this.myTeamsSub.unsubscribe();
+    this.playerSub.unsubscribe();
   }
 
   openModal() {
-    this.myTeamsSub.unsubscribe();
-    let modal = this.modlCtrl.create(EditProfilePage, {player: this.player});
+    this.playerSub.unsubscribe();
+    let modal = this.modlCtrl.create('EditProfilePage', {player: this.player});
     modal.present();
   }
 
   openTeam(team) {
-    this.navCtrl.push(TeamPage, {team: team})
+    this.navCtrl.push('TeamPage', {team: team})
   }
 
 }

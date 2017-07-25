@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ActionSheetController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ActionSheetController, ModalController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { PlayerPage } from '../player/player';
-import { ComposePage } from '../compose/compose';
-import { PostPage } from '../post/post';
 
 @Component({
   selector: 'page-home',
@@ -14,6 +11,7 @@ export class HomePage {
   currentUser: any = {}
   currentUserId: any
   posts: any[]
+  blur: boolean = false;
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
     private teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
@@ -46,12 +44,16 @@ export class HomePage {
   }
 
   openModal() {
-    this.navCtrl.push(PlayerPage, { player: this.currentUser });
+    this.navCtrl.push('PlayerPage', { player: this.currentUser });
   }
 
   compose() {
-    const myModal = this.modal.create(ComposePage, { player: this.currentUser });
+    const myModal = this.modal.create('ComposePage', { player: this.currentUser })
     myModal.present();
+    this.blur = true;
+    myModal.onWillDismiss(()=>{
+      this.blur = false;
+    })
   }
 
 }

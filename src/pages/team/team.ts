@@ -4,11 +4,7 @@ import { IonicPage, NavController, Slides,
 import { Team } from '../../models/team';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AddPlayerPage } from '../add-player/add-player'
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { PlayerPage } from '../player/player';
-import { RequestMatchPage } from '../request-match/request-match';
-import { MatchPage } from '../match/match'
 import * as moment from 'moment';
 
 /**
@@ -48,6 +44,7 @@ export class TeamPage {
 
   ngAfterViewInit() {
     this.bottomSlides = this.slides.toArray()[1];
+    this.bottomSlides.lockSwipes(true);
   }
 
   ionViewDidEnter () {
@@ -80,7 +77,9 @@ export class TeamPage {
 
   segmentChanged(event) {
     if (event.value == '2') this.loadGames();
+    this.bottomSlides.lockSwipes(false);
     this.bottomSlides.slideTo(event.value, 500);
+    this.bottomSlides.lockSwipes(true);
   }
 
   slideChanged() {
@@ -108,7 +107,7 @@ export class TeamPage {
   }
 
   openMatchRequest(request) {
-    this.navCtrl.push(MatchPage, {request: request})
+    this.navCtrl.push('MatchPage', {request: request})
   }
 
   removePlayer(player) {
@@ -151,16 +150,16 @@ export class TeamPage {
   }
 
   showPlayer(player) {
-    this.navCtrl.push(PlayerPage, {player: player})
+    this.navCtrl.push('PlayerPage', {player: player})
   }
 
   addPlayer() {
-    const myModal = this.modal.create(AddPlayerPage, {team: this.team});
+    const myModal = this.modal.create('AddPlayerPage', {team: this.team});
     myModal.present();
   }
 
   requestMatch() {
-    const myModal = this.modal.create(RequestMatchPage, {team: this.team});
+    const myModal = this.modal.create('RequestMatchPage', {team: this.team});
     myModal.present();
   }
 

@@ -27,22 +27,9 @@
   <ion-item-divider>
     جميع الفرق المشارك فيها
   </ion-item-divider>
-  <ion-item-group *ngIf="myTeams?.length > 0 ">
-    <ion-row align-items-start>
-      <ion-col col-6 col-md class="noPadding" wrap *ngFor="let team of myTeams">
-        <ion-card class="card1">
-          <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
-          <img *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
-          <img *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
-          <ion-item>
-            <h2>{{team.name}}</h2>
-            <p>{{team.city}}</p>
-            <button ion-button (click)='presentActionSheet(team)' item-end clear>
-              <ion-icon name="md-more"></ion-icon>
-            </button>
-          </ion-item>
-        </ion-card>
-      </ion-col>
+  <ion-item-group padding-bottom *ngIf="myTeams?.length > 0 ">
+    <ion-row *ngFor="let team of myTeams">
+      <team-card style="width: 100%" [team]='team'></team-card>
     </ion-row>
   </ion-item-group>
   <div *ngIf="hasNoTeams" text-center>

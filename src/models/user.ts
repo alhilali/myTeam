@@ -7,4 +7,5 @@ export interface User {
   position: string;
   myTeams: any[];
   profilePic: string;
+  bg: string;
 }

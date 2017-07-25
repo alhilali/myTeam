@@ -9,8 +9,8 @@
   <ion-navbar>
     <ion-title>التفاصيل</ion-title>
     <ion-buttons end>
-      <button ion-button clear icon-only>
-        <ion-icon name="ios-share-outline" color="white"></ion-icon>
+      <button (click)="options()" ion-button clear icon-only>
+        <ion-icon name="md-more" color="white"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -25,18 +25,40 @@
     </p>
   </post>
   <ion-item-divider>التعليقات</ion-item-divider>
-  <ion-footer dir="rtl" class="bottomBar">
-    <ion-row align-items-center>
-      <ion-col col-9>
-        <ion-input [(ngModel)]="comment" placeholder="ادخل تعليقك" type="text"></ion-input>
-      </ion-col>
-      <ion-col col-3>
-        <ion-buttons end>
-          <button ion-button round color="gold" small>
-            <ion-icon name="md-checkmark" class="largeIcon" color="green"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
-  </ion-footer>
+  <ion-list no-margin>
+    <ion-item-sliding *ngFor="let comment of comments | async">
+      <ion-item class="fixedBorder">
+        <span item-start>
+        <ion-avatar>
+          <profile-pic ID="{{comment.by}}" type="user"></profile-pic>
+        </ion-avatar>
+      </span>
+        <h3 no-margin>
+          <name ID="{{comment.by}}" type="user"></name>
+        </h3>
+        <p no-margin text-right>
+          {{comment.message}}
+        </p>
+      </ion-item>
+      <ion-item-options *ngIf="currentUserID == comment.by" side="left">
+        <button (click)="deleteComment(comment)" ion-button icon-only color="danger">
+          <ion-icon name="md-trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
+<ion-footer dir="rtl" class="bottomBar">
+  <ion-row align-items-center>
+    <ion-col col-9>
+      <ion-input [(ngModel)]="comment" placeholder="ادخل تعليقك" type="text"></ion-input>
+    </ion-col>
+    <ion-col col-3>
+      <ion-buttons end>
+        <button ion-button (click)="sendComment()" round color="gold" [disabled]="comment.length == 0" small>
+          <ion-icon name="md-checkmark" class="largeIcon" color="green"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+</ion-footer>

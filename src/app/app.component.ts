@@ -20,7 +20,7 @@ export class MyApp {
     platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
      private keyboard: Keyboard) {
     afAuth.auth.onAuthStateChanged(user => {
-      this.rootPage = user ? TabsPage : WelcomePage;
+      this.rootPage = user ? TabsPage : 'WelcomePage';
     })
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

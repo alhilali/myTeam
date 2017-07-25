@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Subject } from 'rxjs/Subject';
-import { TeamPage } from '../team/team';
-import { PlayerPage } from '../player/player';
 
 /**
  * Generated class for the SearchPage page.
@@ -57,8 +55,8 @@ export class SearchPage {
   }
 
   open(item) {
-    if (this.type == 'teams') this.navCtrl.push(TeamPage, {team: item})
-    else if (this.type == 'players') this.navCtrl.push(PlayerPage, {player: item})
+    if (this.type == 'teams') this.navCtrl.push('TeamPage', {team: item})
+    else if (this.type == 'players') this.navCtrl.push('PlayerPage', {player: item})
   }
 
   segmentChanged(ev: any) {

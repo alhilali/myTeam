@@ -19,8 +19,19 @@ page-home {
     font-size: 20px;
   }
 
-  ion-content {
-    height:100%;
-    width:100%;
+  @-webkit-keyframes image_blur {
+    0% { -webkit-filter: blur(0px);}
+    50% { -webkit-filter: blur(1px);}
+    100% { -webkit-filter: blur(2px);}
+  }
+
+  .blur {
+    filter: blur(1px);
+    transition: 1s filter linear;
+  }
+
+  .unblur {
+    filter: blur(0px);
+    transition: 1s filter linear;
   }
 }

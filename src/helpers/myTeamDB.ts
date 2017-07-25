@@ -300,6 +300,15 @@ export class MyTeamDB {
     })
   }
 
+  getCommentsNum(postID) {
+    return new Promise(resolve => {
+      const ref = this.db.list('timeline/'+postID+'/comments/')
+      .take(1).subscribe(comments=>{
+        resolve(comments.length)
+      })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

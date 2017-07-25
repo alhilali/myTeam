@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
-import { PlayerPage } from '../../pages/player/player'
-import { PostPage } from '../../pages/post/post'
 import * as moment from 'moment';
 
 /**
@@ -21,6 +19,7 @@ export class PostComponent {
   @Input('post') postInfo: any;
   user: any = {}
   date: any = ''
+  commentsNum: any;
 
   constructor(private teamDB: MyTeamDB, public navCtrl: NavController) {
   }
@@ -33,17 +32,20 @@ export class PostComponent {
     Promise.resolve().then(() => {
       let relativeDate = moment(this.postInfo.date+' '+this.postInfo.time,
        "MM/DD/YYYY HH:mm:ss").locale('ar-sa').fromNow();
+      this.teamDB.getCommentsNum(this.postInfo.$key).then(data=>{
+        this.commentsNum = data;
+      })
       this.user = result;
       this.date = relativeDate;
     });
   }
 
   openPlayer() {
-    this.navCtrl.push(PlayerPage, { player: this.user });
+    this.navCtrl.push('PlayerPage', { player: this.user });
   }
 
   openPost()  {
-    this.navCtrl.push(PostPage, { post: this.postInfo });
+    this.navCtrl.push('PostPage', { post: this.postInfo });
   }
 
 }

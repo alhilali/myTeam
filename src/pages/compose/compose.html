@@ -21,8 +21,20 @@
 </ion-header>
 
 
-<ion-content>
-  <form [formGroup]="composeForm" (ngSubmit)="submit()">
+<ion-content padding>
+  <ion-row class="composeForm btnsRow" align-items-stretch>
+    <ion-col pull-1>
+      <button (click)="closeModal()" color="orange" ion-button round small>
+          إلغاء
+        </button>
+    </ion-col>
+    <ion-col push-1>
+      <button (click)="submit()" [disabled]="composeForm.invalid" color="gold" ion-button round small>
+            ارسل
+        </button>
+    </ion-col>
+  </ion-row>
+  <form [formGroup]="composeForm">
     <ion-card class="card1">
       <ion-item>
         <ion-avatar item-start>
@@ -32,7 +44,7 @@
         <p>{{player.originalUsername}}@</p>
       </ion-item>
       <ion-card-content>
-        <div padding-vertical>
+        <div padding-bottom>
           <ion-item>
             <ion-input [(ngModel)]="title" style="font-size: larger;" placeholder="العنوان" type="text" formControlName="title"></ion-input>
           </ion-item>

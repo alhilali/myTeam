@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { TeamPage } from '../team/team'
-import { MatchPage } from '../match/match'
 import { Events } from 'ionic-angular';
 
 /**
@@ -105,11 +103,11 @@ export class NotificationPage {
   }
 
   openTeam(team) {
-    this.navCtrl.push(TeamPage, {team: team})
+    this.navCtrl.push('TeamPage', {team: team})
   }
 
   openMatchRequest(request) {
-    this.navCtrl.push(MatchPage, {request: request})
+    this.navCtrl.push('MatchPage', {request: request})
   }
 
   ionViewWillLeave() {
