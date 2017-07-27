@@ -26,11 +26,11 @@ export class StartTeamPage {
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private _form: FormBuilder) {
-      this.team = {};
-      this.teamForm = this._form.group({
-        "name":["",Validators.required],
-        "city":["الرياض"]
-      })
+    this.team = {};
+    this.teamForm = this._form.group({
+      "name": ["", Validators.required],
+      "city": ["الرياض"]
+    })
   }
 
   closeModal() {
@@ -39,7 +39,7 @@ export class StartTeamPage {
 
   saveTeam(team) {
     let newKey = new Date().getTime();
-    const ref = this.db.object('/teams/'+newKey);
+    const ref = this.db.object('/teams/' + newKey);
     const saveSub = this.afAuth.authState.subscribe(data => {
       if (data && data.email && data.uid) {
         let uid = data.uid
@@ -48,16 +48,17 @@ export class StartTeamPage {
           name: team.name,
           city: team.city || 'الرياض',
           logo: 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png',
+          bg: 'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png',
           estDate: new Date().toDateString()
         })
 
         // Add player to players list DB
-        const playersList = this.db.object('/playersList/'+newKey+'/'+uid);
-        playersList.set({uid: uid, status: 'enrolled'});
+        const playersList = this.db.object('/playersList/' + newKey + '/' + uid);
+        playersList.set({ uid: uid, status: 'enrolled' });
 
         // Add team to user list DB
-        this.db.object('/users/'+uid+'/myTeams/'+newKey)
-        .set({teamId: newKey});
+        this.db.object('/users/' + uid + '/myTeams/' + newKey)
+          .set({ teamId: newKey });
         saveSub.unsubscribe();
         this.closeModal();
       }

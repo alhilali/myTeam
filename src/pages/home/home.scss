@@ -1,5 +1,6 @@
 page-home {
   .avatar {
+    background-color: grey;
     background-position: center;
     background-size: cover;
     border-radius: 50%;
@@ -8,28 +9,32 @@ page-home {
     position: relative;
     width: 30px;
   }
-
   ion-list {
     margin-bottom: 10px !important;
   }
-
   .socialIcons {
     letter-spacing: 20px;
     text-align: center;
     font-size: 20px;
   }
-
   @-webkit-keyframes image_blur {
-    0% { -webkit-filter: blur(0px);}
-    50% { -webkit-filter: blur(1px);}
-    100% { -webkit-filter: blur(2px);}
+    0% {
+      -webkit-filter: blur(0px);
+    }
+    50% {
+      -webkit-filter: blur(1px);
+    }
+    100% {
+      -webkit-filter: blur(2px);
+    }
   }
-
+  .post {
+    transition: all 0.4s ease-out;
+  }
   .blur {
     filter: blur(1px);
     transition: 1s filter linear;
   }
-
   .unblur {
     filter: blur(0px);
     transition: 1s filter linear;

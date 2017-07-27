@@ -7,7 +7,6 @@ page-player {
     height: 185px;
     background-color: rgba(0, 0, 0, 0.3);
   }
-
   .avatar {
     background-color: white;
     background-position: center;
@@ -20,91 +19,89 @@ page-player {
     position: relative;
     width: 78px;
   }
-
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0;
   }
-
   h5 {
     font-weight: normal;
   }
-
   h4 {
     color: rgba(255, 255, 255, 0.7);
     margin: 3px 0 16px;
   }
-
   .white {
     color: #fff;
   }
-
   .bold {
     font-weight: bold;
   }
-
-  h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  h1>a,
+  h2>a,
+  h3>a,
+  h4>a,
+  h5>a,
+  h6>a {
     text-decoration: none;
   }
-
-  .light, a.light {
+  .light,
+  a.light {
     color: #fff;
   }
-
-  .profileCards {
-  }
-
-  .swiper-container-horizontal > .swiper-pagination-bullets {
+  .profileCards {}
+  .swiper-container-horizontal>.swiper-pagination-bullets {
     top: 0px !important;
     width: 20% !important;
   }
-
   .swiper-pagination-bullet {
     background: #fff;
   }
-
   .socialIcons {
     padding: 10px;
     letter-spacing: 10px;
     color: #fff;
   }
-
   .editIcon {
     position: absolute;
     right: 300px;
     bottom: 50px;
   }
-
   .profileBottom {
     background-color: white;
     position: absolute;
     width: 100%;
     padding-bottom: 41px;
   }
-
   ion-card {
     border-radius: 6px !important;
     box-shadow: 0px 3px 20px #d6dee4 !important;
   }
-
   .segment-button {
     height: 55px !important;
     border-bottom-width: 3px !important;
     line-height: 7rem !important;
   }
-
   .card-title {
     position: absolute;
     top: 51%;
-    font-size: 1.5em;
+    font-size: 1.1em;
     width: 100px;
     font-weight: bold;
     color: #fff;
+    left: 0;
+    right: 0;
+    margin: auto;
   }
-
-  ion-card > .bg {
+  ion-card>.bg {
     filter: brightness(0.9);
+    background-position: center;
+    background-size: cover;
+    height: 120px;
   }
-
   .logo {
     background-color: white;
     display: block;

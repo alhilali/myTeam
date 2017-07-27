@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/v2/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,22 +12,23 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 //.content-ios:not([no-bounce])>.scroll-content::before { bottom: 0; }
 @import url('https://fonts.googleapis.com/css?family=Cairo:400');
-
 @font-face {
   font-family: "Helvetica Neue";
   src: url("../assets/fonts/HelveticaNeueLTArabic-Light.ttf");
 }
+
 * {
   font-family: "Helvetica Neue";
 }
+
 .mdIcon {
   font-size: 20px;
 }
+
 .largeIcon {
-  font-size: 30px !important;
+  font-size: 38px !important;
 }
 
 .toolbar-title-ios {
@@ -59,16 +58,16 @@ ion-card-header {
 }
 
 .card2 {
-    border-radius: 6px !important;
-    -webkit-box-shadow: 0px 20px 150px #d6dee4 !important;
-    box-shadow: 0px 20px 60px #d6dee4 !important;
+  border-radius: 6px !important;
+  -webkit-box-shadow: 0px 20px 150px #d6dee4 !important;
+  box-shadow: 0px 20px 60px #d6dee4 !important;
 }
 
 .fixedBorder {
   border-bottom: 0.55px solid #c8c7cc !important;
 }
 
-.fixedBorder > .item-inner{
+.fixedBorder>.item-inner {
   border-bottom: 0 !important;
 }
 
@@ -76,4 +75,43 @@ ion-card-header {
 .toolbar-ios {
   height: 44px + $cordova-ios-statusbar-padding;
   padding-top: $cordova-ios-statusbar-padding;
+}
+
+// Calendar
+ion-calendar-modal.matchCalender {
+  ion-header {
+    .toolbar-background-md,
+    .toolbar-background-ios {
+      background-color: #0072bb;
+    }
+    .toolbar-title-md,
+    .toolbar-title-ios {
+      color: #fff;
+    }
+    .bar-button-clear-md,
+    .bar-button-clear-ios {
+      color: #fff;
+      font-size: 25px;
+      letter-spacing: 10px;
+    }
+    .week-title {
+      background-color: rgb(0, 114, 187);
+      color: #fff;
+    }
+  }
+  ion-content {
+    .month-box {
+      background-color: #white;
+    }
+    .days-btn,
+    .month-title {
+      color: #FF4C3B;
+    }
+    button.days-btn.on-selected {
+      background-color: #FFD034 !important;
+    }
+    button.days-btn.marked {
+      background-color: #e4f3fd;
+    }
+  }
 }

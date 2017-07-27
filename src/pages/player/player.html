@@ -19,7 +19,7 @@
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
-          <profile-pic className="avatar" ID="{{prmPlayer.$key}}" type="user"></profile-pic>
+          <profile-pic className="avatar" ID="{{playerID}}" type="user"></profile-pic>
           <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" color="light" name="ios-cog"></ion-icon>
           <h3 class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>
@@ -74,8 +74,10 @@
           <ion-col col-4 col-sm no-padding wrap *ngFor="let team of myTeams">
             <ion-card class="profileCards">
               <img class="logo" on-tap='openTeam(team)' src="{{team.logo}}" alt="">
-              <img class="bg" *ngIf='team.bg' on-tap='openTeam(team)' src="{{team.bg}}">
-              <img class="bg" style="height: 105.98px" *ngIf='!team.bg' on-tap='openTeam(team)' src="https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">
+              <div class="bg" *ngIf='team.bg' on-tap='openTeam(team)' [ngStyle]="{ 'background-image': 'url(' + team.bg + ')'}">
+              </div>
+              <div class="bg" *ngIf='!team.bg' on-tap='openTeam(team)' style="background-image: url('https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png')">
+              </div>
               <div class="card-title">
                 {{team.name}}
               </div>

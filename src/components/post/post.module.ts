@@ -7,10 +7,10 @@ import { PostComponent } from './post';
     PostComponent,
   ],
   imports: [
-    IonicModule,
+    IonicModule
   ],
   exports: [
     PostComponent
   ]
 })
-export class PostComponentModule {}
+export class PostComponentModule { }

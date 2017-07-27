@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
     <ion-buttons start>
-      <button (click)="compose()" ion-button icon-only>
+      <button padding-right (click)="compose()" ion-button icon-only>
         <ion-icon name="ios-albums-outline"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,6 +20,11 @@
 
     </ion-refresher-content>
   </ion-refresher>
+  <ion-segment padding-horizontal [(ngModel)]="type" color="orange" mode="md" (ionChange)="segmentChanged()">
+    <ion-segment-button value="all">عام</ion-segment-button>
+    <ion-segment-button value="match">مباريات</ion-segment-button>
+    <ion-segment-button value="players">لاعبين</ion-segment-button>
+  </ion-segment>
   <ion-list>
     <post *ngFor="let post of posts" [post]="post"></post>
   </ion-list>

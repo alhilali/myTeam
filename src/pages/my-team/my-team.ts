@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController,
-   ModalController, ActionSheetController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, AlertController,
+  ModalController, ActionSheetController
+} from 'ionic-angular';
 import { StartTeamPage } from '../start-team/start-team';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -36,37 +38,38 @@ export class MyTeamPage {
     private alertCtrl: AlertController) {
   }
 
-  ionViewDidLoad () {
+  ionViewDidLoad() {
     this.loadTeams();
     this.loadGames()
   }
 
   loadTeams() {
-    this.myTeamsSub = this.db.list('users/'+this.afAuth.auth.currentUser.uid
-    +'/myTeams').subscribe(data=>{
-      if (data.length == 0) this.hasNoTeams = true;
+    this.myTeamsSub = this.db.list('users/' + this.afAuth.auth.currentUser.uid
+      + '/myTeams').subscribe(data => {
+        if (data.length == 0) this.hasNoTeams = true;
         this.hasNoTeams = false;
         this.myTeams = []
         this.myTeams = data;
-    })
+      })
   }
 
   loadGames() {
-    this.db.list('users/'+this.afAuth.auth.currentUser.uid+'/myTeams/').take(1)
-    .subscribe(teams=>{
-      teams.forEach(team => {
-        this.db.list('teams/'+team.$key+'/upcomingMatches/').take(1).subscribe(matches=>{
-          matches.forEach(match => {
-            const monthNum = match.date.substring(0, 2);
-            const monthName = moment(monthNum, 'MM').format('MMMM');
-            const index = this.months.map(e=> {return e.num}).indexOf(monthNum);
-            if (index == -1) this.months.push({name:monthName, num:monthNum})
-            const matchIndex = this.matches.map(e=> {return e.$key}).indexOf(match.$key);
-            if (matchIndex == -1) this.matches.push(match)
-          });
-        })
-      });
-    })
+    this.matches = []
+    this.db.list('users/' + this.afAuth.auth.currentUser.uid + '/myTeams/').take(1)
+      .subscribe(teams => {
+        teams.forEach(team => {
+          this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(matches => {
+            matches.forEach(match => {
+              const monthNum = match.date.substring(0, 2);
+              const monthName = moment(monthNum, 'MM').format('MMMM');
+              const index = this.months.map(e => { return e.num }).indexOf(monthNum);
+              if (index == -1) this.months.push({ name: monthName, num: monthNum })
+              const matchIndex = this.matches.map(e => { return e.$key }).indexOf(match.$key);
+              if (matchIndex == -1) this.matches.push(match)
+            });
+          })
+        });
+      })
   }
 
   doRefresh(refresher) {
@@ -83,7 +86,7 @@ export class MyTeamPage {
   }
 
   openMatchRequest(request) {
-    this.navCtrl.push('MatchPage', {request: request})
+    this.navCtrl.push('MatchPage', { request: request })
   }
 
   ionViewWillLeave() {

@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { Events } from 'ionic-angular';
-import { SearchPage } from '../search/search';
-import { HomePage } from '../home/home';
-import { NotificationPage } from '../notification/notification'
+import { Events, IonicPage } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+@IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
+  tab1Root = 'HomePage';
   tab2Root = 'MyTeamPage';
   tab3Root = 'NotificationPage';
   tab4Root = 'SearchPage';
@@ -20,27 +18,27 @@ export class TabsPage {
   matchRequestsNum: number = 0;
 
   constructor(public events: Events, private db: AngularFireDatabase,
-  private afAuth: AngularFireAuth) {
+    private afAuth: AngularFireAuth) {
   }
 
   updateBadge() {
     if ((this.userRequestsNum + this.matchRequestsNum) == 0)
-    this.notificationNum = null;
-    else this.notificationNum = this.userRequestsNum+this.matchRequestsNum;
+      this.notificationNum = null;
+    else this.notificationNum = this.userRequestsNum + this.matchRequestsNum;
   }
 
   subscribeToBadgeCountChange() {
     // Method to run when tab count changes
     return this.events
-    .subscribe("tabs-page:badge-update", (type) => {
-      if (type == 'match') this.checkMatchRequests();
-      else if (type == 'user') this.checkUserRequests();
-    });
+      .subscribe("tabs-page:badge-update", (type) => {
+        if (type == 'match') this.checkMatchRequests();
+        else if (type == 'user') this.checkUserRequests();
+      });
   }
 
   checkUserRequests() {
     this.db.list('users/' + this.afAuth.auth.currentUser.uid
-      + '/requests').take(1).subscribe(data=>{
+      + '/requests').take(1).subscribe(data => {
         this.userRequestsNum = data.length;
         this.updateBadge();
       })
@@ -52,11 +50,11 @@ export class TabsPage {
         orderByChild: 'toUID',
         equalTo: this.afAuth.auth.currentUser.uid
       }
-    }).take(1).subscribe(data=>{
+    }).take(1).subscribe(data => {
       let count = 0;
       for (let i = 0; i < data.length; i++) {
         if (data[i].status == 'pending') count++;
-        if (i == data.length -1) {
+        if (i == data.length - 1) {
           this.matchRequestsNum = count;
           this.updateBadge();
         }

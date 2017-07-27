@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { NavController, AlertController,
-   ModalController, ActionSheetController } from 'ionic-angular';
+import { Component, Input, trigger, state, style, animate, transition } from '@angular/core';
+import {
+  NavController, AlertController,
+  ModalController, ActionSheetController
+} from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import * as moment from 'moment';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -15,7 +17,14 @@ import { AngularFireDatabase } from 'angularfire2/database';
  */
 @Component({
   selector: 'team-card',
-  templateUrl: 'team-card.html'
+  templateUrl: 'team-card.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: '0' })),
+      state('*', style({ opacity: '1' })),
+      transition('void <=> *', animate('400ms ease-in'))
+    ])
+  ]
 })
 export class TeamCardComponent {
   @Input('className') className: any;
@@ -25,21 +34,21 @@ export class TeamCardComponent {
 
 
   constructor(private teamDB: MyTeamDB,
-     public navCtrl: NavController,
-     private modal: ModalController,
-     private afAuth: AngularFireAuth,
-     private db: AngularFireDatabase,
-     private actionSheetCtrl: ActionSheetController,
-     private alertCtrl: AlertController) {
+    public navCtrl: NavController,
+    private modal: ModalController,
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase,
+    private actionSheetCtrl: ActionSheetController,
+    private alertCtrl: AlertController) {
   }
 
-  async ngAfterViewInit () {
+  async ngAfterViewInit() {
     let result;
-    await this.teamDB.getTeamInfo(this.team.$key).then(data=>{
+    await this.teamDB.getTeamInfo(this.team.$key).then(data => {
       result = data;
     })
     Promise.resolve().then(() => {
-      this.db.list('playersList/'+this.team.$key).take(1).subscribe(data=>{
+      this.db.list('playersList/' + this.team.$key).take(1).subscribe(data => {
         this.playersNum = data.length;
       })
       this.teamInfo = result;
@@ -59,9 +68,9 @@ export class TeamCardComponent {
         {
           text: 'إعدادات الفريق',
           handler: () => {
-            const editModal = this.modal.create("EditTeamPage", {team: team})
+            const editModal = this.modal.create("EditTeamPage", { team: team })
             editModal.present()
-            editModal.onWillDismiss(data=>{
+            editModal.onWillDismiss(data => {
               //this.loadTeams();
             })
           }
@@ -70,12 +79,12 @@ export class TeamCardComponent {
           text: 'حذف الفريق',
           role: 'destructive',
           handler: () => {
-            actionSheet.dismiss().then(()=>{
+            actionSheet.dismiss().then(() => {
               this.deleteTeam(team)
             })
             return false;
           }
-        },{
+        }, {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -88,16 +97,16 @@ export class TeamCardComponent {
           text: 'انسحب من الفريق',
           role: 'destructive',
           handler: () => {
-            actionSheet.dismiss().then(()=>{
+            actionSheet.dismiss().then(() => {
               this.exitTeam(this.afAuth.auth.currentUser.uid, team.$key)
             })
             return false;
           }
-        },{
+        }, {
           text: 'اجعل الفريق المفضل',
           handler: () => {
           }
-        },{
+        }, {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -120,14 +129,14 @@ export class TeamCardComponent {
           text: 'متأكد',
           handler: () => {
             let dataToDelete = {}
-            dataToDelete['teams/'+team.$key] = null;
-            dataToDelete['playersList/'+team.$key] = null;
+            dataToDelete['teams/' + team.$key] = null;
+            dataToDelete['playersList/' + team.$key] = null;
 
-            this.db.list('playersList/'+team.$key).take(1).subscribe(data=>{
+            this.db.list('playersList/' + team.$key).take(1).subscribe(data => {
               let i;
-              for (i=0; i < data.length; i++) {
-                dataToDelete['users/'+data[i].uid+'/myTeams/'+team.$key] = null;
-                dataToDelete['users/'+data[i].uid+'/requests/'+team.$key] = null;
+              for (i = 0; i < data.length; i++) {
+                dataToDelete['users/' + data[i].uid + '/myTeams/' + team.$key] = null;
+                dataToDelete['users/' + data[i].uid + '/requests/' + team.$key] = null;
                 if (i == data.length - 1) {
                   this.db.object('/').update(dataToDelete);
                 }
@@ -156,8 +165,8 @@ export class TeamCardComponent {
           text: 'متأكد',
           handler: () => {
             let dataToDelete = {}
-            dataToDelete['users/'+playerId+'/myTeams/'+teamId] = null;
-            dataToDelete['playersList/'+teamId+'/'+playerId] = null;
+            dataToDelete['users/' + playerId + '/myTeams/' + teamId] = null;
+            dataToDelete['playersList/' + teamId + '/' + playerId] = null;
             this.db.object('/').update(dataToDelete);
           }
         },
@@ -173,7 +182,7 @@ export class TeamCardComponent {
   }
 
   openTeam(team) {
-    this.navCtrl.push('TeamPage', {team: team})
+    this.navCtrl.push('TeamPage', { team: team })
   }
 
 }

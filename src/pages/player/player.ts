@@ -19,6 +19,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class PlayerPage {
   player = {} as User
   prmPlayer: any = {}
+  playerID: string = ''
   playerSub: any
   currentUser: boolean = false
   myTeams: any[] = []
@@ -32,11 +33,13 @@ export class PlayerPage {
      private db: AngularFireDatabase,
      private modlCtrl: ModalController) {
        this.prmPlayer = navParams.get('player');
+       if (!this.prmPlayer) this.playerID = navParams.get('playerID');
+       else this.playerID = this.prmPlayer.$key;
        this.player.bg = '';
   }
 
   ionViewWillLoad() {
-    if(this.navParams.get('player').$key == this.afAuth.auth.currentUser.uid) this.currentUser = true;
+    if(this.playerID == this.afAuth.auth.currentUser.uid) this.currentUser = true;
     this.loadPlayer();
   }
 
@@ -52,7 +55,7 @@ export class PlayerPage {
 
   loadPlayer() {
     if (this.playerSub) this.playerSub.unsubscribe();
-    this.playerSub = this.db.object('users/'+this.navParams.get('player').$key)
+    this.playerSub = this.db.object('users/'+this.playerID)
     .subscribe(data=>{
       this.player = data;
       if (!this.player.bg) this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
@@ -60,7 +63,7 @@ export class PlayerPage {
   }
 
   loadMyTeams() {
-    this.db.list('users/'+this.navParams.get('player').$key
+    this.db.list('users/'+this.playerID
    +'/myTeams').take(1).subscribe(data=>{
      this.myTeams = []
      let i;

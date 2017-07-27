@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, trigger, state, style, animate, transition } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import * as moment from 'moment';
@@ -11,7 +11,14 @@ import * as moment from 'moment';
  */
 @Component({
   selector: 'post',
-  templateUrl: 'post.html'
+  templateUrl: 'post.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({ opacity: '0' })),
+      state('*', style({ opacity: '1' })),
+      transition('void <=> *', animate('700ms ease-in'))
+    ])
+  ]
 })
 export class PostComponent {
   @Input('className') className: any;
@@ -20,23 +27,30 @@ export class PostComponent {
   user: any = {}
   date: any = ''
   commentsNum: any;
+  teamInfo: any = {}
+  month: any
+  day: any
 
   constructor(private teamDB: MyTeamDB, public navCtrl: NavController) {
   }
 
-  async ngAfterViewInit () {
-    let result;
-    await this.teamDB.getUserInfo(this.postInfo.by).then(data=>{
-      result = data;
-    })
+  ngAfterViewInit() {
     Promise.resolve().then(() => {
-      let relativeDate = moment(this.postInfo.date+' '+this.postInfo.time,
-       "MM/DD/YYYY HH:mm:ss").locale('ar-sa').fromNow();
-      this.teamDB.getCommentsNum(this.postInfo.$key).then(data=>{
+      if (this.postInfo.type == 'match') {
+        this.month = moment(this.postInfo.matchDate, 'MM/DD/YYYY').format('MMM');
+        this.day = moment(this.postInfo.matchDate, 'MM/DD/YYYY').format('D');
+      }
+      this.teamDB.getUserInfo(this.postInfo.by).then(data => {
+        this.user = data;
+      })
+      this.teamDB.getTeamInfo(this.postInfo.teamID).then(data => {
+        this.teamInfo = data;
+      })
+      this.teamDB.getCommentsNum(this.postInfo.$key).then(data => {
         this.commentsNum = data;
       })
-      this.user = result;
-      this.date = relativeDate;
+      this.date = moment(this.postInfo.date + ' ' + this.postInfo.time,
+        "MM/DD/YYYY HH:mm:ss").locale('ar-sa').fromNow();
     });
   }
 
@@ -44,8 +58,12 @@ export class PostComponent {
     this.navCtrl.push('PlayerPage', { player: this.user });
   }
 
-  openPost()  {
+  openPost() {
     this.navCtrl.push('PostPage', { post: this.postInfo });
+  }
+
+  openTeam(team) {
+    this.navCtrl.push('TeamPage', { team: team })
   }
 
 }

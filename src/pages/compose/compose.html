@@ -34,8 +34,14 @@
         </button>
     </ion-col>
   </ion-row>
-  <form [formGroup]="composeForm">
-    <ion-card class="card1">
+  <ion-card class="card1" style="margin-top: 0; margin-bottom: 0;">
+    <ion-segment class="typeSegment" [(ngModel)]="type" (ionChange)="segmentChanged()" color="orange" mode="md">
+      <ion-segment-button value="general">عام</ion-segment-button>
+      <ion-segment-button value="match">مباريات</ion-segment-button>
+      <ion-segment-button value="players">لاعبين</ion-segment-button>
+    </ion-segment>
+    <form [formGroup]="composeForm">
+      <img *ngIf="type == 'match' && selectedTeam && selectedTeam.bg" src="{{selectedTeam.bg}}" alt="">
       <ion-item>
         <ion-avatar item-start>
           <profile-pic ID="{{player.$key}}" type="user"></profile-pic>
@@ -46,32 +52,52 @@
       <ion-card-content>
         <div padding-bottom>
           <ion-item>
-            <ion-input [(ngModel)]="title" style="font-size: larger;" placeholder="العنوان" type="text" formControlName="title"></ion-input>
+            <ion-input no-margin [(ngModel)]="title" style="font-size: large;" placeholder="العنوان" type="text" formControlName="title"></ion-input>
           </ion-item>
-          <ion-note [ngClass]="{'red': (!composeForm.controls.title.valid && composeForm.controls.title.dirty)}" style="position: absolute;" *ngIf="title.length > 0">
+          <ion-note [ngClass]="{'red': (!composeForm.controls.title.valid && composeForm.controls.title.dirty)}" style="position: absolute;"
+            *ngIf="title.length > 0">
             {{title.length}}/30
           </ion-note>
         </div>
         <hr/>
+        <ion-row *ngIf="type == 'match' && myTeams?.length > 0">
+          <ion-col col-8>
+            <ion-slides class="teamsList" dir="rtl" slidesPerView="4">
+              <ion-slide *ngFor="let team of myTeams">
+                <img on-tap="selectTeam(team)" class="logo" src="{{team.logo}}" alt="">
+                <div class="card-title">
+                  {{team.name}}
+                </div>
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+          <ion-col col-4>
+            <div on-tap="openCalendar()" class="icon_calendar">
+              <em></em><em></em>
+              <label>{{month}}</label>
+              <span>{{day}}</span>
+            </div>
+          </ion-col>
+        </ion-row>
         <ion-item>
-          <ion-textarea [(ngModel)]="info" rows="3" placeholder="معلومات اخرى (اختياري)" type="text" formControlName="info"></ion-textarea>
+          <ion-textarea class="infoArea" [(ngModel)]="info" rows="2" placeholder="معلومات اخرى (اختياري)" type="text" formControlName="info"></ion-textarea>
         </ion-item>
       </ion-card-content>
-      <ion-row>
-        <ion-col text-center>
-          <ion-note [ngClass]="{'red': (!composeForm.controls.info.valid && composeForm.controls.info.dirty)}" *ngIf="info.length > 0">
-            {{info.length}}/150
-          </ion-note>
-        </ion-col>
-        <ion-col>
+    </form>
+    <ion-row>
+      <ion-col text-center>
+        <ion-note [ngClass]="{'red': (!composeForm.controls.info.valid && composeForm.controls.info.dirty)}" *ngIf="info.length > 0">
+          {{info.length}}/120
+        </ion-note>
+      </ion-col>
+      <ion-col>
 
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            {{date}}
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </form>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{date}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
