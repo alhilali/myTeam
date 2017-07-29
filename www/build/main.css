@@ -56915,12 +56915,11 @@ page-welcome h3 {
 }
 
 page-welcome .welcomeSlides {
-  height: 35%;
+  height: 45%;
 }
 
 page-welcome .welcomeBtns {
   text-align: center;
-  padding-top: 10%;
   padding-left: 80px;
   padding-right: 80px;
 }
@@ -56931,7 +56930,7 @@ page-welcome .welcomeBtns > p {
 }
 
 page-welcome .AppLogo {
-  width: 70%;
+  width: 67%;
   padding: 20%;
   display: block;
   margin-left: auto;
