@@ -1,73 +1,46 @@
 <!-- Generated template for the PostComponent component -->
 <ion-card [@fadeInOut] [ngClass]="className ? className : 'card1'">
   <ion-item>
-    <ion-avatar item-start>
+    <ion-avatar margin-top item-start>
       <profile-pic ID="{{postInfo.by}}" type="user" on-tap="openPlayer()"></profile-pic>
     </ion-avatar>
-    <h2>{{user.name}}</h2>
-    <p>{{user.originalUsername}}@</p>
+    <ion-row justify-content-start>
+      <h2 style="margin: 2px 0;">{{user.name}}</h2>&nbsp;
+      <p>{{user.originalUsername}}@</p>
+    </ion-row>
     <div *ngIf="postInfo.type == 'match'" class="calendar">
-      <div class="icon_calendar">
+      <div on-tap="requestMatch()" class="icon_calendar">
         <em></em><em></em>
         <label>{{month}}</label>
         <span><h1>{{day}}</h1></span>
       </div>
     </div>
   </ion-item>
-  <img *ngIf="postInfo.type == 'match' && teamInfo.bg" on-tap="openTeam(teamInfo)" class="bg" src="{{teamInfo.bg}}" alt="">
-  <img *ngIf="postInfo.type == 'match'" on-tap="openTeam(teamInfo)" class="logo" src="{{teamInfo.logo}}" alt="">
-  <h1 class="teamName">{{teamInfo.name}}</h1>
-  <div class="teamBar" *ngIf="postInfo.type == 'match'">
-    <ion-row justify-content-center>
-      <ion-col col-3>
-        <ion-icon padding-horizontal class="largeIcon" name="ios-people" color='lightBlue'></ion-icon>
-        <p style="color: white">
-          لا يوجد
-        </p>
-      </ion-col>
-      <p style="font-weight: bold; font-size: large; color: white">
-        &middot;
-      </p>
-      <ion-col col-3>
-        <ion-icon padding-horizontal class="largeIcon" name="md-trophy" color='gold'></ion-icon>
-        <p style="color: white">
-          لا يوجد
-        </p>
-      </ion-col>
-      <p style="font-weight: bold; font-size: large; color: white">
-        &middot;
-      </p>
-      <ion-col col-3>
-        <div class="set-size charts-container">
-          <div class="pie-wrapper progress-90">
-            <span class="label">90<span class="smaller">%</span></span>
-            <div class="pie">
-              <div class="left-side half-circle"></div>
-              <div class="right-side half-circle"></div>
-            </div>
-          </div>
-        </div>
-        <p dir="ltr"><span style="color: gold">10</span> <span style="color: white">I</span> <span style="color: red">1</span></p>
-      </ion-col>
-    </ion-row>
-  </div>
   <ion-card-content>
     <h2>{{postInfo.title}}</h2>
     <ng-content></ng-content>
   </ion-card-content>
+  <div *ngIf="postInfo.type == 'match'" [@fadeInOut] class="infoPlaceholder">
+    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">
+    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">
+    <h1 class="teamName">{{teamInfo.name}}</h1>
+    <div class="teamBar">
+      <team-bar teamID="{{postInfo.teamID}}"></team-bar>
+    </div>
+  </div>
   <ion-row>
-    <ion-col>
+    <ion-col class="likes">
       <button ion-button icon-left clear small>
-        <ion-icon name="md-heart" color="danger"></ion-icon>
+        <ion-icon name="md-heart-outline" color="danger"></ion-icon>
       </button>
     </ion-col>
-    <ion-col>
+    <ion-col class="comments">
       <button (click)="openPost()" ion-button icon-left clear small>
         <ion-icon name="text" color="gold"></ion-icon>
         <div>{{commentsNum}}</div>
       </button>
     </ion-col>
-    <ion-col center text-center>
+    <ion-col class="date" center text-end>
       <ion-note>
         {{date}}
       </ion-note>

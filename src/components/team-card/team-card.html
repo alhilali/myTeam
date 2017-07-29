@@ -19,38 +19,6 @@
 
   </div>
   <div class="card-content" text-center>
-    <ion-row justify-content-center>
-      <ion-col col-3>
-        <ion-icon padding-horizontal class="largeIcon" name="ios-people" color='lightBlue'></ion-icon>
-        <p>
-          <span *ngIf="playersNum == 0">لا يوجد</span>
-          <span *ngIf="playersNum > 0">{{playersNum}}</span>
-        </p>
-      </ion-col>
-      <p style="font-weight: bold; font-size: large;">
-        &middot;
-      </p>
-      <ion-col col-3>
-        <ion-icon padding-horizontal class="largeIcon" name="md-trophy" color='gold'></ion-icon>
-        <p>
-          لا يوجد
-        </p>
-      </ion-col>
-      <p style="font-weight: bold; font-size: large;">
-        &middot;
-      </p>
-      <ion-col col-3>
-        <div class="set-size charts-container">
-          <div class="pie-wrapper progress-90">
-            <span class="label">90<span class="smaller">%</span></span>
-            <div class="pie">
-              <div class="left-side half-circle"></div>
-              <div class="right-side half-circle"></div>
-            </div>
-          </div>
-        </div>
-        <p dir="ltr"><span style="color: gold">10</span> I <span style="color: red">1</span></p>
-      </ion-col>
-    </ion-row>
+    <team-bar teamID="{{team.$key}}"></team-bar>
   </div>
 </ion-card>

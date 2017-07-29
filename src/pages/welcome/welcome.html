@@ -7,76 +7,28 @@
     <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">
   </div>
 
-  <ion-slides pager class="welcomeSlides" ion-fixed dir="rtl">
+  <ion-slides pager class="welcomeSlides" loop="true" ion-fixed dir="rtl">
     <ion-slide>
-      <h3>هل انت جاهز لقبول التحدي؟</h3>
-      <div class="welcomeBtns">
-        <button color="orange" ion-button block (click)="slideRegister()">حساب جديد</button>
-        <p text-right>
-          لديك حساب؟ <button id="loginBtn" ion-button clear (click)="goToSlide()" small>سجل دخول</button>
-        </p>
-      </div>
+      <img style="width: 20%" src="https://www.shareicon.net/download/2016/10/29/848351_cup_512x512.png" alt="">
+      <h3 text-center>
+        هل انت جاهز لقبول التحدي؟
+      </h3>
     </ion-slide>
     <ion-slide>
-      <div class="login">
-        <form [formGroup]="loginForm" novalidate>
-          <ion-item dir="ltr">
-            <ion-label>
-              <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>
-            </ion-label>
-            <ion-input type="text" [(ngModel)]="user.email" formControlName='email' placeholder="Username/Email"></ion-input>
-          </ion-item>
-
-          <ion-item dir="ltr">
-            <ion-label>
-              <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>
-            </ion-label>
-            <ion-input type="password" [(ngModel)]="user.password" formControlName='password' placeholder="Password"></ion-input>
-          </ion-item>
-          <button color="orange" ion-button block (click)="login(user)">الدخول</button>
-          <p text-right style="margin: 0px;">
-            <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>
-          </p>
-        </form>
-      </div>
+      <img style="width: 20%" src="https://www.shareicon.net/download/2017/06/01/886647_track_512x512.png" alt="">
+      <h3 text-center>
+        ابحث عن مباريات
+      </h3>
     </ion-slide>
     <ion-slide>
-      <form name="registerForm" novalidate>
-        <div class="register" [formGroup]='registerForm'>
-          <div class="errorMessages">
-            <p *ngIf="user.username != '' && !registerForm.controls.username.valid && !registerForm.controls.username.pending && (submitAttempt || registerForm.controls.username.dirty)" style="color: #ea6153;">
-              <ion-icon name="bug"></ion-icon>
-              اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
-            </p>
-            <p *ngIf="usedEmail" style="color: #ea6153;">
-              <ion-icon name="bug"></ion-icon>
-              الايميل مستخدم من قبل شخص آخر.
-            </p>
-            <p *ngIf="!registerForm.controls.password.valid && (submitAttempt)" style="color: #ea6153;">
-              <ion-icon name="bug"></ion-icon>
-              يجب ان يكون الرقم السري اكثر من ٦ احرف/ارقام.</p>
-          </div>
-          <ion-item>
-            <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!registerForm.controls.name.valid && (registerForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
-          </ion-item>
-          <ion-item dir="ltr">
-            <ion-label>
-              <h2>@</h2></ion-label>
-            <ion-input type="text" [(ngModel)]="user.username" [class.invalid]="!registerForm.controls.username.valid && (registerForm.controls.username.dirty || submitAttempt)" formControlName='username' placeholder="Username"></ion-input>
-          </ion-item>
-          <ion-item dir="ltr">
-            <ion-label>
-              <ion-icon name="ios-mail-outline"></ion-icon>
-            </ion-label>
-            <ion-input class="email" type="text" [(ngModel)]="user.email" [class.invalid]="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)" formControlName='email' placeholder="Email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input type="password" [(ngModel)]="user.password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" formControlName='password' placeholder="الرقم السري"></ion-input>
-          </ion-item>
-
-          <button ion-button block (click)="register(user)" color="gold">التسجيل</button>
-        </div>
-      </form>
+      <img style="width: 20%" src="http://bootwise.com/wp-content/uploads/2014/10/bootwise-icon-04.png" alt="">
+      <h3 text-center>
+        انضم لفرق اخرى
+      </h3>
     </ion-slide>
   </ion-slides>
+  <div class="welcomeBtns">
+    <button color="orange" ion-button block (click)="registerPage()">حساب جديد</button>
+    <button color="lightBlue" ion-button block (click)="loginPage()" outline>سجل دخول</button>
+  </div>
 </ion-content>

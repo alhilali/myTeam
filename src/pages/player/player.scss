@@ -67,7 +67,7 @@ page-player {
   }
   .editIcon {
     position: absolute;
-    right: 300px;
+    left: 20%;
     bottom: 50px;
   }
   .profileBottom {
@@ -87,14 +87,17 @@ page-player {
   }
   .card-title {
     position: absolute;
-    top: 51%;
+    top: 55%;
     font-size: 1.1em;
-    width: 100px;
+    width: 80px;
     font-weight: bold;
     color: #fff;
     left: 0;
     right: 0;
     margin: auto;
+    height: 63px;
+    line-height: 1.2;
+    white-space: initial;
   }
   ion-card>.bg {
     filter: brightness(0.9);

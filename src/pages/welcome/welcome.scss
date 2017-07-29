@@ -1,108 +1,29 @@
 page-welcome {
-  .content-ios:not([no-bounce])>.scroll-content::before { bottom: 0; }
-
-  // Splash screen
-  #custom-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
+  .content-ios:not([no-bounce])>.scroll-content::before {
     bottom: 0;
-    left: 0;
-    z-index: 100000;
-    width:100%;
-    background-color: #7ea3c1;
   }
-
-  .flb {
-    background-color: #7ea3c1;
-    background-image: url("https://www.transparenttextures.com/patterns/white-diamond-dark.png");
-    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-    height:100%;
-    width:100%;
-    animation: pulse 1s linear forwards;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  button.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #ff4c3b;
+    width: 9px;
+    height: 9px;
   }
-  .Aligner-item {
-    max-width: 50%;
-  }
-  .Aligner-item--top {
-    align-self: flex-start;
-  }
-  .Aligner-item--bottom {
-    align-self: flex-end;
-  }
-  #custom-overlay img {
-    display: block;
-    margin: 0 auto;
-    width: 50%;
-    height: auto;
-    animation: fadeIn 300ms linear infinite both;
-    animation-delay: 1s;
-  }
-
-  @keyframes pulse {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-
-  .fadeIn {
-    animation-name: fadeIn;
-  }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  // Splash end
-
-  .login {
-    padding: 40px;
-    height: 45vh;
-  }
-
-  .register {
-    padding: 40px;
-    margin-bottom: 50px;
-  }
-
   h3 {
     color: #38557C;
   }
-
   .welcomeSlides {
-    max-height: 360px;
-    bottom: 15px;
+    height: 240px;
+    bottom: 165px;
   }
-
   .welcomeBtns {
     text-align: center;
-    padding: 40px;
+    padding-top: 50%;
+    padding-left: 80px;
+    padding-right: 80px;
   }
-
-  .welcomeBtns > p {
+  .welcomeBtns>p {
     font-size: 1.5rem;
     color: #38557C;
   }
-
-  #loginBtn {
-    padding: 0px;
-    padding-bottom: 9px;
-  }
-
   .AppLogo {
     width: 70%;
     padding: 80px;
@@ -110,26 +31,6 @@ page-welcome {
     margin-left: auto;
     margin-right: auto;
   }
-
-  .welcomeTop{
-    height: 300px;
-  }
-
-  .invalid {
-    border-bottom: 1px solid #ea6153;
-  }
-
-  .errorMessages {
-    text-align: right;
-    font-size: 1.0rem;
-    line-height: 90%;
-    max-height: 67px;
-    min-height: 0px;
-  }
-
-  .welcomePage {
-  }
-
   .wave {
     opacity: 0.4;
     position: absolute;
@@ -145,17 +46,15 @@ page-welcome {
     animation: drift 9000ms infinite linear;
     z-index: -1
   }
-
   .wave.-three {
     animation: drift 11000ms infinite linear;
   }
-
   .wave.-two {
     animation: drift 13000ms infinite linear;
     opacity: 0.1;
-    background: #38557C;;
+    background: #38557C;
+    ;
   }
-
   .welcomePage:after {
     content: '';
     display: block;
@@ -169,12 +68,10 @@ page-welcome {
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     transform: translate3d(0, 0, 0);
   }
-
   @keyframes drift {
     from {
       transform: rotate(0deg);
     }
-
     from {
       transform: rotate(360deg);
     }

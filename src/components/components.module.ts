@@ -1,3 +1,4 @@
+import { TeamBarComponent } from "./team-bar/team-bar";
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular'
 import { ProfilePicComponent } from './profile-pic/profile-pic'
@@ -7,7 +8,6 @@ import { ShrinkingSegmentHeader } from './shrinking-segment-header/shrinking-seg
 import { TeamCardComponent } from './team-card/team-card'
 import { MatchItemComponent } from './match-item/match-item';
 import { NameComponent } from './name/name';
-
 @NgModule({
   declarations: [
     ProfilePicComponent,
@@ -16,6 +16,7 @@ import { NameComponent } from './name/name';
     TeamCardComponent,
     MatchItemComponent,
     NameComponent,
+    TeamBarComponent,
     ShrinkingSegmentHeader],
   imports: [IonicModule],
   exports: [
@@ -25,6 +26,7 @@ import { NameComponent } from './name/name';
     TeamCardComponent,
     MatchItemComponent,
     NameComponent,
+    TeamBarComponent,
     ShrinkingSegmentHeader]
 })
 export class ComponentsModule { }

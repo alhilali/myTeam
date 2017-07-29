@@ -22,7 +22,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
     trigger('fadeInOut', [
       state('void', style({ opacity: '0' })),
       state('*', style({ opacity: '1' })),
-      transition('void <=> *', animate('400ms ease-in'))
+      transition('void <=> *', animate('300ms ease-in'))
     ])
   ]
 })
@@ -30,7 +30,6 @@ export class TeamCardComponent {
   @Input('className') className: any;
   @Input('team') team: any;
   teamInfo: any = {}
-  playersNum: number = 0
 
 
   constructor(private teamDB: MyTeamDB,
@@ -42,16 +41,11 @@ export class TeamCardComponent {
     private alertCtrl: AlertController) {
   }
 
-  async ngAfterViewInit() {
-    let result;
-    await this.teamDB.getTeamInfo(this.team.$key).then(data => {
-      result = data;
-    })
+  ngAfterViewInit() {
     Promise.resolve().then(() => {
-      this.db.list('playersList/' + this.team.$key).take(1).subscribe(data => {
-        this.playersNum = data.length;
+      this.teamDB.getTeamInfo(this.team.$key).then(data => {
+        this.teamInfo = data;
       })
-      this.teamInfo = result;
     });
   }
 

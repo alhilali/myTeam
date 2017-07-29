@@ -1,8 +1,18 @@
 <!-- Generated template for the MatchItemComponent component -->
 <div>
   <ion-row justify-content-center>
-    <div class="teamName">{{homeName}}</div>
-    <div style="margin-left: 3px; margin-right: 3px;">vs</div>
-    <div class="teamName">{{awayName}}</div>
+    <ion-col col-2>
+      <profile-pic className="matchLogo" ID="{{home}}" type="team"></profile-pic>
+    </ion-col>
+    <ion-col col-8>
+      <ion-row justify-content-center nowrap>
+        <div class="teamName">{{homeName}}</div>
+        <div style="margin-left: 3px; margin-right: 3px;">vs</div>
+        <div class="teamName">{{awayName}}</div>
+      </ion-row>
+    </ion-col>
+    <ion-col col-2>
+      <profile-pic className="matchLogo" ID="{{away}}" type="team"></profile-pic>
+    </ion-col>
   </ion-row>
 </div>

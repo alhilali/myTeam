@@ -23,12 +23,14 @@
           <div class="infoSlideBottom">
             <h3 class="white bold">{{team.name}}</h3>
             <h5 class="white">{{team.city}}</h5>
-            <button style="    position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only color="white">
+            <button style="    position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only
+              color="white">
                 <ion-icon name="person-add"></ion-icon>
             </button>
           </div>
         </ion-slide>
         <ion-slide>
+          <team-bar teamID="{{team.$key}}"></team-bar>
           <ion-chip color="gold">
             <ion-label>متقدم الترتيب</ion-label>
           </ion-chip>
@@ -109,17 +111,7 @@
             </ion-item-divider>
             <span *ngFor="let match of matches | async">
               <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
-                <ion-row justify-content-center>
-                  <ion-col col-2>
-                    <profile-pic className="matchLogo" ID="{{match.homeTeam}}" type="team"></profile-pic>
-                  </ion-col>
-                  <ion-col col-6>
-                    <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
-                  </ion-col>
-                  <ion-col col-2>
-                    <profile-pic className="matchLogo" ID="{{match.awayTeam}}" type="team"></profile-pic>
-                  </ion-col>
-                </ion-row>
+                <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
                 <date text-center requestID="{{match.$key}}" day="true"></date>
               </ion-item>
             </span>

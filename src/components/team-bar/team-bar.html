@@ -1,0 +1,46 @@
+<ion-row justify-content-center style="height: 100px">
+  <ion-col col-3>
+    <ion-icon padding-horizontal class="largeIcon" name="ios-people" color='lightBlue'></ion-icon>
+    <p *ngIf="playersNum == 0" style="color: white">
+      لا يوجد
+    </p>
+    <p *ngIf="playersNum > 0" style="color: white">
+      {{playersNum}}
+    </p>
+  </ion-col>
+  <p style="font-weight: bold; font-size: large; color: white">
+    &middot;
+  </p>
+  <ion-col col-3>
+    <ion-icon padding-horizontal class="largeIcon" name="md-trophy" color='gold'></ion-icon>
+    <p style="color: white">
+      لا يوجد
+    </p>
+  </ion-col>
+  <p style="font-weight: bold; font-size: large; color: white">
+    &middot;
+  </p>
+  <ion-col col-3 no-padding>
+    <div class="set-size charts-container">
+      <div class="pie-wrapper progress-0">
+        <span class="label"><span class="smaller">%</span>NA</span>
+        <div class="pie">
+          <div class="left-side half-circle"></div>
+          <div class="right-side half-circle"></div>
+        </div>
+      </div>
+    </div>
+    <div class="matchesStat" dir="ltr">
+      <ion-row justify-content-center>
+        <ion-col align-self-baseline no-padding col-sm-1>
+          <ion-icon color="gold" name="ios-arrow-up"></ion-icon>
+          <p>0</p>
+        </ion-col>
+        <ion-col align-self-baseline no-padding col-sm-1>
+          <ion-icon color="danger" name="ios-arrow-down"></ion-icon>
+          <p>0</p>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-col>
+</ion-row>

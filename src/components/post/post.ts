@@ -1,3 +1,4 @@
+import { RequestMatchPage } from "./../../pages/request-match/request-match";
 import { Component, Input, trigger, state, style, animate, transition } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -16,7 +17,7 @@ import * as moment from 'moment';
     trigger('fadeInOut', [
       state('void', style({ opacity: '0' })),
       state('*', style({ opacity: '1' })),
-      transition('void <=> *', animate('700ms ease-in'))
+      transition('void <=> *', animate('300ms ease-in'))
     ])
   ]
 })
@@ -39,12 +40,12 @@ export class PostComponent {
       if (this.postInfo.type == 'match') {
         this.month = moment(this.postInfo.matchDate, 'MM/DD/YYYY').format('MMM');
         this.day = moment(this.postInfo.matchDate, 'MM/DD/YYYY').format('D');
+        this.teamDB.getTeamInfo(this.postInfo.teamID).then(data => {
+          this.teamInfo = data;
+        })
       }
       this.teamDB.getUserInfo(this.postInfo.by).then(data => {
         this.user = data;
-      })
-      this.teamDB.getTeamInfo(this.postInfo.teamID).then(data => {
-        this.teamInfo = data;
       })
       this.teamDB.getCommentsNum(this.postInfo.$key).then(data => {
         this.commentsNum = data;
@@ -62,8 +63,12 @@ export class PostComponent {
     this.navCtrl.push('PostPage', { post: this.postInfo });
   }
 
-  openTeam(team) {
-    this.navCtrl.push('TeamPage', { team: team })
+  openTeam() {
+    this.navCtrl.push('TeamPage', { team: this.teamInfo })
+  }
+
+  requestMatch() {
+    this.navCtrl.push('RequestMatchPage', { team: this.teamInfo })
   }
 
 }

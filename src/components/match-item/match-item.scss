@@ -1,6 +1,14 @@
 match-item {
   .teamName {
-    width: 66px;
-    overflow: hidden;
+    width: 81px;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.3;
+    align-self: center;
+  }
+  .matchLogo {
+    display: block;
+    margin: auto;
+    border: solid 1px rgba(255, 255, 255, 255);
   }
 }

@@ -34,10 +34,10 @@ export class PostPage {
   }
 
   ionViewDidLoad() {
-    this.teamDB.getUserInfo(this.post.by).then(data=>{
+    this.teamDB.getUserInfo(this.post.by).then(data => {
       this.authorInfo = data;
     })
-    this.comments = this.db.list('timeline/'+this.post.$key+'/comments', {
+    this.comments = this.db.list('timeline/' + this.post.$key + '/comments', {
       query: {
         orderByChild: 'timestamp'
       }
@@ -47,20 +47,20 @@ export class PostPage {
   sendComment() {
     let time = moment().format("HH:mm:ss");
     let date = moment().format("L");
-    this.db.list('timeline/'+this.post.$key+'/comments').push({
+    this.db.list('timeline/' + this.post.$key + '/comments').push({
       by: this.afAuth.auth.currentUser.uid,
       message: this.comment,
       date: date,
       time: time,
       timestamp: new Date().getTime()
-    }).then(()=>{
+    }).then(() => {
       this.comment = '';
       // Refresh comment
     })
   }
 
   deleteComment(comment) {
-    this.db.object('timeline/'+this.post.$key+'/comments/'+comment.$key).remove();
+    this.db.object('timeline/' + this.post.$key + '/comments/' + comment.$key).remove();
   }
 
   options() {
@@ -72,10 +72,18 @@ export class PostPage {
           text: 'حذف',
           role: 'destructive',
           handler: () => {
-            this.db.object('timeline/'+this.post.$key).remove();
+            this.db.object('timeline/' + this.post.$key).remove();
             this.navCtrl.pop();
           }
-        },{
+        },
+        {
+          text: 'Report',
+          role: 'destructive',
+          handler: () => {
+            this.db.list('reports/').push(this.post)
+          }
+        },
+        {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {

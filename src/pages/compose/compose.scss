@@ -89,10 +89,10 @@ page-compose {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     z-index: 3;
-    height: 30px;
+    height: 25px;
     position: relative;
     text-align: center;
   }
@@ -107,23 +107,5 @@ page-compose {
     background-color: white;
     transition: all .2s;
     text-align: center;
-  }
-  button#param {
-    display: block;
-    z-index: 1;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    background-color: #eee;
-    font-size: 20px;
-    color: #9e9e9e;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    outline: none;
-    cursor: pointer;
   }
 }

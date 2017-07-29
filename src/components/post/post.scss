@@ -4,7 +4,7 @@ post {
   }
   .logo {
     position: absolute;
-    top: 22%;
+    top: 15%;
     background-color: white;
     margin: auto;
     left: 0;
@@ -16,15 +16,16 @@ post {
     z-index: 10;
   }
   .bg {
-    filter: brightness(0.8);
-    max-height: 200px;
+    filter: brightness(0.6);
+    height: 200px;
+    border-radius: 10px;
   }
   .teamName {
     position: absolute;
     left: 0;
     right: 0;
     margin: auto;
-    top: 40%;
+    top: 45%;
     text-align: center;
     color: white;
     font-weight: bold;
@@ -34,15 +35,47 @@ post {
     left: 0;
     right: 0;
     margin: auto;
-    top: 50%;
+    top: 60%;
     text-align: center;
     color: white;
-  } // CSS Dat
+  }
+  .infoPlaceholder {
+    height: 200px;
+    background-color: lightgray;
+    position: relative;
+    margin-top: 20px;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+  }
+  .card-content {
+    padding: 0px 16px 0px;
+    position: absolute;
+    right: 54px;
+    top: 40px;
+  }
+  ion-card-content h2 {
+    color: dimgray;
+  }
+  ion-avatar {
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+  }
+  ion-avatar img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .date {
+    padding-left: 15px;
+  }
+  /** Calendar CSS **/
   .calendar {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 3%;
+    padding-top: 4px;
+    padding-left: 12px;
   }
   .icon_calendar {
     position: relative;
@@ -85,10 +118,10 @@ post {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     z-index: 3;
-    height: 30px;
+    height: 25px;
     position: relative;
     text-align: center;
   }
@@ -102,211 +135,5 @@ post {
     background-color: white;
     transition: all .2s;
     text-align: center;
-  } // prograss bar
-  .set-size {
-    font-size: 3em;
-    text-align: -webkit-center;
-  }
-  .charts-container:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-  .pie-wrapper {
-    height: 1em;
-    width: 1em;
-    position: relative;
-    &:nth-child(3n+1) {
-      clear: both;
-    }
-    .pie {
-      height: 100%;
-      width: 100%;
-      clip: rect(0, 1em, 1em, 0.5em);
-      left: 0;
-      position: absolute;
-      top: 0;
-      .half-circle {
-        height: 100%;
-        width: 100%;
-        border: 0.1em solid #3498db;
-        border-radius: 50%;
-        clip: rect(0, 0.5em, 1em, 0);
-        left: 0;
-        position: absolute;
-        top: 0;
-      }
-    }
-    .label {
-      background: #34495e;
-      border-radius: 50%;
-      bottom: 0.4em;
-      color: #ecf0f1;
-      cursor: default;
-      display: block;
-      font-size: 0.25em;
-      left: 0.4em;
-      line-height: 2.6em;
-      position: absolute;
-      right: 0.4em;
-      text-align: center;
-      top: 0.4em;
-      .smaller {
-        color: #bdc3c7;
-        font-size: .45em;
-        padding-bottom: 20px;
-        vertical-align: super;
-      }
-    }
-    .shadow {
-      height: 100%;
-      width: 100%;
-      border: 0.1em solid #bdc3c7;
-      border-radius: 50%;
-    }
-    &.style-2 .label {
-      background: none;
-      color: #7f8c8d;
-      .smaller {
-        color: #bdc3c7;
-      }
-    }
-    &.progress-30 .pie {
-      .right-side {
-        display: none;
-      }
-      .half-circle {
-        border-color: #3498db;
-      }
-      .left-side {
-        -webkit-transform: rotate(108deg);
-        transform: rotate(108deg);
-      }
-    }
-    &.progress-60 .pie {
-      clip: rect(auto, auto, auto, auto);
-      .right-side {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .half-circle {
-        border-color: #9b59b6;
-      }
-      .left-side {
-        -webkit-transform: rotate(216deg);
-        transform: rotate(216deg);
-      }
-    }
-    &.progress-90 .pie {
-      clip: rect(auto, auto, auto, auto);
-      .right-side {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .half-circle {
-        border-color: #e67e22;
-      }
-      .left-side {
-        -webkit-transform: rotate(324deg);
-        transform: rotate(324deg);
-      }
-    }
-    &.progress-45 .pie {
-      .right-side {
-        display: none;
-      }
-      .half-circle {
-        border-color: #1abc9c;
-      }
-      .left-side {
-        -webkit-transform: rotate(162deg);
-        transform: rotate(162deg);
-      }
-    }
-    &.progress-75 .pie {
-      clip: rect(auto, auto, auto, auto);
-      .right-side {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .half-circle {
-        border-color: #8e44ad;
-      }
-      .left-side {
-        -webkit-transform: rotate(270deg);
-        transform: rotate(270deg);
-      }
-    }
-    &.progress-95 .pie {
-      clip: rect(auto, auto, auto, auto);
-      .right-side {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .half-circle {
-        border-color: #e74c3c;
-      }
-      .left-side {
-        -webkit-transform: rotate(342deg);
-        transform: rotate(342deg);
-      }
-    }
-    &.progress-99 .pie {
-      clip: rect(auto, auto, auto, auto);
-      .right-side {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-      }
-      .half-circle {
-        border-color: #e74c3c;
-      }
-      .left-side {
-        -webkit-transform: rotate(342deg);
-        transform: rotate(359deg);
-      }
-    }
-  }
-  .pie-wrapper--solid {
-    border-radius: 50%;
-    overflow: hidden;
-    &:before {
-      border-radius: 0 100% 100% 0%;
-      content: '';
-      display: block;
-      height: 100%;
-      margin-left: 50%;
-      -webkit-transform-origin: left;
-      transform-origin: left;
-    }
-    .label {
-      background: transparent;
-    }
-    &.progress-65 {
-      background: -webkit-linear-gradient(left, #e67e22 50%, #34495e 50%);
-      background: linear-gradient(to right, #e67e22 50%, #34495e 50%);
-      &:before {
-        background: #e67e22;
-        -webkit-transform: rotate(126deg);
-        transform: rotate(126deg);
-      }
-    }
-    &.progress-25 {
-      background: -webkit-linear-gradient(left, #9b59b6 50%, #34495e 50%);
-      background: linear-gradient(to right, #9b59b6 50%, #34495e 50%);
-      &:before {
-        background: #34495e;
-        -webkit-transform: rotate(-270deg);
-        transform: rotate(-270deg);
-      }
-    }
-    &.progress-88 {
-      background: -webkit-linear-gradient(left, #3498db 50%, #34495e 50%);
-      background: linear-gradient(to right, #3498db 50%, #34495e 50%);
-      &:before {
-        background: #3498db;
-        -webkit-transform: rotate(43.2deg);
-        transform: rotate(43.2deg);
-      }
-    }
   }
 }

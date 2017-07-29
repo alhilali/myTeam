@@ -7,7 +7,6 @@ page-team {
     height: 185px;
     background-color: rgba(0, 0, 0, 0.3);
   }
-
   .teamAvatar {
     background-color: white;
     background-position: center;
@@ -18,64 +17,64 @@ page-team {
     width: 78px;
     margin: auto;
     position: absolute;
-    top: 0; left: 0; bottom: 70px; right: 0;
+    top: 0;
+    left: 0;
+    bottom: 70px;
+    right: 0;
   }
-
   .infoSlideBottom {
     margin-top: 60px;
   }
-
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin: 0;
   }
-
   .white {
     color: #fff;
   }
-
   .bold {
     font-weight: bold;
   }
-
-  h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+  h1>a,
+  h2>a,
+  h3>a,
+  h4>a,
+  h5>a,
+  h6>a {
     text-decoration: none;
   }
-
-  .light, a.light {
+  .light,
+  a.light {
     color: #fff;
   }
-
-  .profileCards {
-  }
-
-  .swiper-container-horizontal > .swiper-pagination-bullets {
+  .profileCards {}
+  .swiper-container-horizontal>.swiper-pagination-bullets {
     top: 0px !important;
     width: 20% !important;
   }
-
   .swiper-pagination-bullet {
     background: #fff;
   }
-
   .socialIcons {
     padding: 10px;
     letter-spacing: 10px;
     color: #fff;
   }
-
   .editIcon {
     position: absolute;
     right: 300px;
     bottom: 50px;
   }
-
   .profileBottom {
     background-color: white;
     position: absolute;
     width: 100%;
     padding-bottom: 41px;
   }
-
   .avatar {
     background-color: white;
     background-position: center;
@@ -87,25 +86,13 @@ page-team {
     width: 50px;
     margin-top: 2px;
   }
-
   .segment-button {
     height: 55px !important;
     border-bottom-width: 3px !important;
     line-height: 7rem !important;
   }
-
   .monthLabel {
     background: #FFD034;
     text-align: left;
-  }
-
-  .matchLogo {
-    display: block;
-    margin: auto;
-    border: solid 1px rgba(255, 255, 255, 255);
-    border-radius: 50%;
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
   }
 }

@@ -4,12 +4,14 @@ page-post {
     box-shadow: 0px 14px 0px #0072bb;
     width: 100%;
     margin-bottom: 14px;
+    padding-top: 8px;
   }
-
+  .comments {
+    display: none;
+  }
   .bottomBar {
     background-color: #f4f4f4;
   }
-
   ion-input {
     background-color: white;
     border-radius: 35px;
@@ -17,5 +19,9 @@ page-post {
   }
   .text-input {
     margin: 0;
+  }
+  ion-item-sliding h3 {
+    margin: 0 !important;
+    line-height: 1 !important;
   }
 }

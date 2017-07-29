@@ -1,3 +1,31 @@
 page-login {
-
+  ion-content:after {
+    content: '';
+    display: block;
+    height: 100%;
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/white-diamond.png");
+  }
+  .AppLogo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 120px;
+  }
+  .invalid {
+    border-bottom: 1px solid #ea6153;
+  }
+  .item {
+    border: 1px solid #efefef;
+    border-radius: 17px;
+    font-size: 1.3rem;
+    background-color: white;
+    height: 10px;
+  }
+  .item-inner {
+    border-bottom: 0 !important;
+  }
+  ion-item {
+    margin-bottom: 10px !important;
+  }
 }

@@ -8,8 +8,8 @@
 
   <ion-navbar>
     <ion-buttons end>
-      <button *ngIf='!currentUser' (click)="addPlayer()" ion-button icon-only>
-        <ion-icon name="person-add"></ion-icon>
+      <button (click)="options()" ion-button icon-only>
+        <ion-icon name="md-more" color="white"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>{{player.name}}</ion-title>
