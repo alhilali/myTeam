@@ -56435,29 +56435,6 @@ page-home ion-list {
   margin-bottom: 10px !important;
 }
 
-page-home .socialIcons {
-  letter-spacing: 20px;
-  text-align: center;
-  font-size: 20px;
-}
-
-@-webkit-keyframes image_blur {
-  0% {
-    -webkit-filter: blur(0px);
-  }
-  50% {
-    -webkit-filter: blur(1px);
-  }
-  100% {
-    -webkit-filter: blur(2px);
-  }
-}
-
-page-home .post {
-  -webkit-transition: all 0.4s ease-out;
-  transition: all 0.4s ease-out;
-}
-
 page-home .blur {
   -webkit-filter: blur(1px);
   filter: blur(1px);
