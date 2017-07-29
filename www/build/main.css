@@ -56906,18 +56906,21 @@ page-welcome button.swiper-pagination-bullet.swiper-pagination-bullet-active {
   height: 9px;
 }
 
+page-welcome .welcomeTop {
+  height: 40%;
+}
+
 page-welcome h3 {
   color: #38557C;
 }
 
 page-welcome .welcomeSlides {
-  height: 240px;
-  bottom: 165px;
+  height: 35%;
 }
 
 page-welcome .welcomeBtns {
   text-align: center;
-  padding-top: 45%;
+  padding-top: 10%;
   padding-left: 80px;
   padding-right: 80px;
 }
@@ -56929,7 +56932,7 @@ page-welcome .welcomeBtns > p {
 
 page-welcome .AppLogo {
   width: 70%;
-  padding: 80px;
+  padding: 20%;
   display: block;
   margin-left: auto;
   margin-right: auto;

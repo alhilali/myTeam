@@ -7,16 +7,18 @@ page-welcome {
     width: 9px;
     height: 9px;
   }
+  .welcomeTop {
+    height: 40%;
+  }
   h3 {
     color: #38557C;
   }
   .welcomeSlides {
-    height: 240px;
-    bottom: 165px;
+    height: 35%;
   }
   .welcomeBtns {
     text-align: center;
-    padding-top: 45%;
+    padding-top: 10%;
     padding-left: 80px;
     padding-right: 80px;
   }
@@ -26,7 +28,7 @@ page-welcome {
   }
   .AppLogo {
     width: 70%;
-    padding: 80px;
+    padding: 20%;
     display: block;
     margin-left: auto;
     margin-right: auto;
