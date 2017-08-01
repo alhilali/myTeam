@@ -31,7 +31,6 @@ export class HomePage {
   }
 
   segmentChanged(event) {
-    this.loadPosts(event.value)
     if (event.value == 'all') this.slides.slideTo(0, 500);
     else if (event.value == 'match') this.slides.slideTo(1, 500);
     else if (event.value == 'player') this.slides.slideTo(2, 500);
@@ -47,6 +46,8 @@ export class HomePage {
   ionViewWillLoad() {
     this.loadUser();
     this.loadPosts('all');
+    this.loadPosts('match');
+    this.loadPosts('player');
   }
 
   loadUser() {
