@@ -27,7 +27,6 @@ export class ComposePage {
   info: string = ''
   type: string = 'general';
   selectedTeam: any
-  showTeams: boolean = false;
   matchDate: any
   month: string = ''
   day: string = ''
@@ -46,7 +45,7 @@ export class ComposePage {
         Validators.minLength(1),
         Validators.required])],
       "info": ["",
-        Validators.compose([Validators.maxLength(120)])]
+        Validators.compose([Validators.maxLength(150)])]
     })
     this.matchDate = moment().format('L')
     this.month = moment().format('MMM')
@@ -58,13 +57,11 @@ export class ComposePage {
       await this.teamDB.getMyTeamsCaptain().then(data => {
         this.myTeams = data;
       })
-      this.showTeams = true;
     }
   }
 
   selectTeam(team) {
     this.selectedTeam = team;
-    this.showTeams = false;
   }
 
   openCalendar() {
@@ -90,16 +87,12 @@ export class ComposePage {
   }
 
   submit() {
-    let time = moment().format("HH:mm:ss");
-    let date = moment().format("L");
     this.post.by = this.player.$key;
     this.post.title = this.title;
     this.post.info = this.info;
-    this.post.date = moment().format("L");
-    this.post.time = moment().format("HH:mm:ss");
+    this.post.date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
     this.post.type = this.type;
     this.post.timestamp = new Date().getTime();
-    this.post.genreTimestamp = this.type + '_' + new Date().getTime();
     if (this.type == 'match') {
       this.post.teamID = this.selectedTeam.$key;
       this.post.matchDate = this.matchDate;

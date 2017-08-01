@@ -36,20 +36,22 @@ export class NotificationPage {
   }
 
   loadTeamRequests() {
+    if (this.requestsSub) this.requestsSub.unsubscribe();
     const ref = this.db.list('users/' + this.afAuth.auth.currentUser.uid
       + '/requests')
-      this.requestsSub = ref.subscribe(data => {
-        this.teamsRequest = []
-        this.events.publish("tabs-page:badge-update", 'user');
-        data.forEach(team => {
-          this.db.object('teams/' + team.teamId).take(1).subscribe(teamInfo => {
-            this.teamsRequest.push({teamInfo: teamInfo, dateRequested: team.dateRequested})
-          })
+    this.requestsSub = ref.subscribe(data => {
+      this.teamsRequest = []
+      this.events.publish("tabs-page:badge-update", 'user');
+      data.forEach(team => {
+        this.db.object('teams/' + team.teamId).take(1).subscribe(teamInfo => {
+          this.teamsRequest.push({ teamInfo: teamInfo, dateRequested: team.dateRequested })
         })
       })
+    })
   }
 
   loadMatchRequests() {
+    if (this.matchSub) this.matchSub.unsubscribe();
     const ref = this.db.list('matches/', {
       query: {
         orderByChild: 'toUID',
@@ -62,7 +64,7 @@ export class NotificationPage {
       data.forEach(request => {
         if (request.status == 'pending') {
           this.db.object('teams/' + request.homeTeam).take(1).subscribe(teamInfo => {
-            this.matchRequests.push({teamInfo: teamInfo, request: request})
+            this.matchRequests.push({ teamInfo: teamInfo, request: request })
           })
         }
       })
@@ -103,11 +105,11 @@ export class NotificationPage {
   }
 
   openTeam(team) {
-    this.navCtrl.push('TeamPage', {team: team})
+    this.navCtrl.push('TeamPage', { id: team.$key })
   }
 
   openMatchRequest(request) {
-    this.navCtrl.push('MatchPage', {request: request})
+    this.navCtrl.push('MatchPage', { request: request })
   }
 
   ionViewWillLeave() {

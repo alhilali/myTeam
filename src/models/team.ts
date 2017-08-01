@@ -7,4 +7,5 @@ export interface Team {
   logo: string;
   bg: string;
   $key: string;
+  estDate: string;
 }

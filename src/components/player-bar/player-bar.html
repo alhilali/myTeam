@@ -1,0 +1,29 @@
+<ion-row justify-content-center style="height: 100px">
+  <ion-col col-3>
+    <ion-icon padding-horizontal class="largeIcon" name="ios-stats" color='lightBlue'></ion-icon>
+    <p *ngIf="numMatches == 0" style="color: white">
+      لا يوجد
+    </p>
+    <p *ngIf="numMatches > 0" style="color: white">
+      {{numMatches}}
+    </p>
+  </ion-col>
+  <p style="font-weight: bold; font-size: large; color: white">
+    &middot;
+  </p>
+  <ion-col col-3>
+    <ion-icon padding-horizontal class="largeIcon" name="ios-football" color='gold'></ion-icon>
+    <p style="color: white">
+      لا يوجد
+    </p>
+  </ion-col>
+  <p style="font-weight: bold; font-size: large; color: white">
+    &middot;
+  </p>
+  <ion-col col-3 no-padding>
+    <ion-icon padding-horizontal class="largeIcon" name="ios-pulse" color='orange'></ion-icon>
+    <p style="color: white">
+      لا يوجد
+    </p>
+  </ion-col>
+</ion-row>

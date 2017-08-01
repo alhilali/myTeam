@@ -328,6 +328,46 @@ export class MyTeamDB {
     })
   }
 
+  getLikesNum(postID) {
+    return new Promise(resolve => {
+      const ref = this.db.list('timeline/' + postID + '/likes/')
+        .take(1).subscribe(likes => {
+          resolve(likes.length)
+        })
+    })
+  }
+
+  like(postID) {
+    this.db.list('timeline/' + postID + '/likes/').push({ id: this.afAuth.auth.currentUser.uid })
+  }
+
+  unlike(postID) {
+    this.db.list('timeline/' + postID + '/likes/', {
+      query: {
+        orderByChild: 'id',
+        equalTo: this.afAuth.auth.currentUser.uid
+      }
+    })
+      .take(1).subscribe(like => {
+        this.db.object('timeline/' + postID + '/likes/' + like[0].$key).remove();
+      })
+  }
+
+  likeOrNot(postID) {
+    return new Promise(resolve => {
+      const ref = this.db.list('timeline/' + postID + '/likes/', {
+        query: {
+          orderByChild: 'id',
+          equalTo: this.afAuth.auth.currentUser.uid
+        }
+      })
+        .take(1).subscribe(likes => {
+          if (likes.length > 0) resolve(true)
+          else resolve(false);
+        })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

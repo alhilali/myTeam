@@ -3,6 +3,7 @@ import { Component, Input, trigger, state, style, animate, transition } from '@a
 import { NavController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import * as moment from 'moment';
+import * as tzMoment from 'moment-timezone'
 
 /**
  * Generated class for the PostComponent component.
@@ -28,9 +29,11 @@ export class PostComponent {
   user: any = {}
   date: any = ''
   commentsNum: any;
+  likesNum: any;
   teamInfo: any = {}
   month: any
   day: any
+  liked: boolean = false;
 
   constructor(private teamDB: MyTeamDB, public navCtrl: NavController) {
   }
@@ -50,9 +53,32 @@ export class PostComponent {
       this.teamDB.getCommentsNum(this.postInfo.$key).then(data => {
         this.commentsNum = data;
       })
-      this.date = moment(this.postInfo.date + ' ' + this.postInfo.time,
-        "MM/DD/YYYY HH:mm:ss").locale('ar-sa').fromNow();
+      this.teamDB.getLikesNum(this.postInfo.$key).then(data => {
+        this.likesNum = data;
+      })
+      this.teamDB.likeOrNot(this.postInfo.$key).then(data => {
+        let res;
+        res = data;
+        this.liked = res;
+      })
+      // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
+      // const shortConverted = converted.substring(0, 19);
+      // console.log(shortConverted);
+      let momentDate = moment.utc(this.postInfo.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
+      this.date = moment(momentDate).fromNow();
     });
+  }
+
+  like() {
+    this.teamDB.like(this.postInfo.$key);
+    this.liked = true;
+    this.likesNum++;
+  }
+
+  unlike() {
+    this.teamDB.unlike(this.postInfo.$key);
+    this.liked = false;
+    this.likesNum--;
   }
 
   openPlayer() {
@@ -60,11 +86,11 @@ export class PostComponent {
   }
 
   openPost() {
-    this.navCtrl.push('PostPage', { post: this.postInfo });
+    this.navCtrl.push('PostPage', { post: this.postInfo })
   }
 
   openTeam() {
-    this.navCtrl.push('TeamPage', { team: this.teamInfo })
+    this.navCtrl.push('TeamPage', { id: this.teamInfo.$key })
   }
 
   requestMatch() {

@@ -47,18 +47,21 @@ export class UsernameValidator {
 
   async checkTeam(control: FormControl, teamId) {
     let user;
-    await this.teamDB.findUID(control.value.toLowerCase()).then(data=>{
+    await this.teamDB.findUID(control.value.toLowerCase()).then(data => {
       user = data;
     })
     return new Promise(resolve => {
       if (user) {
-        this.db.list('playersList/'+teamId, {
+        this.db.list('playersList/' + teamId, {
           query: {
             orderByChild: 'uid',
             equalTo: user.$key
           }
         }).take(1).subscribe(data => {
-          if (data.length>0) resolve({"message": "اللاعب متواجد في الفريق حالياً"})
+          if (data.length > 0) {
+            if (data[0].status == 'enrolled') resolve({ "message": "اللاعب متواجد في الفريق حالياً" })
+            else resolve({ "message": "اللاعب لم يقبل الإضافة بعد" })
+          }
           else resolve(null);
         })
       } else {

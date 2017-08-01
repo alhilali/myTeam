@@ -1,7 +1,10 @@
 import { TermsPage } from "./../terms/terms";
 import { WelcomePage } from "./../welcome/welcome";
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ToastController, ModalController, LoadingController
+} from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -14,7 +17,10 @@ import { UsernameValidator } from '../../validators/username'
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'register',
+  defaultHistory: ['WelcomePage']
+})
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
@@ -33,7 +39,8 @@ export class RegisterPage {
     private db: AngularFireDatabase,
     private _form: FormBuilder,
     private unameValid: UsernameValidator,
-    private mdlController: ModalController) {
+    private mdlController: ModalController,
+    private loadingCtrl: LoadingController) {
     let usernameValidator = (control) => {
       return unameValid.checkUsername(control);
     };
@@ -47,6 +54,10 @@ export class RegisterPage {
 
   async register(user: User) {
     this.submitAttempt = true;
+    let registerLoading = this.loadingCtrl.create({
+      dismissOnPageChange: true,
+      spinner: 'crescent'
+    })
     if (this.registerForm.valid) {
       try {
         const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email,
@@ -64,14 +75,13 @@ export class RegisterPage {
               email: user.email
             });
           })
-        if (result) this.navCtrl.setRoot('TabsPage');
-        this.toast.create({
-          message: ' مرحباً بك ' + user.name,
-          duration: 3000,
-          position: 'middle'
-        }).present();
+        if (result) {
+          registerLoading.dismiss();
+          this.navCtrl.setRoot('TabsPage');
+        }
       }
       catch (e) {
+        registerLoading.dismiss();
         if (e.code == 'auth/email-already-in-use') this.usedEmail = true;
         setTimeout(() => { this.usedEmail = false }, 2000);
       }

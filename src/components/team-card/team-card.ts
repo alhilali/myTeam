@@ -30,6 +30,7 @@ export class TeamCardComponent {
   @Input('className') className: any;
   @Input('team') team: any;
   teamInfo: any = {}
+  isCaptain: boolean = false;
 
 
   constructor(private teamDB: MyTeamDB,
@@ -45,6 +46,7 @@ export class TeamCardComponent {
     Promise.resolve().then(() => {
       this.teamDB.getTeamInfo(this.team.$key).then(data => {
         this.teamInfo = data;
+        this.isCaptain = this.teamInfo.captain == this.afAuth.auth.currentUser.uid
       })
     });
   }
@@ -88,6 +90,11 @@ export class TeamCardComponent {
     } else {
       btns = [
         {
+          text: 'اجعل الفريق المفضل',
+          handler: () => {
+          }
+        },
+        {
           text: 'انسحب من الفريق',
           role: 'destructive',
           handler: () => {
@@ -96,11 +103,8 @@ export class TeamCardComponent {
             })
             return false;
           }
-        }, {
-          text: 'اجعل الفريق المفضل',
-          handler: () => {
-          }
-        }, {
+        },
+        {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -176,7 +180,7 @@ export class TeamCardComponent {
   }
 
   openTeam(team) {
-    this.navCtrl.push('TeamPage', { team: team })
+    this.navCtrl.push('TeamPage', { id: team.$key })
   }
 
 }

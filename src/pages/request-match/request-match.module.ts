@@ -13,4 +13,4 @@ import { RequestMatchPage } from './request-match';
     RequestMatchPage
   ]
 })
-export class RequestMatchPageModule {}
+export class RequestMatchPageModule { }

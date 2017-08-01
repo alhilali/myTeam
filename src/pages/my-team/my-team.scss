@@ -1,4 +1,12 @@
 page-my-team {
+  .blur {
+    filter: blur(1px);
+    transition: 1s filter linear;
+  }
+  .unblur {
+    filter: blur(0px);
+    transition: 1s filter linear;
+  }
   .button {
     border: none;
   }
@@ -6,27 +14,5 @@ page-my-team {
     background: #FFD034;
     text-align: left;
     font-weight: 300;
-  }
-  ion-card {
-    position: relative;
-    text-align: center;
-  }
-  .bg {
-    background-position: center;
-    background-size: cover;
-    height: 100px;
-    filter: brightness(0.7);
-    background-color: lightgrey;
-  }
-  .more {
-    position: absolute;
-    width: 10px;
-    left: 5%;
-    top: 0;
-  }
-  .card-content {
-    position: absolute;
-    top: 50%;
-    width: 100%;
   }
 }

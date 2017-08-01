@@ -2,6 +2,7 @@ page-team {
   .hero {
     background-size: cover;
     width: 100%;
+    height: 185px;
   }
   .topContent {
     height: 185px;
@@ -16,14 +17,10 @@ page-team {
     height: 78px;
     width: 78px;
     margin: auto;
-    position: absolute;
     top: 0;
     left: 0;
     bottom: 70px;
     right: 0;
-  }
-  .infoSlideBottom {
-    margin-top: 60px;
   }
   h1,
   h2,

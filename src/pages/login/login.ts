@@ -1,3 +1,4 @@
+import { WelcomePage } from "./../welcome/welcome";
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
@@ -13,7 +14,10 @@ import { User } from '../../models/user';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'login',
+  defaultHistory: ['WelcomePage']
+})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

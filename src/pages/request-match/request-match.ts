@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,
-ViewController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ViewController
+} from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB'
-import {CalendarController} from "ion2-calendar/dist";
+import { CalendarController } from "ion2-calendar/dist";
 import * as moment from 'moment';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -34,54 +36,54 @@ export class RequestMatchPage {
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
     public calendarCtrl: CalendarController) {
-      this.matchForm = this._form.group({
-        "selectedTeam":["", Validators.required],
-        "time": ["", Validators.required],
-        "stadium": ["", Validators.required]
-      })
-      this.awayTeam = navParams.get('team');
-      this.date = moment().format('L')
-      this.day = moment().format('dddd');
-      this.dateFormated = moment().locale('ar-sa').format('ll') + ' '
+    this.matchForm = this._form.group({
+      "selectedTeam": ["", Validators.required],
+      "time": ["", Validators.required],
+      "stadium": ["", Validators.required]
+    })
+    this.awayTeam = navParams.get('team');
+    this.date = moment().format('L')
+    this.day = moment().format('dddd');
+    this.dateFormated = moment().locale('ar-sa').format('ll') + ' '
       + moment().locale('ar-sa').format('dddd');
   }
 
   async ionViewDidLoad() {
-    await this.teamDB.getMyTeamsCaptain().then(data=>{
+    await this.teamDB.getMyTeamsCaptain().then(data => {
       this.myTeams = data;
     })
   }
 
-  openCalendar(){
+  openCalendar() {
     let _daysConfig = [
       {
-        date:new Date(2018,8,25),
-        subTitle:'vs Alhilal',
-        marked:true
+        date: new Date(2018, 8, 25),
+        subTitle: 'vs Alhilal',
+        marked: true
       }
     ];
 
     this.calendarCtrl.openCalendar({
-      title:'تاريخ المباراة',
-      weekdaysTitle:["الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت"],
+      title: 'تاريخ المباراة',
+      weekdaysTitle: ["الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت"],
       cssClass: 'matchCalender',
       closeIcon: true,
       closeLabel: 'close',
       doneLabel: 'md-checkmark',
       doneIcon: true,
-      daysConfig:_daysConfig
+      daysConfig: _daysConfig
     })
-      .then( (res:any) => {
+      .then((res: any) => {
         const selectedDate = new Date(res.date.time).toDateString();
         var momentDate = moment(selectedDate, 'ddd MMM D YYYY', 'en');
         this.date = momentDate.format('L')
         this.day = momentDate.format('dddd');
         this.dateFormated = momentDate.locale('ar-sa').format('ll') + ' '
-        + momentDate.locale('ar-sa').format('dddd');
+          + momentDate.locale('ar-sa').format('dddd');
       })
-      .catch( () => {
+      .catch(() => {
         console.log("error")
-      } )
+      })
   }
 
   sendRequest() {

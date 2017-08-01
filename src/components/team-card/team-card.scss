@@ -1,1 +1,39 @@
-team-card {}
+team-card {
+  .ribbon {
+    transition: .2s all ease;
+    position: absolute;
+    width: 250px;
+    height: 30px;
+    text-align: center;
+    background: #C12121;
+    z-index: 10;
+    transform: rotate(-35deg);
+    top: 10px;
+    left: -92px;
+    line-height: 29px;
+    font-weight: bold;
+    color: white;
+  }
+  ion-card {
+    position: relative;
+    text-align: center;
+  }
+  .bg {
+    background-position: center;
+    background-size: cover;
+    height: 100px;
+    filter: brightness(0.7);
+    background-color: lightgrey;
+  }
+  .more {
+    position: absolute;
+    width: 10px;
+    left: 15%;
+    top: 0;
+  }
+  .card-content {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+  }
+}

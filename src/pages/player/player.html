@@ -15,16 +15,17 @@
     <ion-title>{{player.name}}</ion-title>
   </ion-navbar>
 
-  <shrinking-segment-header [scrollArea]="myContent" headerHeight="185" class="hero" [ngStyle]="{ 'background-image': 'url(' + player.bg + ')'}">
+  <div class="hero" [ngStyle]="{ 'background-image': 'url(' + player.bg + ')'}">
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
           <profile-pic className="avatar" ID="{{playerID}}" type="user"></profile-pic>
-          <ion-icon *ngIf='currentUser' (click)="openModal(player)" class="largeIcon editIcon" color="light" name="ios-cog"></ion-icon>
           <h3 class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>
         </ion-slide>
         <ion-slide>
+
+          <player-bar style="line-height: 1;" playerID="{{player.$key}}"></player-bar>
           <ion-chip color="gold">
             <ion-label>{{player.position}}</ion-label>
           </ion-chip>
@@ -46,7 +47,7 @@
         </ion-slide>
       </ion-slides>
     </div>
-  </shrinking-segment-header>
+  </div>
 
   <ion-toolbar no-padding color="white" mode="md">
     <ion-segment class="segment" color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">

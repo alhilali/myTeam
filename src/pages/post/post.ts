@@ -77,13 +77,6 @@ export class PostPage {
           }
         },
         {
-          text: 'Report',
-          role: 'destructive',
-          handler: () => {
-            this.db.list('reports/').push(this.post)
-          }
-        },
-        {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -92,6 +85,13 @@ export class PostPage {
       ]
     } else {
       btns = [
+        {
+          text: 'Report',
+          role: 'destructive',
+          handler: () => {
+            this.db.list('reports/').push(this.post)
+          }
+        },
         {
           text: 'إلغاء',
           role: 'cancel',

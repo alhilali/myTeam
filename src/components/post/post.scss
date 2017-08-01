@@ -19,6 +19,7 @@ post {
     filter: brightness(0.6);
     height: 200px;
     border-radius: 10px;
+    width: 100% !important;
   }
   .teamName {
     position: absolute;
@@ -69,12 +70,30 @@ post {
   .date {
     padding-left: 15px;
   }
+  .chip {
+    padding: 0 15px 8px;
+    border-radius: 20px;
+    color: white;
+    font-size: smaller;
+  }
+  .gold {
+    background-color: #AF6916;
+  }
+  .red {
+    background-color: orangered;
+  }
+  .green {
+    background-color: green;
+  }
+  .blue {
+    background-color: #0072BB;
+  }
   /** Calendar CSS **/
-  .calendar {
+  .topLeft {
     position: absolute;
     top: 0;
     left: 0;
-    padding-top: 4px;
+    padding-top: 15px;
     padding-left: 12px;
   }
   .icon_calendar {
@@ -83,7 +102,7 @@ post {
     background-color: white;
     margin: auto;
     border-radius: 10px;
-    width: 62px;
+    width: 55px;
     -moz-box-shadow: 0px 2px 5px 0px #cfcfcf;
     -webkit-box-shadow: 0px 2px 5px 0px #cfcfcf;
     -o-box-shadow: 0px 2px 5px 0px #cfcfcf;
@@ -121,7 +140,7 @@ post {
     font-size: 14px;
     font-weight: bold;
     z-index: 3;
-    height: 25px;
+    height: 24px;
     position: relative;
     text-align: center;
   }

@@ -1,0 +1,10 @@
+<div style="position: relative; padding: 10px;">
+  <img *ngIf="userInfo.bg" class="bg" src="{{userInfo.bg}}" alt="">
+  <img *ngIf="!userInfo.bg" class="bg" src="http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg"
+    alt="">
+  <img class="playerLogo" src="{{userInfo.profilePic}}" alt="">
+  <h1 class="playerName">{{userInfo.name}}</h1>
+  <div class="playerBar">
+    <player-bar playerID="{{playerID}}"></player-bar>
+  </div>
+</div>

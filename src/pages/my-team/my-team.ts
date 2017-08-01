@@ -1,3 +1,4 @@
+import { TabsPage } from "./../tabs/tabs";
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams, AlertController,
@@ -15,7 +16,10 @@ import * as moment from 'moment';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'myteam',
+  defaultHistory: ['TabsPage', 'MyTeamPage']
+})
 @Component({
   selector: 'page-my-team',
   templateUrl: 'my-team.html',
@@ -27,6 +31,7 @@ export class MyTeamPage {
   hasNoTeams: boolean = false
   matches: any[] = [];
   months: any[] = [];
+  blur: boolean = false;
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -44,6 +49,7 @@ export class MyTeamPage {
   }
 
   loadTeams() {
+    if (this.myTeamsSub) this.myTeamsSub.unsubscribe();
     this.myTeamsSub = this.db.list('users/' + this.afAuth.auth.currentUser.uid
       + '/myTeams').subscribe(data => {
         if (data.length == 0) this.hasNoTeams = true;
@@ -55,6 +61,7 @@ export class MyTeamPage {
 
   loadGames() {
     this.matches = []
+    this.months = []
     this.db.list('users/' + this.afAuth.auth.currentUser.uid + '/myTeams/').take(1)
       .subscribe(teams => {
         teams.forEach(team => {
@@ -83,6 +90,10 @@ export class MyTeamPage {
   startTeam() {
     const myModal = this.modal.create('StartTeamPage');
     myModal.present();
+    this.blur = true;
+    myModal.onWillDismiss(data => {
+      this.blur = false;
+    })
   }
 
   openMatchRequest(request) {

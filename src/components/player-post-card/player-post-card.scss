@@ -1,0 +1,40 @@
+player-post-card {
+  .playerLogo {
+    position: absolute;
+    top: 15%;
+    background-color: white;
+    margin: auto;
+    left: 0;
+    right: 0;
+    border: solid 1px white;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    z-index: 10;
+  }
+  .bg {
+    filter: brightness(0.6);
+    height: 200px;
+    border-radius: 10px;
+    width: 100% !important;
+  }
+  .playerName {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 45%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  .playerBar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 60%;
+    text-align: center;
+    color: white;
+  }
+}

@@ -37,6 +37,7 @@ const cloudSettings: CloudSettings = {
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
       swipeBackEnabled: true,
+      tabsHideOnSubPages: true,
     }),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,

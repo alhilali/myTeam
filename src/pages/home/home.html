@@ -20,12 +20,30 @@
 
     </ion-refresher-content>
   </ion-refresher>
-  <ion-segment padding-horizontal [(ngModel)]="type" color="orange" mode="md" (ionChange)="segmentChanged()">
+  <ion-segment padding-horizontal [(ngModel)]="type" color="orange" mode="md" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="all">عام</ion-segment-button>
     <ion-segment-button value="match">مباريات</ion-segment-button>
-    <ion-segment-button value="players">لاعبين</ion-segment-button>
+    <ion-segment-button value="player">لاعبين</ion-segment-button>
   </ion-segment>
-  <ion-list>
-    <post *ngFor="let post of posts" [post]="post"></post>
-  </ion-list>
+  <div>
+    <ion-slides dir="rtl" (ionSlideWillChange)="slideChanged()">
+
+      <ion-slide>
+        <post *ngFor="let post of posts" [post]="post"></post>
+      </ion-slide>
+
+      <ion-slide>
+        <post *ngFor="let post of posts" [post]="post">
+        </post>
+      </ion-slide>
+
+      <ion-slide>
+        <post *ngFor="let post of posts" [post]="post">
+        </post>
+      </ion-slide>
+
+    </ion-slides>
+
+  </div>
+
 </ion-content>

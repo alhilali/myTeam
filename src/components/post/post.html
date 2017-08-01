@@ -1,6 +1,6 @@
 <!-- Generated template for the PostComponent component -->
 <ion-card [@fadeInOut] [ngClass]="className ? className : 'card1'">
-  <ion-item>
+  <ion-item style="height: 70px;">
     <ion-avatar margin-top item-start>
       <profile-pic ID="{{postInfo.by}}" type="user" on-tap="openPlayer()"></profile-pic>
     </ion-avatar>
@@ -8,11 +8,22 @@
       <h2 style="margin: 2px 0;">{{user.name}}</h2>&nbsp;
       <p>{{user.originalUsername}}@</p>
     </ion-row>
-    <div *ngIf="postInfo.type == 'match'" class="calendar">
-      <div on-tap="requestMatch()" class="icon_calendar">
+    <div class="topLeft">
+      <div *ngIf="postInfo.type == 'match'" on-tap="requestMatch()" class="icon_calendar">
         <em></em><em></em>
         <label>{{month}}</label>
         <span><h1>{{day}}</h1></span>
+      </div>
+      <div *ngIf="postInfo.type == 'player'" on-tap="requestPlayer()">
+        <span [ngSwitch]="user.position">
+          <span *ngSwitchCase="'GK'" class="chip red">حارس</span>
+
+        <span *ngSwitchCase="'DF'" class="chip green">دفاع</span>
+
+        <span *ngSwitchCase="'CM'" class="chip gold">وسط</span>
+
+        <span *ngSwitchCase="'AT'" class="chip blue">مهاجم</span>
+        </span>
       </div>
     </div>
   </ion-item>
@@ -28,10 +39,19 @@
       <team-bar teamID="{{postInfo.teamID}}"></team-bar>
     </div>
   </div>
+  <player-post-card *ngIf="postInfo.type == 'player'" playerID="{{postInfo.by}}"></player-post-card>
+  <p class="postInfo" padding>
+    {{postInfo.info}}
+  </p>
   <ion-row>
     <ion-col class="likes">
-      <button ion-button icon-left clear small>
+      <button (click)="like()" *ngIf="liked == false" ion-button icon-left clear small>
         <ion-icon name="md-heart-outline" color="danger"></ion-icon>
+        <div>{{likesNum}}</div>
+      </button>
+      <button (click)="unlike()" *ngIf="liked == true" ion-button icon-left clear small>
+        <ion-icon name="md-heart" color="danger"></ion-icon>
+        <div>{{likesNum}}</div>
       </button>
     </ion-col>
     <ion-col class="comments">
@@ -41,7 +61,7 @@
       </button>
     </ion-col>
     <ion-col class="date" center text-end>
-      <ion-note>
+      <ion-note dir="ltr">
         {{date}}
       </ion-note>
     </ion-col>

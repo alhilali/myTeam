@@ -15,7 +15,9 @@ import * as moment from 'moment';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'team/:id'
+})
 @Component({
   selector: 'page-team',
   templateUrl: 'team.html',
@@ -41,6 +43,7 @@ export class TeamPage {
     private alertCtrl: AlertController) {
     this.team.logo = '';
     this.team.bg = '';
+    this.team.$key = this.navParams.get('id');
   }
 
   ngAfterViewInit() {
@@ -54,7 +57,7 @@ export class TeamPage {
   }
 
   loadTeam() {
-    this.teamSub = this.db.object('teams/' + this.navParams.get('team').$key).subscribe(data => {
+    this.teamSub = this.db.object('teams/' + this.navParams.get('id')).subscribe(data => {
       this.team = data;
       if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
       if (!this.team.bg) this.team.bg = 'http://2.bp.blogspot.com/-IxU2acVSDds/UPPNBOwulyI/AAAAAAAACGU/3RaskOb8upk/s1600/Old+Trafford+wallpapers+12.jpg';
@@ -62,7 +65,7 @@ export class TeamPage {
   }
 
   loadPlayers() {
-    this.playersListSub = this.db.list('playersList/' + this.navParams.get('team').$key)
+    this.playersListSub = this.db.list('playersList/' + this.navParams.get('id'))
       .subscribe(data => {
         this.playersList = []
         let i;

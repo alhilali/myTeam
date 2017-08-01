@@ -1,14 +1,15 @@
 <!-- Generated template for the TeamCardComponent component -->
 <ion-card [@fadeInOut] [ngClass]="className ? className : 'card1'">
   <ion-item>
+    <span *ngIf="isCaptain" class="ribbon">كابتن</span>
     <ion-avatar item-start>
       <img on-tap='openTeam(teamInfo)' src="{{teamInfo.logo}}" alt="">
     </ion-avatar>
     <h2>{{teamInfo.name}}</h2>
     <p>{{teamInfo.city}}</p>
-    <div class="more" text-left>
+    <div padding class="more" text-left>
       <button ion-button (click)='presentActionSheet(teamInfo)' clear>
-        <ion-icon class="mdIcon" name="md-more"></ion-icon>
+        <ion-icon class="mdIcon" name="ios-more"></ion-icon>
       </button>
     </div>
   </ion-item>

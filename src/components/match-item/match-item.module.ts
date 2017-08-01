@@ -1,3 +1,4 @@
+import { ProfilePicComponent } from "./../profile-pic/profile-pic";
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { MatchItemComponent } from './match-item';
@@ -7,10 +8,11 @@ import { MatchItemComponent } from './match-item';
     MatchItemComponent,
   ],
   imports: [
+    ProfilePicComponent,
     IonicModule,
   ],
   exports: [
     MatchItemComponent
   ]
 })
-export class MatchItemComponentModule {}
+export class MatchItemComponentModule { }

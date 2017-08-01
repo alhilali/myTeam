@@ -1,6 +1,6 @@
 <ion-tabs tabsLayout="title-hide">
-  <ion-tab [root]="tab1Root" tabTitle="الرئيسية" tabIcon="home" #content swipeBackEnabled="true"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="فريقي" tabIcon="football" #content swipeBackEnabled="true"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="تنبيهات" tabBadge="{{notificationNum}}" tabBadgeStyle="danger" tabIcon="ios-notifications-outline" #content swipeBackEnabled="true"></ion-tab>
-  <ion-tab [root]="tab4Root" tabTitle="بحث" tabIcon="search" #content swipeBackEnabled="true"></ion-tab>
+  <ion-tab [root]="tab1Root" tabUrlPath="home" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tab2Root" tabUrlPath="myteam" tabIcon="football"></ion-tab>
+  <ion-tab [root]="tab3Root" tabUrlPath="notification" tabBadge="{{notificationNum}}" tabBadgeStyle="danger" tabIcon="ios-notifications-outline"></ion-tab>
+  <ion-tab [root]="tab4Root" tabUrlPath="search" tabIcon="search"></ion-tab>
 </ion-tabs>

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage, NavController, ActionSheetController,
-  ModalController, Content
+  ModalController, Slides
 } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -12,7 +12,7 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild(Content) content: Content;
+  @ViewChild(Slides) slides: Slides;
   currentUser: any = {}
   currentUserId: any
   posts: any[]
@@ -24,7 +24,21 @@ export class HomePage {
     this.currentUserId = this.afAuth.auth.currentUser.uid;
   }
 
-  ionViewDidLoad() {
+  segmentChanged(event) {
+    this.loadPosts(event.value)
+    if (event.value == 'all') this.slides.slideTo(0, 500);
+    else if (event.value == 'match') this.slides.slideTo(1, 500);
+    else if (event.value == 'player') this.slides.slideTo(2, 500);
+  }
+
+  slideChanged() {
+    let currentIndex = this.slides.getActiveIndex();
+    if (currentIndex == 0) this.type = 'all';
+    else if (currentIndex == 1) this.type = 'match';
+    else if (currentIndex == 2) this.type = 'player';
+  }
+
+  ionViewWillLoad() {
     this.loadUser();
     this.loadPosts('all');
   }
@@ -51,10 +65,6 @@ export class HomePage {
         this.posts.reverse();
       })
     }
-  }
-
-  segmentChanged() {
-    this.loadPosts(this.type)
   }
 
   doRefresh(refresher) {

@@ -16,12 +16,20 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
+  <ion-row class="padding-top btnsRow" align-items-stretch>
+    <ion-col pull-1>
+      <button (click)="closeModal()" color="orange" ion-button round small>
+          إلغاء
+        </button>
+    </ion-col>
+    <ion-col push-1>
+      <button (click)="saveTeam(team)" [disabled]='!teamForm.valid' color="gold" ion-button round small>
+            حفظ
+        </button>
+    </ion-col>
+  </ion-row>
   <ion-card class="card1">
-    <ion-card-header>
-      فريق جديد
-    </ion-card-header>
-
     <form name="myForm" novalidate>
       <ion-list [formGroup]='teamForm'>
 
@@ -39,9 +47,6 @@
             <ion-option value="الدمام">الدمام</ion-option>
           </ion-select>
         </ion-item>
-        <p style="padding: 30px" text-center>
-          <button full ion-button color='orange' [disabled]='!teamForm.valid' (click)="saveTeam(team)">حفظ</button>
-        </p>
       </ion-list>
     </form>
 

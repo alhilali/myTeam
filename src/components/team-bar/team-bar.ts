@@ -18,10 +18,22 @@ export class TeamBarComponent {
   constructor(private db: AngularFireDatabase) {
   }
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
+    this.setData();
+  }
+
+  ngOnChanges() {
+    this.setData();
+  }
+
+  setData() {
     Promise.resolve().then(() => {
       this.db.list('playersList/' + this.teamID).take(1).subscribe(data => {
-        this.playersNum = data.length;
+        let count = 0;
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].status == "enrolled") count++;
+        }
+        this.playersNum = count;
       })
     });
   }

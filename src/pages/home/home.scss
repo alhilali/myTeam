@@ -4,10 +4,9 @@ page-home {
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    height: 30px;
-    left: auto;
-    position: relative;
-    width: 30px;
+    width: 31px;
+    height: 31px;
+    border: solid 1px white;
   }
   ion-list {
     margin-bottom: 10px !important;
@@ -19,5 +18,8 @@ page-home {
   .unblur {
     filter: blur(0px);
     transition: 1s filter linear;
+  }
+  .postInfo {
+    display: none;
   }
 }

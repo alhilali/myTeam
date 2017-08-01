@@ -125,6 +125,12 @@ export class PlayerPage {
     } else {
       btns = [
         {
+          text: 'تعديل بياناتي',
+          handler: () => {
+            this.editProfilePage();
+          }
+        },
+        {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -142,14 +148,14 @@ export class PlayerPage {
     this.playerSub.unsubscribe();
   }
 
-  openModal() {
+  editProfilePage() {
     this.playerSub.unsubscribe();
     let modal = this.modlCtrl.create('EditProfilePage', { player: this.player });
     modal.present();
   }
 
   openTeam(team) {
-    this.navCtrl.push('TeamPage', { team: team })
+    this.navCtrl.push('TeamPage', { id: team.$key })
   }
 
 }

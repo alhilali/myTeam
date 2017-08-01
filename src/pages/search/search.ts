@@ -51,12 +51,12 @@ export class SearchPage {
     // set val to the value of the searchbar
     let query = ev.target.value;
     if (query && this.type == 'players') query = query.toLowerCase();
-    if(query) this.query.next(query)
+    if (query) this.query.next(query)
   }
 
   open(item) {
-    if (this.type == 'teams') this.navCtrl.push('TeamPage', {team: item})
-    else if (this.type == 'players') this.navCtrl.push('PlayerPage', {player: item})
+    if (this.type == 'teams') this.navCtrl.push('TeamPage', { id: item.$key })
+    else if (this.type == 'players') this.navCtrl.push('PlayerPage', { player: item })
   }
 
   segmentChanged(ev: any) {

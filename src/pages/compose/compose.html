@@ -22,7 +22,7 @@
 
 
 <ion-content padding>
-  <ion-row class="composeForm btnsRow" align-items-stretch>
+  <ion-row class="padding-top btnsRow" align-items-stretch>
     <ion-col pull-1>
       <button (click)="closeModal()" color="orange" ion-button round small>
           إلغاء
@@ -38,10 +38,18 @@
     <ion-segment class="typeSegment" [(ngModel)]="type" (ionChange)="segmentChanged()" color="orange" mode="md">
       <ion-segment-button value="general">عام</ion-segment-button>
       <ion-segment-button value="match">مباريات</ion-segment-button>
-      <ion-segment-button value="players">لاعبين</ion-segment-button>
+      <ion-segment-button value="player">لاعبين</ion-segment-button>
     </ion-segment>
     <form [formGroup]="composeForm">
-      <img *ngIf="type == 'match' && selectedTeam && selectedTeam.bg" src="{{selectedTeam.bg}}" alt="">
+      <div *ngIf="type == 'match' && selectedTeam" style="position: relative; padding: 10px;">
+        <img class="bg" src="{{selectedTeam.bg}}" alt="">
+        <img class="teamLogo" src="{{selectedTeam.logo}}" alt="">
+        <h1 class="teamName">{{selectedTeam.name}}</h1>
+        <div class="teamBar">
+          <team-bar teamID="{{selectedTeam.$key}}"></team-bar>
+        </div>
+      </div>
+      <player-post-card *ngIf="type == 'player'" playerID="{{player.$key}}"></player-post-card>
       <ion-item>
         <ion-avatar item-start>
           <profile-pic ID="{{player.$key}}" type="user"></profile-pic>
@@ -87,7 +95,7 @@
     <ion-row>
       <ion-col text-center>
         <ion-note [ngClass]="{'red': (!composeForm.controls.info.valid && composeForm.controls.info.dirty)}" *ngIf="info.length > 0">
-          {{info.length}}/120
+          {{info.length}}/300
         </ion-note>
       </ion-col>
       <ion-col>
