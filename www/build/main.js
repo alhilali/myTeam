@@ -1755,7 +1755,7 @@ PostComponent = __decorate([
             Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* trigger */])('fadeInOut', [
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* style */])({ opacity: '0' })),
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_29" /* state */])('*', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* style */])({ opacity: '1' })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* transition */])('void <=> *', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_18" /* animate */])('300ms ease-in'))
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* transition */])('void <=> *', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_18" /* animate */])('400ms ease-in'))
             ])
         ]
     }),

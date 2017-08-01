@@ -15,13 +15,19 @@ export class HomePage {
   @ViewChild(Slides) slides: Slides;
   currentUser: any = {}
   currentUserId: any
-  posts: any[]
+  allPosts: any[]
+  matchPosts: any[]
+  playerPosts: any[]
   blur: boolean = false;
   type: string = 'all';
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
     private teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
     this.currentUserId = this.afAuth.auth.currentUser.uid;
+  }
+
+  ngAfterViewInit() {
+    this.slides.autoHeight = true;
   }
 
   segmentChanged(event) {
@@ -55,14 +61,20 @@ export class HomePage {
     if (type == 'all') {
       this.teamDB.getAllPosts().then(data => {
         result = data;
-        this.posts = result;
-        this.posts.reverse();
+        this.allPosts = result;
+        this.allPosts.reverse();
       })
-    } else {
+    } else if (type == 'match') {
       this.teamDB.getPosts(type).then(data => {
         result = data;
-        this.posts = result;
-        this.posts.reverse();
+        this.matchPosts = result;
+        this.matchPosts.reverse();
+      })
+    } else if (type == 'player') {
+      this.teamDB.getPosts(type).then(data => {
+        result = data;
+        this.playerPosts = result;
+        this.playerPosts.reverse();
       })
     }
   }

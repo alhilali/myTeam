@@ -29,16 +29,16 @@
     <ion-slides dir="rtl" (ionSlideWillChange)="slideChanged()">
 
       <ion-slide>
-        <post *ngFor="let post of posts" [post]="post"></post>
+        <post *ngFor="let post of allPosts" [post]="post"></post>
       </ion-slide>
 
       <ion-slide>
-        <post *ngFor="let post of posts" [post]="post">
+        <post *ngFor="let post of matchPosts" [post]="post">
         </post>
       </ion-slide>
 
       <ion-slide>
-        <post *ngFor="let post of posts" [post]="post">
+        <post *ngFor="let post of playerPosts" [post]="post">
         </post>
       </ion-slide>
 
