@@ -3,6 +3,10 @@
   "short_name": "فالملعب",
   "start_url": "index.html",
   "display": "standalone",
+  "splashscreens": [{
+    "src": "assets/launch.png",
+    "sizes": "640x1136",
+  }],
   "icons": [{
     "src": "assets/logo/icon1.png",
     "sizes": "512x512",
