@@ -1,6 +1,6 @@
 webpackJsonp([8],{
 
-/***/ 1096:
+/***/ 1095:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequestMatchPageModule", function() { return RequestMatchPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__request_match__ = __webpack_require__(1161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__request_match__ = __webpack_require__(1160);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ RequestMatchPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1161:
+/***/ 1160:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -198,11 +198,11 @@ var RequestMatchPage = (function () {
 RequestMatchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-request-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/'<!--\n  Generated template for the RequestMatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب مباراة</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <ion-card-header>\n      تفاصيل المباراة\n    </ion-card-header>\n    <form name="matchForm" novalidate>\n      <div class="register" [formGroup]=\'matchForm\'>\n        <ion-list>\n          <ion-item>\n            <ion-label>فريقي</ion-label>\n            <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">\n              <span *ngFor="let team of myTeams">\n                <ion-option *ngIf="team.$key != awayTeam.$key"  [value]="team">{{team.name}}</ion-option>\n              </span>\n            </ion-select>\n          </ion-item>\n\n          <button ion-item (click)="openCalendar()">\n        <ion-row>\n          <ion-col>\n            التاريخ\n          </ion-col>\n          <ion-col text-end>\n            {{dateFormated}}\n          </ion-col>\n        </ion-row>\n      </button>\n          <ion-item>\n            <ion-label>الساعة</ion-label>\n            <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label>الملعب</ion-label>\n            <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>\n          </ion-item>\n          <p text-center>\n            <button padding ion-button color="secondary" [disabled]="matchForm.invalid" (click)="sendRequest()">إرسال الطلب\n              <ion-icon padding name="ios-calendar-outline"></ion-icon>\n            </button>\n          </p>\n        </ion-list>\n      </div>\n    </form>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/,
+        selector: 'page-request-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/'<!--\n  Generated template for the RequestMatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب مباراة مع {{awayTeam.name}}</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <ion-card-header>\n      تفاصيل المباراة\n    </ion-card-header>\n    <form name="matchForm" novalidate>\n      <div class="register" [formGroup]=\'matchForm\'>\n        <ion-list>\n          <ion-item>\n            <ion-label>فريقي</ion-label>\n            <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">\n              <span *ngFor="let team of myTeams">\n                <ion-option *ngIf="team.$key != awayTeam.$key"  [value]="team">{{team.name}}</ion-option>\n              </span>\n            </ion-select>\n          </ion-item>\n\n          <button ion-item (click)="openCalendar()">\n        <ion-row>\n          <ion-col>\n            التاريخ\n          </ion-col>\n          <ion-col text-end>\n            {{dateFormated}}\n          </ion-col>\n        </ion-row>\n      </button>\n          <ion-item>\n            <ion-label>الساعة</ion-label>\n            <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label>الملعب</ion-label>\n            <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>\n          </ion-item>\n          <p text-center>\n            <button padding ion-button color="secondary" [disabled]="matchForm.invalid" (click)="sendRequest()">إرسال الطلب\n              <ion-icon padding name="ios-calendar-outline"></ion-icon>\n            </button>\n          </p>\n        </ion-list>\n      </div>\n    </form>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
         __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__["a" /* CalendarController */]])

@@ -1,6 +1,6 @@
 webpackJsonp([17],{
 
-/***/ 1099:
+/***/ 1098:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,7 +9,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_components_module__ = __webpack_require__(672);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compose__ = __webpack_require__(1164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compose__ = __webpack_require__(1163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44,7 +44,7 @@ ComposePageModule = __decorate([
 
 /***/ }),
 
-/***/ 1164:
+/***/ 1163:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53,7 +53,7 @@ ComposePageModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ion2_calendar_dist__ = __webpack_require__(676);
@@ -213,9 +213,9 @@ ComposePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
         selector: 'page-compose',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/compose/compose.html"*/'<!--\n  Generated template for the ComposePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons end>\n      <button end (click)="submit()" [disabled]="composeForm.invalid" color="white" ion-button clear>\n        ارسل\n      </button>\n    </ion-buttons>\n    <ion-title>مشاركة جديده</ion-title>\n    <button start (click)="closeModal()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-row class="padding-top btnsRow" align-items-stretch>\n    <ion-col pull-1>\n      <button (click)="closeModal()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="submit()" [disabled]="composeForm.invalid" color="gold" ion-button round small>\n            ارسل\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1" style="margin-top: 0; margin-bottom: 0;">\n    <ion-segment class="typeSegment" [(ngModel)]="type" (ionChange)="segmentChanged()" color="orange" mode="md">\n      <ion-segment-button value="general">عام</ion-segment-button>\n      <ion-segment-button value="match">مباريات</ion-segment-button>\n      <ion-segment-button value="player">لاعبين</ion-segment-button>\n    </ion-segment>\n    <form [formGroup]="composeForm">\n      <div *ngIf="type == \'match\' && selectedTeam" style="position: relative; padding: 10px;">\n        <img class="bg" src="{{selectedTeam.bg}}" alt="">\n        <img class="teamLogo" src="{{selectedTeam.logo}}" alt="">\n        <h1 class="teamName">{{selectedTeam.name}}</h1>\n        <div class="teamBar">\n          <team-bar teamID="{{selectedTeam.$key}}"></team-bar>\n        </div>\n      </div>\n      <player-post-card *ngIf="type == \'player\'" playerID="{{player.$key}}"></player-post-card>\n      <ion-item>\n        <ion-avatar item-start>\n          <profile-pic ID="{{player.$key}}" type="user"></profile-pic>\n        </ion-avatar>\n        <h2>{{player.name}}</h2>\n        <p>{{player.originalUsername}}@</p>\n      </ion-item>\n      <ion-card-content>\n        <div padding-bottom>\n          <ion-item>\n            <ion-input no-margin [(ngModel)]="title" style="font-size: large;" placeholder="العنوان" type="text" formControlName="title"></ion-input>\n          </ion-item>\n          <ion-note [ngClass]="{\'red\': (!composeForm.controls.title.valid && composeForm.controls.title.dirty)}" style="position: absolute;"\n            *ngIf="title.length > 0">\n            {{title.length}}/30\n          </ion-note>\n        </div>\n        <hr/>\n        <ion-row *ngIf="type == \'match\' && myTeams?.length > 0">\n          <ion-col col-8>\n            <ion-slides class="teamsList" dir="rtl" slidesPerView="4">\n              <ion-slide *ngFor="let team of myTeams">\n                <img on-tap="selectTeam(team)" class="logo" src="{{team.logo}}" alt="">\n                <div class="card-title">\n                  {{team.name}}\n                </div>\n              </ion-slide>\n            </ion-slides>\n          </ion-col>\n          <ion-col col-4>\n            <div on-tap="openCalendar()" class="icon_calendar">\n              <em></em><em></em>\n              <label>{{month}}</label>\n              <span>{{day}}</span>\n            </div>\n          </ion-col>\n        </ion-row>\n        <ion-item>\n          <ion-textarea class="infoArea" [(ngModel)]="info" rows="2" placeholder="معلومات اخرى (اختياري)" type="text" formControlName="info"></ion-textarea>\n        </ion-item>\n      </ion-card-content>\n    </form>\n    <ion-row>\n      <ion-col text-center>\n        <ion-note [ngClass]="{\'red\': (!composeForm.controls.info.valid && composeForm.controls.info.dirty)}" *ngIf="info.length > 0">\n          {{info.length}}/300\n        </ion-note>\n      </ion-col>\n      <ion-col>\n\n      </ion-col>\n      <ion-col center text-center>\n        <ion-note>\n          {{date}}\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/compose/compose.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* ViewController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */],

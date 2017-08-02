@@ -51,7 +51,7 @@ MyTeamPageModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyTeamPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
@@ -230,8 +230,8 @@ MyTeamPage = __decorate([
         selector: 'page-my-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/my-team/my-team.html"*/'<!--\n  Generated template for the MyTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>فريقي</ion-title>\n    <ion-buttons end>\n      <button (click)=\'startTeam()\' ion-button icon-only color="royal">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content [ngClass]="blur ? \'blur\' : \'unblur\'">\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n  <ion-item-divider>\n    جميع الفرق المشارك فيها\n  </ion-item-divider>\n  <ion-item-group padding-bottom *ngIf="myTeams?.length > 0 ">\n    <ion-row *ngFor="let team of myTeams">\n      <team-card style="width: 100%" [team]=\'team\'></team-card>\n    </ion-row>\n  </ion-item-group>\n  <div padding *ngIf="myTeams?.length == 0">\n    <h6 text-center>ابدأ فريقك الان</h6>\n  </div>\n  <ion-item-divider>\n    مبارياتي القادمة\n  </ion-item-divider>\n  <ion-list no-margin>\n    <span *ngFor="let month of months">\n    <ion-item-divider class="monthLabel">\n      {{month.name}}\n    </ion-item-divider>\n    <span *ngFor="let match of matches">\n      <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">\n        <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>\n        <date text-center requestID="{{match.$key}}" day="true"></date>\n      </ion-item>\n    </span>\n    </span>\n  </ion-list>\n  <div padding *ngIf="matches.length == 0">\n    <h6 text-center>ابحث عن مباريات في الرئيسية</h6>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/my-team/my-team.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
         __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__["a" /* MyTeamDB */],

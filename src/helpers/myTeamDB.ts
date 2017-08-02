@@ -384,6 +384,15 @@ export class MyTeamDB {
     })
   }
 
+  getPostInfo(postID) {
+    return new Promise(resolve => {
+      this.db.object('timeline/' + postID).take(1).subscribe(data => {
+        if (data) resolve(data)
+        else resolve(null);
+      })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

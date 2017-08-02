@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 1101:
+/***/ 1100:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditTeamPageModule", function() { return EditTeamPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_team__ = __webpack_require__(1166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_team__ = __webpack_require__(1165);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2805,7 +2805,7 @@ var _app = __webpack_require__(44);
 
 var _app2 = _interopRequireDefault(_app);
 
-__webpack_require__(212);
+__webpack_require__(213);
 
 __webpack_require__(61);
 
@@ -6132,7 +6132,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1166:
+/***/ 1165:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6143,7 +6143,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_camera__ = __webpack_require__(677);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6274,9 +6274,9 @@ EditTeamPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-edit-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-team/edit-team.html"*/'<!--\n  Generated template for the EditProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>إعدادات الفريق</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <button ion-item (click)="presentActionSheet(\'logo\')">\n      <div *ngIf="team.logo" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + team.logo + \')\'}"></div>\n    </button>\n    <button ion-item (click)="presentActionSheet(\'bg\')">\n      <div *ngIf="team.bg" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + team.bg + \')\'}"></div>\n      <div *ngIf="!team.bg" class="avatar" style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\');"></div>\n    </button>\n    <ion-item>\n      <ion-input [(ngModel)]="team.name" name="name" type="text" placeholder="اسم فريقك" required>\n      </ion-input>\n    </ion-item>\n\n    <ion-item>\n      <ion-label>المدينة</ion-label>\n      <ion-select [(ngModel)]="team.city" name="city" interface=\'popover\'>\n        <ion-option value="الرياض" selected>الرياض</ion-option>\n        <ion-option value="جده">جده</ion-option>\n        <ion-option value="الدمام">الدمام</ion-option>\n      </ion-select>\n    </ion-item>\n    <div text-center padding>\n      <button block ion-button color="orange" (click)="update(team)">تحديث</button>\n    </div>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-team/edit-team.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */],
         __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],

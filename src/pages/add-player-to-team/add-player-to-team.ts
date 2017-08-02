@@ -1,6 +1,9 @@
+import { User } from "./../../models/user";
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,
-  ViewController, AlertController} from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ViewController, AlertController
+} from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB'
@@ -21,23 +24,25 @@ export class AddPlayerToTeamPage {
   teamsSelected = []
   error: boolean = false
   status: boolean
+  player = {} as User
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private view: ViewController,
     private teamDB: MyTeamDB,
     private alertCtrl: AlertController) {
+    this.player = this.navParams.get('player');
   }
 
   async ionViewDidLoad() {
-    await this.teamDB.getMyTeamsCaptain().then(data=>{
+    await this.teamDB.getMyTeamsCaptain().then(data => {
       this.myTeams = data;
     })
   }
 
   async updateTeamsSelected(team) {
     const index = this.teamsSelected.indexOf(team);
-    await this.teamDB.checkTeamPlayers(team.$key, this.navParams.get('player').$key).then(data=>{
+    await this.teamDB.checkTeamPlayers(team.$key, this.player.$key).then(data => {
       if (data && index < 0) {
         this.presentAlert(team.name)
       }
@@ -51,15 +56,14 @@ export class AddPlayerToTeamPage {
 
   async requestAddPlayer() {
     this.error = false;
-    let playerID = this.navParams.get('player').$key;
     for (let i = 0; i < this.teamsSelected.length; i++) {
-      await this.teamDB.checkTeamPlayers(this.teamsSelected[i].$key, playerID).then(data=>{
+      await this.teamDB.checkTeamPlayers(this.teamsSelected[i].$key, this.player.$key).then(data => {
         if (data) {
           this.presentAlert(this.teamsSelected[i].name);
           this.error = true;
         }
       })
-      if (!this.error) this.teamDB.sendRequestToPlayer(playerID, this.teamsSelected[i].$key)
+      if (!this.error) this.teamDB.sendRequestToPlayer(this.player.$key, this.teamsSelected[i].$key)
     }
     if (this.teamsSelected.length == 0) this.alert()
     else if (!this.error) this.view.dismiss();
@@ -68,7 +72,7 @@ export class AddPlayerToTeamPage {
   presentAlert(teamName) {
     let alert = this.alertCtrl.create({
       title: 'خطأ',
-      subTitle: 'سبق وتم اضافة اللاعب في فريق '+ teamName +"، الرجاء ازالة اختيار الفريق لإتمام العملية",
+      subTitle: 'سبق وتم اضافة اللاعب في فريق ' + teamName + "، الرجاء ازالة اختيار الفريق لإتمام العملية",
       buttons: ['حسناً']
     });
     alert.present();

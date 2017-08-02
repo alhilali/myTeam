@@ -1,3 +1,4 @@
+import { Post } from "./../../models/post";
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -11,13 +12,15 @@ import * as moment from 'moment';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'post/:id'
+})
 @Component({
   selector: 'page-post',
   templateUrl: 'post.html',
 })
 export class PostPage {
-  post: any
+  post = {} as Post
   authorInfo: any = {}
   comment: string = '';
   comments: FirebaseListObservable<any[]>;
@@ -29,11 +32,18 @@ export class PostPage {
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private actionSheetCtrl: ActionSheetController) {
-    this.post = this.navParams.get('post');
-    this.currentUserID = this.afAuth.auth.currentUser.uid;
+    this.post.$key = this.navParams.get('id');
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) this.currentUserID = user.uid;
+    })
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
+    let res;
+    await this.teamDB.getPostInfo(this.post.$key).then(data => {
+      res = data
+      this.post = res
+    })
     this.teamDB.getUserInfo(this.post.by).then(data => {
       this.authorInfo = data;
     })
@@ -48,7 +58,7 @@ export class PostPage {
     let time = moment().format("HH:mm:ss");
     let date = moment().format("L");
     this.db.list('timeline/' + this.post.$key + '/comments').push({
-      by: this.afAuth.auth.currentUser.uid,
+      by: this.currentUserID,
       message: this.comment,
       date: date,
       time: time,
@@ -66,7 +76,7 @@ export class PostPage {
   options() {
     let actionSheet;
     let btns;
-    if (this.post.by == this.afAuth.auth.currentUser.uid) {
+    if (this.post.by == this.currentUserID) {
       btns = [
         {
           text: 'حذف',

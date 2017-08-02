@@ -54,7 +54,7 @@ post {
     padding: 0px 16px 0px;
     position: absolute;
     right: 54px;
-    top: 40px;
+    top: 45px;
   }
   ion-card-content h2 {
     color: dimgray;
@@ -87,6 +87,9 @@ post {
   }
   .blue {
     background-color: #0072BB;
+  }
+  ion-avatar[item-start] {
+    margin: 8px 0 8px 9px !important;
   }
   /** Calendar CSS **/
   .topLeft {

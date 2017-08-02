@@ -17,7 +17,7 @@ var FIREBASE_CONFIG = {
 
 /***/ }),
 
-/***/ 222:
+/***/ 223:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -26,44 +26,44 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 222;
+webpackEmptyAsyncContext.id = 223;
 
 /***/ }),
 
-/***/ 265:
+/***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/add-player-to-team/add-player-to-team.module": [
-		1098,
+		1097,
 		19
 	],
 	"../pages/add-player/add-player.module": [
-		1097,
+		1096,
 		18
 	],
 	"../pages/compose/compose.module": [
-		1099,
+		1098,
 		17
 	],
 	"../pages/edit-profile/edit-profile.module": [
-		1100,
+		1099,
 		1
 	],
 	"../pages/edit-team/edit-team.module": [
-		1101,
+		1100,
 		0
 	],
 	"../pages/home/home.module": [
-		1102,
+		1101,
 		16
 	],
 	"../pages/login/login.module": [
-		1104,
+		1103,
 		15
 	],
 	"../pages/match/match.module": [
-		1105,
+		1104,
 		14
 	],
 	"../pages/my-team/my-team.module": [
@@ -87,7 +87,7 @@ var map = {
 		9
 	],
 	"../pages/request-match/request-match.module": [
-		1096,
+		1095,
 		8
 	],
 	"../pages/search/search.module": [
@@ -99,7 +99,7 @@ var map = {
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		1095,
+		1105,
 		5
 	],
 	"../pages/team/team.module": [
@@ -111,7 +111,7 @@ var map = {
 		3
 	],
 	"../pages/welcome/welcome.module": [
-		1103,
+		1102,
 		2
 	]
 };
@@ -127,7 +127,7 @@ webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
 module.exports = webpackAsyncContext;
-webpackAsyncContext.id = 265;
+webpackAsyncContext.id = 266;
 
 /***/ }),
 
@@ -136,7 +136,7 @@ webpackAsyncContext.id = 265;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyTeamDB; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -625,6 +625,17 @@ var MyTeamDB = (function () {
             });
         });
     };
+    MyTeamDB.prototype.getPostInfo = function (postID) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.db.object('timeline/' + postID).take(1).subscribe(function (data) {
+                if (data)
+                    resolve(data);
+                else
+                    resolve(null);
+            });
+        });
+    };
     MyTeamDB.prototype.ionViewWillLeave = function () {
         this.unsubscribeAll();
     };
@@ -735,7 +746,7 @@ ComponentsModule = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsernameValidator; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -922,15 +933,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(793);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__validators_username__ = __webpack_require__(674);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(462);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(463);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_cloud_angular__ = __webpack_require__(795);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(639);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_cloud_angular__ = __webpack_require__(1025);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angularfire2__ = __webpack_require__(1090);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_firebase_config__ = __webpack_require__(1091);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_camera__ = __webpack_require__(677);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_keyboard__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_keyboard__ = __webpack_require__(640);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_ion2_calendar__ = __webpack_require__(676);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_components_module__ = __webpack_require__(672);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__angular_platform_browser_animations__ = __webpack_require__(1092);
@@ -979,7 +990,6 @@ AppModule = __decorate([
                 tabsHideOnSubPages: true,
             }, {
                 links: [
-                    { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'mytabs', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/request-match/request-match.module#RequestMatchPageModule', name: 'RequestMatchPage', segment: 'request-match', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/add-player/add-player.module#AddPlayerPageModule', name: 'AddPlayerPage', segment: 'add-player', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/add-player-to-team/add-player-to-team.module#AddPlayerToTeamPageModule', name: 'AddPlayerToTeamPage', segment: 'add-player-to-team', priority: 'low', defaultHistory: [] },
@@ -990,11 +1000,12 @@ AppModule = __decorate([
                     { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: ['WelcomePage'] },
                     { loadChildren: '../pages/match/match.module#MatchPageModule', name: 'MatchPage', segment: 'match', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'mytabs', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/start-team/start-team.module#StartTeamPageModule', name: 'StartTeamPage', segment: 'start-team', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-team/my-team.module#MyTeamPageModule', name: 'MyTeamPage', segment: 'myteam', priority: 'low', defaultHistory: ['TabsPage', 'MyTeamPage'] },
                     { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/player/player.module#PlayerPageModule', name: 'PlayerPage', segment: 'player/:username', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/post/post.module#PostPageModule', name: 'PostPage', segment: 'post', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/post/post.module#PostPageModule', name: 'PostPage', segment: 'post/:id', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: ['WelcomePage'] },
                     { loadChildren: '../pages/search/search.module#SearchPageModule', name: 'SearchPage', segment: 'search', priority: 'low', defaultHistory: [] },
@@ -1033,236 +1044,236 @@ AppModule = __decorate([
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 305,
-	"./af.js": 305,
-	"./ar": 306,
-	"./ar-dz": 307,
-	"./ar-dz.js": 307,
-	"./ar-kw": 308,
-	"./ar-kw.js": 308,
-	"./ar-ly": 309,
-	"./ar-ly.js": 309,
-	"./ar-ma": 310,
-	"./ar-ma.js": 310,
-	"./ar-sa": 311,
-	"./ar-sa.js": 311,
-	"./ar-tn": 312,
-	"./ar-tn.js": 312,
-	"./ar.js": 306,
-	"./az": 313,
-	"./az.js": 313,
-	"./be": 314,
-	"./be.js": 314,
-	"./bg": 315,
-	"./bg.js": 315,
-	"./bn": 316,
-	"./bn.js": 316,
-	"./bo": 317,
-	"./bo.js": 317,
-	"./br": 318,
-	"./br.js": 318,
-	"./bs": 319,
-	"./bs.js": 319,
-	"./ca": 320,
-	"./ca.js": 320,
-	"./cs": 321,
-	"./cs.js": 321,
-	"./cv": 322,
-	"./cv.js": 322,
-	"./cy": 323,
-	"./cy.js": 323,
-	"./da": 324,
-	"./da.js": 324,
-	"./de": 325,
-	"./de-at": 326,
-	"./de-at.js": 326,
-	"./de-ch": 327,
-	"./de-ch.js": 327,
-	"./de.js": 325,
-	"./dv": 328,
-	"./dv.js": 328,
-	"./el": 329,
-	"./el.js": 329,
-	"./en-au": 330,
-	"./en-au.js": 330,
-	"./en-ca": 331,
-	"./en-ca.js": 331,
-	"./en-gb": 332,
-	"./en-gb.js": 332,
-	"./en-ie": 333,
-	"./en-ie.js": 333,
-	"./en-nz": 334,
-	"./en-nz.js": 334,
-	"./eo": 335,
-	"./eo.js": 335,
-	"./es": 336,
-	"./es-do": 337,
-	"./es-do.js": 337,
-	"./es.js": 336,
-	"./et": 338,
-	"./et.js": 338,
-	"./eu": 339,
-	"./eu.js": 339,
-	"./fa": 340,
-	"./fa.js": 340,
-	"./fi": 341,
-	"./fi.js": 341,
-	"./fo": 342,
-	"./fo.js": 342,
-	"./fr": 343,
-	"./fr-ca": 344,
-	"./fr-ca.js": 344,
-	"./fr-ch": 345,
-	"./fr-ch.js": 345,
-	"./fr.js": 343,
-	"./fy": 346,
-	"./fy.js": 346,
-	"./gd": 347,
-	"./gd.js": 347,
-	"./gl": 348,
-	"./gl.js": 348,
-	"./gom-latn": 349,
-	"./gom-latn.js": 349,
-	"./he": 350,
-	"./he.js": 350,
-	"./hi": 351,
-	"./hi.js": 351,
-	"./hr": 352,
-	"./hr.js": 352,
-	"./hu": 353,
-	"./hu.js": 353,
-	"./hy-am": 354,
-	"./hy-am.js": 354,
-	"./id": 355,
-	"./id.js": 355,
-	"./is": 356,
-	"./is.js": 356,
-	"./it": 357,
-	"./it.js": 357,
-	"./ja": 358,
-	"./ja.js": 358,
-	"./jv": 359,
-	"./jv.js": 359,
-	"./ka": 360,
-	"./ka.js": 360,
-	"./kk": 361,
-	"./kk.js": 361,
-	"./km": 362,
-	"./km.js": 362,
-	"./kn": 363,
-	"./kn.js": 363,
-	"./ko": 364,
-	"./ko.js": 364,
-	"./ky": 365,
-	"./ky.js": 365,
-	"./lb": 366,
-	"./lb.js": 366,
-	"./lo": 367,
-	"./lo.js": 367,
-	"./lt": 368,
-	"./lt.js": 368,
-	"./lv": 369,
-	"./lv.js": 369,
-	"./me": 370,
-	"./me.js": 370,
-	"./mi": 371,
-	"./mi.js": 371,
-	"./mk": 372,
-	"./mk.js": 372,
-	"./ml": 373,
-	"./ml.js": 373,
-	"./mr": 374,
-	"./mr.js": 374,
-	"./ms": 375,
-	"./ms-my": 376,
-	"./ms-my.js": 376,
-	"./ms.js": 375,
-	"./my": 377,
-	"./my.js": 377,
-	"./nb": 378,
-	"./nb.js": 378,
-	"./ne": 379,
-	"./ne.js": 379,
-	"./nl": 380,
-	"./nl-be": 381,
-	"./nl-be.js": 381,
-	"./nl.js": 380,
-	"./nn": 382,
-	"./nn.js": 382,
-	"./pa-in": 383,
-	"./pa-in.js": 383,
-	"./pl": 384,
-	"./pl.js": 384,
-	"./pt": 385,
-	"./pt-br": 386,
-	"./pt-br.js": 386,
-	"./pt.js": 385,
-	"./ro": 387,
-	"./ro.js": 387,
-	"./ru": 388,
-	"./ru.js": 388,
-	"./sd": 389,
-	"./sd.js": 389,
-	"./se": 390,
-	"./se.js": 390,
-	"./si": 391,
-	"./si.js": 391,
-	"./sk": 392,
-	"./sk.js": 392,
-	"./sl": 393,
-	"./sl.js": 393,
-	"./sq": 394,
-	"./sq.js": 394,
-	"./sr": 395,
-	"./sr-cyrl": 396,
-	"./sr-cyrl.js": 396,
-	"./sr.js": 395,
-	"./ss": 397,
-	"./ss.js": 397,
-	"./sv": 398,
-	"./sv.js": 398,
-	"./sw": 399,
-	"./sw.js": 399,
-	"./ta": 400,
-	"./ta.js": 400,
-	"./te": 401,
-	"./te.js": 401,
-	"./tet": 402,
-	"./tet.js": 402,
-	"./th": 403,
-	"./th.js": 403,
-	"./tl-ph": 404,
-	"./tl-ph.js": 404,
-	"./tlh": 405,
-	"./tlh.js": 405,
-	"./tr": 406,
-	"./tr.js": 406,
-	"./tzl": 407,
-	"./tzl.js": 407,
-	"./tzm": 408,
-	"./tzm-latn": 409,
-	"./tzm-latn.js": 409,
-	"./tzm.js": 408,
-	"./uk": 410,
-	"./uk.js": 410,
-	"./ur": 411,
-	"./ur.js": 411,
-	"./uz": 412,
-	"./uz-latn": 413,
-	"./uz-latn.js": 413,
-	"./uz.js": 412,
-	"./vi": 414,
-	"./vi.js": 414,
-	"./x-pseudo": 415,
-	"./x-pseudo.js": 415,
-	"./yo": 416,
-	"./yo.js": 416,
-	"./zh-cn": 417,
-	"./zh-cn.js": 417,
-	"./zh-hk": 418,
-	"./zh-hk.js": 418,
-	"./zh-tw": 419,
-	"./zh-tw.js": 419
+	"./af": 306,
+	"./af.js": 306,
+	"./ar": 307,
+	"./ar-dz": 308,
+	"./ar-dz.js": 308,
+	"./ar-kw": 309,
+	"./ar-kw.js": 309,
+	"./ar-ly": 310,
+	"./ar-ly.js": 310,
+	"./ar-ma": 311,
+	"./ar-ma.js": 311,
+	"./ar-sa": 312,
+	"./ar-sa.js": 312,
+	"./ar-tn": 313,
+	"./ar-tn.js": 313,
+	"./ar.js": 307,
+	"./az": 314,
+	"./az.js": 314,
+	"./be": 315,
+	"./be.js": 315,
+	"./bg": 316,
+	"./bg.js": 316,
+	"./bn": 317,
+	"./bn.js": 317,
+	"./bo": 318,
+	"./bo.js": 318,
+	"./br": 319,
+	"./br.js": 319,
+	"./bs": 320,
+	"./bs.js": 320,
+	"./ca": 321,
+	"./ca.js": 321,
+	"./cs": 322,
+	"./cs.js": 322,
+	"./cv": 323,
+	"./cv.js": 323,
+	"./cy": 324,
+	"./cy.js": 324,
+	"./da": 325,
+	"./da.js": 325,
+	"./de": 326,
+	"./de-at": 327,
+	"./de-at.js": 327,
+	"./de-ch": 328,
+	"./de-ch.js": 328,
+	"./de.js": 326,
+	"./dv": 329,
+	"./dv.js": 329,
+	"./el": 330,
+	"./el.js": 330,
+	"./en-au": 331,
+	"./en-au.js": 331,
+	"./en-ca": 332,
+	"./en-ca.js": 332,
+	"./en-gb": 333,
+	"./en-gb.js": 333,
+	"./en-ie": 334,
+	"./en-ie.js": 334,
+	"./en-nz": 335,
+	"./en-nz.js": 335,
+	"./eo": 336,
+	"./eo.js": 336,
+	"./es": 337,
+	"./es-do": 338,
+	"./es-do.js": 338,
+	"./es.js": 337,
+	"./et": 339,
+	"./et.js": 339,
+	"./eu": 340,
+	"./eu.js": 340,
+	"./fa": 341,
+	"./fa.js": 341,
+	"./fi": 342,
+	"./fi.js": 342,
+	"./fo": 343,
+	"./fo.js": 343,
+	"./fr": 344,
+	"./fr-ca": 345,
+	"./fr-ca.js": 345,
+	"./fr-ch": 346,
+	"./fr-ch.js": 346,
+	"./fr.js": 344,
+	"./fy": 347,
+	"./fy.js": 347,
+	"./gd": 348,
+	"./gd.js": 348,
+	"./gl": 349,
+	"./gl.js": 349,
+	"./gom-latn": 350,
+	"./gom-latn.js": 350,
+	"./he": 351,
+	"./he.js": 351,
+	"./hi": 352,
+	"./hi.js": 352,
+	"./hr": 353,
+	"./hr.js": 353,
+	"./hu": 354,
+	"./hu.js": 354,
+	"./hy-am": 355,
+	"./hy-am.js": 355,
+	"./id": 356,
+	"./id.js": 356,
+	"./is": 357,
+	"./is.js": 357,
+	"./it": 358,
+	"./it.js": 358,
+	"./ja": 359,
+	"./ja.js": 359,
+	"./jv": 360,
+	"./jv.js": 360,
+	"./ka": 361,
+	"./ka.js": 361,
+	"./kk": 362,
+	"./kk.js": 362,
+	"./km": 363,
+	"./km.js": 363,
+	"./kn": 364,
+	"./kn.js": 364,
+	"./ko": 365,
+	"./ko.js": 365,
+	"./ky": 366,
+	"./ky.js": 366,
+	"./lb": 367,
+	"./lb.js": 367,
+	"./lo": 368,
+	"./lo.js": 368,
+	"./lt": 369,
+	"./lt.js": 369,
+	"./lv": 370,
+	"./lv.js": 370,
+	"./me": 371,
+	"./me.js": 371,
+	"./mi": 372,
+	"./mi.js": 372,
+	"./mk": 373,
+	"./mk.js": 373,
+	"./ml": 374,
+	"./ml.js": 374,
+	"./mr": 375,
+	"./mr.js": 375,
+	"./ms": 376,
+	"./ms-my": 377,
+	"./ms-my.js": 377,
+	"./ms.js": 376,
+	"./my": 378,
+	"./my.js": 378,
+	"./nb": 379,
+	"./nb.js": 379,
+	"./ne": 380,
+	"./ne.js": 380,
+	"./nl": 381,
+	"./nl-be": 382,
+	"./nl-be.js": 382,
+	"./nl.js": 381,
+	"./nn": 383,
+	"./nn.js": 383,
+	"./pa-in": 384,
+	"./pa-in.js": 384,
+	"./pl": 385,
+	"./pl.js": 385,
+	"./pt": 386,
+	"./pt-br": 387,
+	"./pt-br.js": 387,
+	"./pt.js": 386,
+	"./ro": 388,
+	"./ro.js": 388,
+	"./ru": 389,
+	"./ru.js": 389,
+	"./sd": 390,
+	"./sd.js": 390,
+	"./se": 391,
+	"./se.js": 391,
+	"./si": 392,
+	"./si.js": 392,
+	"./sk": 393,
+	"./sk.js": 393,
+	"./sl": 394,
+	"./sl.js": 394,
+	"./sq": 395,
+	"./sq.js": 395,
+	"./sr": 396,
+	"./sr-cyrl": 397,
+	"./sr-cyrl.js": 397,
+	"./sr.js": 396,
+	"./ss": 398,
+	"./ss.js": 398,
+	"./sv": 399,
+	"./sv.js": 399,
+	"./sw": 400,
+	"./sw.js": 400,
+	"./ta": 401,
+	"./ta.js": 401,
+	"./te": 402,
+	"./te.js": 402,
+	"./tet": 403,
+	"./tet.js": 403,
+	"./th": 404,
+	"./th.js": 404,
+	"./tl-ph": 405,
+	"./tl-ph.js": 405,
+	"./tlh": 406,
+	"./tlh.js": 406,
+	"./tr": 407,
+	"./tr.js": 407,
+	"./tzl": 408,
+	"./tzl.js": 408,
+	"./tzm": 409,
+	"./tzm-latn": 410,
+	"./tzm-latn.js": 410,
+	"./tzm.js": 409,
+	"./uk": 411,
+	"./uk.js": 411,
+	"./ur": 412,
+	"./ur.js": 412,
+	"./uz": 413,
+	"./uz-latn": 414,
+	"./uz-latn.js": 414,
+	"./uz.js": 413,
+	"./vi": 415,
+	"./vi.js": 415,
+	"./x-pseudo": 416,
+	"./x-pseudo.js": 416,
+	"./yo": 417,
+	"./yo.js": 417,
+	"./zh-cn": 418,
+	"./zh-cn.js": 418,
+	"./zh-hk": 419,
+	"./zh-hk.js": 419,
+	"./zh-tw": 420,
+	"./zh-tw.js": 420
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -1328,7 +1339,7 @@ __decorate([
 ], PlayerPostCardComponent.prototype, "playerID", void 0);
 PlayerPostCardComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'player-post-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/'<div style="position: relative; padding: 10px;">\n  <img *ngIf="userInfo.bg" class="bg" src="{{userInfo.bg}}" alt="">\n  <img *ngIf="!userInfo.bg" class="bg" src="http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg"\n    alt="">\n  <img class="playerLogo" src="{{userInfo.profilePic}}" alt="">\n  <h1 class="playerName">{{userInfo.name}}</h1>\n  <div class="playerBar">\n    <player-bar playerID="{{playerID}}"></player-bar>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/
+        selector: 'player-post-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/'<div style="position: relative; padding: 10px;">\n  <div *ngIf=\'userInfo.bg\' class="playerBg" [ngStyle]="{ \'background-image\': \'url(\' + userInfo.bg + \')\'}">\n\n  </div>\n  <div *ngIf=\'!userInfo.bg\' class="playerBg" style="background-image: url(http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg)">\n\n  </div>\n  <div class="playerBar">\n    <player-bar playerID="{{playerID}}"></player-bar>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__helpers_myTeamDB__["a" /* MyTeamDB */]])
 ], PlayerPostCardComponent);
@@ -1398,7 +1409,7 @@ PlayerBarComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamBarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1597,7 +1608,7 @@ ProfilePicComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1668,11 +1679,12 @@ DateComponent = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1682,6 +1694,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
 
 
 
@@ -1693,44 +1741,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * for more info on Angular Components.
  */
 var PostComponent = (function () {
-    function PostComponent(teamDB, navCtrl) {
+    function PostComponent(teamDB, navCtrl, modal, db) {
         this.teamDB = teamDB;
         this.navCtrl = navCtrl;
+        this.modal = modal;
+        this.db = db;
+        this.postInfo = {};
         this.user = {};
         this.date = '';
         this.teamInfo = {};
         this.liked = false;
     }
     PostComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        Promise.resolve().then(function () {
-            if (_this.postInfo.type == 'match') {
-                _this.month = __WEBPACK_IMPORTED_MODULE_3_moment__(_this.postInfo.matchDate, 'MM/DD/YYYY').format('MMM');
-                _this.day = __WEBPACK_IMPORTED_MODULE_3_moment__(_this.postInfo.matchDate, 'MM/DD/YYYY').format('D');
-                _this.teamDB.getTeamInfo(_this.postInfo.teamID).then(function (data) {
-                    _this.teamInfo = data;
-                });
-            }
-            _this.teamDB.getUserInfo(_this.postInfo.by).then(function (data) {
-                _this.user = data;
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var res_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!!this.postInfo.by) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.teamDB.getPostInfo(this.postID).then(function (data) {
+                                res_1 = data;
+                                _this.postInfo = res_1;
+                            })];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2:
+                        Promise.resolve().then(function () {
+                            if (_this.postInfo.type == 'match') {
+                                _this.month = __WEBPACK_IMPORTED_MODULE_4_moment__(_this.postInfo.matchDate, 'MM/DD/YYYY').format('MMM');
+                                _this.day = __WEBPACK_IMPORTED_MODULE_4_moment__(_this.postInfo.matchDate, 'MM/DD/YYYY').format('D');
+                                _this.teamDB.getTeamInfo(_this.postInfo.teamID).then(function (data) {
+                                    _this.teamInfo = data;
+                                });
+                            }
+                            _this.teamDB.getUserInfo(_this.postInfo.by).then(function (data) {
+                                _this.user = data;
+                            });
+                            _this.teamDB.getCommentsNum(_this.postInfo.$key).then(function (data) {
+                                _this.commentsNum = data;
+                            });
+                            _this.teamDB.getLikesNum(_this.postInfo.$key).then(function (data) {
+                                _this.likesNum = data;
+                            });
+                            if (_this.teamDB.loggedIn)
+                                _this.teamDB.likeOrNot(_this.postInfo.$key).then(function (data) {
+                                    var res;
+                                    res = data;
+                                    _this.liked = res;
+                                });
+                            // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
+                            // const shortConverted = converted.substring(0, 19);
+                            // console.log(shortConverted);
+                            var momentDate = __WEBPACK_IMPORTED_MODULE_4_moment__["utc"](_this.postInfo.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
+                            _this.date = __WEBPACK_IMPORTED_MODULE_4_moment__(momentDate).fromNow();
+                        });
+                        return [2 /*return*/];
+                }
             });
-            _this.teamDB.getCommentsNum(_this.postInfo.$key).then(function (data) {
-                _this.commentsNum = data;
-            });
-            _this.teamDB.getLikesNum(_this.postInfo.$key).then(function (data) {
-                _this.likesNum = data;
-            });
-            if (_this.teamDB.loggedIn)
-                _this.teamDB.likeOrNot(_this.postInfo.$key).then(function (data) {
-                    var res;
-                    res = data;
-                    _this.liked = res;
-                });
-            // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
-            // const shortConverted = converted.substring(0, 19);
-            // console.log(shortConverted);
-            var momentDate = __WEBPACK_IMPORTED_MODULE_3_moment__["utc"](_this.postInfo.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
-            _this.date = __WEBPACK_IMPORTED_MODULE_3_moment__(momentDate).fromNow();
         });
     };
     PostComponent.prototype.like = function () {
@@ -1750,44 +1819,57 @@ var PostComponent = (function () {
     PostComponent.prototype.openPlayer = function () {
         this.navCtrl.push('PlayerPage', { username: this.user.originalUsername });
     };
+    PostComponent.prototype.requestPlayer = function () {
+        if (this.teamDB.loggedIn) {
+            this.modal.create('AddPlayerToTeamPage', { player: this.user }).present();
+        }
+    };
     PostComponent.prototype.openPost = function () {
-        this.navCtrl.push('PostPage', { post: this.postInfo });
+        this.navCtrl.push('PostPage', { id: this.postInfo.$key });
     };
     PostComponent.prototype.openTeam = function () {
         this.navCtrl.push('TeamPage', { id: this.teamInfo.$key });
     };
     PostComponent.prototype.requestMatch = function () {
-        this.navCtrl.push('RequestMatchPage', { team: this.teamInfo });
+        if (this.teamDB.loggedIn) {
+            this.modal.create('RequestMatchPage', { team: this.teamInfo }).present();
+        }
     };
     return PostComponent;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('className'),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* Input */])('className'),
     __metadata("design:type", Object)
 ], PostComponent.prototype, "className", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('type'),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* Input */])('type'),
     __metadata("design:type", Object)
 ], PostComponent.prototype, "type", void 0);
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('post'),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* Input */])('post'),
     __metadata("design:type", Object)
 ], PostComponent.prototype, "postInfo", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* Input */])('postID'),
+    __metadata("design:type", Object)
+], PostComponent.prototype, "postID", void 0);
 PostComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <profile-pic ID="{{postInfo.by}}" type="user" on-tap="openPlayer()"></profile-pic>\n    </ion-avatar>\n    <ion-row justify-content-start>\n      <h2 style="margin: 2px 0;">{{user.name}}</h2>&nbsp;\n      <p>{{user.originalUsername}}@</p>\n    </ion-row>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row>\n    <ion-col class="likes">\n      <button (click)="like()" *ngIf="liked == false" ion-button icon-left clear small>\n        <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n      <button (click)="unlike()" *ngIf="liked == true" ion-button icon-left clear small>\n        <ion-icon name="md-heart" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="comments">\n      <button (click)="openPost()" ion-button icon-left clear small>\n        <ion-icon name="text" color="gold"></ion-icon>\n        <div>{{commentsNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="date" center text-end>\n      <ion-note dir="ltr">\n        {{date}}\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
+        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <ion-row justify-content-start>\n      <h2 style="margin: 2px 0;">{{user.name}}</h2>&nbsp;\n      <p>{{user.originalUsername}}@</p>\n    </ion-row>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row>\n    <ion-col class="likes">\n      <button (click)="like()" *ngIf="liked == false" ion-button icon-left clear small>\n        <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n      <button (click)="unlike()" *ngIf="liked == true" ion-button icon-left clear small>\n        <ion-icon name="md-heart" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="comments">\n      <button (click)="openPost()" ion-button icon-left clear small>\n        <ion-icon name="text" color="gold"></ion-icon>\n        <div>{{commentsNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="date" center text-end>\n      <ion-note dir="ltr">\n        {{date}}\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
         animations: [
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* trigger */])('fadeInOut', [
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* style */])({ opacity: '0' })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_29" /* state */])('*', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* style */])({ opacity: '1' })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* transition */])('void <=> *', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_18" /* animate */])('400ms ease-in'))
+            Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_32" /* trigger */])('fadeInOut', [
+                Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_30" /* style */])({ opacity: '0' })),
+                Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_29" /* state */])('*', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_30" /* style */])({ opacity: '1' })),
+                Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_31" /* transition */])('void <=> *', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_18" /* animate */])('400ms ease-in'))
             ])
         ]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */]])
 ], PostComponent);
 
-var _a, _b;
 //# sourceMappingURL=post.js.map
 
 /***/ }),
@@ -1867,7 +1949,7 @@ ShrinkingSegmentHeader = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2061,7 +2143,7 @@ TeamCardComponent = __decorate([
         ]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
@@ -2310,12 +2392,13 @@ NameComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(462);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(463);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_web_animations_js_web_animations_min__ = __webpack_require__(794);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_web_animations_js_web_animations_min__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_native__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(639);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_web_animations_js_web_animations_min__ = __webpack_require__(1024);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_web_animations_js_web_animations_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_keyboard__ = __webpack_require__(640);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2332,15 +2415,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MyApp = (function () {
     function MyApp(afAuth, platform, statusBar, splashScreen, keyboard) {
         var _this = this;
         this.afAuth = afAuth;
+        this.platform = platform;
         this.keyboard = keyboard;
         this.rootPage = 'WelcomePage';
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
+            __WEBPACK_IMPORTED_MODULE_3_ionic_native__["a" /* Deeplinks */].route({
+                '#/mytabs/tab-3/search': 'SearchPage',
+                '#/mytabs/tab-0/player:username': 'PlayerPage'
+            });
             if (_this.keyboard) {
                 _this.keyboard.hideKeyboardAccessoryBar(false);
             }
@@ -2351,15 +2440,33 @@ var MyApp = (function () {
             //splashScreen.hide();
         });
     }
+    MyApp.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.platform.ready().then(function () {
+            __WEBPACK_IMPORTED_MODULE_3_ionic_native__["a" /* Deeplinks */].routeWithNavController(_this.navChild, {
+                '#/mytabs/tab-3/search': 'SearchPage',
+                '#/mytabs/tab-0/player:username': 'PlayerPage'
+            }).subscribe(function (match) {
+                console.log('Successfully routed', match);
+            }, function (nomatch) {
+                console.warn('Unmatched Route', nomatch);
+            });
+        });
+    };
     return MyApp;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Nav */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Nav */])
+], MyApp.prototype, "navChild", void 0);
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/app/app.html"*/'<ion-nav [root]="rootPage" swipeBackEnabled="true"></ion-nav>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__["a" /* AngularFireAuth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__["a" /* SplashScreen */],
+        __WEBPACK_IMPORTED_MODULE_7__ionic_native_keyboard__["a" /* Keyboard */]])
 ], MyApp);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ })

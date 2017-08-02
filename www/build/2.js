@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 1103:
+/***/ 1102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WelcomePageModule", function() { return WelcomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__welcome__ = __webpack_require__(1168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__welcome__ = __webpack_require__(1167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ WelcomePageModule = __decorate([
 
 /***/ }),
 
-/***/ 1168:
+/***/ 1167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -90,10 +90,9 @@ WelcomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
         selector: 'page-welcome',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/welcome/welcome.html"*/'<ion-content class="welcomePage" no-bounce scroll="false">\n\n  <div class=\'wave -one\'></div>\n  <div class=\'wave -two\'></div>\n  <div class=\'wave -three\'></div>\n  <div class="welcomeTop">\n    <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n  </div>\n\n  <ion-slides pager class="welcomeSlides" loop="true" dir="rtl">\n    <ion-slide>\n      <img style="width: 20%" src="https://www.shareicon.net/download/2016/10/29/848351_cup_512x512.png" alt="">\n      <h3 text-center>\n        هل انت جاهز لقبول التحدي؟\n      </h3>\n    </ion-slide>\n    <ion-slide>\n      <img style="width: 20%" src="https://www.shareicon.net/download/2017/06/01/886647_track_512x512.png" alt="">\n      <h3 text-center>\n        ابحث عن مباريات\n      </h3>\n    </ion-slide>\n    <ion-slide>\n      <img style="width: 20%" src="http://bootwise.com/wp-content/uploads/2014/10/bootwise-icon-04.png" alt="">\n      <h3 text-center>\n        انضم لفرق اخرى\n      </h3>\n    </ion-slide>\n  </ion-slides>\n  <div class="welcomeBtns">\n    <button color="orange" ion-button block (click)="registerPage()">حساب جديد</button>\n    <button color="lightBlue" ion-button block (click)="loginPage()" outline>سجل دخول</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/welcome/welcome.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]])
 ], WelcomePage);
 
-var _a, _b;
 //# sourceMappingURL=welcome.js.map
 
 /***/ })

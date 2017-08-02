@@ -7,4 +7,5 @@ export interface Post {
   teamID: string,
   matchDate: string,
   timestamp: number,
+  $key: string
 }

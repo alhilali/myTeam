@@ -1,6 +1,7 @@
+import { AngularFireDatabase } from "angularfire2/database";
 import { RequestMatchPage } from "./../../pages/request-match/request-match";
 import { Component, Input, trigger, state, style, animate, transition } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import * as moment from 'moment';
 import * as tzMoment from 'moment-timezone'
@@ -25,7 +26,8 @@ import * as tzMoment from 'moment-timezone'
 export class PostComponent {
   @Input('className') className: any;
   @Input('type') type: any;
-  @Input('post') postInfo: any;
+  @Input('post') postInfo: any = {}
+  @Input('postID') postID: any;
   user: any = {}
   date: any = ''
   commentsNum: any;
@@ -35,10 +37,20 @@ export class PostComponent {
   day: any
   liked: boolean = false;
 
-  constructor(public teamDB: MyTeamDB, public navCtrl: NavController) {
+  constructor(public teamDB: MyTeamDB,
+    public navCtrl: NavController,
+    private modal: ModalController,
+    private db: AngularFireDatabase) {
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    if (!this.postInfo.by) {
+      let res
+      await this.teamDB.getPostInfo(this.postID).then(data => {
+        res = data;
+        this.postInfo = res;
+      })
+    }
     Promise.resolve().then(() => {
       if (this.postInfo.type == 'match') {
         this.month = moment(this.postInfo.matchDate, 'MM/DD/YYYY').format('MMM');
@@ -79,7 +91,6 @@ export class PostComponent {
 
   unlike() {
     if (this.teamDB.loggedIn) {
-
       this.teamDB.unlike(this.postInfo.$key);
       this.liked = false;
       this.likesNum--;
@@ -90,8 +101,14 @@ export class PostComponent {
     this.navCtrl.push('PlayerPage', { username: this.user.originalUsername });
   }
 
+  requestPlayer() {
+    if (this.teamDB.loggedIn) {
+      this.modal.create('AddPlayerToTeamPage', { player: this.user }).present();
+    }
+  }
+
   openPost() {
-    this.navCtrl.push('PostPage', { post: this.postInfo })
+    this.navCtrl.push('PostPage', { id: this.postInfo.$key })
   }
 
   openTeam() {
@@ -99,7 +116,9 @@ export class PostComponent {
   }
 
   requestMatch() {
-    this.navCtrl.push('RequestMatchPage', { team: this.teamInfo })
+    if (this.teamDB.loggedIn) {
+      this.modal.create('RequestMatchPage', { team: this.teamInfo }).present()
+    }
   }
 
 }

@@ -48,7 +48,7 @@ SearchPageModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -124,7 +124,7 @@ SearchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-search',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/'<!--\n  Generated template for the SearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <div padding>\n      <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">\n        <ion-segment-button value="teams">\n          فريق\n        </ion-segment-button>\n        <ion-segment-button value="players">\n          لاعب\n        </ion-segment-button>\n      </ion-segment>\n    </div>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-searchbar [(ngModel)]="queryString" (ionInput)="getItems($event)" placeholder=\'بحث\'></ion-searchbar>\n  <ion-list>\n    <button ion-item clear *ngFor="let item of items | async" (click)="open(item)">\n      <ion-row>\n          <h2 id="itemInfo" margin-bottom>{{ item.name }}</h2>\n          <p *ngIf="type == \'players\'" color="orange">&nbsp; - {{item.position}}</p>\n          <p *ngIf="type == \'teams\'" color="orange">&nbsp; - {{item.city}}</p>\n      </ion-row>\n    </button>\n    <p text-center *ngIf=\'((items | async)?.length == 0) && queryString && (queryString.length != 0)\'>\n      لا يوجد نتائج\n    </p>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
 ], SearchPage);
 

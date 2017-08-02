@@ -2,7 +2,7 @@
 <ion-card [@fadeInOut] [ngClass]="className ? className : 'card1'">
   <ion-item style="height: 70px;">
     <ion-avatar margin-top item-start>
-      <profile-pic ID="{{postInfo.by}}" type="user" on-tap="openPlayer()"></profile-pic>
+      <img on-tap="openPlayer()" src="{{user.profilePic}}" alt="">
     </ion-avatar>
     <ion-row justify-content-start>
       <h2 style="margin: 2px 0;">{{user.name}}</h2>&nbsp;

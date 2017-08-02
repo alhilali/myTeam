@@ -1,6 +1,6 @@
 webpackJsonp([19],{
 
-/***/ 1098:
+/***/ 1097:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddPlayerToTeamPageModule", function() { return AddPlayerToTeamPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player_to_team__ = __webpack_require__(1163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player_to_team__ = __webpack_require__(1162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ AddPlayerToTeamPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1163:
+/***/ 1162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -112,6 +112,8 @@ var AddPlayerToTeamPage = (function () {
         this.myTeams = [];
         this.teamsSelected = [];
         this.error = false;
+        this.player = {};
+        this.player = this.navParams.get('player');
     }
     AddPlayerToTeamPage.prototype.ionViewDidLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -136,7 +138,7 @@ var AddPlayerToTeamPage = (function () {
                 switch (_a.label) {
                     case 0:
                         index = this.teamsSelected.indexOf(team);
-                        return [4 /*yield*/, this.teamDB.checkTeamPlayers(team.$key, this.navParams.get('player').$key).then(function (data) {
+                        return [4 /*yield*/, this.teamDB.checkTeamPlayers(team.$key, this.player.$key).then(function (data) {
                                 if (data && index < 0) {
                                     _this.presentAlert(team.name);
                                 }
@@ -158,16 +160,15 @@ var AddPlayerToTeamPage = (function () {
     AddPlayerToTeamPage.prototype.requestAddPlayer = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var playerID, _loop_1, this_1, i;
+            var _loop_1, this_1, i;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.error = false;
-                        playerID = this.navParams.get('player').$key;
                         _loop_1 = function (i) {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: return [4 /*yield*/, this_1.teamDB.checkTeamPlayers(this_1.teamsSelected[i].$key, playerID).then(function (data) {
+                                    case 0: return [4 /*yield*/, this_1.teamDB.checkTeamPlayers(this_1.teamsSelected[i].$key, this_1.player.$key).then(function (data) {
                                             if (data) {
                                                 _this.presentAlert(_this.teamsSelected[i].name);
                                                 _this.error = true;
@@ -176,7 +177,7 @@ var AddPlayerToTeamPage = (function () {
                                     case 1:
                                         _a.sent();
                                         if (!this_1.error)
-                                            this_1.teamDB.sendRequestToPlayer(playerID, this_1.teamsSelected[i].$key);
+                                            this_1.teamDB.sendRequestToPlayer(this_1.player.$key, this_1.teamsSelected[i].$key);
                                         return [2 /*return*/];
                                 }
                             });
@@ -227,11 +228,11 @@ var AddPlayerToTeamPage = (function () {
 AddPlayerToTeamPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-add-player-to-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/'<!--\n  Generated template for the AddPlayerToTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب اضافة لاعب</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <ion-card-header>\n      اختر الفريق الذي ترغب بإضافة اللاعب اليه\n    </ion-card-header>\n    <ion-item-group class="teamsList" *ngIf="myTeams?.length > 0 ">\n      <ion-slides pager dir="rtl" slidesPerView="3">\n        <ion-slide *ngFor="let team of myTeams">\n          <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>\n          <ion-card class="card1 teamCard">\n            <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">\n            <h2 text-center>{{team.name}}</h2>\n          </ion-card>\n        </ion-slide>\n      </ion-slides>\n    </ion-item-group>\n    <p text-center>\n      <button padding ion-button color="secondary" (click)="requestAddPlayer()">إرسال الإضافة\n        <ion-icon padding name="person-add"></ion-icon>\n      </button>\n    </p>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/,
+        selector: 'page-add-player-to-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/'<!--\n  Generated template for the AddPlayerToTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب اضافة @{{player.originalUsername}}</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <ion-card-header>\n      اختر الفريق الذي ترغب بإضافة اللاعب اليه\n    </ion-card-header>\n    <ion-item-group class="teamsList" *ngIf="myTeams?.length > 0 ">\n      <ion-slides pager dir="rtl" slidesPerView="3">\n        <ion-slide *ngFor="let team of myTeams">\n          <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>\n          <ion-card class="card1 teamCard">\n            <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">\n            <h2 text-center>{{team.name}}</h2>\n          </ion-card>\n        </ion-slide>\n      </ion-slides>\n    </ion-item-group>\n    <p text-center>\n      <button padding ion-button color="secondary" (click)="requestAddPlayer()">إرسال الإضافة\n        <ion-icon padding name="person-add"></ion-icon>\n      </button>\n    </p>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], AddPlayerToTeamPage);

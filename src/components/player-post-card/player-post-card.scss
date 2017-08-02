@@ -12,11 +12,13 @@ player-post-card {
     width: 60px;
     z-index: 10;
   }
-  .bg {
-    filter: brightness(0.6);
-    height: 200px;
+  .playerBg {
+    background-position: center;
+    background-size: cover;
+    height: 100px;
+    filter: brightness(0.7);
+    background-color: lightgrey;
     border-radius: 10px;
-    width: 100% !important;
   }
   .playerName {
     position: absolute;
@@ -33,7 +35,7 @@ player-post-card {
     left: 0;
     right: 0;
     margin: auto;
-    top: 60%;
+    top: 20%;
     text-align: center;
     color: white;
   }

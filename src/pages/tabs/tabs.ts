@@ -1,6 +1,6 @@
 import { MyTeamDB } from "./../../helpers/myTeamDB";
-import { Component } from '@angular/core';
-import { Events, IonicPage } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Events, IonicPage, Tabs } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -11,7 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
+  @ViewChild('myTabs') tabRef: Tabs;
   tab1Root = 'HomePage';
   tab2Root = 'MyTeamPage';
   tab3Root = 'NotificationPage';
@@ -22,6 +22,10 @@ export class TabsPage {
 
   constructor(public events: Events, private db: AngularFireDatabase,
     private afAuth: AngularFireAuth, public teamDB: MyTeamDB) {
+  }
+
+  ngAfterViewInit() {
+    //console.log(this.tabRef);
   }
 
   updateBadge() {
@@ -66,6 +70,15 @@ export class TabsPage {
   }
 
   ionViewWillEnter() {
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (!user) {
+        this.tabRef._tabs[1].show = false;
+        this.tabRef._tabs[2].show = false;
+      } else {
+        this.tabRef._tabs[1].show = true;
+        this.tabRef._tabs[2].show = true;
+      }
+    })
     // this.checkUserRequests();
     // this.checkMatchRequests();
     // this.subscribeToBadgeCountChange();

@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 1100:
+/***/ 1099:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditProfilePageModule", function() { return EditProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_profile__ = __webpack_require__(1165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_profile__ = __webpack_require__(1164);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2805,7 +2805,7 @@ var _app = __webpack_require__(44);
 
 var _app2 = _interopRequireDefault(_app);
 
-__webpack_require__(212);
+__webpack_require__(213);
 
 __webpack_require__(61);
 
@@ -6132,7 +6132,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1165:
+/***/ 1164:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6141,7 +6141,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(677);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__validators_username__ = __webpack_require__(674);
@@ -6431,10 +6431,20 @@ EditProfilePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-edit-profile',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/'<!--\n  Generated template for the EditProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>تعديل بياناتي</ion-title>\n    <ion-buttons end>\n      <button (click)="logout()" ion-button icon-only>\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <form name="editForm" novalidate>\n      <div [formGroup]=\'editForm\'>\n        <button ion-item (click)="presentActionSheet(\'profilePic\')">\n          <div *ngIf="user.profilePic" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.profilePic + \')\'}"></div>\n          <div *ngIf="!user.profilePic" class="avatar" style="background-image: url(\'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg\');"></div>\n        </button>\n        <button ion-item (click)="presentActionSheet(\'bg\')">\n          <div *ngIf="user.bg" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.bg + \')\'}"></div>\n          <div *ngIf="!user.bg" class="avatar" style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\');"></div>\n        </button>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-person"></ion-icon>\n          </ion-label>\n          <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName=\'name\' placeholder="الاسم كامل"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-at"></ion-icon>\n          </ion-label>\n          <ion-input dir="ltr" type="text" [(ngModel)]="user.originalUsername" formControlName=\'username\' placeholder="username"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-analytics"></ion-icon>\n          </ion-label>\n          <ion-select [(ngModel)]="user.position" formControlName=\'position\' name="position" interface=\'popover\'>\n            <ion-option value="GK" selected>حارس</ion-option>\n            <ion-option value="DF">دفاع</ion-option>\n            <ion-option value="CM">وسط</ion-option>\n            <ion-option value="AT">مهاجم</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-mail"></ion-icon>\n          </ion-label>\n          <ion-input dir=\'ltr\' type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="البريد الالكتروني"></ion-input>\n        </ion-item>\n\n        <div padding>\n          <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>\n          <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">\n            اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.\n          </p>\n          <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>\n          <p *ngIf="usedEmail" style="color: #ea6153;">\n            الايميل مستخدم من قبل شخص آخر.\n          </p>\n          <p *ngIf="editForm.controls.username.pending">\n            جاري التأكد من اسم المستخدم...\n          </p>\n        </div>\n      </div>\n    </form>\n    <div text-center padding>\n      <button block ion-button color="orange" (click)="update(user)">تحديث</button>\n    </div>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_7__validators_username__["a" /* UsernameValidator */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__validators_username__["a" /* UsernameValidator */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */]) === "function" && _m || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
+        __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_5__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_7__validators_username__["a" /* UsernameValidator */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__["a" /* Camera */]])
 ], EditProfilePage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 //# sourceMappingURL=edit-profile.js.map
 
 /***/ })

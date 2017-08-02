@@ -1,6 +1,6 @@
 webpackJsonp([18],{
 
-/***/ 1097:
+/***/ 1096:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddPlayerPageModule", function() { return AddPlayerPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player__ = __webpack_require__(1162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player__ = __webpack_require__(1161);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,14 +41,14 @@ AddPlayerPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1162:
+/***/ 1161:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPlayerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__validators_username__ = __webpack_require__(674);
@@ -174,9 +174,9 @@ AddPlayerPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-add-player',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player/add-player.html"*/'<!--\n  Generated template for the AddPlayerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <button start (click)="closeModal()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n    <ion-title>اضف لاعب</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n\n  <ion-card class="card1">\n    <ion-card-header>\n      المعرف الشخصي للاعب الذي تريد اضافته\n    </ion-card-header>\n    <form name="requestPlayerForm" novalidate>\n      <div [formGroup]=\'requestPlayerForm\'>\n        <ion-item dir="ltr">\n          <ion-label>\n            <h1>@</h1></ion-label>\n          <ion-input type="text" [(ngModel)]="player.username" formControlName=\'username\' placeholder="username"></ion-input>\n        </ion-item>\n\n        <ion-row>\n          <ion-col center text-center>\n            <button ion-button color="secondary" (click)="requestAddPlayer(player)" [disabled]="requestPlayerForm.invalid">إضافة\n              <ion-icon padding name="person-add"></ion-icon>\n            </button>\n          </ion-col>\n        </ion-row>\n\n        <div padding>\n          <p *ngIf="!requestPlayerForm.controls.username.valid && !requestPlayerForm.controls.username.pending && (requestPlayerForm.controls.username.dirty)" style="color: #ea6153;">\n            {{requestPlayerForm.controls.username.errors.message}}\n          </p>\n          <p *ngIf="requestPlayerForm.controls.username.pending">\n            جاري التأكد من اسم المستخدم...\n          </p>\n        </div>\n\n      </div>\n    </form>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player/add-player.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */],
         __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],

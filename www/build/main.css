@@ -55826,12 +55826,14 @@ player-post-card .playerLogo {
   z-index: 10;
 }
 
-player-post-card .bg {
-  -webkit-filter: brightness(0.6);
-  filter: brightness(0.6);
-  height: 200px;
+player-post-card .playerBg {
+  background-position: center;
+  background-size: cover;
+  height: 100px;
+  -webkit-filter: brightness(0.7);
+  filter: brightness(0.7);
+  background-color: lightgrey;
   border-radius: 10px;
-  width: 100% !important;
 }
 
 player-post-card .playerName {
@@ -55850,7 +55852,7 @@ player-post-card .playerBar {
   left: 0;
   right: 0;
   margin: auto;
-  top: 60%;
+  top: 20%;
   text-align: center;
   color: white;
 }
@@ -55921,7 +55923,7 @@ post .card-content {
   padding: 0px 16px 0px;
   position: absolute;
   right: 54px;
-  top: 40px;
+  top: 45px;
 }
 
 post ion-card-content h2 {
@@ -55963,6 +55965,10 @@ post .green {
 
 post .blue {
   background-color: #0072BB;
+}
+
+post ion-avatar[item-start] {
+  margin: 8px 0 8px 9px !important;
 }
 
 post .topLeft {
