@@ -40,8 +40,8 @@ export class HomePage {
   slideChanged() {
     let currentIndex = this.slides.getActiveIndex();
     if (currentIndex == 0) this.type = 'all';
-    else if (currentIndex == 1) this.type = 'match';
-    else if (currentIndex == 2) this.type = 'player';
+    if (currentIndex == 1) this.type = 'match';
+    if (currentIndex == 2) this.type = 'player';
   }
 
   ionViewWillLoad() {

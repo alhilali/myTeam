@@ -128,9 +128,9 @@ var HomePage = (function () {
         var currentIndex = this.slides.getActiveIndex();
         if (currentIndex == 0)
             this.type = 'all';
-        else if (currentIndex == 1)
+        if (currentIndex == 1)
             this.type = 'match';
-        else if (currentIndex == 2)
+        if (currentIndex == 2)
             this.type = 'player';
     };
     HomePage.prototype.ionViewWillLoad = function () {

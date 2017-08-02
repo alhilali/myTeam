@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding-vertical>
   <ion-row class="padding-top btnsRow" align-items-stretch>
     <ion-col pull-1>
       <button (click)="closeModal()" color="orange" ion-button round small>
@@ -69,7 +69,7 @@
         </div>
         <hr/>
         <ion-row *ngIf="type == 'match' && myTeams?.length > 0">
-          <ion-col col-8>
+          <ion-col col-9>
             <ion-slides class="teamsList" dir="rtl" slidesPerView="4">
               <ion-slide *ngFor="let team of myTeams">
                 <img on-tap="selectTeam(team)" class="logo" src="{{team.logo}}" alt="">
@@ -79,7 +79,7 @@
               </ion-slide>
             </ion-slides>
           </ion-col>
-          <ion-col col-4>
+          <ion-col col-3>
             <div on-tap="openCalendar()" class="icon_calendar">
               <em></em><em></em>
               <label>{{month}}</label>

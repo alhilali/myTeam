@@ -22,4 +22,10 @@ page-home {
   .postInfo {
     display: none;
   }
+  .segment-button.activated {
+    transition: none !important;
+  }
+  .segment-button {
+    transition: none !important;
+  }
 }

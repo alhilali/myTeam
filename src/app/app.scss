@@ -40,7 +40,8 @@
 }
 
 ion-item-divider {
-  height: 45px;
+  height: 40px;
+  background-color: #f7f7f7 !important;
 }
 
 ion-refresher {
@@ -106,6 +107,9 @@ ion-calendar-modal.matchCalender {
     .days-btn,
     .month-title {
       color: #FF4C3B;
+    }
+    button.days-btn {
+      width: 55px !important;
     }
     button.days-btn.on-selected {
       background-color: #FFD034 !important;

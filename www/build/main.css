@@ -55720,7 +55720,8 @@ ion-navbar.toolbar {
 }
 
 ion-item-divider {
-  height: 45px;
+  height: 40px;
+  background-color: #f7f7f7 !important;
 }
 
 ion-refresher {
@@ -55786,6 +55787,10 @@ ion-calendar-modal.matchCalender ion-content .month-box {
 ion-calendar-modal.matchCalender ion-content .days-btn,
 ion-calendar-modal.matchCalender ion-content .month-title {
   color: #FF4C3B;
+}
+
+ion-calendar-modal.matchCalender ion-content button.days-btn {
+  width: 55px !important;
 }
 
 ion-calendar-modal.matchCalender ion-content button.days-btn.on-selected {
@@ -56610,6 +56615,16 @@ page-home .postInfo {
   display: none;
 }
 
+page-home .segment-button.activated {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+page-home .segment-button {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
 page-login ion-content:after {
   content: '';
   display: block;
@@ -56802,9 +56817,11 @@ page-player ion-card {
 }
 
 page-player .segment-button {
-  height: 55px !important;
   border-bottom-width: 3px !important;
-  line-height: 7rem !important;
+}
+
+page-player .toolbar-md {
+  min-height: 42px !important;
 }
 
 page-player .card-title {
@@ -57040,9 +57057,11 @@ page-team .avatar {
 }
 
 page-team .segment-button {
-  height: 55px !important;
   border-bottom-width: 3px !important;
-  line-height: 7rem !important;
+}
+
+page-team .toolbar-md {
+  min-height: 42px !important;
 }
 
 page-team .monthLabel {

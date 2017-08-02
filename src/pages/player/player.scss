@@ -82,9 +82,10 @@ page-player {
     box-shadow: 0px 3px 20px #d6dee4 !important;
   }
   .segment-button {
-    height: 55px !important;
     border-bottom-width: 3px !important;
-    line-height: 7rem !important;
+  }
+  .toolbar-md {
+    min-height: 42px !important;
   }
   .card-title {
     position: absolute;

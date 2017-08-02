@@ -84,9 +84,10 @@ page-team {
     margin-top: 2px;
   }
   .segment-button {
-    height: 55px !important;
     border-bottom-width: 3px !important;
-    line-height: 7rem !important;
+  }
+  .toolbar-md {
+    min-height: 42px !important;
   }
   .monthLabel {
     background: #FFD034;
