@@ -1,9 +1,12 @@
+import { MyTeamDB } from "./../../helpers/myTeamDB";
 import { Component } from '@angular/core';
 import { Events, IonicPage } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-@IonicPage()
+@IonicPage({
+  segment: 'mytabs'
+})
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -18,7 +21,7 @@ export class TabsPage {
   matchRequestsNum: number = 0;
 
   constructor(public events: Events, private db: AngularFireDatabase,
-    private afAuth: AngularFireAuth) {
+    private afAuth: AngularFireAuth, public teamDB: MyTeamDB) {
   }
 
   updateBadge() {
@@ -63,8 +66,8 @@ export class TabsPage {
   }
 
   ionViewWillEnter() {
-    this.checkUserRequests();
-    this.checkMatchRequests();
-    this.subscribeToBadgeCountChange();
+    // this.checkUserRequests();
+    // this.checkMatchRequests();
+    // this.subscribeToBadgeCountChange();
   }
 }

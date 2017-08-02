@@ -1,3 +1,4 @@
+import { MyTeamDB } from "./../../helpers/myTeamDB";
 import { Component, ViewChildren, QueryList } from '@angular/core';
 import {
   IonicPage, NavController, ActionSheetController,
@@ -13,37 +14,36 @@ import { AngularFireAuth } from 'angularfire2/auth';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'player/:username'
+})
 @Component({
   selector: 'page-player',
   templateUrl: 'player.html',
 })
 export class PlayerPage {
   player = {} as User
-  prmPlayer: any = {}
-  playerID: string = ''
-  playerSub: any
-  currentUser: boolean = false
   myTeams: any[] = []
   section: string = '0';
   @ViewChildren(Slides) slides: QueryList<Slides>;
   bottomSlides: Slides
+  currentUID: any
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
+    public teamDB: MyTeamDB,
     private modlCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController) {
-    this.prmPlayer = navParams.get('player');
-    if (!this.prmPlayer) this.playerID = navParams.get('playerID');
-    else this.playerID = this.prmPlayer.$key;
+    this.player.username = navParams.get('username')
     this.player.bg = '';
   }
 
-  ionViewWillLoad() {
-    if (this.playerID == this.afAuth.auth.currentUser.uid) this.currentUser = true;
-    this.loadPlayer();
+  async ionViewWillLoad() {
+    await this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) this.currentUID = user.uid;
+    })
   }
 
   ngAfterViewInit() {
@@ -51,22 +51,18 @@ export class PlayerPage {
     this.bottomSlides.lockSwipes(true);
   }
 
-  ionViewDidLoad() {
-    this.loadPlayer();
+  async ionViewDidLoad() {
+    let userInfo;
+    await this.teamDB.findUID(this.player.username).then(data => {
+      userInfo = data;
+      this.player = userInfo;
+      if (!this.player.bg) this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
+    })
     this.loadMyTeams();
   }
 
-  loadPlayer() {
-    if (this.playerSub) this.playerSub.unsubscribe();
-    this.playerSub = this.db.object('users/' + this.playerID)
-      .subscribe(data => {
-        this.player = data;
-        if (!this.player.bg) this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
-      })
-  }
-
-  loadMyTeams() {
-    this.db.list('users/' + this.playerID
+  async loadMyTeams() {
+    this.db.list('users/' + this.player.$key
       + '/myTeams').take(1).subscribe(data => {
         this.myTeams = []
         let i;
@@ -97,7 +93,7 @@ export class PlayerPage {
   options() {
     let actionSheet;
     let btns;
-    if (!this.currentUser) {
+    if (this.currentUID != this.player.$key) {
       btns = [
         {
           text: 'إضافة اللاعب',
@@ -110,7 +106,7 @@ export class PlayerPage {
           role: 'destructive',
           handler: () => {
             this.db.object('users/' + this.afAuth.auth.currentUser.uid +
-              '/blocked/' + this.playerID)
+              '/blocked/' + this.player.$key)
               .set({ status: 'blocked' })
             this.navCtrl.pop();
           }
@@ -144,12 +140,7 @@ export class PlayerPage {
     actionSheet.present()
   }
 
-  ionViewWillLeave() {
-    this.playerSub.unsubscribe();
-  }
-
   editProfilePage() {
-    this.playerSub.unsubscribe();
     let modal = this.modlCtrl.create('EditProfilePage', { player: this.player });
     modal.present();
   }

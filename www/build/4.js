@@ -105,9 +105,9 @@ var TeamPage = (function () {
     };
     TeamPage.prototype.loadTeam = function () {
         var _this = this;
-        this.teamSub = this.db.object('teams/' + this.navParams.get('id')).subscribe(function (data) {
+        this.teamSub = this.db.object('teams/' + this.team.$key).subscribe(function (data) {
             _this.team = data;
-            if (_this.team.captain == _this.afAuth.auth.currentUser.uid)
+            if (_this.teamDB.loggedIn && _this.team.captain == _this.teamDB.userInfo.uid)
                 _this.isCaptain = true;
             if (!_this.team.bg)
                 _this.team.bg = 'http://2.bp.blogspot.com/-IxU2acVSDds/UPPNBOwulyI/AAAAAAAACGU/3RaskOb8upk/s1600/Old+Trafford+wallpapers+12.jpg';
@@ -115,7 +115,7 @@ var TeamPage = (function () {
     };
     TeamPage.prototype.loadPlayers = function () {
         var _this = this;
-        this.playersListSub = this.db.list('playersList/' + this.navParams.get('id'))
+        this.playersListSub = this.db.list('playersList/' + this.team.$key)
             .subscribe(function (data) {
             _this.playersList = [];
             var i;
@@ -202,7 +202,7 @@ var TeamPage = (function () {
         this.teamDB.unsubscribeAll();
     };
     TeamPage.prototype.showPlayer = function (player) {
-        this.navCtrl.push('PlayerPage', { player: player });
+        this.navCtrl.push('PlayerPage', { username: player.originalUsername });
     };
     TeamPage.prototype.addPlayer = function () {
         var myModal = this.modal.create('AddPlayerPage', { team: this.team });
@@ -216,24 +216,20 @@ var TeamPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChildren */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Slides */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["Y" /* QueryList */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["Y" /* QueryList */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["Y" /* QueryList */]) === "function" && _a || Object)
 ], TeamPage.prototype, "slides", void 0);
 TeamPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
-        segment: 'team/:id'
+        segment: 'team/:id',
+        defaultHistory: ['MyTeamPage']
     }),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/team/team.html"*/'<!--\n  Generated template for the TeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>{{team.name}}</ion-title>\n    <ion-buttons end>\n      <button (click)=\'requestMatch()\' ion-button icon-only color="royal">\n          <ion-icon name="md-calendar"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n  <div class="hero" [ngStyle]="{ \'background-image\': \'url(\' + team.bg + \')\'}">\n    <div class="topContent">\n      <ion-slides class="topSlides" pager dir="rtl">\n        <ion-slide>\n          <div class="teamAvatar" [ngStyle]="{ \'background-image\': \'url(\' + team.logo + \')\'}"></div>\n          <h3 class="white bold">{{team.name}}</h3>\n          <h5 class="white">{{team.city}}</h5>\n          <button style="position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)=\'addPlayer()\' ion-button clear icon-only\n            color="white">\n                <ion-icon name="person-add"></ion-icon>\n            </button>\n        </ion-slide>\n        <ion-slide>\n          <team-bar style="line-height: 2;" teamID="{{team.$key}}"></team-bar>\n        </ion-slide>\n        <ion-slide>\n          <ion-chip color="gold">\n            <ion-label>متقدم الترتيب</ion-label>\n          </ion-chip>\n          <ion-chip color="lightBlue">\n            <ion-label>لعب نظيف</ion-label>\n          </ion-chip>\n          <ion-chip color="darkBlue">\n            <ion-label>شيء اخر</ion-label>\n          </ion-chip>\n          <h5 class="white">تأسس الفريق: {{team.estDate}}</h5>\n        </ion-slide>\n      </ion-slides>\n    </div>\n  </div>\n\n  <ion-toolbar no-padding color="white" mode="md">\n    <ion-segment color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">\n      <ion-segment-button value="0">\n        <ion-icon class="largeIcon" name="ios-people"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="1">\n        <ion-icon class="largeIcon" name="md-trophy"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="2">\n        <ion-icon class="largeIcon" name="md-calendar"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content fullscreen #myContent>\n  <div class="profileBottom">\n    <ion-slides dir="rtl" parallax="true" (ionSlideWillChange)="slideChanged()">\n      <ion-slide>\n        <ion-list no-margin>\n          <ion-item-divider>لاعبي الفريق</ion-item-divider>\n          <ion-item-sliding *ngFor="let player of playersList">\n            <ion-item class="fixedBorder">\n              <span item-start>\n                <profile-pic className="avatar" ID="{{player.$key}}" type="user"></profile-pic>\n              </span>\n              <span item-content>\n                <ion-chip color="orange">\n                  <ion-label>{{player.position}}</ion-label>\n                </ion-chip>\n                <button ion-button clear (click)=\'showPlayer(player)\'>\n                  <h2>{{player.name}}</h2>\n                </button>\n              </span>\n              <span *ngIf="this.team.captain == player.$key" item-end>\n                <ion-chip color="gold">\n                  <ion-label>كابتن</ion-label>\n                </ion-chip>\n              </span>\n            </ion-item>\n            <ion-item-options *ngIf="this.team.captain != player.$key && isCaptain == true" side="left">\n              <button (click)="removePlayer(player)" ion-button icon-only color="danger">\n                <ion-icon name="md-trash"></ion-icon>\n              </button>\n            </ion-item-options>\n          </ion-item-sliding>\n        </ion-list>\n      </ion-slide>\n      <ion-slide>\n        <ion-item-divider>\n          البطولات\n        </ion-item-divider>\n        <h6 text-center>قريباً</h6>\n      </ion-slide>\n      <ion-slide>\n        <ion-list no-margin>\n          <ion-item-divider>\n            التقويم\n          </ion-item-divider>\n          <span *ngFor="let month of months">\n            <ion-item-divider class="monthLabel">\n              {{month.name}}\n            </ion-item-divider>\n            <span *ngFor="let match of matches | async">\n              <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">\n                <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>\n                <date text-center requestID="{{match.$key}}" day="true"></date>\n              </ion-item>\n            </span>\n          </span>\n        </ion-list>\n        <div padding *ngIf="months?.length == 0">\n          <h6 text-center>لا توجد مباريات</h6>\n        </div>\n      </ion-slide>\n    </ion-slides>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/team/team.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object])
 ], TeamPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=team.js.map
 
 /***/ })

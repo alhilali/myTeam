@@ -45,12 +45,16 @@ export class LoginPage {
     loginLoading.present();
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(user.email,
-        user.password);
+        user.password).then(() => {
+          this.navCtrl.setRoot('TabsPage')
+        })
     }
     catch (e) {
       this.myTeamDB.findEmail(user.email).then(data => {
         this.afAuth.auth.signInWithEmailAndPassword(data,
-          user.password)
+          user.password).then(() => {
+            this.navCtrl.setRoot('TabsPage')
+          })
           .catch(err => {
             loginLoading.dismiss();
             this.showErrorToast()

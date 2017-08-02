@@ -138,14 +138,18 @@ var LoginPage = (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)];
+                        return [4 /*yield*/, this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(function () {
+                                _this.navCtrl.setRoot('TabsPage');
+                            })];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
                         this.myTeamDB.findEmail(user.email).then(function (data) {
-                            _this.afAuth.auth.signInWithEmailAndPassword(data, user.password)
+                            _this.afAuth.auth.signInWithEmailAndPassword(data, user.password).then(function () {
+                                _this.navCtrl.setRoot('TabsPage');
+                            })
                                 .catch(function (err) {
                                 loginLoading.dismiss();
                                 _this.showErrorToast();
@@ -246,12 +250,10 @@ LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-login',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content>\n  <ion-row justify-content-start>\n    <ion-col col-3 text-start padding>\n      <ion-icon on-tap="goBack()" class="largeIcon" color="grey" name="ios-arrow-back"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <div class="login" padding>\n    <div class="welcomeTop">\n      <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n    </div>\n    <h2 text-center>تسجيل الدخول</h2>\n    <form [formGroup]="loginForm" novalidate padding>\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="Username/Email"></ion-input>\n      </ion-item>\n\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="password" [(ngModel)]="user.password" formControlName=\'password\' placeholder="Password"></ion-input>\n      </ion-item>\n      <button color="orange" ion-button block (click)="login(user)">الدخول</button>\n      <p text-right style="margin: 0px;">\n        <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>\n      </p>\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _h || Object])
 ], LoginPage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=login.js.map
 
 /***/ })

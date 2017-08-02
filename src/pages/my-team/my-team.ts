@@ -48,9 +48,13 @@ export class MyTeamPage {
     this.loadGames()
   }
 
-  loadTeams() {
+  async loadTeams() {
+    let currentUserId;
+    await this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) currentUserId = user.uid;
+    })
     if (this.myTeamsSub) this.myTeamsSub.unsubscribe();
-    this.myTeamsSub = this.db.list('users/' + this.afAuth.auth.currentUser.uid
+    this.myTeamsSub = this.db.list('users/' + currentUserId
       + '/myTeams').subscribe(data => {
         if (data.length == 0) this.hasNoTeams = true;
         this.hasNoTeams = false;
@@ -59,10 +63,14 @@ export class MyTeamPage {
       })
   }
 
-  loadGames() {
+  async loadGames() {
+    let currentUserId;
+    await this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) currentUserId = user.uid;
+    })
     this.matches = []
     this.months = []
-    this.db.list('users/' + this.afAuth.auth.currentUser.uid + '/myTeams/').take(1)
+    this.db.list('users/' + currentUserId + '/myTeams/').take(1)
       .subscribe(teams => {
         teams.forEach(team => {
           this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(matches => {

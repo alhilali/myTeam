@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-buttons end>
+    <ion-buttons *ngIf="teamDB.loggedIn" end>
       <button (click)="options()" ion-button icon-only>
         <ion-icon name="md-more" color="white"></ion-icon>
       </button>
@@ -19,7 +19,7 @@
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
-          <profile-pic className="avatar" ID="{{playerID}}" type="user"></profile-pic>
+          <img class="avatar" src="{{player.profilePic}}" alt="">
           <h3 class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>
         </ion-slide>

@@ -35,7 +35,7 @@ export class PostComponent {
   day: any
   liked: boolean = false;
 
-  constructor(private teamDB: MyTeamDB, public navCtrl: NavController) {
+  constructor(public teamDB: MyTeamDB, public navCtrl: NavController) {
   }
 
   ngAfterViewInit() {
@@ -56,7 +56,7 @@ export class PostComponent {
       this.teamDB.getLikesNum(this.postInfo.$key).then(data => {
         this.likesNum = data;
       })
-      this.teamDB.likeOrNot(this.postInfo.$key).then(data => {
+      if (this.teamDB.loggedIn) this.teamDB.likeOrNot(this.postInfo.$key).then(data => {
         let res;
         res = data;
         this.liked = res;
@@ -70,19 +70,24 @@ export class PostComponent {
   }
 
   like() {
-    this.teamDB.like(this.postInfo.$key);
-    this.liked = true;
-    this.likesNum++;
+    if (this.teamDB.loggedIn) {
+      this.teamDB.like(this.postInfo.$key);
+      this.liked = true;
+      this.likesNum++;
+    }
   }
 
   unlike() {
-    this.teamDB.unlike(this.postInfo.$key);
-    this.liked = false;
-    this.likesNum--;
+    if (this.teamDB.loggedIn) {
+
+      this.teamDB.unlike(this.postInfo.$key);
+      this.liked = false;
+      this.likesNum--;
+    }
   }
 
   openPlayer() {
-    this.navCtrl.push('PlayerPage', { player: this.user });
+    this.navCtrl.push('PlayerPage', { username: this.user.originalUsername });
   }
 
   openPost() {

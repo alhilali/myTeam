@@ -83,7 +83,6 @@ export class RegisterPage {
       catch (e) {
         registerLoading.dismiss();
         if (e.code == 'auth/email-already-in-use') this.usedEmail = true;
-        setTimeout(() => { this.usedEmail = false }, 2000);
       }
     }
   }

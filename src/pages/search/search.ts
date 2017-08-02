@@ -56,7 +56,7 @@ export class SearchPage {
 
   open(item) {
     if (this.type == 'teams') this.navCtrl.push('TeamPage', { id: item.$key })
-    else if (this.type == 'players') this.navCtrl.push('PlayerPage', { player: item })
+    else if (this.type == 'players') this.navCtrl.push('PlayerPage', { username: item.originalUsername })
   }
 
   segmentChanged(ev: any) {

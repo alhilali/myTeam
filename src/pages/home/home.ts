@@ -13,7 +13,6 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
 })
 export class HomePage {
   @ViewChild(Slides) slides: Slides;
-  currentUser: any = {}
   currentUserId: any
   allPosts: any[]
   matchPosts: any[]
@@ -21,9 +20,11 @@ export class HomePage {
   blur: boolean = false;
   type: string = 'all';
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
-    private teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
+    public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
-    this.currentUserId = this.afAuth.auth.currentUser.uid;
+    this.teamDB.getLoggedInUser().then(data => {
+      this.currentUserId = data;
+    })
   }
 
   ngAfterViewInit() {
@@ -44,17 +45,9 @@ export class HomePage {
   }
 
   ionViewWillLoad() {
-    this.loadUser();
     this.loadPosts('all');
     this.loadPosts('match');
     this.loadPosts('player');
-  }
-
-  loadUser() {
-    this.teamDB.getUserInfo(this.afAuth.auth.currentUser.uid)
-      .then(user => {
-        this.currentUser = user;
-      })
   }
 
   loadPosts(type) {
@@ -81,7 +74,6 @@ export class HomePage {
   }
 
   doRefresh(refresher) {
-    this.loadUser();
     this.loadPosts(this.type);
     setTimeout(() => {
       //console.log('Async operation has ended');
@@ -89,18 +81,27 @@ export class HomePage {
     }, 1000);
   }
 
-  openModal() {
-    this.navCtrl.push('PlayerPage', { player: this.currentUser });
+  async openModal() {
+    await this.teamDB.getUserInfo(this.currentUserId).then(data => {
+      this.navCtrl.push('PlayerPage', { username: data.originalUsername });
+    })
   }
 
-  compose() {
-    const myModal = this.modal.create('ComposePage', { player: this.currentUser })
-    myModal.present();
-    this.blur = true;
-    myModal.onWillDismiss(data => {
-      this.blur = false;
-      if (data.postDone) this.loadPosts(this.type);
+  async compose() {
+    await this.teamDB.getUserInfo(this.currentUserId).then(data => {
+      const myModal = this.modal.create('ComposePage', { player: data })
+      myModal.present();
+      this.blur = true;
+      myModal.onWillDismiss(data => {
+        this.blur = false;
+        if (data.postDone) this.loadPosts(this.type);
+      })
     })
+
+  }
+
+  loginPage() {
+    this.navCtrl.push('WelcomePage')
   }
 
 }

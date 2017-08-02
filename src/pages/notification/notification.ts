@@ -21,6 +21,7 @@ export class NotificationPage {
   requestsSub: any
   matchRequests: any[] = []
   matchSub: any
+  currentUserUid: any
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,14 +31,17 @@ export class NotificationPage {
     private modlCtrl: ModalController) {
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
+    await this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) this.currentUserUid = user.uid;
+    })
     this.loadTeamRequests();
     this.loadMatchRequests();
   }
 
   loadTeamRequests() {
     if (this.requestsSub) this.requestsSub.unsubscribe();
-    const ref = this.db.list('users/' + this.afAuth.auth.currentUser.uid
+    const ref = this.db.list('users/' + this.currentUserUid
       + '/requests')
     this.requestsSub = ref.subscribe(data => {
       this.teamsRequest = []
@@ -55,7 +59,7 @@ export class NotificationPage {
     const ref = this.db.list('matches/', {
       query: {
         orderByChild: 'toUID',
-        equalTo: this.afAuth.auth.currentUser.uid
+        equalTo: this.currentUserUid
       }
     })
     this.matchSub = ref.subscribe(data => {
@@ -80,28 +84,25 @@ export class NotificationPage {
   }
 
   acceptTeam(team) {
-    const uid = this.afAuth.auth.currentUser.uid;
 
     // Add player to players list DB
-    const playersList = this.db.object('/playersList/' + team.$key + '/' + uid);
-    playersList.set({ uid: uid, status: 'enrolled' });
+    const playersList = this.db.object('/playersList/' + team.$key + '/' + this.currentUserUid);
+    playersList.set({ uid: this.currentUserUid, status: 'enrolled' });
 
     // Add team to user list DB
-    this.db.object('/users/' + uid + '/myTeams/' + team.$key)
+    this.db.object('/users/' + this.currentUserUid + '/myTeams/' + team.$key)
       .update({ teamId: team.$key });
 
     // Remove request from user list DB
-    this.db.object('users/' + uid + '/requests/' + team.$key).remove();
+    this.db.object('users/' + this.currentUserUid + '/requests/' + team.$key).remove();
   }
 
   declineTeam(team) {
-    const uid = this.afAuth.auth.currentUser.uid;
-
     // Remove request from user list DB
-    this.db.object('users/' + uid + '/requests/' + team.$key).remove();
+    this.db.object('users/' + this.currentUserUid + '/requests/' + team.$key).remove();
 
     // Remove player from players list DB
-    this.db.object('/playersList/' + team.$key + '/' + uid).remove();
+    this.db.object('/playersList/' + team.$key + '/' + this.currentUserUid).remove();
   }
 
   openTeam(team) {

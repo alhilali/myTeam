@@ -1,3 +1,4 @@
+import { AngularFireAuth } from "angularfire2/auth";
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 /**
@@ -13,7 +14,10 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class WelcomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth) {
+    afAuth.auth.onAuthStateChanged(user => {
+      if (user) this.navCtrl.setRoot('TabsPage')
+    })
   }
 
   loginPage() {

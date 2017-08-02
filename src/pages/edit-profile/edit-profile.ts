@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController,
+import {
+  IonicPage, NavController,
   NavParams, ViewController,
-  ToastController, AlertController, ActionSheetController } from 'ionic-angular';
+  ToastController, AlertController, ActionSheetController
+} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -45,17 +47,17 @@ export class EditProfilePage {
     private unameValid: UsernameValidator,
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera) {
-      this.user = this.navParams.get('player');
-      let usernameValidator = (control) => {
-          return unameValid.checkEditUsername(control, this.user.username);
-      };
-      this.cpyUser = Object.assign({}, this.user)
-      this.editForm = this._form.group({
-        "name":["",Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
-        "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
-        "email": ["",Validators.email],
-        "position": ["GK"]
-      })
+    this.user = this.navParams.get('player');
+    let usernameValidator = (control) => {
+      return unameValid.checkEditUsername(control, this.user.username);
+    };
+    this.cpyUser = Object.assign({}, this.user)
+    this.editForm = this._form.group({
+      "name": ["", Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
+      "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
+      "email": ["", Validators.email],
+      "position": ["GK"]
+    })
   }
 
   closeModal() {
@@ -77,15 +79,15 @@ export class EditProfilePage {
     const currUser = this.afAuth.auth.currentUser;
     if (this.editForm.controls.name.valid && this.editForm.controls.email.valid) {
       if (currUser && currUser.email && currUser.uid) {
-        const userRef = this.db.object('/users/'+currUser.uid, { preserveSnapshot: true });
+        const userRef = this.db.object('/users/' + currUser.uid, { preserveSnapshot: true });
         this.editSub = userRef.subscribe(snap => {
           if (snap.val().name != user.name) {
-            userRef.update({name: user.name})
+            userRef.update({ name: user.name })
             this.user.name = user.name;
             this.updateNotification('الاسم');
           }
           if (snap.val().position != user.position) {
-            userRef.update({position: user.position}).then()
+            userRef.update({ position: user.position }).then()
             //this.user.position = user.position;
             this.updateNotification('المركز');
           }
@@ -97,16 +99,16 @@ export class EditProfilePage {
     }
 
     if (this.editForm.controls.username.valid && currUser) {
-      this.db.object('/users/'+currUser.uid)
-      .update({
-        originalUsername: user.originalUsername,
-        username: user.originalUsername.toLowerCase()
-      })
+      this.db.object('/users/' + currUser.uid)
+        .update({
+          originalUsername: user.originalUsername,
+          username: user.originalUsername.toLowerCase()
+        })
 
       if (this.currentUsername != user.originalUsername) this.updateNotification('المعرف الشخصي');
-      if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()){
-        this.db.object('usernames/'+user.originalUsername.toLowerCase()).set({email: user.email});
-        this.db.object('usernames/'+this.currentUsername.toLowerCase()).remove();
+      if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()) {
+        this.db.object('usernames/' + user.originalUsername.toLowerCase()).set({ email: user.email });
+        this.db.object('usernames/' + this.currentUsername.toLowerCase()).remove();
         this.currentUsername = user.originalUsername;
       }
     }
@@ -115,11 +117,11 @@ export class EditProfilePage {
   updateNotification(word) {
     if (this.shown) this.toastMessage.dismiss();
     this.toastMessage = this.toast.create({
-       message: ' تم تحديث ' + word + ' بنجاح',
-       duration: 2200,
-       dismissOnPageChange: true,
-       position: 'middle'
-     });
+      message: ' تم تحديث ' + word + ' بنجاح',
+      duration: 2200,
+      dismissOnPageChange: true,
+      position: 'middle'
+    });
     this.toastMessage.present();
     this.shown = true;
   }
@@ -141,17 +143,17 @@ export class EditProfilePage {
           handler: data => {
             let bind = this
             this.afAuth.auth.signInWithEmailAndPassword(oldEmail, data.password)
-            .then(function(user) {
-                user.updateEmail(newEmail).then(()=>{
+              .then(function (user) {
+                user.updateEmail(newEmail).then(() => {
                   bind.updateNotification('الايميل');
-                }).catch(err=> {
+                }).catch(err => {
                   console.log(err);
                   bind.alertUserError(err);
                 })
-            }).catch(err => {
-              console.log(err);
-              this.alertUserError(err);
-            })
+              }).catch(err => {
+                console.log(err);
+                this.alertUserError(err);
+              })
           }
         },
         {
@@ -174,17 +176,17 @@ export class EditProfilePage {
     let message = error;
     switch (error.code) {
       case 'auth/invalid-email':
-      message = 'الرجاء التأكد من صيغة الايميل.'
-      break;
+        message = 'الرجاء التأكد من صيغة الايميل.'
+        break;
       case 'auth/user-not-found':
-      message = 'لا يوجد حساب مسجل بهذا البريد الالكتروني.'
-      break;
+        message = 'لا يوجد حساب مسجل بهذا البريد الالكتروني.'
+        break;
       case 'auth/email-already-in-use':
-      message = 'البريد الالكتروني مستخدم من قبل شخص آخر'
-      break;
+        message = 'البريد الالكتروني مستخدم من قبل شخص آخر'
+        break;
       case 'auth/wrong-password':
-      message = 'الرجاء التأكد من الرقم السري'
-      break;
+        message = 'الرجاء التأكد من الرقم السري'
+        break;
     }
     this.alertCtrl.create({
       title: 'خطأ في تغيير البريد الإلكتروني',
@@ -205,24 +207,24 @@ export class EditProfilePage {
       targetHeight: 300
     }
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64:
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-     let storageRef = firebase.storage().ref();
-     const filename = this.afAuth.auth.currentUser.uid;
-     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
+      let storageRef = firebase.storage().ref();
+      const filename = this.afAuth.auth.currentUser.uid;
+      const imageRef = storageRef.child(`${filename}/${type}.jpg`)
 
-     imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
-     .then((snap)=>{
-       const ref = this.db.object('/users/'+this.afAuth.auth.currentUser.uid)
+      imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
+        .then((snap) => {
+          const ref = this.db.object('/users/' + this.afAuth.auth.currentUser.uid)
 
-       if (type == 'profilePic') ref.update({profilePic: snap.downloadURL})
-       else ref.update({bg: snap.downloadURL})
-       this.updateNotification('الصورة الشخصية')
-     })
+          if (type == 'profilePic') ref.update({ profilePic: snap.downloadURL })
+          else ref.update({ bg: snap.downloadURL })
+          this.updateNotification('الصورة الشخصية')
+        })
     }, (err) => {
-     // Handle error
+      // Handle error
     });
   }
 
@@ -230,19 +232,19 @@ export class EditProfilePage {
     let storageRef = firebase.storage().ref();
     const filename = this.afAuth.auth.currentUser.uid;
     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
-    imageRef.delete().then(()=> {
-      this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/profilePic')
-      .remove();
+    imageRef.delete().then(() => {
+      this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/profilePic')
+        .remove();
       this.user.profilePic = null;
       if (type == 'profilePic') {
-        this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/profilePic')
-        .set('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');
+        this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/profilePic')
+          .set('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');
       }
       else {
-        this.db.object('/users/'+this.afAuth.auth.currentUser.uid+'/bg')
-        .set('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');
+        this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/bg')
+          .set('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');
       }
-    }).catch((error)=> {
+    }).catch((error) => {
       // Uh-oh, an error occurred!
       console.log(error)
     });
@@ -253,17 +255,17 @@ export class EditProfilePage {
     let actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'تغيير '+typeConverted,
+          text: 'تغيير ' + typeConverted,
           handler: () => {
             this.changePhoto(type);
           }
-        },{
+        }, {
           text: 'حذف الصورة',
           role: 'destructive',
           handler: () => {
             this.deletePic(type);
           }
-        },{
+        }, {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {
@@ -277,7 +279,8 @@ export class EditProfilePage {
   logout() {
     if (this.editSub) this.editSub.unsubscribe();
     if (this.editUnameSub) this.editUnameSub.unsubscribe();
-    this.view.dismiss();
+    this.navCtrl.popAll();
+    this.navCtrl.setRoot('WelcomePage')
     this.afAuth.auth.signOut();
   }
 

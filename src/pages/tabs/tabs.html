@@ -1,6 +1,6 @@
 <ion-tabs tabsLayout="title-hide">
-  <ion-tab [root]="tab1Root" tabUrlPath="home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabUrlPath="myteam" tabIcon="football"></ion-tab>
-  <ion-tab [root]="tab3Root" tabUrlPath="notification" tabBadge="{{notificationNum}}" tabBadgeStyle="danger" tabIcon="ios-notifications-outline"></ion-tab>
-  <ion-tab [root]="tab4Root" tabUrlPath="search" tabIcon="search"></ion-tab>
+  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>
+  <ion-tab *ngIf='teamDB.loggedIn' [root]="tab2Root" tabIcon="football"></ion-tab>
+  <ion-tab *ngIf='teamDB.loggedIn' [root]="tab3Root" tabBadge="{{notificationNum}}" tabBadgeStyle="danger" tabIcon="ios-notifications-outline"></ion-tab>
+  <ion-tab [root]="tab4Root" tabIcon="search"></ion-tab>
 </ion-tabs>

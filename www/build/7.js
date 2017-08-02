@@ -107,7 +107,7 @@ var SearchPage = (function () {
         if (this.type == 'teams')
             this.navCtrl.push('TeamPage', { id: item.$key });
         else if (this.type == 'players')
-            this.navCtrl.push('PlayerPage', { player: item });
+            this.navCtrl.push('PlayerPage', { username: item.originalUsername });
     };
     SearchPage.prototype.segmentChanged = function (ev) {
         this.queryString = '';

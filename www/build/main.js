@@ -188,24 +188,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var MyTeamDB = (function () {
     function MyTeamDB(db, afAuth) {
+        var _this = this;
         this.db = db;
         this.afAuth = afAuth;
+        this.loggedIn = false;
+        this.userInfo = {};
+        this.afAuth.auth.onAuthStateChanged(function (user) {
+            if (user) {
+                _this.userInfo = user;
+                _this.loggedIn = true;
+            }
+            else
+                _this.loggedIn = false;
+        });
     }
     MyTeamDB.prototype.findUID = function (username) {
         var _this = this;
         return new Promise(function (resolve) {
-            var users = _this.db.list('users/', {
+            _this.db.list('users/', {
                 query: {
                     orderByChild: 'username',
-                    equalTo: username
+                    equalTo: username.toLowerCase()
                 }
-            });
-            _this.usersSub = users.subscribe(function (data) {
+            }).take(1).subscribe(function (data) {
                 if (data && data.length > 0)
                     resolve(data[0]);
                 else
                     resolve(null);
-                _this.usersSub.unsubscribe();
             });
         });
     };
@@ -605,6 +614,17 @@ var MyTeamDB = (function () {
             });
         });
     };
+    MyTeamDB.prototype.getLoggedInUser = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.afAuth.auth.onAuthStateChanged(function (user) {
+                if (user)
+                    resolve(user.uid);
+                else
+                    resolve(null);
+            });
+        });
+    };
     MyTeamDB.prototype.ionViewWillLeave = function () {
         this.unsubscribeAll();
     };
@@ -959,7 +979,7 @@ AppModule = __decorate([
                 tabsHideOnSubPages: true,
             }, {
                 links: [
-                    { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'mytabs', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/request-match/request-match.module#RequestMatchPageModule', name: 'RequestMatchPage', segment: 'request-match', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/add-player/add-player.module#AddPlayerPageModule', name: 'AddPlayerPage', segment: 'add-player', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/add-player-to-team/add-player-to-team.module#AddPlayerToTeamPageModule', name: 'AddPlayerToTeamPage', segment: 'add-player-to-team', priority: 'low', defaultHistory: [] },
@@ -973,12 +993,12 @@ AppModule = __decorate([
                     { loadChildren: '../pages/start-team/start-team.module#StartTeamPageModule', name: 'StartTeamPage', segment: 'start-team', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-team/my-team.module#MyTeamPageModule', name: 'MyTeamPage', segment: 'myteam', priority: 'low', defaultHistory: ['TabsPage', 'MyTeamPage'] },
                     { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/player/player.module#PlayerPageModule', name: 'PlayerPage', segment: 'player', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/player/player.module#PlayerPageModule', name: 'PlayerPage', segment: 'player/:username', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/post/post.module#PostPageModule', name: 'PostPage', segment: 'post', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: ['WelcomePage'] },
                     { loadChildren: '../pages/search/search.module#SearchPageModule', name: 'SearchPage', segment: 'search', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/team/team.module#TeamPageModule', name: 'TeamPage', segment: 'team/:id', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/team/team.module#TeamPageModule', name: 'TeamPage', segment: 'team/:id', priority: 'low', defaultHistory: ['MyTeamPage'] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_8_angularfire2__["a" /* AngularFireModule */].initializeApp(__WEBPACK_IMPORTED_MODULE_9__app_firebase_config__["a" /* FIREBASE_CONFIG */]),
@@ -1700,11 +1720,12 @@ var PostComponent = (function () {
             _this.teamDB.getLikesNum(_this.postInfo.$key).then(function (data) {
                 _this.likesNum = data;
             });
-            _this.teamDB.likeOrNot(_this.postInfo.$key).then(function (data) {
-                var res;
-                res = data;
-                _this.liked = res;
-            });
+            if (_this.teamDB.loggedIn)
+                _this.teamDB.likeOrNot(_this.postInfo.$key).then(function (data) {
+                    var res;
+                    res = data;
+                    _this.liked = res;
+                });
             // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
             // const shortConverted = converted.substring(0, 19);
             // console.log(shortConverted);
@@ -1713,17 +1734,21 @@ var PostComponent = (function () {
         });
     };
     PostComponent.prototype.like = function () {
-        this.teamDB.like(this.postInfo.$key);
-        this.liked = true;
-        this.likesNum++;
+        if (this.teamDB.loggedIn) {
+            this.teamDB.like(this.postInfo.$key);
+            this.liked = true;
+            this.likesNum++;
+        }
     };
     PostComponent.prototype.unlike = function () {
-        this.teamDB.unlike(this.postInfo.$key);
-        this.liked = false;
-        this.likesNum--;
+        if (this.teamDB.loggedIn) {
+            this.teamDB.unlike(this.postInfo.$key);
+            this.liked = false;
+            this.likesNum--;
+        }
     };
     PostComponent.prototype.openPlayer = function () {
-        this.navCtrl.push('PlayerPage', { player: this.user });
+        this.navCtrl.push('PlayerPage', { username: this.user.originalUsername });
     };
     PostComponent.prototype.openPost = function () {
         this.navCtrl.push('PostPage', { post: this.postInfo });
@@ -1759,9 +1784,10 @@ PostComponent = __decorate([
             ])
         ]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object])
 ], PostComponent);
 
+var _a, _b;
 //# sourceMappingURL=post.js.map
 
 /***/ }),
@@ -2311,9 +2337,7 @@ var MyApp = (function () {
         var _this = this;
         this.afAuth = afAuth;
         this.keyboard = keyboard;
-        afAuth.auth.onAuthStateChanged(function (user) {
-            _this.rootPage = user ? 'TabsPage' : 'WelcomePage';
-        });
+        this.rootPage = 'WelcomePage';
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -2332,11 +2356,10 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/app/app.html"*/'<ion-nav [root]="rootPage" swipeBackEnabled="true"></ion-nav>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/app/app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-        __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _e || Object])
 ], MyApp);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ })

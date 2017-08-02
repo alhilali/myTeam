@@ -16,7 +16,8 @@ import * as moment from 'moment';
  * on Ionic pages and navigation.
  */
 @IonicPage({
-  segment: 'team/:id'
+  segment: 'team/:id',
+  defaultHistory: ['MyTeamPage']
 })
 @Component({
   selector: 'page-team',
@@ -57,15 +58,15 @@ export class TeamPage {
   }
 
   loadTeam() {
-    this.teamSub = this.db.object('teams/' + this.navParams.get('id')).subscribe(data => {
+    this.teamSub = this.db.object('teams/' + this.team.$key).subscribe(data => {
       this.team = data;
-      if (this.team.captain == this.afAuth.auth.currentUser.uid) this.isCaptain = true;
+      if (this.teamDB.loggedIn && this.team.captain == this.teamDB.userInfo.uid) this.isCaptain = true;
       if (!this.team.bg) this.team.bg = 'http://2.bp.blogspot.com/-IxU2acVSDds/UPPNBOwulyI/AAAAAAAACGU/3RaskOb8upk/s1600/Old+Trafford+wallpapers+12.jpg';
     })
   }
 
   loadPlayers() {
-    this.playersListSub = this.db.list('playersList/' + this.navParams.get('id'))
+    this.playersListSub = this.db.list('playersList/' + this.team.$key)
       .subscribe(data => {
         this.playersList = []
         let i;
@@ -154,7 +155,7 @@ export class TeamPage {
   }
 
   showPlayer(player) {
-    this.navCtrl.push('PlayerPage', { player: player })
+    this.navCtrl.push('PlayerPage', { username: player.originalUsername })
   }
 
   addPlayer() {

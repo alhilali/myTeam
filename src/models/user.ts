@@ -8,4 +8,5 @@ export interface User {
   myTeams: any[];
   profilePic: string;
   bg: string;
+  $key: string;
 }

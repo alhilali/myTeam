@@ -12,22 +12,29 @@ export class MyTeamDB {
   teammInfoSub: any
   myTeamsSub: any
   usernamesSub: any
+  loggedIn: boolean = false
+  userInfo: any = {}
   constructor(public db: AngularFireDatabase,
     private afAuth: AngularFireAuth) {
+    this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.userInfo = user;
+        this.loggedIn = true;
+      }
+      else this.loggedIn = false;
+    })
   }
 
   findUID(username: string) {
     return new Promise(resolve => {
-      const users = this.db.list('users/', {
+      this.db.list('users/', {
         query: {
           orderByChild: 'username',
-          equalTo: username
+          equalTo: username.toLowerCase()
         }
-      });
-      this.usersSub = users.subscribe(data => {
+      }).take(1).subscribe(data => {
         if (data && data.length > 0) resolve(data[0]);
         else resolve(null)
-        this.usersSub.unsubscribe();
       })
     })
   }
@@ -365,6 +372,15 @@ export class MyTeamDB {
           if (likes.length > 0) resolve(true)
           else resolve(false);
         })
+    })
+  }
+
+  getLoggedInUser() {
+    return new Promise(resolve => {
+      this.afAuth.auth.onAuthStateChanged(user => {
+        if (user) resolve(user.uid);
+        else resolve(null)
+      })
     })
   }
 

@@ -1,11 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons end>
+    <ion-buttons *ngIf='teamDB.loggedIn' end>
       <button (click)="openModal()" ion-button icon-only>
-        <profile-pic className="avatar" type="user" ID="{{currentUserId}}"></profile-pic>
+        <profile-pic className="avatar" type="user" ID="{{teamDB.userInfo.uid}}"></profile-pic>
       </button>
     </ion-buttons>
-    <ion-buttons start>
+    <ion-buttons *ngIf='!teamDB.loggedIn' end>
+      <button (click)="loginPage()" ion-button icon-only>
+        <ion-icon name="ios-log-in"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons *ngIf='teamDB.loggedIn' start>
       <button padding-right (click)="compose()" ion-button icon-only>
         <ion-icon name="ios-albums-outline"></ion-icon>
       </button>
