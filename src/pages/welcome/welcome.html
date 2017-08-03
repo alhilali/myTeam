@@ -29,6 +29,15 @@
   </ion-slides>
   <div class="welcomeBtns">
     <button color="orange" ion-button block (click)="registerPage()">حساب جديد</button>
-    <button color="lightBlue" ion-button block (click)="loginPage()" outline>سجل دخول</button>
+    <ion-row>
+      <ion-col col-7 no-padding>
+        <button color="lightBlue" ion-button block (click)="loginPage()" outline>سجل دخول</button>
+      </ion-col>
+      <ion-col col-4 push-1 no-padding>
+        <button color="twitter" ion-button block (click)="twitterLogin()">
+              <ion-icon class="mdIcon" color="white" name="logo-twitter"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

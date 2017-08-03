@@ -4,9 +4,13 @@ page-home {
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    width: 31px;
-    height: 31px;
+    width: 34px;
+    height: 34px;
+    max-width: unset;
     border: solid 1px white;
+    position: absolute;
+    left: 0;
+    top: -5px;
   }
   ion-list {
     margin-bottom: 10px !important;

@@ -89,7 +89,10 @@ post {
     background-color: #0072BB;
   }
   ion-avatar[item-start] {
-    margin: 8px 0 8px 9px !important;
+    margin: 22px 0px 0px 9px !important
+  }
+  .date>ion-note {
+    white-space: nowrap;
   }
   /** Calendar CSS **/
   .topLeft {

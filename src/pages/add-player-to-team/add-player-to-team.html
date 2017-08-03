@@ -25,10 +25,10 @@
       <ion-slides pager dir="rtl" slidesPerView="3">
         <ion-slide *ngFor="let team of myTeams">
           <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>
-          <ion-card class="card1 teamCard">
-            <img src="https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png">
-            <h2 text-center>{{team.name}}</h2>
-          </ion-card>
+          <img class="logo" src="{{team.logo}}" alt="">
+          <div class="card-title">
+            {{team.name}}
+          </div>
         </ion-slide>
       </ion-slides>
     </ion-item-group>

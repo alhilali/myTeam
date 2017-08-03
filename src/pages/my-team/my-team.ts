@@ -1,3 +1,4 @@
+import { User } from "./../../models/user";
 import { TabsPage } from "./../tabs/tabs";
 import { Component } from '@angular/core';
 import {
@@ -32,6 +33,7 @@ export class MyTeamPage {
   matches: any[] = [];
   months: any[] = [];
   blur: boolean = false;
+  currentUID: any;
 
   constructor(private modal: ModalController,
     public navCtrl: NavController,
@@ -43,18 +45,17 @@ export class MyTeamPage {
     private alertCtrl: AlertController) {
   }
 
-  ionViewDidLoad() {
+  async ionViewWillEnter() {
+    await this.afAuth.auth.onAuthStateChanged(user => {
+      if (user) this.currentUID = user.uid;
+    })
     this.loadTeams();
     this.loadGames()
   }
 
   async loadTeams() {
-    let currentUserId;
-    await this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) currentUserId = user.uid;
-    })
     if (this.myTeamsSub) this.myTeamsSub.unsubscribe();
-    this.myTeamsSub = this.db.list('users/' + currentUserId
+    this.myTeamsSub = this.db.list('users/' + this.currentUID
       + '/myTeams').subscribe(data => {
         if (data.length == 0) this.hasNoTeams = true;
         this.hasNoTeams = false;
@@ -64,13 +65,9 @@ export class MyTeamPage {
   }
 
   async loadGames() {
-    let currentUserId;
-    await this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) currentUserId = user.uid;
-    })
     this.matches = []
     this.months = []
-    this.db.list('users/' + currentUserId + '/myTeams/').take(1)
+    this.db.list('users/' + this.currentUID + '/myTeams/').take(1)
       .subscribe(teams => {
         teams.forEach(team => {
           this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(matches => {

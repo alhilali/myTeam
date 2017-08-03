@@ -1,0 +1,32 @@
+<ion-content padding-top>
+  <div class="login" padding>
+    <div class="welcomeTop">
+      <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">
+    </div>
+    <form name="registerForm" novalidate padding>
+      <div class="register" [formGroup]='registerForm' padding>
+
+        <h5 text-center>تبقت خطوة اخيرة، اختر المعرف الشخصي</h5>
+        <ion-item dir="ltr">
+          <ion-label>
+            <h2>@</h2>
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="username" [class.invalid]="!registerForm.controls.username.valid" formControlName='username'
+            placeholder="Username"></ion-input>
+        </ion-item>
+
+        <button ion-button block [disabled]="!registerForm.valid" (click)="register()" color="gold">إتمام التسجيل</button>
+        <p text-right style="margin: 0px;">
+          التسجيل يعني موافقتك على
+          <button style="margin-bottom: 15px;" ion-button clear (click)="openTerms()" no-padding small>الشروط والأحكام.</button>
+        </p>
+        <div class="errorMessages">
+          <p *ngIf="username != '' && !registerForm.controls.username.valid && !registerForm.controls.username.pending" style="color: #ea6153;">
+            <ion-icon name="bug"></ion-icon>
+            اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+</ion-content>

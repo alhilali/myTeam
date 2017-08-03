@@ -93,4 +93,28 @@ page-team {
     background: #FFD034;
     text-align: left;
   }
+  .captainChip {
+    text-align: end;
+    color: orangered;
+  }
+  .chip {
+    padding: 0 4px 0px;
+    border-radius: 6px;
+    color: white;
+    margin-top: 6px;
+    margin-left: 6px;
+    background-color: #969696;
+  }
+  .CM {
+    background-color: #AF6916;
+  }
+  .GK {
+    background-color: orangered;
+  }
+  .DF {
+    background-color: green;
+  }
+  .AT {
+    background-color: #0072BB;
+  }
 }

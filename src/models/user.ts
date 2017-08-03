@@ -9,4 +9,5 @@ export interface User {
   profilePic: string;
   bg: string;
   $key: string;
+  uid: string;
 }

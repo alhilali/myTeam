@@ -19,6 +19,7 @@ export class HomePage {
   playerPosts: any[]
   blur: boolean = false;
   type: string = 'all';
+  currentUser: any = {}
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
     public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
@@ -29,6 +30,12 @@ export class HomePage {
 
   ngAfterViewInit() {
     this.slides.autoHeight = true;
+  }
+
+  async ionViewWillEnter() {
+    await this.teamDB.getUserInfo(this.currentUserId).then(data => {
+      this.currentUser = data;
+    })
   }
 
   segmentChanged(event) {
@@ -82,22 +89,17 @@ export class HomePage {
   }
 
   async openModal() {
-    await this.teamDB.getUserInfo(this.currentUserId).then(data => {
-      this.navCtrl.push('PlayerPage', { username: data.originalUsername });
-    })
+    this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
   }
 
   async compose() {
-    await this.teamDB.getUserInfo(this.currentUserId).then(data => {
-      const myModal = this.modal.create('ComposePage', { player: data })
-      myModal.present();
-      this.blur = true;
-      myModal.onWillDismiss(data => {
-        this.blur = false;
-        if (data.postDone) this.loadPosts(this.type);
-      })
+    const myModal = this.modal.create('ComposePage', { player: this.currentUser })
+    myModal.present();
+    this.blur = true;
+    myModal.onWillDismiss(data => {
+      this.blur = false;
+      if (data.postDone) this.loadPosts(this.type);
     })
-
   }
 
   loginPage() {

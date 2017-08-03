@@ -9,8 +9,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
  * for more info on Angular Components.
  */
 @Component({
- selector: 'date',
- templateUrl: 'date.html'
+  selector: 'date',
+  templateUrl: 'date.html'
 })
 export class DateComponent {
   @Input('requestID') reqID: any;
@@ -21,13 +21,19 @@ export class DateComponent {
   constructor(private db: AngularFireDatabase) {
   }
 
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     Promise.resolve().then(() => {
       if (this.date) {
-        if (this.day !== null && this.day == "true") this.formatedDate = moment(this.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " "
-        this.formatedDate += moment(this.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
+        if (this.day !== null && this.day == "true") {
+          this.formatedDate = moment(this.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " "
+          this.formatedDate += moment(this.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
+        }
+        else {
+          const momentDate = moment.utc(this.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
+          this.formatedDate = moment(momentDate).fromNow();
+        }
       } else {
-        this.db.object('/matches/'+this.reqID).take(1).subscribe(data=>{
+        this.db.object('/matches/' + this.reqID).take(1).subscribe(data => {
           if (this.day !== null && this.day == "true") this.formatedDate = moment(data.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " "
           this.formatedDate += moment(data.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
         })

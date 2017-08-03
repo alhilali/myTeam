@@ -1,6 +1,6 @@
 webpackJsonp([16],{
 
-/***/ 1101:
+/***/ 1104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePageModule", function() { return HomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(1166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(1170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -42,14 +42,14 @@ HomePageModule = __decorate([
 
 /***/ }),
 
-/***/ 1166:
+/***/ 1170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -109,12 +109,28 @@ var HomePage = (function () {
         this.navCtrl = navCtrl;
         this.blur = false;
         this.type = 'all';
+        this.currentUser = {};
         this.teamDB.getLoggedInUser().then(function (data) {
             _this.currentUserId = data;
         });
     }
     HomePage.prototype.ngAfterViewInit = function () {
         this.slides.autoHeight = true;
+    };
+    HomePage.prototype.ionViewWillEnter = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
+                            _this.currentUser = data;
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     HomePage.prototype.segmentChanged = function (event) {
         if (event.value == 'all')
@@ -172,38 +188,26 @@ var HomePage = (function () {
     };
     HomePage.prototype.openModal = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
-                            _this.navCtrl.push('PlayerPage', { username: data.originalUsername });
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
+                this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
+                return [2 /*return*/];
             });
         });
     };
     HomePage.prototype.compose = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
+            var myModal;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
-                            var myModal = _this.modal.create('ComposePage', { player: data });
-                            myModal.present();
-                            _this.blur = true;
-                            myModal.onWillDismiss(function (data) {
-                                _this.blur = false;
-                                if (data.postDone)
-                                    _this.loadPosts(_this.type);
-                            });
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
+                myModal = this.modal.create('ComposePage', { player: this.currentUser });
+                myModal.present();
+                this.blur = true;
+                myModal.onWillDismiss(function (data) {
+                    _this.blur = false;
+                    if (data.postDone)
+                        _this.loadPosts(_this.type);
+                });
+                return [2 /*return*/];
             });
         });
     };

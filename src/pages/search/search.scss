@@ -1,5 +1,14 @@
 page-search {
   #itemInfo {
     margin-bottom: 15px;
+    align-self: center;
+  }
+  .chip {
+    padding: 0 4px 0px;
+    border-radius: 6px;
+    color: white;
+    margin-top: 6px;
+    margin-left: 6px;
+    background-color: #969696;
   }
 }

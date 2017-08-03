@@ -41,7 +41,7 @@ export class StartTeamPage {
     let newKey = new Date().getTime();
     const ref = this.db.object('/teams/' + newKey);
     const saveSub = this.afAuth.authState.subscribe(data => {
-      if (data && data.email && data.uid) {
+      if (data && data.uid) {
         let uid = data.uid
         ref.set({
           captain: uid,

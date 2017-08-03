@@ -1,3 +1,4 @@
+import { SocialSharing } from "@ionic-native/social-sharing";
 import { Post } from "./../../models/post";
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
@@ -31,7 +32,8 @@ export class PostPage {
     private teamDB: MyTeamDB,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private socialSharing: SocialSharing) {
     this.post.$key = this.navParams.get('id');
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) this.currentUserID = user.uid;
@@ -79,6 +81,13 @@ export class PostPage {
     if (this.post.by == this.currentUserID) {
       btns = [
         {
+          text: 'مشاركة',
+          handler: () => {
+            this.socialSharing.share(this.post.info, this.post.title,
+              "https://firebasestorage.googleapis.com/v0/b/myteam-29a5b.appspot.com/o/1500455988652%2Fbg.jpg?alt=media&token=88cee9ee-6b3e-4942-a756-99242b5fcbac", "felmel3ab://")
+          }
+        },
+        {
           text: 'حذف',
           role: 'destructive',
           handler: () => {
@@ -95,6 +104,13 @@ export class PostPage {
       ]
     } else {
       btns = [
+        {
+          text: 'مشاركة',
+          handler: () => {
+            this.socialSharing.share(this.post.info, this.post.title,
+              "https://firebasestorage.googleapis.com/v0/b/myteam-29a5b.appspot.com/o/1500455988652%2Fbg.jpg?alt=media&token=88cee9ee-6b3e-4942-a756-99242b5fcbac", "felmel3ab://")
+          }
+        },
         {
           text: 'Report',
           role: 'destructive',

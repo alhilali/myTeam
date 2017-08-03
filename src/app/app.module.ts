@@ -14,6 +14,9 @@ import { AngularFireModule } from 'angularfire2';
 import { FIREBASE_CONFIG } from './app.firebase.config'
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { TwitterConnect } from '@ionic-native/twitter-connect';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -58,6 +61,8 @@ const cloudSettings: CloudSettings = {
     UsernameValidator,
     Camera,
     Keyboard,
+    TwitterConnect,
+    SocialSharing,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

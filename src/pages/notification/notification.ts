@@ -1,8 +1,11 @@
+import { MyTeamDB } from "./../../helpers/myTeamDB";
+import { User } from "./../../models/user";
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Events } from 'ionic-angular';
+import * as moment from 'moment';
 
 /**
  * Generated class for the NotificationPage page.
@@ -20,6 +23,7 @@ export class NotificationPage {
   teamsRequest: any[] = []
   requestsSub: any
   matchRequests: any[] = []
+  userNotification: FirebaseListObservable<any[]>;
   matchSub: any
   currentUserUid: any
 
@@ -28,15 +32,17 @@ export class NotificationPage {
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
     public events: Events,
-    private modlCtrl: ModalController) {
+    private modlCtrl: ModalController,
+    private teamDB: MyTeamDB) {
   }
 
-  async ionViewDidLoad() {
-    await this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) this.currentUserUid = user.uid;
+  async ionViewWillEnter() {
+    await this.teamDB.getLoggedInUser().then(data => {
+      this.currentUserUid = data;
     })
     this.loadTeamRequests();
     this.loadMatchRequests();
+    this.loadUserNotifications();
   }
 
   loadTeamRequests() {
@@ -75,9 +81,18 @@ export class NotificationPage {
     })
   }
 
+  loadUserNotifications() {
+    this.userNotification = this.db.list('users/' + this.currentUserUid + '/notifications/', {
+      query: {
+        orderByChild: 'timestamp'
+      }
+    });
+  }
+
   doRefresh(refresher) {
     this.loadTeamRequests();
     this.loadMatchRequests();
+    this.loadUserNotifications();
     setTimeout(() => {
       refresher.complete();
     }, 1000);
@@ -95,6 +110,14 @@ export class NotificationPage {
 
     // Remove request from user list DB
     this.db.object('users/' + this.currentUserUid + '/requests/' + team.$key).remove();
+
+    // Add notification to current User
+    this.db.list('users/' + this.currentUserUid + '/notifications/').push({
+      type: 'joinedTeam',
+      by: team.$key,
+      timestamps: new Date().getTime(),
+      date: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+    })
   }
 
   declineTeam(team) {
@@ -105,8 +128,8 @@ export class NotificationPage {
     this.db.object('/playersList/' + team.$key + '/' + this.currentUserUid).remove();
   }
 
-  openTeam(team) {
-    this.navCtrl.push('TeamPage', { id: team.$key })
+  openTeam(teamID) {
+    this.navCtrl.push('TeamPage', { id: teamID })
   }
 
   openMatchRequest(request) {

@@ -92,7 +92,7 @@ export class EditProfilePage {
             this.updateNotification('المركز');
           }
         })
-        if (user.email != currUser.email) {
+        if (user.email && user.email != currUser.email) {
           this.updateEmail(currUser.email, user.email);
         }
       }
@@ -279,8 +279,7 @@ export class EditProfilePage {
   logout() {
     if (this.editSub) this.editSub.unsubscribe();
     if (this.editUnameSub) this.editUnameSub.unsubscribe();
-    this.navCtrl.popAll();
-    this.navCtrl.setRoot('WelcomePage')
+    this.navCtrl.push('WelcomePage')
     this.afAuth.auth.signOut();
   }
 

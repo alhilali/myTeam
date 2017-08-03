@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 1099:
+/***/ 1102:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditProfilePageModule", function() { return EditProfilePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_profile__ = __webpack_require__(1164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__edit_profile__ = __webpack_require__(1168);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,7 +41,7 @@ EditProfilePageModule = __decorate([
 
 /***/ }),
 
-/***/ 1115:
+/***/ 1118:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120,7 +120,7 @@ function isNativeBlobDefined() {
 
 /***/ }),
 
-/***/ 1116:
+/***/ 1119:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -159,7 +159,7 @@ exports.invalidRootOperation = invalidRootOperation;
 exports.invalidFormat = invalidFormat;
 exports.internalError = internalError;
 
-var _constants = __webpack_require__(1119);
+var _constants = __webpack_require__(1122);
 
 var FirebaseStorageError = function () {
     function FirebaseStorageError(code, message) {
@@ -351,7 +351,7 @@ function internalError(message) {
 
 /***/ }),
 
-/***/ 1117:
+/***/ 1120:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -411,7 +411,7 @@ function reject(error) {
 
 /***/ }),
 
-/***/ 1118:
+/***/ 1121:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -470,7 +470,7 @@ function clone(obj) {
 
 /***/ }),
 
-/***/ 1119:
+/***/ 1122:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -544,7 +544,7 @@ var minSafeInteger = exports.minSafeInteger = -9007199254740991;
 
 /***/ }),
 
-/***/ 1120:
+/***/ 1123:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -559,7 +559,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Location = undefined;
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
@@ -667,7 +667,7 @@ exports.Location = Location;
 
 /***/ }),
 
-/***/ 1121:
+/***/ 1124:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -743,7 +743,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1122:
+/***/ 1125:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -765,7 +765,7 @@ exports.base64Bytes_ = base64Bytes_;
 exports.dataURLBytes_ = dataURLBytes_;
 exports.dataURLContentType_ = dataURLContentType_;
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
@@ -950,7 +950,7 @@ function endsWith(s, end) {
 
 /***/ }),
 
-/***/ 1123:
+/***/ 1126:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -973,15 +973,15 @@ exports.nonNegativeNumberSpec = nonNegativeNumberSpec;
 exports.looseObjectSpec = looseObjectSpec;
 exports.nullFunctionSpec = nullFunctionSpec;
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
-var _metadata = __webpack_require__(1124);
+var _metadata = __webpack_require__(1127);
 
 var MetadataUtils = _interopRequireWildcard(_metadata);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -1117,7 +1117,7 @@ function nullFunctionSpec(opt_optional) {
 
 /***/ }),
 
-/***/ 1124:
+/***/ 1127:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1140,21 +1140,21 @@ exports.fromResourceString = fromResourceString;
 exports.toResourceString = toResourceString;
 exports.metadataValidator = metadataValidator;
 
-var _json = __webpack_require__(1141);
+var _json = __webpack_require__(1144);
 
 var json = _interopRequireWildcard(_json);
 
-var _location = __webpack_require__(1120);
+var _location = __webpack_require__(1123);
 
-var _path = __webpack_require__(1130);
+var _path = __webpack_require__(1133);
 
 var path = _interopRequireWildcard(_path);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
-var _url = __webpack_require__(1125);
+var _url = __webpack_require__(1128);
 
 var UrlUtils = _interopRequireWildcard(_url);
 
@@ -1331,7 +1331,7 @@ function metadataValidator(p) {
 
 /***/ }),
 
-/***/ 1125:
+/***/ 1128:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1349,11 +1349,11 @@ exports.makeDownloadUrl = makeDownloadUrl;
 exports.makeUploadUrl = makeUploadUrl;
 exports.makeQueryString = makeQueryString;
 
-var _constants = __webpack_require__(1119);
+var _constants = __webpack_require__(1122);
 
 var constants = _interopRequireWildcard(_constants);
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
@@ -1402,7 +1402,7 @@ function makeQueryString(params) {
 
 /***/ }),
 
-/***/ 1126:
+/***/ 1129:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1463,7 +1463,7 @@ function remove(array, elem) {
 
 /***/ }),
 
-/***/ 1127:
+/***/ 1130:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1541,7 +1541,7 @@ function taskStateFromInternalTaskState(state) {
 
 /***/ }),
 
-/***/ 1128:
+/***/ 1131:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1583,7 +1583,7 @@ var ErrorCode = exports.ErrorCode = undefined;
 
 /***/ }),
 
-/***/ 1129:
+/***/ 1132:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1598,43 +1598,43 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Reference = undefined;
 
-var _args = __webpack_require__(1123);
+var _args = __webpack_require__(1126);
 
 var args = _interopRequireWildcard(_args);
 
-var _blob = __webpack_require__(1131);
+var _blob = __webpack_require__(1134);
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
-var _location = __webpack_require__(1120);
+var _location = __webpack_require__(1123);
 
-var _metadata = __webpack_require__(1124);
+var _metadata = __webpack_require__(1127);
 
 var metadata = _interopRequireWildcard(_metadata);
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
-var _path = __webpack_require__(1130);
+var _path = __webpack_require__(1133);
 
 var path = _interopRequireWildcard(_path);
 
-var _requests = __webpack_require__(1132);
+var _requests = __webpack_require__(1135);
 
 var requests = _interopRequireWildcard(_requests);
 
-var _string = __webpack_require__(1122);
+var _string = __webpack_require__(1125);
 
 var fbsString = _interopRequireWildcard(_string);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
-var _task = __webpack_require__(1144);
+var _task = __webpack_require__(1147);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1866,7 +1866,7 @@ exports.Reference = Reference;
 
 /***/ }),
 
-/***/ 1130:
+/***/ 1133:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1943,7 +1943,7 @@ function lastComponent(path) {
 
 /***/ }),
 
-/***/ 1131:
+/***/ 1134:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1958,15 +1958,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FbsBlob = undefined;
 
-var _fs = __webpack_require__(1142);
+var _fs = __webpack_require__(1145);
 
 var fs = _interopRequireWildcard(_fs);
 
-var _string = __webpack_require__(1122);
+var _string = __webpack_require__(1125);
 
 var string = _interopRequireWildcard(_string);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -2092,7 +2092,7 @@ exports.FbsBlob = FbsBlob;
 
 /***/ }),
 
-/***/ 1132:
+/***/ 1135:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2121,31 +2121,31 @@ exports.createResumableUpload = createResumableUpload;
 exports.getResumableUploadStatus = getResumableUploadStatus;
 exports.continueResumableUpload = continueResumableUpload;
 
-var _array = __webpack_require__(1126);
+var _array = __webpack_require__(1129);
 
 var array = _interopRequireWildcard(_array);
 
-var _blob = __webpack_require__(1131);
+var _blob = __webpack_require__(1134);
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
-var _metadata = __webpack_require__(1124);
+var _metadata = __webpack_require__(1127);
 
 var MetadataUtils = _interopRequireWildcard(_metadata);
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
-var _requestinfo = __webpack_require__(1143);
+var _requestinfo = __webpack_require__(1146);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
-var _url = __webpack_require__(1125);
+var _url = __webpack_require__(1128);
 
 var UrlUtils = _interopRequireWildcard(_url);
 
@@ -2453,7 +2453,7 @@ function continueResumableUpload(location, authWrapper, url, blob, chunkSize, ma
 
 /***/ }),
 
-/***/ 1133:
+/***/ 1136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2484,15 +2484,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _errors = __webpack_require__(673);
 
-var _errors2 = __webpack_require__(1121);
+var _errors2 = __webpack_require__(1124);
 
 var _errors3 = _interopRequireDefault(_errors2);
 
-var _tokenManager = __webpack_require__(1156);
+var _tokenManager = __webpack_require__(1159);
 
 var _tokenManager2 = _interopRequireDefault(_tokenManager);
 
-var _notificationPermission = __webpack_require__(1135);
+var _notificationPermission = __webpack_require__(1138);
 
 var _notificationPermission2 = _interopRequireDefault(_notificationPermission);
 
@@ -2648,7 +2648,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1134:
+/***/ 1137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2692,7 +2692,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1135:
+/***/ 1138:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2731,7 +2731,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1136:
+/***/ 1139:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2787,7 +2787,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1137:
+/***/ 1140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2809,9 +2809,9 @@ __webpack_require__(213);
 
 __webpack_require__(61);
 
-__webpack_require__(1138);
+__webpack_require__(1141);
 
-__webpack_require__(1154);
+__webpack_require__(1157);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2838,7 +2838,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1138:
+/***/ 1141:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2853,15 +2853,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.registerStorage = registerStorage;
 
-var _string = __webpack_require__(1122);
+var _string = __webpack_require__(1125);
 
-var _taskenums = __webpack_require__(1127);
+var _taskenums = __webpack_require__(1130);
 
-var _xhriopool = __webpack_require__(1139);
+var _xhriopool = __webpack_require__(1142);
 
-var _reference = __webpack_require__(1129);
+var _reference = __webpack_require__(1132);
 
-var _service = __webpack_require__(1148);
+var _service = __webpack_require__(1151);
 
 var _app = __webpack_require__(44);
 
@@ -2910,7 +2910,7 @@ registerStorage(_app2.default);
 
 /***/ }),
 
-/***/ 1139:
+/***/ 1142:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2925,7 +2925,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.XhrIoPool = undefined;
 
-var _xhrio_network = __webpack_require__(1140);
+var _xhrio_network = __webpack_require__(1143);
 
 /**
  * Factory-like class for creating XhrIo instances.
@@ -2957,7 +2957,7 @@ exports.XhrIoPool = XhrIoPool;
 
 /***/ }),
 
-/***/ 1140:
+/***/ 1143:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2972,23 +2972,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NetworkXhrIo = undefined;
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var promiseimpl = _interopRequireWildcard(_promise_external);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
-var _xhrio = __webpack_require__(1128);
+var _xhrio = __webpack_require__(1131);
 
 var XhrIoExports = _interopRequireWildcard(_xhrio);
 
@@ -3123,7 +3123,7 @@ exports.NetworkXhrIo = NetworkXhrIo;
 
 /***/ }),
 
-/***/ 1141:
+/***/ 1144:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3138,7 +3138,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.jsonObjectOrNull = jsonObjectOrNull;
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -3180,7 +3180,7 @@ function jsonObjectOrNull(s) {
 
 /***/ }),
 
-/***/ 1142:
+/***/ 1145:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3196,7 +3196,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getBlob = getBlob;
 exports.sliceBlob = sliceBlob;
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -3261,7 +3261,7 @@ function sliceBlob(blob, start, end) {
 
 /***/ }),
 
-/***/ 1143:
+/***/ 1146:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3308,7 +3308,7 @@ exports.RequestInfo = RequestInfo;
 
 /***/ }),
 
-/***/ 1144:
+/***/ 1147:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3323,37 +3323,37 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.UploadTask = undefined;
 
-var _taskenums = __webpack_require__(1127);
+var _taskenums = __webpack_require__(1130);
 
 var fbsTaskEnums = _interopRequireWildcard(_taskenums);
 
-var _observer = __webpack_require__(1145);
+var _observer = __webpack_require__(1148);
 
-var _tasksnapshot = __webpack_require__(1146);
+var _tasksnapshot = __webpack_require__(1149);
 
-var _args = __webpack_require__(1123);
+var _args = __webpack_require__(1126);
 
 var fbsArgs = _interopRequireWildcard(_args);
 
-var _array = __webpack_require__(1126);
+var _array = __webpack_require__(1129);
 
 var fbsArray = _interopRequireWildcard(_array);
 
-var _async = __webpack_require__(1147);
+var _async = __webpack_require__(1150);
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errors = _interopRequireWildcard(_error);
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var fbsPromiseimpl = _interopRequireWildcard(_promise_external);
 
-var _requests = __webpack_require__(1132);
+var _requests = __webpack_require__(1135);
 
 var fbsRequests = _interopRequireWildcard(_requests);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var typeUtils = _interopRequireWildcard(_type);
 
@@ -3891,7 +3891,7 @@ exports.UploadTask = UploadTask;
 
 /***/ }),
 
-/***/ 1145:
+/***/ 1148:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3906,7 +3906,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Observer = undefined;
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -3951,7 +3951,7 @@ exports.Observer = Observer;
 
 /***/ }),
 
-/***/ 1146:
+/***/ 1149:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3997,7 +3997,7 @@ exports.UploadTaskSnapshot = UploadTaskSnapshot;
 
 /***/ }),
 
-/***/ 1147:
+/***/ 1150:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4012,7 +4012,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.async = async;
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var promiseimpl = _interopRequireWildcard(_promise_external);
 
@@ -4056,7 +4056,7 @@ function async(f) {
 
 /***/ }),
 
-/***/ 1148:
+/***/ 1151:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4071,23 +4071,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ServiceInternals = exports.Service = undefined;
 
-var _args = __webpack_require__(1123);
+var _args = __webpack_require__(1126);
 
 var args = _interopRequireWildcard(_args);
 
-var _authwrapper = __webpack_require__(1149);
+var _authwrapper = __webpack_require__(1152);
 
-var _location = __webpack_require__(1120);
+var _location = __webpack_require__(1123);
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var fbsPromiseImpl = _interopRequireWildcard(_promise_external);
 
-var _request = __webpack_require__(1152);
+var _request = __webpack_require__(1155);
 
 var RequestExports = _interopRequireWildcard(_request);
 
-var _reference = __webpack_require__(1129);
+var _reference = __webpack_require__(1132);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -4232,7 +4232,7 @@ exports.ServiceInternals = ServiceInternals;
 
 /***/ }),
 
-/***/ 1149:
+/***/ 1152:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4247,25 +4247,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AuthWrapper = undefined;
 
-var _constants = __webpack_require__(1119);
+var _constants = __webpack_require__(1122);
 
 var constants = _interopRequireWildcard(_constants);
 
-var _error2 = __webpack_require__(1116);
+var _error2 = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error2);
 
-var _failrequest = __webpack_require__(1150);
+var _failrequest = __webpack_require__(1153);
 
-var _location = __webpack_require__(1120);
+var _location = __webpack_require__(1123);
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var promiseimpl = _interopRequireWildcard(_promise_external);
 
-var _requestmap = __webpack_require__(1151);
+var _requestmap = __webpack_require__(1154);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
@@ -4382,7 +4382,7 @@ exports.AuthWrapper = AuthWrapper;
 
 /***/ }),
 
-/***/ 1150:
+/***/ 1153:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4397,7 +4397,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FailRequest = undefined;
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var promiseimpl = _interopRequireWildcard(_promise_external);
 
@@ -4430,7 +4430,7 @@ exports.FailRequest = FailRequest;
 
 /***/ }),
 
-/***/ 1151:
+/***/ 1154:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4445,11 +4445,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RequestMap = undefined;
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
-var _constants = __webpack_require__(1119);
+var _constants = __webpack_require__(1122);
 
 var constants = _interopRequireWildcard(_constants);
 
@@ -4512,7 +4512,7 @@ exports.RequestMap = RequestMap;
 
 /***/ }),
 
-/***/ 1152:
+/***/ 1155:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4530,35 +4530,35 @@ exports.addAuthHeader_ = addAuthHeader_;
 exports.addVersionHeader_ = addVersionHeader_;
 exports.makeRequest = makeRequest;
 
-var _array = __webpack_require__(1126);
+var _array = __webpack_require__(1129);
 
 var array = _interopRequireWildcard(_array);
 
-var _backoff = __webpack_require__(1153);
+var _backoff = __webpack_require__(1156);
 
 var backoff = _interopRequireWildcard(_backoff);
 
-var _error = __webpack_require__(1116);
+var _error = __webpack_require__(1119);
 
 var errorsExports = _interopRequireWildcard(_error);
 
-var _object = __webpack_require__(1118);
+var _object = __webpack_require__(1121);
 
 var object = _interopRequireWildcard(_object);
 
-var _promise_external = __webpack_require__(1117);
+var _promise_external = __webpack_require__(1120);
 
 var promiseimpl = _interopRequireWildcard(_promise_external);
 
-var _type = __webpack_require__(1115);
+var _type = __webpack_require__(1118);
 
 var type = _interopRequireWildcard(_type);
 
-var _url = __webpack_require__(1125);
+var _url = __webpack_require__(1128);
 
 var UrlUtils = _interopRequireWildcard(_url);
 
-var _xhrio = __webpack_require__(1128);
+var _xhrio = __webpack_require__(1131);
 
 var XhrIoExports = _interopRequireWildcard(_xhrio);
 
@@ -4766,7 +4766,7 @@ function makeRequest(requestInfo, authToken, pool) {
 
 /***/ }),
 
-/***/ 1153:
+/***/ 1156:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4899,7 +4899,7 @@ function stop(id) {
 
 /***/ }),
 
-/***/ 1154:
+/***/ 1157:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4929,11 +4929,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.registerMessaging = registerMessaging;
 
-var _windowController = __webpack_require__(1155);
+var _windowController = __webpack_require__(1158);
 
 var _windowController2 = _interopRequireDefault(_windowController);
 
-var _swController = __webpack_require__(1159);
+var _swController = __webpack_require__(1162);
 
 var _swController2 = _interopRequireDefault(_swController);
 
@@ -4964,7 +4964,7 @@ registerMessaging(_app2.default);
 
 /***/ }),
 
-/***/ 1155:
+/***/ 1158:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4993,23 +4993,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _controllerInterface = __webpack_require__(1133);
+var _controllerInterface = __webpack_require__(1136);
 
 var _controllerInterface2 = _interopRequireDefault(_controllerInterface);
 
-var _errors = __webpack_require__(1121);
+var _errors = __webpack_require__(1124);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _workerPageMessage = __webpack_require__(1136);
+var _workerPageMessage = __webpack_require__(1139);
 
 var _workerPageMessage2 = _interopRequireDefault(_workerPageMessage);
 
-var _defaultSw = __webpack_require__(1158);
+var _defaultSw = __webpack_require__(1161);
 
 var _defaultSw2 = _interopRequireDefault(_defaultSw);
 
-var _notificationPermission = __webpack_require__(1135);
+var _notificationPermission = __webpack_require__(1138);
 
 var _notificationPermission2 = _interopRequireDefault(_notificationPermission);
 
@@ -5329,7 +5329,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1156:
+/***/ 1159:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5360,15 +5360,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _errors = __webpack_require__(673);
 
-var _errors2 = __webpack_require__(1121);
+var _errors2 = __webpack_require__(1124);
 
 var _errors3 = _interopRequireDefault(_errors2);
 
-var _arrayBufferToBase = __webpack_require__(1157);
+var _arrayBufferToBase = __webpack_require__(1160);
 
 var _arrayBufferToBase2 = _interopRequireDefault(_arrayBufferToBase);
 
-var _fcmDetails = __webpack_require__(1134);
+var _fcmDetails = __webpack_require__(1137);
 
 var _fcmDetails2 = _interopRequireDefault(_fcmDetails);
 
@@ -5707,7 +5707,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1157:
+/***/ 1160:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5752,7 +5752,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1158:
+/***/ 1161:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5790,7 +5790,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1159:
+/***/ 1162:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5821,19 +5821,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _controllerInterface = __webpack_require__(1133);
+var _controllerInterface = __webpack_require__(1136);
 
 var _controllerInterface2 = _interopRequireDefault(_controllerInterface);
 
-var _errors = __webpack_require__(1121);
+var _errors = __webpack_require__(1124);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _workerPageMessage = __webpack_require__(1136);
+var _workerPageMessage = __webpack_require__(1139);
 
 var _workerPageMessage2 = _interopRequireDefault(_workerPageMessage);
 
-var _fcmDetails = __webpack_require__(1134);
+var _fcmDetails = __webpack_require__(1137);
 
 var _fcmDetails2 = _interopRequireDefault(_fcmDetails);
 
@@ -6132,7 +6132,7 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ 1164:
+/***/ 1168:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6140,12 +6140,12 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_camera__ = __webpack_require__(677);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__validators_username__ = __webpack_require__(674);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_firebase__ = __webpack_require__(1137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_firebase__ = __webpack_require__(1140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6234,7 +6234,7 @@ var EditProfilePage = (function () {
                         _this.updateNotification('المركز');
                     }
                 });
-                if (user.email != currUser.email) {
+                if (user.email && user.email != currUser.email) {
                     this.updateEmail(currUser.email, user.email);
                 }
             }
@@ -6420,8 +6420,7 @@ var EditProfilePage = (function () {
             this.editSub.unsubscribe();
         if (this.editUnameSub)
             this.editUnameSub.unsubscribe();
-        this.navCtrl.popAll();
-        this.navCtrl.setRoot('WelcomePage');
+        this.navCtrl.push('WelcomePage');
         this.afAuth.auth.signOut();
     };
     return EditProfilePage;
@@ -6429,7 +6428,7 @@ var EditProfilePage = (function () {
 EditProfilePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-edit-profile',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/'<!--\n  Generated template for the EditProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>تعديل بياناتي</ion-title>\n    <ion-buttons end>\n      <button (click)="logout()" ion-button icon-only>\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <form name="editForm" novalidate>\n      <div [formGroup]=\'editForm\'>\n        <button ion-item (click)="presentActionSheet(\'profilePic\')">\n          <div *ngIf="user.profilePic" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.profilePic + \')\'}"></div>\n          <div *ngIf="!user.profilePic" class="avatar" style="background-image: url(\'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg\');"></div>\n        </button>\n        <button ion-item (click)="presentActionSheet(\'bg\')">\n          <div *ngIf="user.bg" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.bg + \')\'}"></div>\n          <div *ngIf="!user.bg" class="avatar" style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\');"></div>\n        </button>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-person"></ion-icon>\n          </ion-label>\n          <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName=\'name\' placeholder="الاسم كامل"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-at"></ion-icon>\n          </ion-label>\n          <ion-input dir="ltr" type="text" [(ngModel)]="user.originalUsername" formControlName=\'username\' placeholder="username"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-analytics"></ion-icon>\n          </ion-label>\n          <ion-select [(ngModel)]="user.position" formControlName=\'position\' name="position" interface=\'popover\'>\n            <ion-option value="GK" selected>حارس</ion-option>\n            <ion-option value="DF">دفاع</ion-option>\n            <ion-option value="CM">وسط</ion-option>\n            <ion-option value="AT">مهاجم</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-mail"></ion-icon>\n          </ion-label>\n          <ion-input dir=\'ltr\' type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="البريد الالكتروني"></ion-input>\n        </ion-item>\n\n        <div padding>\n          <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>\n          <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">\n            اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.\n          </p>\n          <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>\n          <p *ngIf="usedEmail" style="color: #ea6153;">\n            الايميل مستخدم من قبل شخص آخر.\n          </p>\n          <p *ngIf="editForm.controls.username.pending">\n            جاري التأكد من اسم المستخدم...\n          </p>\n        </div>\n      </div>\n    </form>\n    <div text-center padding>\n      <button block ion-button color="orange" (click)="update(user)">تحديث</button>\n    </div>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/,
+        selector: 'page-edit-profile',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/'<!--\n  Generated template for the EditProfilePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>تعديل بياناتي</ion-title>\n    <ion-buttons end>\n      <button (click)="logout()" ion-button icon-only>\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <form name="editForm" novalidate>\n      <div [formGroup]=\'editForm\'>\n        <button ion-item (click)="presentActionSheet(\'profilePic\')">\n          <div *ngIf="user.profilePic" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.profilePic + \')\'}"></div>\n          <div *ngIf="!user.profilePic" class="avatar" style="background-image: url(\'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg\');"></div>\n        </button>\n        <button ion-item (click)="presentActionSheet(\'bg\')">\n          <div *ngIf="user.bg" class="avatar" [ngStyle]="{ \'background-image\': \'url(\' + user.bg + \')\'}"></div>\n          <div *ngIf="!user.bg" class="avatar" style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\');"></div>\n        </button>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-person"></ion-icon>\n          </ion-label>\n          <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)"\n            formControlName=\'name\' placeholder="الاسم كامل"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-at"></ion-icon>\n          </ion-label>\n          <ion-input dir="ltr" type="text" [(ngModel)]="user.originalUsername" formControlName=\'username\' placeholder="username"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-analytics"></ion-icon>\n          </ion-label>\n          <ion-select [(ngModel)]="user.position" formControlName=\'position\' name="position" interface=\'popover\'>\n            <ion-option value="GK" selected>حارس</ion-option>\n            <ion-option value="DF">دفاع</ion-option>\n            <ion-option value="CM">وسط</ion-option>\n            <ion-option value="AT">مهاجم</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-item *ngIf="user.email">\n          <ion-label>\n            <ion-icon class="largeIcon" name="ios-mail"></ion-icon>\n          </ion-label>\n          <ion-input dir=\'ltr\' type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="البريد الالكتروني"></ion-input>\n        </ion-item>\n\n        <div padding>\n          <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>\n          <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)"\n            style="color: #ea6153;">\n            اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.\n          </p>\n          <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>\n          <p *ngIf="usedEmail" style="color: #ea6153;">\n            الايميل مستخدم من قبل شخص آخر.\n          </p>\n          <p *ngIf="editForm.controls.username.pending">\n            جاري التأكد من اسم المستخدم...\n          </p>\n        </div>\n      </div>\n    </form>\n    <div text-center padding>\n      <button block ion-button color="orange" (click)="update(user)">تحديث</button>\n    </div>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/edit-profile/edit-profile.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],

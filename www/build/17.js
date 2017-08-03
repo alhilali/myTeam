@@ -1,6 +1,6 @@
 webpackJsonp([17],{
 
-/***/ 1098:
+/***/ 1101:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,7 +9,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_components_module__ = __webpack_require__(672);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compose__ = __webpack_require__(1163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compose__ = __webpack_require__(1167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -44,7 +44,7 @@ ComposePageModule = __decorate([
 
 /***/ }),
 
-/***/ 1163:
+/***/ 1167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -115,7 +115,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  * on Ionic pages and navigation.
  */
 var ComposePage = (function () {
-    function ComposePage(navCtrl, navParams, view, _form, db, teamDB, calendarCtrl) {
+    function ComposePage(navCtrl, navParams, view, _form, db, teamDB, calendarCtrl, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.view = view;
@@ -123,6 +123,7 @@ var ComposePage = (function () {
         this.db = db;
         this.teamDB = teamDB;
         this.calendarCtrl = calendarCtrl;
+        this.alertCtrl = alertCtrl;
         this.myTeams = [];
         this.post = {};
         this.date = new Date().toLocaleDateString();
@@ -189,6 +190,10 @@ var ComposePage = (function () {
     };
     ComposePage.prototype.submit = function () {
         var _this = this;
+        if (this.type == 'match' && !this.selectedTeam) {
+            this.showError();
+            return;
+        }
         this.post.by = this.player.$key;
         this.post.title = this.title;
         this.post.info = this.info;
@@ -202,6 +207,13 @@ var ComposePage = (function () {
         this.db.list('timeline/').push(this.post).then(function () {
             _this.view.dismiss({ postDone: true });
         });
+    };
+    ComposePage.prototype.showError = function () {
+        this.alertCtrl.create({
+            title: 'خطأ',
+            subTitle: 'يجب اختيار فريق',
+            buttons: ['حسناً'],
+        }).present();
     };
     ComposePage.prototype.closeModal = function () {
         this.view.dismiss({ postDone: false });
@@ -219,7 +231,8 @@ ComposePage = __decorate([
         __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_6_ion2_calendar_dist__["a" /* CalendarController */]])
+        __WEBPACK_IMPORTED_MODULE_6_ion2_calendar_dist__["a" /* CalendarController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */]])
 ], ComposePage);
 
 //# sourceMappingURL=compose.js.map

@@ -36,7 +36,8 @@
           <ion-label>
             <ion-icon class="largeIcon" name="ios-person"></ion-icon>
           </ion-label>
-          <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)" formControlName='name' placeholder="الاسم كامل"></ion-input>
+          <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)"
+            formControlName='name' placeholder="الاسم كامل"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>
@@ -55,7 +56,7 @@
             <ion-option value="AT">مهاجم</ion-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="user.email">
           <ion-label>
             <ion-icon class="largeIcon" name="ios-mail"></ion-icon>
           </ion-label>
@@ -64,7 +65,8 @@
 
         <div padding>
           <p *ngIf="!editForm.controls.name.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال الاسم.</p>
-          <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)" style="color: #ea6153;">
+          <p *ngIf="currentUsername != user.originalUsername && !editForm.controls.username.valid && !editForm.controls.username.pending && (submitAttempt || editForm.controls.username.dirty)"
+            style="color: #ea6153;">
             اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
           </p>
           <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>

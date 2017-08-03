@@ -1,5 +1,4 @@
 page-notification {
-
   .listAvatar {
     background-position: center;
     background-size: cover;
@@ -10,7 +9,6 @@ page-notification {
     width: 50px;
     margin-top: 2px;
   }
-
   .item-ios h2:last-child,
   .item-ios h3:last-child,
   .item-ios h4:last-child,
@@ -19,5 +17,15 @@ page-notification {
   .item-ios p:last-child {
     margin-bottom: 4px;
   }
-
+  .notificationBody {
+    line-height: 1.4;
+    padding-right: 10px;
+    white-space: initial;
+  }
+  date>p {
+    line-height: 1 !important;
+    white-space: initial;
+    direction: ltr;
+    text-align: -webkit-left;
+  }
 }

@@ -14,28 +14,25 @@ import { MyTeamDB } from '../../helpers/myTeamDB';
 export class NameComponent {
   @Input('ID') id: any;
   @Input('type') type: any;
-  username: string = ''
+  name: string = ''
 
   constructor(private teamDB: MyTeamDB) {
   }
 
-  async ngAfterViewInit () {
+  async ngAfterViewInit() {
     let info;
-    if (this.type == 'user') {
-      if (this.id) {
-        await this.teamDB.getUserInfo(this.id).then(user=>{
-          info = user;
-        })
-      }
-    } else if (this.type == 'team') {
-      if (this.id) {
-        await this.teamDB.getTeamInfo(this.id).then(user=>{
-          info = user;
-        })
-      }
+    if (this.type == 'user' && this.id) {
+      await this.teamDB.getUserInfo(this.id).then(user => {
+        info = user;
+      })
+    } else if (this.type == 'team' && this.id) {
+      await this.teamDB.getTeamInfo(this.id).then(team => {
+        info = team;
+      })
     }
     Promise.resolve().then(() => {
-      if (this.id && this.type == 'user' && info.profilePic) this.username = info.originalUsername;
+      if (this.type == 'user') this.name = info.originalUsername + "@";
+      if (this.type == 'team') this.name = info.name;
     });
   }
 

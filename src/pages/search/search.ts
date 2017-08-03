@@ -19,7 +19,6 @@ export class SearchPage {
   query: Subject<any>;
   type: string = 'teams'
   items: FirebaseListObservable<any[]>;
-  nameResults: FirebaseListObservable<any[]>;
   queryString: string
 
 
@@ -33,7 +32,8 @@ export class SearchPage {
     this.items = this.db.list('teams/', {
       query: {
         orderByChild: 'name',
-        startAt: this.query
+        startAt: this.query,
+        limitToFirst: 5
       }
     });
   }
@@ -42,7 +42,8 @@ export class SearchPage {
     this.items = this.db.list('users/', {
       query: {
         orderByChild: 'username',
-        equalTo: this.query
+        startAt: this.query,
+        limitToFirst: 5
       }
     });
   }
@@ -64,6 +65,9 @@ export class SearchPage {
     if (ev.value == 'teams') this.searchTeams();
     if (ev.value == 'players') this.searchPlayers();
     //this.query.next(this.queryString)
+  }
+
+  onClear(event) {
   }
 
 }

@@ -1,7 +1,10 @@
 import { Post } from "./../../models/post";
 import { MyTeamDB } from "./../../helpers/myTeamDB";
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ViewController, AlertController
+} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as moment from 'moment';
@@ -37,7 +40,8 @@ export class ComposePage {
     private _form: FormBuilder,
     private db: AngularFireDatabase,
     private teamDB: MyTeamDB,
-    private calendarCtrl: CalendarController) {
+    private calendarCtrl: CalendarController,
+    private alertCtrl: AlertController) {
     this.player = this.navParams.get('player');
     this.composeForm = _form.group({
       "title": ["",
@@ -87,6 +91,10 @@ export class ComposePage {
   }
 
   submit() {
+    if (this.type == 'match' && !this.selectedTeam) {
+      this.showError()
+      return;
+    }
     this.post.by = this.player.$key;
     this.post.title = this.title;
     this.post.info = this.info;
@@ -100,6 +108,14 @@ export class ComposePage {
     this.db.list('timeline/').push(this.post).then(() => {
       this.view.dismiss({ postDone: true });
     })
+  }
+
+  showError() {
+    this.alertCtrl.create({
+      title: 'خطأ',
+      subTitle: 'يجب اختيار فريق',
+      buttons: ['حسناً'],
+    }).present();
   }
 
   closeModal() {

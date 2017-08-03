@@ -1,6 +1,6 @@
 webpackJsonp([13],{
 
-/***/ 1107:
+/***/ 1110:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyTeamPageModule", function() { return MyTeamPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_team__ = __webpack_require__(1172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_team__ = __webpack_require__(1176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -44,7 +44,7 @@ MyTeamPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1172:
+/***/ 1176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52,7 +52,7 @@ MyTeamPageModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
@@ -129,70 +129,66 @@ var MyTeamPage = (function () {
         this.months = [];
         this.blur = false;
     }
-    MyTeamPage.prototype.ionViewDidLoad = function () {
-        this.loadTeams();
-        this.loadGames();
-    };
-    MyTeamPage.prototype.loadTeams = function () {
+    MyTeamPage.prototype.ionViewWillEnter = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var currentUserId;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.afAuth.auth.onAuthStateChanged(function (user) {
                             if (user)
-                                currentUserId = user.uid;
+                                _this.currentUID = user.uid;
                         })];
                     case 1:
                         _a.sent();
-                        if (this.myTeamsSub)
-                            this.myTeamsSub.unsubscribe();
-                        this.myTeamsSub = this.db.list('users/' + currentUserId
-                            + '/myTeams').subscribe(function (data) {
-                            if (data.length == 0)
-                                _this.hasNoTeams = true;
-                            _this.hasNoTeams = false;
-                            _this.myTeams = [];
-                            _this.myTeams = data;
-                        });
+                        this.loadTeams();
+                        this.loadGames();
                         return [2 /*return*/];
                 }
+            });
+        });
+    };
+    MyTeamPage.prototype.loadTeams = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                if (this.myTeamsSub)
+                    this.myTeamsSub.unsubscribe();
+                this.myTeamsSub = this.db.list('users/' + this.currentUID
+                    + '/myTeams').subscribe(function (data) {
+                    if (data.length == 0)
+                        _this.hasNoTeams = true;
+                    _this.hasNoTeams = false;
+                    _this.myTeams = [];
+                    _this.myTeams = data;
+                });
+                return [2 /*return*/];
             });
         });
     };
     MyTeamPage.prototype.loadGames = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var currentUserId;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.afAuth.auth.onAuthStateChanged(function (user) {
-                            if (user)
-                                currentUserId = user.uid;
-                        })];
-                    case 1:
-                        _a.sent();
-                        this.matches = [];
-                        this.months = [];
-                        this.db.list('users/' + currentUserId + '/myTeams/').take(1)
-                            .subscribe(function (teams) {
-                            teams.forEach(function (team) {
-                                _this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(function (matches) {
-                                    matches.forEach(function (match) {
-                                        var monthNum = match.date.substring(0, 2);
-                                        var monthName = __WEBPACK_IMPORTED_MODULE_5_moment__(monthNum, 'MM').format('MMMM');
-                                        var index = _this.months.map(function (e) { return e.num; }).indexOf(monthNum);
-                                        if (index == -1)
-                                            _this.months.push({ name: monthName, num: monthNum });
-                                        var matchIndex = _this.matches.map(function (e) { return e.$key; }).indexOf(match.$key);
-                                        if (matchIndex == -1)
-                                            _this.matches.push(match);
-                                    });
-                                });
+                this.matches = [];
+                this.months = [];
+                this.db.list('users/' + this.currentUID + '/myTeams/').take(1)
+                    .subscribe(function (teams) {
+                    teams.forEach(function (team) {
+                        _this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(function (matches) {
+                            matches.forEach(function (match) {
+                                var monthNum = match.date.substring(0, 2);
+                                var monthName = __WEBPACK_IMPORTED_MODULE_5_moment__(monthNum, 'MM').format('MMMM');
+                                var index = _this.months.map(function (e) { return e.num; }).indexOf(monthNum);
+                                if (index == -1)
+                                    _this.months.push({ name: monthName, num: monthNum });
+                                var matchIndex = _this.matches.map(function (e) { return e.$key; }).indexOf(match.$key);
+                                if (matchIndex == -1)
+                                    _this.matches.push(match);
                             });
                         });
-                        return [2 /*return*/];
-                }
+                    });
+                });
+                return [2 /*return*/];
             });
         });
     };

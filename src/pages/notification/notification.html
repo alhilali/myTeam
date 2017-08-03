@@ -19,13 +19,17 @@
 
     </ion-refresher-content>
   </ion-refresher>
-  <h6 text-center *ngIf="teamsRequest?.length == 0 && matchRequests?.length == 0">لا يوجد تنبيهات <span>😴</span></h6>
+
+  <ion-item-divider color="light">طلبات</ion-item-divider>
+  <h6 text-center *ngIf="teamsRequest?.length == 0 && matchRequests?.length == 0">لا يوجد <span>😴</span></h6>
   <ion-item-group *ngIf="teamsRequest?.length > 0">
-    <ion-item-divider color="light">الانضمام</ion-item-divider>
     <ion-list no-margin>
       <ion-item class="fixedBorder" *ngFor="let team of teamsRequest">
         <span item-start>
-          <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
+          <ion-avatar on-tap='openTeam(team.teamInfo.$key)'>
+            <profile-pic ID="{{team.teamInfo.$key}}" type="team">
+            </profile-pic>
+          </ion-avatar>
         </span>
         <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
         <h2>{{team.teamInfo.name}}</h2>
@@ -37,12 +41,14 @@
     </ion-list>
   </ion-item-group>
   <ion-item-group *ngIf="matchRequests?.length > 0">
-    <ion-item-divider color="light">المباريات</ion-item-divider>
     <ion-list no-margin>
       <ion-item class="fixedBorder" *ngFor="let team of matchRequests">
         <span item-start>
-            <div on-tap='openTeam(team.teamInfo)' class="listAvatar" style="background-image: url('https://cdn-arkquizzstoragelive.akamaized.net/cdn/1310e09e-7d5e-4efd-97a0-ebf63d923da0_manu.png');"></div>
-          </span>
+          <ion-avatar on-tap='openTeam(team.teamInfo.$key)'>
+            <profile-pic ID="{{team.teamInfo.$key}}" type="team">
+            </profile-pic>
+          </ion-avatar>
+        </span>
         <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>
         <h2>{{team.teamInfo.name}}</h2>
         <span item-end style="margin-bottom: 16px;">
@@ -51,5 +57,34 @@
       </ion-item>
     </ion-list>
   </ion-item-group>
+  <ion-item-divider>اخر التحديثات</ion-item-divider>
+  <ion-list no-margin>
+    <ion-item class="fixedBorder" *ngFor="let notification of userNotification | async">
+      <ion-row align-items-center>
+        <ion-col col-1>
+          <ion-avatar margin-left>
+            <profile-pic ID="{{notification.by}}" type="team">
+            </profile-pic>
+          </ion-avatar>
+        </ion-col>
+        <ion-col col-8>
+          <ion-row>
+            <p class="notificationBody" *ngIf="notification.type == 'joinedTeam'">
+              اتممت الانضمام لفريق&nbsp;
+              <span on-tap="openTeam(notification.by)" style="color: black">
+                <name ID="{{notification.by}}" type="team">
+                </name>
+              </span>
+            </p>
+          </ion-row>
+        </ion-col>
+        <ion-col col-3>
+          <p style="text-align: end">
+            <date date="{{notification.date}}"></date>
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

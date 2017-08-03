@@ -71,22 +71,20 @@
           <ion-item-divider>لاعبي الفريق</ion-item-divider>
           <ion-item-sliding *ngFor="let player of playersList">
             <ion-item class="fixedBorder">
-              <span item-start>
-                <profile-pic className="avatar" ID="{{player.$key}}" type="user"></profile-pic>
-              </span>
-              <span item-content>
-                <ion-chip color="orange">
-                  <ion-label>{{player.position}}</ion-label>
-                </ion-chip>
-                <button ion-button clear (click)='showPlayer(player)'>
-                  <h2>{{player.name}}</h2>
-                </button>
-              </span>
-              <span *ngIf="this.team.captain == player.$key" item-end>
-                <ion-chip color="gold">
-                  <ion-label>كابتن</ion-label>
-                </ion-chip>
-              </span>
+              <ion-row on-tap="showPlayer(player)" align-items-center>
+                <p class="chip {{player.position}}">
+                  {{player.position}}
+                </p>
+                <ion-avatar padding-right>
+                  <profile-pic className="avatar" ID="{{player.$key}}" type="user"></profile-pic>
+                </ion-avatar>
+                <h2 style="margin: 0 0 8px;">{{player.name}}</h2> &nbsp;
+                <p>{{player.originalUsername}}@</p>
+                <ion-col>
+                  <p class="captainChip" *ngIf="this.team.captain == player.$key">
+                    كابتن</p>
+                </ion-col>
+              </ion-row>
             </ion-item>
             <ion-item-options *ngIf="this.team.captain != player.$key && isCaptain == true" side="left">
               <button (click)="removePlayer(player)" ion-button icon-only color="danger">
