@@ -32,4 +32,10 @@ page-home {
   .segment-button {
     transition: none !important;
   }
+  .likeAvatar {
+    display: none;
+  }
+  .postInfoBar {
+    height: 38px;
+  }
 }

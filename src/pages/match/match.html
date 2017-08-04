@@ -29,17 +29,29 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-          <img class="logo" on-tap='openTeam(homeTeam)' src="{{homeTeam.logo}}" alt=""> {{homeTeam.name}}
+          <ion-avatar on-tap="openTeam(requestInfo.homeTeam)">
+            <profile-pic className="logo" ID="{{(request | async)?.homeTeam}}" type="team">
+            </profile-pic>
+          </ion-avatar>
+          <h2>
+            <name ID="{{(request | async)?.homeTeam}}" type="team"></name>
+          </h2>
           <h1>0</h1>
         </ion-col>
         <ion-col text-center style="padding-top: 60px;">
           <h3>VS</h3>
-          <date requestID="{{requestInfo.$key}}" day="true"></date>
+          <date requestID="{{requestID}}" day="true"></date>
           <p>{{(request | async)?.time}}<br> {{(request | async)?.stadium}}
           </p>
         </ion-col>
         <ion-col text-center>
-          <img class="logo" on-tap='openTeam(awayTeam)' src="{{awayTeam.logo}}" alt=""> {{awayTeam.name}}
+          <ion-avatar on-tap="openTeam(requestInfo.awayTeam)">
+            <profile-pic className="logo" ID="{{(request | async)?.awayTeam}}" type="team">
+            </profile-pic>
+          </ion-avatar>
+          <h2>
+            <name ID="{{(request | async)?.awayTeam}}" type="team"></name>
+          </h2>
           <h1>0</h1>
         </ion-col>
       </ion-row>

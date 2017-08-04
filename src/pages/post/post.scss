@@ -10,6 +10,10 @@ page-post {
     display: none;
   }
   .bottomBar {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
     background-color: #f4f4f4;
   }
   ion-input {
@@ -26,5 +30,22 @@ page-post {
   }
   post .card-content {
     top: 50px;
+  }
+  .label {
+    margin: 0;
+  }
+  .postInfoBar {
+    padding: 4px 0;
+  }
+  .likeAvatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 25%;
+  }
+  .likesPreview {
+    //background-color: rgba(221, 129, 33, 0.08);
+    border-radius: 10px;
+    position: absolute;
+    right: 60px;
   }
 }

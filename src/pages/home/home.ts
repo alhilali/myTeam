@@ -23,9 +23,6 @@ export class HomePage {
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
     public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController) {
-    this.teamDB.getLoggedInUser().then(data => {
-      this.currentUserId = data;
-    })
   }
 
   ngAfterViewInit() {
@@ -33,6 +30,9 @@ export class HomePage {
   }
 
   async ionViewWillEnter() {
+    await this.teamDB.getLoggedInUser().then(data => {
+      this.currentUserId = data;
+    })
     await this.teamDB.getUserInfo(this.currentUserId).then(data => {
       this.currentUser = data;
     })

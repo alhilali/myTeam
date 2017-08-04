@@ -76,47 +76,47 @@ var map = {
 	],
 	"../pages/notification/notification.module": [
 		1111,
-		12
+		2
 	],
 	"../pages/player/player.module": [
 		1112,
-		11
+		12
 	],
 	"../pages/post/post.module": [
 		1113,
-		10
+		11
 	],
 	"../pages/register/register.module": [
 		1115,
-		9
+		10
 	],
 	"../pages/request-match/request-match.module": [
 		1097,
-		8
+		9
 	],
 	"../pages/search/search.module": [
 		1116,
-		7
+		8
 	],
 	"../pages/start-team/start-team.module": [
 		1109,
-		6
+		7
 	],
 	"../pages/tabs/tabs.module": [
 		1108,
-		5
+		6
 	],
 	"../pages/team/team.module": [
 		1117,
-		4
+		5
 	],
 	"../pages/terms/terms.module": [
 		1114,
-		3
+		4
 	],
 	"../pages/welcome/welcome.module": [
 		1105,
-		2
+		3
 	]
 };
 function webpackAsyncContext(req) {
@@ -143,6 +143,8 @@ webpackAsyncContext.id = 266;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -187,6 +189,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+
 
 
 
@@ -254,41 +257,10 @@ var MyTeamDB = (function () {
     MyTeamDB.prototype.getTeamPlayers = function (teamId) {
         var _this = this;
         return new Promise(function (resolve) {
-            var teamPlayers = _this.db.list('/teams/' + teamId + '/players/');
-            _this.teamPlayersSub = teamPlayers.subscribe(function (data) {
-                resolve(data);
-                _this.teamPlayersSub.unsubscribe();
-            });
-        });
-    };
-    MyTeamDB.prototype.getTeamPlayersWithInfo = function (teamId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var teamPlayers, teamPlayersInfo, i;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getTeamPlayers(teamId).then(function (data) {
-                            teamPlayers = data;
-                        })];
-                    case 1:
-                        _a.sent();
-                        teamPlayersInfo = [];
-                        i = 0;
-                        _a.label = 2;
-                    case 2:
-                        if (!(i < teamPlayers.length)) return [3 /*break*/, 5];
-                        return [4 /*yield*/, this.getUserInfo(teamPlayers[i].$key).then(function (data) {
-                                teamPlayersInfo.push(data);
-                            })];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4:
-                        i++;
-                        return [3 /*break*/, 2];
-                    case 5: return [2 /*return*/, new Promise(function (resolve) {
-                            resolve(teamPlayersInfo);
-                        })];
-                }
+            _this.db.list('/playersList/' + teamId)
+                .take(1).subscribe(function (data) {
+                if (data && data.length > 1)
+                    resolve(data);
             });
         });
     };
@@ -416,10 +388,12 @@ var MyTeamDB = (function () {
     };
     MyTeamDB.prototype.sendRequestToPlayer = function (playerID, teamID) {
         // Add request to player
-        this.db.object('/users/' + playerID + '/requests/' + teamID)
-            .set({
-            teamId: teamID,
-            dateRequested: new Date().toDateString()
+        this.db.list('/users/' + playerID + '/requests/')
+            .push({
+            teamID: teamID,
+            dateRequested: __WEBPACK_IMPORTED_MODULE_3_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss'),
+            timestamp: new Date().getTime(),
+            type: 'teamRequest'
         });
         // Add player to playersList temporary
         var playersList = this.db.object('/playersList/' + teamID + '/' + playerID);
@@ -446,8 +420,27 @@ var MyTeamDB = (function () {
         });
     };
     MyTeamDB.prototype.sendMatchRequest = function (matchInfo) {
-        var ref = this.db.list("/matches/");
-        ref.push(matchInfo);
+        var matchKey = this.db.list('matches/').push({
+            fromUID: matchInfo.fromUID,
+            toUID: matchInfo.toUID,
+            homeTeam: matchInfo.homeTeam,
+            awayTeam: matchInfo.awayTeam,
+            date: matchInfo.date,
+            day: matchInfo.day,
+            time: matchInfo.time,
+            stadium: matchInfo.stadium,
+            dateRequested: __WEBPACK_IMPORTED_MODULE_3_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss'),
+            status: 'pending'
+        }).key;
+        var ref = this.db.object('users/' + matchInfo.toUID + '/requests/' + matchKey);
+        var info = {
+            matchID: matchKey,
+            fromUID: matchInfo.fromUID,
+            homeTeam: matchInfo.homeTeam,
+            timestamp: new Date().getTime(),
+            type: 'matchRequest'
+        };
+        ref.set(info);
     };
     MyTeamDB.prototype.getTeamHomeGames = function (teamID) {
         var _this = this;
@@ -633,6 +626,17 @@ var MyTeamDB = (function () {
         var _this = this;
         return new Promise(function (resolve) {
             _this.db.object('timeline/' + postID).take(1).subscribe(function (data) {
+                if (data)
+                    resolve(data);
+                else
+                    resolve(null);
+            });
+        });
+    };
+    MyTeamDB.prototype.getMatchInfo = function (matchID) {
+        var _this = this;
+        return new Promise(function (resolve) {
+            _this.db.object('matches/' + matchID).take(1).subscribe(function (data) {
                 if (data)
                     resolve(data);
                 else
@@ -1008,7 +1012,7 @@ AppModule = __decorate([
                     { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: ['WelcomePage'] },
-                    { loadChildren: '../pages/match/match.module#MatchPageModule', name: 'MatchPage', segment: 'match', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/match/match.module#MatchPageModule', name: 'MatchPage', segment: 'match/:id', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'mytabs', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/start-team/start-team.module#StartTeamPageModule', name: 'StartTeamPage', segment: 'start-team', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-team/my-team.module#MyTeamPageModule', name: 'MyTeamPage', segment: 'myteam', priority: 'low', defaultHistory: ['TabsPage', 'MyTeamPage'] },
@@ -1051,240 +1055,240 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 759:
+/***/ 757:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 306,
-	"./af.js": 306,
-	"./ar": 307,
-	"./ar-dz": 308,
-	"./ar-dz.js": 308,
-	"./ar-kw": 309,
-	"./ar-kw.js": 309,
-	"./ar-ly": 310,
-	"./ar-ly.js": 310,
-	"./ar-ma": 311,
-	"./ar-ma.js": 311,
-	"./ar-sa": 312,
-	"./ar-sa.js": 312,
-	"./ar-tn": 313,
-	"./ar-tn.js": 313,
-	"./ar.js": 307,
-	"./az": 314,
-	"./az.js": 314,
-	"./be": 315,
-	"./be.js": 315,
-	"./bg": 316,
-	"./bg.js": 316,
-	"./bn": 317,
-	"./bn.js": 317,
-	"./bo": 318,
-	"./bo.js": 318,
-	"./br": 319,
-	"./br.js": 319,
-	"./bs": 320,
-	"./bs.js": 320,
-	"./ca": 321,
-	"./ca.js": 321,
-	"./cs": 322,
-	"./cs.js": 322,
-	"./cv": 323,
-	"./cv.js": 323,
-	"./cy": 324,
-	"./cy.js": 324,
-	"./da": 325,
-	"./da.js": 325,
-	"./de": 326,
-	"./de-at": 327,
-	"./de-at.js": 327,
-	"./de-ch": 328,
-	"./de-ch.js": 328,
-	"./de.js": 326,
-	"./dv": 329,
-	"./dv.js": 329,
-	"./el": 330,
-	"./el.js": 330,
-	"./en-au": 331,
-	"./en-au.js": 331,
-	"./en-ca": 332,
-	"./en-ca.js": 332,
-	"./en-gb": 333,
-	"./en-gb.js": 333,
-	"./en-ie": 334,
-	"./en-ie.js": 334,
-	"./en-nz": 335,
-	"./en-nz.js": 335,
-	"./eo": 336,
-	"./eo.js": 336,
-	"./es": 337,
-	"./es-do": 338,
-	"./es-do.js": 338,
-	"./es.js": 337,
-	"./et": 339,
-	"./et.js": 339,
-	"./eu": 340,
-	"./eu.js": 340,
-	"./fa": 341,
-	"./fa.js": 341,
-	"./fi": 342,
-	"./fi.js": 342,
-	"./fo": 343,
-	"./fo.js": 343,
-	"./fr": 344,
-	"./fr-ca": 345,
-	"./fr-ca.js": 345,
-	"./fr-ch": 346,
-	"./fr-ch.js": 346,
-	"./fr.js": 344,
-	"./fy": 347,
-	"./fy.js": 347,
-	"./gd": 348,
-	"./gd.js": 348,
-	"./gl": 349,
-	"./gl.js": 349,
-	"./gom-latn": 350,
-	"./gom-latn.js": 350,
-	"./he": 351,
-	"./he.js": 351,
-	"./hi": 352,
-	"./hi.js": 352,
-	"./hr": 353,
-	"./hr.js": 353,
-	"./hu": 354,
-	"./hu.js": 354,
-	"./hy-am": 355,
-	"./hy-am.js": 355,
-	"./id": 356,
-	"./id.js": 356,
-	"./is": 357,
-	"./is.js": 357,
-	"./it": 358,
-	"./it.js": 358,
-	"./ja": 359,
-	"./ja.js": 359,
-	"./jv": 360,
-	"./jv.js": 360,
-	"./ka": 361,
-	"./ka.js": 361,
-	"./kk": 362,
-	"./kk.js": 362,
-	"./km": 363,
-	"./km.js": 363,
-	"./kn": 364,
-	"./kn.js": 364,
-	"./ko": 365,
-	"./ko.js": 365,
-	"./ky": 366,
-	"./ky.js": 366,
-	"./lb": 367,
-	"./lb.js": 367,
-	"./lo": 368,
-	"./lo.js": 368,
-	"./lt": 369,
-	"./lt.js": 369,
-	"./lv": 370,
-	"./lv.js": 370,
-	"./me": 371,
-	"./me.js": 371,
-	"./mi": 372,
-	"./mi.js": 372,
-	"./mk": 373,
-	"./mk.js": 373,
-	"./ml": 374,
-	"./ml.js": 374,
-	"./mr": 375,
-	"./mr.js": 375,
-	"./ms": 376,
-	"./ms-my": 377,
-	"./ms-my.js": 377,
-	"./ms.js": 376,
-	"./my": 378,
-	"./my.js": 378,
-	"./nb": 379,
-	"./nb.js": 379,
-	"./ne": 380,
-	"./ne.js": 380,
-	"./nl": 381,
-	"./nl-be": 382,
-	"./nl-be.js": 382,
-	"./nl.js": 381,
-	"./nn": 383,
-	"./nn.js": 383,
-	"./pa-in": 384,
-	"./pa-in.js": 384,
-	"./pl": 385,
-	"./pl.js": 385,
-	"./pt": 386,
-	"./pt-br": 387,
-	"./pt-br.js": 387,
-	"./pt.js": 386,
-	"./ro": 388,
-	"./ro.js": 388,
-	"./ru": 389,
-	"./ru.js": 389,
-	"./sd": 390,
-	"./sd.js": 390,
-	"./se": 391,
-	"./se.js": 391,
-	"./si": 392,
-	"./si.js": 392,
-	"./sk": 393,
-	"./sk.js": 393,
-	"./sl": 394,
-	"./sl.js": 394,
-	"./sq": 395,
-	"./sq.js": 395,
-	"./sr": 396,
-	"./sr-cyrl": 397,
-	"./sr-cyrl.js": 397,
-	"./sr.js": 396,
-	"./ss": 398,
-	"./ss.js": 398,
-	"./sv": 399,
-	"./sv.js": 399,
-	"./sw": 400,
-	"./sw.js": 400,
-	"./ta": 401,
-	"./ta.js": 401,
-	"./te": 402,
-	"./te.js": 402,
-	"./tet": 403,
-	"./tet.js": 403,
-	"./th": 404,
-	"./th.js": 404,
-	"./tl-ph": 405,
-	"./tl-ph.js": 405,
-	"./tlh": 406,
-	"./tlh.js": 406,
-	"./tr": 407,
-	"./tr.js": 407,
-	"./tzl": 408,
-	"./tzl.js": 408,
-	"./tzm": 409,
-	"./tzm-latn": 410,
-	"./tzm-latn.js": 410,
-	"./tzm.js": 409,
-	"./uk": 411,
-	"./uk.js": 411,
-	"./ur": 412,
-	"./ur.js": 412,
-	"./uz": 413,
-	"./uz-latn": 414,
-	"./uz-latn.js": 414,
-	"./uz.js": 413,
-	"./vi": 415,
-	"./vi.js": 415,
-	"./x-pseudo": 416,
-	"./x-pseudo.js": 416,
-	"./yo": 417,
-	"./yo.js": 417,
-	"./zh-cn": 418,
-	"./zh-cn.js": 418,
-	"./zh-hk": 419,
-	"./zh-hk.js": 419,
-	"./zh-tw": 420,
-	"./zh-tw.js": 420
+	"./af": 305,
+	"./af.js": 305,
+	"./ar": 306,
+	"./ar-dz": 307,
+	"./ar-dz.js": 307,
+	"./ar-kw": 308,
+	"./ar-kw.js": 308,
+	"./ar-ly": 309,
+	"./ar-ly.js": 309,
+	"./ar-ma": 310,
+	"./ar-ma.js": 310,
+	"./ar-sa": 311,
+	"./ar-sa.js": 311,
+	"./ar-tn": 312,
+	"./ar-tn.js": 312,
+	"./ar.js": 306,
+	"./az": 313,
+	"./az.js": 313,
+	"./be": 314,
+	"./be.js": 314,
+	"./bg": 315,
+	"./bg.js": 315,
+	"./bn": 316,
+	"./bn.js": 316,
+	"./bo": 317,
+	"./bo.js": 317,
+	"./br": 318,
+	"./br.js": 318,
+	"./bs": 319,
+	"./bs.js": 319,
+	"./ca": 320,
+	"./ca.js": 320,
+	"./cs": 321,
+	"./cs.js": 321,
+	"./cv": 322,
+	"./cv.js": 322,
+	"./cy": 323,
+	"./cy.js": 323,
+	"./da": 324,
+	"./da.js": 324,
+	"./de": 325,
+	"./de-at": 326,
+	"./de-at.js": 326,
+	"./de-ch": 327,
+	"./de-ch.js": 327,
+	"./de.js": 325,
+	"./dv": 328,
+	"./dv.js": 328,
+	"./el": 329,
+	"./el.js": 329,
+	"./en-au": 330,
+	"./en-au.js": 330,
+	"./en-ca": 331,
+	"./en-ca.js": 331,
+	"./en-gb": 332,
+	"./en-gb.js": 332,
+	"./en-ie": 333,
+	"./en-ie.js": 333,
+	"./en-nz": 334,
+	"./en-nz.js": 334,
+	"./eo": 335,
+	"./eo.js": 335,
+	"./es": 336,
+	"./es-do": 337,
+	"./es-do.js": 337,
+	"./es.js": 336,
+	"./et": 338,
+	"./et.js": 338,
+	"./eu": 339,
+	"./eu.js": 339,
+	"./fa": 340,
+	"./fa.js": 340,
+	"./fi": 341,
+	"./fi.js": 341,
+	"./fo": 342,
+	"./fo.js": 342,
+	"./fr": 343,
+	"./fr-ca": 344,
+	"./fr-ca.js": 344,
+	"./fr-ch": 345,
+	"./fr-ch.js": 345,
+	"./fr.js": 343,
+	"./fy": 346,
+	"./fy.js": 346,
+	"./gd": 347,
+	"./gd.js": 347,
+	"./gl": 348,
+	"./gl.js": 348,
+	"./gom-latn": 349,
+	"./gom-latn.js": 349,
+	"./he": 350,
+	"./he.js": 350,
+	"./hi": 351,
+	"./hi.js": 351,
+	"./hr": 352,
+	"./hr.js": 352,
+	"./hu": 353,
+	"./hu.js": 353,
+	"./hy-am": 354,
+	"./hy-am.js": 354,
+	"./id": 355,
+	"./id.js": 355,
+	"./is": 356,
+	"./is.js": 356,
+	"./it": 357,
+	"./it.js": 357,
+	"./ja": 358,
+	"./ja.js": 358,
+	"./jv": 359,
+	"./jv.js": 359,
+	"./ka": 360,
+	"./ka.js": 360,
+	"./kk": 361,
+	"./kk.js": 361,
+	"./km": 362,
+	"./km.js": 362,
+	"./kn": 363,
+	"./kn.js": 363,
+	"./ko": 364,
+	"./ko.js": 364,
+	"./ky": 365,
+	"./ky.js": 365,
+	"./lb": 366,
+	"./lb.js": 366,
+	"./lo": 367,
+	"./lo.js": 367,
+	"./lt": 368,
+	"./lt.js": 368,
+	"./lv": 369,
+	"./lv.js": 369,
+	"./me": 370,
+	"./me.js": 370,
+	"./mi": 371,
+	"./mi.js": 371,
+	"./mk": 372,
+	"./mk.js": 372,
+	"./ml": 373,
+	"./ml.js": 373,
+	"./mr": 374,
+	"./mr.js": 374,
+	"./ms": 375,
+	"./ms-my": 376,
+	"./ms-my.js": 376,
+	"./ms.js": 375,
+	"./my": 377,
+	"./my.js": 377,
+	"./nb": 378,
+	"./nb.js": 378,
+	"./ne": 379,
+	"./ne.js": 379,
+	"./nl": 380,
+	"./nl-be": 381,
+	"./nl-be.js": 381,
+	"./nl.js": 380,
+	"./nn": 382,
+	"./nn.js": 382,
+	"./pa-in": 383,
+	"./pa-in.js": 383,
+	"./pl": 384,
+	"./pl.js": 384,
+	"./pt": 385,
+	"./pt-br": 386,
+	"./pt-br.js": 386,
+	"./pt.js": 385,
+	"./ro": 387,
+	"./ro.js": 387,
+	"./ru": 388,
+	"./ru.js": 388,
+	"./sd": 389,
+	"./sd.js": 389,
+	"./se": 390,
+	"./se.js": 390,
+	"./si": 391,
+	"./si.js": 391,
+	"./sk": 392,
+	"./sk.js": 392,
+	"./sl": 393,
+	"./sl.js": 393,
+	"./sq": 394,
+	"./sq.js": 394,
+	"./sr": 395,
+	"./sr-cyrl": 396,
+	"./sr-cyrl.js": 396,
+	"./sr.js": 395,
+	"./ss": 397,
+	"./ss.js": 397,
+	"./sv": 398,
+	"./sv.js": 398,
+	"./sw": 399,
+	"./sw.js": 399,
+	"./ta": 400,
+	"./ta.js": 400,
+	"./te": 401,
+	"./te.js": 401,
+	"./tet": 402,
+	"./tet.js": 402,
+	"./th": 403,
+	"./th.js": 403,
+	"./tl-ph": 404,
+	"./tl-ph.js": 404,
+	"./tlh": 405,
+	"./tlh.js": 405,
+	"./tr": 406,
+	"./tr.js": 406,
+	"./tzl": 407,
+	"./tzl.js": 407,
+	"./tzm": 408,
+	"./tzm-latn": 409,
+	"./tzm-latn.js": 409,
+	"./tzm.js": 408,
+	"./uk": 410,
+	"./uk.js": 410,
+	"./ur": 411,
+	"./ur.js": 411,
+	"./uz": 412,
+	"./uz-latn": 413,
+	"./uz-latn.js": 413,
+	"./uz.js": 412,
+	"./vi": 414,
+	"./vi.js": 414,
+	"./x-pseudo": 415,
+	"./x-pseudo.js": 415,
+	"./yo": 416,
+	"./yo.js": 416,
+	"./zh-cn": 417,
+	"./zh-cn.js": 417,
+	"./zh-hk": 418,
+	"./zh-hk.js": 418,
+	"./zh-tw": 419,
+	"./zh-tw.js": 419
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -1300,7 +1304,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 759;
+webpackContext.id = 757;
 
 /***/ }),
 
@@ -1545,37 +1549,43 @@ var ProfilePicComponent = (function () {
     }
     ProfilePicComponent.prototype.ngAfterViewInit = function () {
         return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.setData();
+                return [2 /*return*/];
+            });
+        });
+    };
+    ProfilePicComponent.prototype.ngOnChanges = function () {
+        this.setData();
+    };
+    ProfilePicComponent.prototype.setData = function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var info;
+            var pic;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this.type == 'user')) return [3 /*break*/, 3];
-                        if (!this.id) return [3 /*break*/, 2];
+                        if (!(this.type == 'user' && this.id)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.teamDB.getUserInfo(this.id).then(function (user) {
-                                info = user;
+                                pic = user.profilePic;
                             })];
                     case 1:
                         _a.sent();
-                        _a.label = 2;
-                    case 2: return [3 /*break*/, 5];
-                    case 3:
-                        if (!(this.type == 'team')) return [3 /*break*/, 5];
-                        if (!this.id) return [3 /*break*/, 5];
+                        return [3 /*break*/, 4];
+                    case 2:
+                        if (!(this.type == 'team' && this.id)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.teamDB.getTeamInfo(this.id).then(function (user) {
-                                info = user;
+                                pic = user.logo;
                             })];
-                    case 4:
+                    case 3:
                         _a.sent();
-                        _a.label = 5;
-                    case 5:
+                        _a.label = 4;
+                    case 4:
                         Promise.resolve().then(function () {
-                            if (_this.id && _this.type == 'user' && info.profilePic)
-                                _this.profilePic = info.profilePic;
-                            else if (_this.id && _this.type == 'team')
-                                _this.profilePic = info.logo;
+                            if (!pic)
+                                _this.profilePic = 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png';
                             else
-                                _this.profilePic = _this.url;
+                                _this.profilePic = pic;
                         });
                         return [2 /*return*/];
                 }
@@ -1596,10 +1606,6 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('type'),
     __metadata("design:type", Object)
 ], ProfilePicComponent.prototype, "type", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])('url'),
-    __metadata("design:type", Object)
-], ProfilePicComponent.prototype, "url", void 0);
 ProfilePicComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'profile-pic',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/profile-pic/profile-pic.html"*/'<img class="{{className}}" src="{{profilePic}}" alt="">\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/profile-pic/profile-pic.html"*/
@@ -1629,6 +1635,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 
 
 
@@ -1642,27 +1683,61 @@ var DateComponent = (function () {
     function DateComponent(db) {
         this.db = db;
         this.formatedDate = "";
+        __WEBPACK_IMPORTED_MODULE_1_moment__["updateLocale"]('en', {
+            relativeTime: {
+                future: 'in %s',
+                past: '%s',
+                s: 'Now',
+                ss: '%ss',
+                m: '1m',
+                mm: '%dm',
+                h: '1hr',
+                hh: '%dh',
+                d: '1d',
+                dd: '%dd',
+                M: '1mo',
+                MM: '%dM',
+                y: 'yr',
+                yy: '%dY'
+            }
+        });
     }
     DateComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        Promise.resolve().then(function () {
-            if (_this.date) {
-                if (_this.day !== null && _this.day == "true") {
-                    _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(_this.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " ";
-                    _this.formatedDate += __WEBPACK_IMPORTED_MODULE_1_moment__(_this.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
-                }
-                else {
-                    var momentDate = __WEBPACK_IMPORTED_MODULE_1_moment__["utc"](_this.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
-                    _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(momentDate).fromNow();
-                }
-            }
-            else {
-                _this.db.object('/matches/' + _this.reqID).take(1).subscribe(function (data) {
-                    if (_this.day !== null && _this.day == "true")
-                        _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(data.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " ";
-                    _this.formatedDate += __WEBPACK_IMPORTED_MODULE_1_moment__(data.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.setData();
+                return [2 /*return*/];
+            });
+        });
+    };
+    DateComponent.prototype.ngOnChanges = function () {
+        this.setData();
+    };
+    DateComponent.prototype.setData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                Promise.resolve().then(function () {
+                    if (_this.date) {
+                        if (_this.day !== null && _this.day == "true") {
+                            _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(_this.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " ";
+                            _this.formatedDate += __WEBPACK_IMPORTED_MODULE_1_moment__(_this.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
+                        }
+                        else {
+                            var momentDate = __WEBPACK_IMPORTED_MODULE_1_moment__["utc"](_this.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
+                            _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(momentDate).fromNow();
+                        }
+                    }
+                    else if (_this.reqID) {
+                        _this.db.object('/matches/' + _this.reqID).take(1).subscribe(function (data) {
+                            if (_this.day !== null && _this.day == "true")
+                                _this.formatedDate = __WEBPACK_IMPORTED_MODULE_1_moment__(data.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " ";
+                            _this.formatedDate += __WEBPACK_IMPORTED_MODULE_1_moment__(data.date, "MM/DD/YYYY").locale('ar-sa').format('ll');
+                        });
+                    }
                 });
-            }
+                return [2 /*return*/];
+            });
         });
     };
     return DateComponent;
@@ -1683,9 +1758,10 @@ DateComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'date',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/date/date.html"*/'<!-- Generated template for the DateComponent component -->\n<p>\n  {{formatedDate}}\n</p>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/date/date.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object])
 ], DateComponent);
 
+var _a;
 //# sourceMappingURL=date.js.map
 
 /***/ }),
@@ -1766,7 +1842,6 @@ var PostComponent = (function () {
         this.user = {};
         this.date = '';
         this.teamInfo = {};
-        this.liked = false;
     }
     PostComponent.prototype.ngAfterViewInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -1795,18 +1870,16 @@ var PostComponent = (function () {
                             _this.teamDB.getUserInfo(_this.postInfo.by).then(function (data) {
                                 _this.user = data;
                             });
-                            _this.teamDB.getCommentsNum(_this.postInfo.$key).then(function (data) {
-                                _this.commentsNum = data;
-                            });
-                            _this.teamDB.getLikesNum(_this.postInfo.$key).then(function (data) {
-                                _this.likesNum = data;
-                            });
-                            if (_this.teamDB.loggedIn)
-                                _this.teamDB.likeOrNot(_this.postInfo.$key).then(function (data) {
-                                    var res;
-                                    res = data;
-                                    _this.liked = res;
+                            _this.commentsNum = _this.db.list('timeline/' + _this.postInfo.$key + '/comments/');
+                            _this.likes = _this.db.list('timeline/' + _this.postInfo.$key + '/likes/');
+                            if (_this.teamDB.loggedIn) {
+                                _this.liked = _this.db.list('timeline/' + _this.postInfo.$key + '/likes/', {
+                                    query: {
+                                        orderByChild: 'id',
+                                        equalTo: _this.teamDB.userInfo.uid
+                                    }
                                 });
+                            }
                             // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
                             // const shortConverted = converted.substring(0, 19);
                             // console.log(shortConverted);
@@ -1819,17 +1892,26 @@ var PostComponent = (function () {
         });
     };
     PostComponent.prototype.like = function () {
+        var _this = this;
         if (this.teamDB.loggedIn) {
-            this.teamDB.like(this.postInfo.$key);
-            this.liked = true;
-            this.likesNum++;
+            this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key)
+                .set({
+                player: this.teamDB.userInfo.uid,
+                title: this.postInfo.title,
+                type: 'likedPost',
+                postID: this.postInfo.$key,
+                timestamp: new Date().getTime(),
+                date: __WEBPACK_IMPORTED_MODULE_4_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
+            }).then(function () {
+                _this.teamDB.like(_this.postInfo.$key);
+            });
         }
     };
     PostComponent.prototype.unlike = function () {
         if (this.teamDB.loggedIn) {
             this.teamDB.unlike(this.postInfo.$key);
-            this.liked = false;
-            this.likesNum--;
+            //this.liked = false;
+            //this.likesNum--;
         }
     };
     PostComponent.prototype.openPlayer = function () {
@@ -1839,6 +1921,12 @@ var PostComponent = (function () {
         if (this.teamDB.loggedIn) {
             this.modal.create('AddPlayerToTeamPage', { player: this.user }).present();
         }
+    };
+    PostComponent.prototype.openPlayerLike = function (uid) {
+        var _this = this;
+        this.teamDB.getUserInfo(uid).then(function (data) {
+            _this.navCtrl.push('PlayerPage', { username: data.originalUsername });
+        });
     };
     PostComponent.prototype.openPost = function () {
         this.navCtrl.push('PostPage', { id: this.postInfo.$key });
@@ -1871,7 +1959,7 @@ __decorate([
 ], PostComponent.prototype, "postID", void 0);
 PostComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
-        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <ion-row justify-content-baseline>\n      <h2 style="margin: 4px 0;">{{user.name}}</h2>&nbsp;\n      <p>{{user.originalUsername}}@</p>\n    </ion-row>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row>\n    <ion-col class="likes">\n      <button (click)="like()" *ngIf="liked == false" ion-button icon-left clear small>\n        <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n      <button (click)="unlike()" *ngIf="liked == true" ion-button icon-left clear small>\n        <ion-icon name="md-heart" color="danger"></ion-icon>\n        <div>{{likesNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="comments">\n      <button (click)="openPost()" ion-button icon-left clear small>\n        <ion-icon name="text" color="gold"></ion-icon>\n        <div>{{commentsNum}}</div>\n      </button>\n    </ion-col>\n    <ion-col class="date" center text-end>\n      <ion-note dir="ltr">\n        {{date}}\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
+        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <ion-row justify-content-baseline>\n      <h2 style="margin: 4px 0;">{{user.name}}</h2>&nbsp;\n      <p>{{user.originalUsername}}@</p>\n    </ion-row>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" *ngIf="postInfo.info" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row class="postInfoBar">\n    <ion-col class="likes">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>\n         <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        </button>\n        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>\n          <ion-icon name="md-heart" color="danger"></ion-icon>\n        </button>\n        <p class="likesNum">{{(likes | async)?.length}}</p>\n        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">\n          <ion-slides dir="rtl" slidesPerView="6">\n            <ion-slide *ngFor="let player of likes | async">\n              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>\n            </ion-slide>\n          </ion-slides>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n    <ion-col class="comments">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="openPost()" ion-button icon-left clear small>\n          <ion-icon name="text" color="gold"></ion-icon>\n        </button>\n        <p>{{(commentsNum | async)?.length}}</p>\n      </ion-row>\n    </ion-col>\n    <ion-col col-2 class="date" center text-end>\n      <ion-note dir="ltr">\n        <date date="{{postInfo.date}}"></date>\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_32" /* trigger */])('fadeInOut', [
                 Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_30" /* style */])({ opacity: '0' })),
@@ -1880,12 +1968,10 @@ PostComponent = __decorate([
             ])
         ]
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _d || Object])
 ], PostComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=post.js.map
 
 /***/ }),
@@ -2251,8 +2337,14 @@ var MatchItemComponent = (function () {
                     case 2:
                         _a.sent();
                         Promise.resolve().then(function () {
-                            _this.homeName = homeName;
-                            _this.awayName = awayName;
+                            if (!homeName)
+                                _this.homeName = 'غير متوفر';
+                            else
+                                _this.homeName = homeName;
+                            if (!awayName)
+                                _this.awayName = 'غير متوفر';
+                            else
+                                _this.awayName = awayName;
                         });
                         return [2 /*return*/];
                 }
@@ -2347,14 +2439,25 @@ var NameComponent = (function () {
     }
     NameComponent.prototype.ngAfterViewInit = function () {
         return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.setData();
+                return [2 /*return*/];
+            });
+        });
+    };
+    NameComponent.prototype.ngOnChanges = function () {
+        this.setData();
+    };
+    NameComponent.prototype.setData = function () {
+        return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var info;
+            var name;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!(this.type == 'user' && this.id)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.teamDB.getUserInfo(this.id).then(function (user) {
-                                info = user;
+                                name = user.originalUsername;
                             })];
                     case 1:
                         _a.sent();
@@ -2362,17 +2465,19 @@ var NameComponent = (function () {
                     case 2:
                         if (!(this.type == 'team' && this.id)) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.teamDB.getTeamInfo(this.id).then(function (team) {
-                                info = team;
+                                name = team.name;
                             })];
                     case 3:
                         _a.sent();
                         _a.label = 4;
                     case 4:
                         Promise.resolve().then(function () {
-                            if (_this.type == 'user')
-                                _this.name = info.originalUsername + "@";
-                            if (_this.type == 'team')
-                                _this.name = info.name;
+                            if (!name)
+                                _this.name = 'غير متوفر';
+                            else if (_this.type == 'user')
+                                _this.name = name + '@';
+                            else
+                                _this.name = name;
                         });
                         return [2 /*return*/];
                 }

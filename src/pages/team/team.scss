@@ -12,15 +12,16 @@ page-team {
     background-color: white;
     background-position: center;
     background-size: cover;
-    border: solid 2px rgba(255, 255, 255, 255);
+    border: solid 2px white;
     border-radius: 50%;
+    display: inline-block;
     height: 78px;
-    width: 78px;
-    margin: auto;
-    top: 0;
     left: 0;
-    bottom: 70px;
     right: 0;
+    margin: auto;
+    top: 15%;
+    position: absolute;
+    width: 78px;
   }
   h1,
   h2,
@@ -97,13 +98,15 @@ page-team {
     text-align: end;
     color: orangered;
   }
-  .chip {
+  .mychip {
     padding: 0 4px 0px;
     border-radius: 6px;
     color: white;
     margin-top: 6px;
     margin-left: 6px;
     background-color: #969696;
+    width: 27px;
+    text-align: center;
   }
   .CM {
     background-color: #AF6916;

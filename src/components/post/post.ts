@@ -1,4 +1,4 @@
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { RequestMatchPage } from "./../../pages/request-match/request-match";
 import { Component, Input, trigger, state, style, animate, transition } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
@@ -30,12 +30,12 @@ export class PostComponent {
   @Input('postID') postID: any;
   user: any = {}
   date: any = ''
-  commentsNum: any;
-  likesNum: any;
+  likes: FirebaseListObservable<any[]>
+  liked: FirebaseListObservable<any[]>
+  commentsNum: FirebaseListObservable<any[]>
   teamInfo: any = {}
   month: any
   day: any
-  liked: boolean = false;
 
   constructor(public teamDB: MyTeamDB,
     public navCtrl: NavController,
@@ -62,17 +62,16 @@ export class PostComponent {
       this.teamDB.getUserInfo(this.postInfo.by).then(data => {
         this.user = data;
       })
-      this.teamDB.getCommentsNum(this.postInfo.$key).then(data => {
-        this.commentsNum = data;
-      })
-      this.teamDB.getLikesNum(this.postInfo.$key).then(data => {
-        this.likesNum = data;
-      })
-      if (this.teamDB.loggedIn) this.teamDB.likeOrNot(this.postInfo.$key).then(data => {
-        let res;
-        res = data;
-        this.liked = res;
-      })
+      this.commentsNum = this.db.list('timeline/' + this.postInfo.$key + '/comments/')
+      this.likes = this.db.list('timeline/' + this.postInfo.$key + '/likes/');
+      if (this.teamDB.loggedIn) {
+        this.liked = this.db.list('timeline/' + this.postInfo.$key + '/likes/', {
+          query: {
+            orderByChild: 'id',
+            equalTo: this.teamDB.userInfo.uid
+          }
+        })
+      }
       // const converted = tzMoment.tz(this.postInfo.date, 'Asia/Riyadh').format();
       // const shortConverted = converted.substring(0, 19);
       // console.log(shortConverted);
@@ -83,17 +82,25 @@ export class PostComponent {
 
   like() {
     if (this.teamDB.loggedIn) {
-      this.teamDB.like(this.postInfo.$key);
-      this.liked = true;
-      this.likesNum++;
+      this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key)
+        .set({
+          player: this.teamDB.userInfo.uid,
+          title: this.postInfo.title,
+          type: 'likedPost',
+          postID: this.postInfo.$key,
+          timestamp: new Date().getTime(),
+          date: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+        }).then(() => {
+          this.teamDB.like(this.postInfo.$key);
+        })
     }
   }
 
   unlike() {
     if (this.teamDB.loggedIn) {
       this.teamDB.unlike(this.postInfo.$key);
-      this.liked = false;
-      this.likesNum--;
+      //this.liked = false;
+      //this.likesNum--;
     }
   }
 
@@ -105,6 +112,12 @@ export class PostComponent {
     if (this.teamDB.loggedIn) {
       this.modal.create('AddPlayerToTeamPage', { player: this.user }).present();
     }
+  }
+
+  openPlayerLike(uid) {
+    this.teamDB.getUserInfo(uid).then(data => {
+      this.navCtrl.push('PlayerPage', { username: data.originalUsername });
+    })
   }
 
   openPost() {

@@ -21,70 +21,132 @@
   </ion-refresher>
 
   <ion-item-divider color="light">طلبات</ion-item-divider>
-  <h6 text-center *ngIf="teamsRequest?.length == 0 && matchRequests?.length == 0">لا يوجد <span>😴</span></h6>
-  <ion-item-group *ngIf="teamsRequest?.length > 0">
+  <h6 text-center *ngIf="((requests | async)?.length) == 0">لا يوجد <span>😴</span></h6>
+  <ion-item-group>
     <ion-list no-margin>
-      <ion-item class="fixedBorder" *ngFor="let team of teamsRequest">
-        <span item-start>
-          <ion-avatar on-tap='openTeam(team.teamInfo.$key)'>
-            <profile-pic ID="{{team.teamInfo.$key}}" type="team">
-            </profile-pic>
-          </ion-avatar>
-        </span>
-        <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
-        <h2>{{team.teamInfo.name}}</h2>
-        <span item-end style="margin-bottom: 16px;">
-          <button (click)="acceptTeam(team.teamInfo)" ion-button color="secondary">موافق</button>
-          <button (click)="declineTeam(team.teamInfo)" ion-button color="danger" outline>إلغاء</button>
-        </span>
-      </ion-item>
-    </ion-list>
-  </ion-item-group>
-  <ion-item-group *ngIf="matchRequests?.length > 0">
-    <ion-list no-margin>
-      <ion-item class="fixedBorder" *ngFor="let team of matchRequests">
-        <span item-start>
-          <ion-avatar on-tap='openTeam(team.teamInfo.$key)'>
-            <profile-pic ID="{{team.teamInfo.$key}}" type="team">
-            </profile-pic>
-          </ion-avatar>
-        </span>
-        <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>
-        <h2>{{team.teamInfo.name}}</h2>
-        <span item-end style="margin-bottom: 16px;">
-            <button (click)="openMatchRequest(team.request)" ion-button small outline>تفاصيل المباراة</button>
+      <div class="fixedBorder" *ngFor="let request of requests | async">
+        <ion-item *ngIf="request.type == 'teamRequest'">
+          <span item-start>
+            <ion-avatar on-tap='openTeam(request.teamID)'>
+              <profile-pic ID="{{request.teamID}}" type="team">
+              </profile-pic>
+            </ion-avatar>
           </span>
-      </ion-item>
+          <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>
+          <h2>
+            <name ID="{{request.teamID}}" type="team"></name>
+          </h2>
+          <span item-end style="margin-bottom: 16px;">
+            <button (click)="acceptTeam(request.teamID, request.$key)" ion-button color="secondary">موافق</button>
+            <button (click)="declineTeam(request.teamID, request.$key)" ion-button color="danger" outline>إلغاء</button>
+          </span>
+        </ion-item>
+        <ion-item *ngIf="request.type == 'matchRequest'">
+          <span item-start>
+            <ion-avatar on-tap='openTeam(request.homeTeam)'>
+              <profile-pic ID="{{request.homeTeam}}" type="team">
+              </profile-pic>
+            </ion-avatar>
+          </span>
+          <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>
+          <h2>
+            <name ID="{{request.homeTeam}}" type="team"></name>
+          </h2>
+          <span item-end style="margin-bottom: 16px;">
+            <button (click)="openMatchRequest(request.matchID)" ion-button small outline>تفاصيل المباراة</button>
+          </span>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-item-group>
-  <ion-item-divider>اخر التحديثات</ion-item-divider>
+  <ion-item-divider>
+    <ion-row>
+      <ion-col col-9>
+        اخر التحديثات
+      </ion-col>
+
+      <ion-col col-3 on-tap="clearAll()">
+        <p style="color: red" text-end>حذف الكل</p>
+      </ion-col>
+    </ion-row>
+  </ion-item-divider>
   <ion-list no-margin>
-    <ion-item class="fixedBorder" *ngFor="let notification of userNotification | async">
-      <ion-row align-items-center>
-        <ion-col col-1>
-          <ion-avatar margin-left>
-            <profile-pic ID="{{notification.by}}" type="team">
-            </profile-pic>
-          </ion-avatar>
-        </ion-col>
-        <ion-col col-8>
-          <ion-row>
-            <p class="notificationBody" *ngIf="notification.type == 'joinedTeam'">
-              اتممت الانضمام لفريق&nbsp;
-              <span on-tap="openTeam(notification.by)" style="color: black">
-                <name ID="{{notification.by}}" type="team">
+    <ion-item-sliding *ngFor="let notification of userNotification | async | reverse">
+      <ion-item class="fixedBorder">
+        <ion-row align-items-center>
+          <ion-col col-1 no-padding>
+            <ion-avatar *ngIf="notification.type == 'joinedTeam'" on-tap="openTeam(notification.team)" margin-left>
+              <profile-pic ID="{{notification.team}}" type="team">
+              </profile-pic>
+            </ion-avatar>
+            <ion-avatar *ngIf="notification.type == 'playerJoined' || notification.type == 'declinedTeamInvite' || notification.type == 'postComment' || notification.type == 'likedPost'" on-tap="openPlayer(notification.player)"
+              margin-left>
+              <profile-pic ID="{{notification.player}}" type="user">
+              </profile-pic>
+            </ion-avatar>
+          </ion-col>
+          <ion-col col-8>
+            <ion-row>
+              <p class="notificationBody" *ngIf="notification.type == 'joinedTeam'">
+                اتممت الانضمام لفريق
+                <span on-tap="openTeam(notification.team)" style="color: black">
+                <name ID="{{notification.team}}" type="team">
                 </name>
               </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'playerJoined'">
+                اللاعب
+                <span on-tap="openPlayer(notification.player)" style="color: black">
+                <name ID="{{notification.player}}" type="user">
+                </name>
+              </span> انضم الى فريق
+                <span on-tap="openTeam(notification.team)" style="color: black">
+                <name ID="{{notification.team}}" type="team">
+                </name>
+              </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'declinedTeamInvite'">
+                اللاعب
+                <span on-tap="openPlayer(notification.player)" style="color: black">
+                <name ID="{{notification.player}}" type="user">
+                </name>
+              </span> رفض الانضمام الى فريق
+                <span on-tap="openTeam(notification.team)" style="color: black">
+                <name ID="{{notification.team}}" type="team">
+                </name>
+              </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'postComment'">
+                <span on-tap="openPost(notification.postID)" style="color: black">
+                  "{{notification.message}}"
+                </span>
+                تعليق جديد من
+                <span on-tap="openPlayer(notification.player)" style="color: black">
+                  <name ID="{{notification.player}}" type="user">
+                  </name>
+                </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'likedPost'">
+                ابدى اعجابه بـ
+                <span on-tap="openPost(notification.postID)" style="color: black">
+                  "{{notification.title}}"
+                </span>
+              </p>
+            </ion-row>
+          </ion-col>
+          <ion-col col-3>
+            <p style="text-align: end">
+              <date date="{{notification.date}}"></date>
             </p>
-          </ion-row>
-        </ion-col>
-        <ion-col col-3>
-          <p style="text-align: end">
-            <date date="{{notification.date}}"></date>
-          </p>
-        </ion-col>
-      </ion-row>
-    </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item-options side="left" (ionSwipe)="clearNotification(notification.$key)">
+        <button (click)="clearNotification(notification.$key)" ion-button expandable icon-only color="gold">
+          <ion-icon color="white" name="md-remove-circle"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
 </ion-content>

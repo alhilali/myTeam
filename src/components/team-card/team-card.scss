@@ -3,14 +3,14 @@ team-card {
     transition: .2s all ease;
     position: absolute;
     width: 250px;
-    height: 30px;
+    height: 20px;
     text-align: center;
     background: #C12121;
     z-index: 10;
     transform: rotate(-35deg);
     top: 10px;
     left: -92px;
-    line-height: 29px;
+    line-height: 12px;
     font-weight: bold;
     color: white;
   }
@@ -28,7 +28,7 @@ team-card {
   .more {
     position: absolute;
     width: 10px;
-    left: 15%;
+    left: 12%;
     top: 0;
   }
   .card-content {

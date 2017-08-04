@@ -22,20 +22,29 @@
   <post [postID]="post.$key" className="postCard">
   </post>
   <ion-item-divider>التعليقات</ion-item-divider>
-  <ion-list no-margin>
+  <ion-list style="margin-bottom: 48px;" no-margin>
     <ion-item-sliding *ngFor="let comment of comments | async">
       <ion-item class="fixedBorder">
-        <span item-start>
-        <ion-avatar>
-          <profile-pic ID="{{comment.by}}" type="user"></profile-pic>
-        </ion-avatar>
-      </span>
-        <h3 no-margin>
-          <name ID="{{comment.by}}" type="user"></name>
-        </h3>
-        <p no-margin text-right>
-          {{comment.message}}
-        </p>
+        <ion-row align-items-center>
+          <ion-col col-2 no-padding>
+            <ion-avatar on-tap="openPlayer(comment.by)">
+              <profile-pic ID="{{comment.by}}" type="user"></profile-pic>
+            </ion-avatar>
+          </ion-col>
+          <ion-col col-7 style="margin-right: -12px">
+            <h3 no-margin>
+              <name ID="{{comment.by}}" type="user"></name>
+            </h3>
+            <p no-margin text-right>
+              {{comment.message}}
+            </p>
+          </ion-col>
+          <ion-col col-3>
+            <p style="text-align: end">
+              <date date="{{comment.date}}"></date>
+            </p>
+          </ion-col>
+        </ion-row>
       </ion-item>
       <ion-item-options *ngIf="currentUserID == comment.by" side="left">
         <button (click)="deleteComment(comment)" ion-button icon-only color="danger">
@@ -44,9 +53,11 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
 </ion-content>
-<ion-footer dir="rtl" class="bottomBar">
-  <ion-row align-items-center>
+
+<ion-footer>
+  <ion-row align-items-center dir="rtl" class="bottomBar">
     <ion-col col-9>
       <ion-input [(ngModel)]="comment" placeholder="ادخل تعليقك" type="text"></ion-input>
     </ion-col>

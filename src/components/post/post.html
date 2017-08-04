@@ -2,7 +2,7 @@
 <ion-card [@fadeInOut] [ngClass]="className ? className : 'card1'">
   <ion-item style="height: 70px;">
     <ion-avatar margin-top item-start>
-      <img on-tap="openPlayer()" src="{{user.profilePic}}" alt="">
+      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">
     </ion-avatar>
     <ion-row justify-content-baseline>
       <h2 style="margin: 4px 0;">{{user.name}}</h2>&nbsp;
@@ -40,29 +40,39 @@
     </div>
   </div>
   <player-post-card *ngIf="postInfo.type == 'player'" playerID="{{postInfo.by}}"></player-post-card>
-  <p class="postInfo" padding>
+  <p class="postInfo" *ngIf="postInfo.info" padding>
     {{postInfo.info}}
   </p>
-  <ion-row>
+  <ion-row class="postInfoBar">
     <ion-col class="likes">
-      <button (click)="like()" *ngIf="liked == false" ion-button icon-left clear small>
-        <ion-icon name="md-heart-outline" color="danger"></ion-icon>
-        <div>{{likesNum}}</div>
-      </button>
-      <button (click)="unlike()" *ngIf="liked == true" ion-button icon-left clear small>
-        <ion-icon name="md-heart" color="danger"></ion-icon>
-        <div>{{likesNum}}</div>
-      </button>
+      <ion-row padding-left align-items-center>
+        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>
+         <ion-icon name="md-heart-outline" color="danger"></ion-icon>
+        </button>
+        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>
+          <ion-icon name="md-heart" color="danger"></ion-icon>
+        </button>
+        <p class="likesNum">{{(likes | async)?.length}}</p>
+        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">
+          <ion-slides dir="rtl" slidesPerView="6">
+            <ion-slide *ngFor="let player of likes | async">
+              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
     </ion-col>
     <ion-col class="comments">
-      <button (click)="openPost()" ion-button icon-left clear small>
-        <ion-icon name="text" color="gold"></ion-icon>
-        <div>{{commentsNum}}</div>
-      </button>
+      <ion-row padding-left align-items-center>
+        <button no-padding (click)="openPost()" ion-button icon-left clear small>
+          <ion-icon name="text" color="gold"></ion-icon>
+        </button>
+        <p>{{(commentsNum | async)?.length}}</p>
+      </ion-row>
     </ion-col>
-    <ion-col class="date" center text-end>
+    <ion-col col-2 class="date" center text-end>
       <ion-note dir="ltr">
-        {{date}}
+        <date date="{{postInfo.date}}"></date>
       </ion-note>
     </ion-col>
   </ion-row>

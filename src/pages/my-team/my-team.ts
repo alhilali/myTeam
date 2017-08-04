@@ -6,7 +6,7 @@ import {
   ModalController, ActionSheetController
 } from 'ionic-angular';
 import { StartTeamPage } from '../start-team/start-team';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 import * as moment from 'moment';
@@ -26,7 +26,7 @@ import * as moment from 'moment';
   templateUrl: 'my-team.html',
 })
 export class MyTeamPage {
-  myTeams: any[] = []
+  myTeams: FirebaseListObservable<any[]>
   myTeamsSub: any
   currentLength: number = 0
   hasNoTeams: boolean = false
@@ -45,37 +45,25 @@ export class MyTeamPage {
     private alertCtrl: AlertController) {
   }
 
-  async ionViewWillEnter() {
-    await this.afAuth.auth.onAuthStateChanged(user => {
-      if (user) this.currentUID = user.uid;
+  async ionViewDidLoad() {
+    await this.teamDB.getLoggedInUser().then(uid => {
+      if (uid) this.currentUID = uid;
     })
     this.loadTeams();
     this.loadGames()
   }
 
-  async loadTeams() {
-    if (this.myTeamsSub) this.myTeamsSub.unsubscribe();
-    this.myTeamsSub = this.db.list('users/' + this.currentUID
-      + '/myTeams').subscribe(data => {
-        if (data.length == 0) this.hasNoTeams = true;
-        this.hasNoTeams = false;
-        this.myTeams = []
-        this.myTeams = data;
-      })
+  loadTeams() {
+    this.myTeams = this.db.list('users/' + this.currentUID + '/myTeams');
   }
 
   async loadGames() {
     this.matches = []
-    this.months = []
     this.db.list('users/' + this.currentUID + '/myTeams/').take(1)
       .subscribe(teams => {
         teams.forEach(team => {
           this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(matches => {
             matches.forEach(match => {
-              const monthNum = match.date.substring(0, 2);
-              const monthName = moment(monthNum, 'MM').format('MMMM');
-              const index = this.months.map(e => { return e.num }).indexOf(monthNum);
-              if (index == -1) this.months.push({ name: monthName, num: monthNum })
               const matchIndex = this.matches.map(e => { return e.$key }).indexOf(match.$key);
               if (matchIndex == -1) this.matches.push(match)
             });
@@ -101,12 +89,11 @@ export class MyTeamPage {
     })
   }
 
-  openMatchRequest(request) {
-    this.navCtrl.push('MatchPage', { request: request })
+  openMatchRequest(requestID) {
+    this.navCtrl.push('MatchPage', { id: requestID })
   }
 
   ionViewWillLeave() {
-    this.myTeamsSub.unsubscribe();
     this.teamDB.unsubscribeAll();
   }
 

@@ -117,30 +117,24 @@ var MatchPage = (function () {
         this.teamDB = teamDB;
         this.db = db;
         this.afAuth = afAuth;
-        this.homeTeam = {};
-        this.awayTeam = {};
         this.previousGames = [];
         this.currentUser = false;
-        this.requestInfo = this.navParams.get('request');
-        this.request = this.db.object('/matches/' + this.requestInfo.$key);
-        if (this.afAuth.auth.currentUser.uid == this.requestInfo.toUID)
-            this.currentUser = true;
+        this.requestID = this.navParams.get('id');
+        this.request = this.db.object('/matches/' + this.requestID);
     }
     MatchPage.prototype.ionViewDidLoad = function () {
-        this.initData();
-    };
-    MatchPage.prototype.initData = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getTeamInfo(this.requestInfo.homeTeam).then(function (data) {
-                            _this.homeTeam = data;
+                    case 0: return [4 /*yield*/, this.teamDB.getMatchInfo(this.requestID).then(function (data) {
+                            _this.requestInfo = data;
                         })];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.teamDB.getTeamInfo(this.requestInfo.awayTeam).then(function (data) {
-                                _this.awayTeam = data;
+                        return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (uid) {
+                                if (_this.requestInfo.toUID == uid)
+                                    _this.currentUser = true;
                             })];
                     case 2:
                         _a.sent();
@@ -151,28 +145,28 @@ var MatchPage = (function () {
     };
     MatchPage.prototype.acceptMatch = function () {
         // Update request status
-        this.db.object('/matches/' + this.requestInfo.$key).update({ status: 'approved' });
+        this.db.object('/matches/' + this.requestID).update({ status: 'approved' });
+        // Remove Request
+        this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
         // Add match to home team DB
         this.db.object('/teams/' + this.requestInfo.homeTeam + '/upcomingMatches/'
-            + this.requestInfo.$key).set({
+            + this.requestID).set({
             homeTeam: this.requestInfo.homeTeam,
             awayTeam: this.requestInfo.awayTeam,
-            date: this.requestInfo.date
         });
         // Add match to away team DB
         this.db.object('/teams/' + this.requestInfo.awayTeam + '/upcomingMatches/'
-            + this.requestInfo.$key).set({
+            + this.requestID).set({
             homeTeam: this.requestInfo.homeTeam,
             awayTeam: this.requestInfo.awayTeam,
-            date: this.requestInfo.date
         });
     };
     MatchPage.prototype.declineMatch = function () {
+        this.db.object('/matches/' + this.requestID).remove();
         this.view.dismiss();
-        this.db.object('/matches/' + this.requestInfo.$key).remove();
     };
-    MatchPage.prototype.openTeam = function (team) {
-        this.navCtrl.push('TeamPage', { id: team.$key });
+    MatchPage.prototype.openTeam = function (teamID) {
+        this.navCtrl.push('TeamPage', { id: teamID });
     };
     MatchPage.prototype.closeModel = function () {
         this.view.dismiss();
@@ -180,9 +174,11 @@ var MatchPage = (function () {
     return MatchPage;
 }());
 MatchPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
+        segment: 'match/:id'
+    }),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/'<!--\n  Generated template for the MatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>تفاصيل المباراة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-row *ngIf="(request | async)?.status == \'pending\' && currentUser" align-items-stretch>\n    <ion-col col-7>\n      <p text-start>هل ترغب بالموافقه على المباراة؟</p>\n    </ion-col>\n    <ion-col no-padding style="padding-left: 10px">\n      <p text-left>\n        <button (click)="acceptMatch()" ion-button color="secondary" small>موافق</button>\n        <button (click)="declineMatch()" ion-button color="danger" outline small>إلغاء</button>\n      </p>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <ion-grid>\n      <ion-row>\n        <ion-col text-center>\n          <img class="logo" on-tap=\'openTeam(homeTeam)\' src="{{homeTeam.logo}}" alt=""> {{homeTeam.name}}\n          <h1>0</h1>\n        </ion-col>\n        <ion-col text-center style="padding-top: 60px;">\n          <h3>VS</h3>\n          <date requestID="{{requestInfo.$key}}" day="true"></date>\n          <p>{{(request | async)?.time}}<br> {{(request | async)?.stadium}}\n          </p>\n        </ion-col>\n        <ion-col text-center>\n          <img class="logo" on-tap=\'openTeam(awayTeam)\' src="{{awayTeam.logo}}" alt=""> {{awayTeam.name}}\n          <h1>0</h1>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-card>\n  <ion-item-divider>\n    المباريات السابقه\n  </ion-item-divider>\n  <ion-list no-margin>\n    <ion-item class="fixedBorder">\n      <div *ngIf="previousGames.length == 0" text-center>\n        لا توجد مباريات سابقة\n      </div>\n      <ion-item *ngIf="previousGames.length != 0" class="fixedBorder">\n\n      </ion-item>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/,
+        selector: 'page-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/'<!--\n  Generated template for the MatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>تفاصيل المباراة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-row *ngIf="(request | async)?.status == \'pending\' && currentUser" align-items-stretch>\n    <ion-col col-7>\n      <p text-start>هل ترغب بالموافقه على المباراة؟</p>\n    </ion-col>\n    <ion-col no-padding style="padding-left: 10px">\n      <p text-left>\n        <button (click)="acceptMatch()" ion-button color="secondary" small>موافق</button>\n        <button (click)="declineMatch()" ion-button color="danger" outline small>إلغاء</button>\n      </p>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <ion-grid>\n      <ion-row>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.homeTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.homeTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.homeTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n        <ion-col text-center style="padding-top: 60px;">\n          <h3>VS</h3>\n          <date requestID="{{requestID}}" day="true"></date>\n          <p>{{(request | async)?.time}}<br> {{(request | async)?.stadium}}\n          </p>\n        </ion-col>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.awayTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.awayTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.awayTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-card>\n  <ion-item-divider>\n    المباريات السابقه\n  </ion-item-divider>\n  <ion-list no-margin>\n    <ion-item class="fixedBorder">\n      <div *ngIf="previousGames.length == 0" text-center>\n        لا توجد مباريات سابقة\n      </div>\n      <ion-item *ngIf="previousGames.length != 0" class="fixedBorder">\n\n      </ion-item>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],

@@ -101,7 +101,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var HomePage = (function () {
     function HomePage(afAuth, modal, teamDB, actionSheetCtrl, navCtrl) {
-        var _this = this;
         this.afAuth = afAuth;
         this.modal = modal;
         this.teamDB = teamDB;
@@ -110,9 +109,6 @@ var HomePage = (function () {
         this.blur = false;
         this.type = 'all';
         this.currentUser = {};
-        this.teamDB.getLoggedInUser().then(function (data) {
-            _this.currentUserId = data;
-        });
     }
     HomePage.prototype.ngAfterViewInit = function () {
         this.slides.autoHeight = true;
@@ -122,10 +118,15 @@ var HomePage = (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
-                            _this.currentUser = data;
+                    case 0: return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (data) {
+                            _this.currentUserId = data;
                         })];
                     case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
+                                _this.currentUser = data;
+                            })];
+                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }

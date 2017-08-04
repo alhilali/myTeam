@@ -48,10 +48,9 @@ AddPlayerPageModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPlayerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__validators_username__ = __webpack_require__(674);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validators_username__ = __webpack_require__(674);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -101,7 +100,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
-
 /**
  * Generated class for the AddPlayerPage page.
  *
@@ -109,12 +107,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  * on Ionic pages and navigation.
  */
 var AddPlayerPage = (function () {
-    function AddPlayerPage(view, navCtrl, navParams, db, teamDB, _form, unameValid) {
+    function AddPlayerPage(view, navCtrl, navParams, teamDB, _form, unameValid) {
         var _this = this;
         this.view = view;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.db = db;
         this.teamDB = teamDB;
         this._form = _form;
         this.unameValid = unameValid;
@@ -129,9 +126,9 @@ var AddPlayerPage = (function () {
         };
         this.requestPlayerForm = _form.group({
             "username": ['',
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern('^[a-zA-Z0-9_.-]*$')]),
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].composeAsync([usernameValidator, teamValidator])]
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern('^[a-zA-Z0-9_.-]*$')]),
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].composeAsync([usernameValidator, teamValidator])]
         });
     }
     AddPlayerPage.prototype.closeModal = function () {
@@ -139,7 +136,7 @@ var AddPlayerPage = (function () {
     };
     AddPlayerPage.prototype.requestAddPlayer = function (player) {
         return __awaiter(this, void 0, void 0, function () {
-            var user, playersList;
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.teamDB.findUID(player.username.toLowerCase()).then(function (data) {
@@ -148,24 +145,13 @@ var AddPlayerPage = (function () {
                     case 1:
                         _a.sent();
                         if (this.requestPlayerForm.valid && user.$key) {
-                            // Add request to player
-                            this.db.object('/users/' + user.$key + '/requests/' + this.team.$key)
-                                .set({
-                                teamId: this.team.$key,
-                                dateRequested: new Date().toDateString()
-                            });
-                            playersList = this.db.object('/playersList/' + this.team.$key + '/' + user.$key);
-                            playersList.set({ uid: user.$key, status: 'pending' });
-                            this.teamDB.unsubscribeAll();
+                            this.teamDB.sendRequestToPlayer(user.$key, this.team.$key);
                             this.view.dismiss();
                         }
                         return [2 /*return*/];
                 }
             });
         });
-    };
-    AddPlayerPage.prototype.ionViewWillLeave = function () {
-        this.teamDB.unsubscribeAll();
     };
     return AddPlayerPage;
 }());
@@ -177,10 +163,9 @@ AddPlayerPage = __decorate([
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_5__validators_username__["a" /* UsernameValidator */]])
+        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_4__validators_username__["a" /* UsernameValidator */]])
 ], AddPlayerPage);
 
 //# sourceMappingURL=add-player.js.map

@@ -22,17 +22,19 @@ export class MatchItemComponent {
   constructor(private teamDB: MyTeamDB) {
   }
 
-  async ngAfterViewInit () {
+  async ngAfterViewInit() {
     let homeName, awayName;
-    await this.teamDB.getTeamInfo(this.home).then(data=>{
+    await this.teamDB.getTeamInfo(this.home).then(data => {
       homeName = data.name;
     })
-    await this.teamDB.getTeamInfo(this.away).then(data=>{
+    await this.teamDB.getTeamInfo(this.away).then(data => {
       awayName = data.name;
     })
     Promise.resolve().then(() => {
-      this.homeName = homeName;
-      this.awayName = awayName;
+      if (!homeName) this.homeName = 'غير متوفر';
+      else this.homeName = homeName;
+      if (!awayName) this.awayName = 'غير متوفر'
+      else this.awayName = awayName;
     });
   }
 

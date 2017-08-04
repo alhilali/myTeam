@@ -4,8 +4,6 @@ import {
   IonicPage, NavController, NavParams,
   ViewController, AlertController
 } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 
 /**

@@ -60391,7 +60391,6 @@ ion-navbar.toolbar {
 
 ion-item-divider {
   height: 40px;
-  background-color: #f7f7f7 !important;
 }
 
 ion-refresher {
@@ -60460,7 +60459,7 @@ ion-calendar-modal.matchCalender ion-content .month-title {
 }
 
 ion-calendar-modal.matchCalender ion-content button.days-btn {
-  width: 55px !important;
+  width: 40px !important;
 }
 
 ion-calendar-modal.matchCalender ion-content button.days-btn.on-selected {
@@ -60605,18 +60604,13 @@ post ion-card-content h2 {
   color: dimgray;
 }
 
-post ion-avatar {
-  margin-top: 16px !important;
-  margin-bottom: 0 !important;
-}
-
-post ion-avatar img {
+post .postAvatar {
   width: 44px !important;
   height: 44px !important;
 }
 
 post .date {
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
 post .chip {
@@ -60648,6 +60642,10 @@ post ion-avatar[item-start] {
 
 post .date > ion-note {
   white-space: nowrap;
+}
+
+post .date p {
+  text-align: start;
 }
 
 post .topLeft {
@@ -61006,7 +61004,7 @@ team-card .ribbon {
   transition: .2s all ease;
   position: absolute;
   width: 250px;
-  height: 30px;
+  height: 20px;
   text-align: center;
   background: #C12121;
   z-index: 10;
@@ -61014,7 +61012,7 @@ team-card .ribbon {
   transform: rotate(-35deg);
   top: 10px;
   left: -92px;
-  line-height: 29px;
+  line-height: 12px;
   font-weight: bold;
   color: white;
 }
@@ -61036,7 +61034,7 @@ team-card .bg {
 team-card .more {
   position: absolute;
   width: 10px;
-  left: 15%;
+  left: 12%;
   top: 0;
 }
 
@@ -61351,6 +61349,14 @@ page-home .segment-button {
   transition: none !important;
 }
 
+page-home .likeAvatar {
+  display: none;
+}
+
+page-home .postInfoBar {
+  height: 38px;
+}
+
 page-login ion-content:after {
   content: '';
   display: block;
@@ -61476,8 +61482,11 @@ page-player .avatar {
   border-radius: 50%;
   display: inline-block;
   height: 78px;
-  left: auto;
-  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 15%;
+  position: absolute;
   width: 78px;
 }
 
@@ -61534,12 +61543,6 @@ page-player .socialIcons {
   padding: 10px;
   letter-spacing: 10px;
   color: #fff;
-}
-
-page-player .editIcon {
-  position: absolute;
-  left: 20%;
-  bottom: 50px;
 }
 
 page-player .profileBottom {
@@ -61618,6 +61621,10 @@ page-post .comments {
 }
 
 page-post .bottomBar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
   background-color: #f4f4f4;
 }
 
@@ -61638,6 +61645,26 @@ page-post ion-item-sliding h3 {
 
 page-post post .card-content {
   top: 50px;
+}
+
+page-post .label {
+  margin: 0;
+}
+
+page-post .postInfoBar {
+  padding: 4px 0;
+}
+
+page-post .likeAvatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 25%;
+}
+
+page-post .likesPreview {
+  border-radius: 10px;
+  position: absolute;
+  right: 60px;
 }
 
 page-register ion-content:after {
@@ -61731,13 +61758,14 @@ page-team .teamAvatar {
   background-size: cover;
   border: solid 2px white;
   border-radius: 50%;
+  display: inline-block;
   height: 78px;
-  width: 78px;
-  margin: auto;
-  top: 0;
   left: 0;
-  bottom: 70px;
   right: 0;
+  margin: auto;
+  top: 15%;
+  position: absolute;
+  width: 78px;
 }
 
 page-team h1,
@@ -61829,13 +61857,15 @@ page-team .captainChip {
   color: orangered;
 }
 
-page-team .chip {
+page-team .mychip {
   padding: 0 4px 0px;
   border-radius: 6px;
   color: white;
   margin-top: 6px;
   margin-left: 6px;
   background-color: #969696;
+  width: 27px;
+  text-align: center;
 }
 
 page-team .CM {
@@ -61880,7 +61910,7 @@ page-welcome h3 {
 }
 
 page-welcome .welcomeSlides {
-  height: 30%;
+  height: 35%;
 }
 
 page-welcome .welcomeBtns {

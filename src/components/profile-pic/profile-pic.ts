@@ -15,31 +15,34 @@ export class ProfilePicComponent {
   @Input('ID') id: any;
   @Input('className') className: any;
   @Input('type') type: any;
-  @Input('url') url: any;
   profilePic: string = ''
 
   constructor(private teamDB: MyTeamDB) {
   }
 
-  async ngAfterViewInit () {
-    let info;
-    if (this.type == 'user') {
-      if (this.id) {
-        await this.teamDB.getUserInfo(this.id).then(user=>{
-          info = user;
-        })
-      }
-    } else if (this.type == 'team') {
-      if (this.id) {
-        await this.teamDB.getTeamInfo(this.id).then(user=>{
-          info = user;
-        })
-      }
+  async ngAfterViewInit() {
+    this.setData();
+  }
+
+  ngOnChanges() {
+    this.setData();
+  }
+
+  async setData() {
+    let pic;
+    if (this.type == 'user' && this.id) {
+      await this.teamDB.getUserInfo(this.id).then(user => {
+        pic = user.profilePic;
+      })
+    } else if (this.type == 'team' && this.id) {
+      await this.teamDB.getTeamInfo(this.id).then(user => {
+        pic = user.logo;
+      })
     }
     Promise.resolve().then(() => {
-      if (this.id && this.type == 'user' && info.profilePic) this.profilePic = info.profilePic;
-      else if (this.id && this.type == 'team') this.profilePic = info.logo;
-      else this.profilePic = this.url;
+      if (!pic) this.profilePic = 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png';
+      else this.profilePic = pic;
     });
   }
+
 }

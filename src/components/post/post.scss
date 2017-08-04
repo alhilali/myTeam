@@ -59,16 +59,12 @@ post {
   ion-card-content h2 {
     color: dimgray;
   }
-  ion-avatar {
-    margin-top: 16px !important;
-    margin-bottom: 0 !important;
-  }
-  ion-avatar img {
+  .postAvatar {
     width: 44px !important;
     height: 44px !important;
   }
   .date {
-    padding-left: 15px;
+    padding-left: 20px;
   }
   .chip {
     padding: 0 15px 8px;
@@ -93,6 +89,9 @@ post {
   }
   .date>ion-note {
     white-space: nowrap;
+  }
+  .date p {
+    text-align: start;
   }
   /** Calendar CSS **/
   .topLeft {

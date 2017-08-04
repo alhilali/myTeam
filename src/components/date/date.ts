@@ -19,9 +19,35 @@ export class DateComponent {
   formatedDate: string = ""
 
   constructor(private db: AngularFireDatabase) {
+    moment.updateLocale('en', {
+      relativeTime: {
+        future: 'in %s',
+        past: '%s',
+        s: 'Now',
+        ss: '%ss',
+        m: '1m',
+        mm: '%dm',
+        h: '1hr',
+        hh: '%dh',
+        d: '1d',
+        dd: '%dd',
+        M: '1mo',
+        MM: '%dM',
+        y: 'yr',
+        yy: '%dY'
+      }
+    });
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
+    this.setData();
+  }
+
+  ngOnChanges() {
+    this.setData();
+  }
+
+  async setData() {
     Promise.resolve().then(() => {
       if (this.date) {
         if (this.day !== null && this.day == "true") {
@@ -32,7 +58,7 @@ export class DateComponent {
           const momentDate = moment.utc(this.date, "YYYY-MM-DD HH:mm:ss").local().format("YYYY-MM-DD HH:mm:ss");
           this.formatedDate = moment(momentDate).fromNow();
         }
-      } else {
+      } else if (this.reqID) {
         this.db.object('/matches/' + this.reqID).take(1).subscribe(data => {
           if (this.day !== null && this.day == "true") this.formatedDate = moment(data.date, "MM/DD/YYYY").locale('ar-sa').format('dddd') + " "
           this.formatedDate += moment(data.date, "MM/DD/YYYY").locale('ar-sa').format('ll');

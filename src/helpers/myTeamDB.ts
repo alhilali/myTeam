@@ -1,6 +1,7 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable()
 export class MyTeamDB {
@@ -67,27 +68,10 @@ export class MyTeamDB {
 
   getTeamPlayers(teamId): Promise<any> {
     return new Promise(resolve => {
-      const teamPlayers = this.db.list('/teams/' + teamId + '/players/');
-      this.teamPlayersSub = teamPlayers.subscribe(data => {
-        resolve(data);
-        this.teamPlayersSub.unsubscribe();
-      })
-    })
-  }
-
-  async getTeamPlayersWithInfo(teamId): Promise<any> {
-    let teamPlayers;
-    await this.getTeamPlayers(teamId).then(data => {
-      teamPlayers = data;
-    })
-    let teamPlayersInfo: any[] = [];
-    for (let i = 0; i < teamPlayers.length; i++) {
-      await this.getUserInfo(teamPlayers[i].$key).then(data => {
-        teamPlayersInfo.push(data);
-      })
-    }
-    return new Promise(resolve => {
-      resolve(teamPlayersInfo)
+      this.db.list('/playersList/' + teamId)
+        .take(1).subscribe(data => {
+          if (data && data.length > 1) resolve(data);
+        })
     })
   }
 
@@ -193,10 +177,12 @@ export class MyTeamDB {
 
   sendRequestToPlayer(playerID, teamID) {
     // Add request to player
-    this.db.object('/users/' + playerID + '/requests/' + teamID)
-      .set({
-        teamId: teamID,
-        dateRequested: new Date().toDateString()
+    this.db.list('/users/' + playerID + '/requests/')
+      .push({
+        teamID: teamID,
+        dateRequested: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
+        timestamp: new Date().getTime(),
+        type: 'teamRequest'
       });
 
     // Add player to playersList temporary
@@ -219,8 +205,27 @@ export class MyTeamDB {
   }
 
   sendMatchRequest(matchInfo) {
-    const ref = this.db.list("/matches/");
-    ref.push(matchInfo)
+    const matchKey = this.db.list('matches/').push({
+      fromUID: matchInfo.fromUID,
+      toUID: matchInfo.toUID,
+      homeTeam: matchInfo.homeTeam,
+      awayTeam: matchInfo.awayTeam,
+      date: matchInfo.date,
+      day: matchInfo.day,
+      time: matchInfo.time,
+      stadium: matchInfo.stadium,
+      dateRequested: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
+      status: 'pending'
+    }).key;
+    const ref = this.db.object('users/' + matchInfo.toUID + '/requests/' + matchKey);
+    let info = {
+      matchID: matchKey,
+      fromUID: matchInfo.fromUID,
+      homeTeam: matchInfo.homeTeam,
+      timestamp: new Date().getTime(),
+      type: 'matchRequest'
+    }
+    ref.set(info)
   }
 
   getTeamHomeGames(teamID) {
@@ -387,6 +392,15 @@ export class MyTeamDB {
   getPostInfo(postID) {
     return new Promise(resolve => {
       this.db.object('timeline/' + postID).take(1).subscribe(data => {
+        if (data) resolve(data)
+        else resolve(null);
+      })
+    })
+  }
+
+  getMatchInfo(matchID) {
+    return new Promise(resolve => {
+      this.db.object('matches/' + matchID).take(1).subscribe(data => {
         if (data) resolve(data)
         else resolve(null);
       })

@@ -19,8 +19,8 @@
     <div class="topContent">
       <ion-slides class="topSlides" pager dir="rtl">
         <ion-slide>
-          <div class="teamAvatar" [ngStyle]="{ 'background-image': 'url(' + team.logo + ')'}"></div>
-          <h3 class="white bold">{{team.name}}</h3>
+          <img class="teamAvatar" src="{{team.logo}}" alt="">
+          <h3 style="padding-top: 20%;" class="white bold">{{team.name}}</h3>
           <h5 class="white">{{team.city}}</h5>
           <button style="position: absolute;top: 70px;left: 70px;" *ngIf="isCaptain" (click)='addPlayer()' ion-button clear icon-only
             color="white">
@@ -72,7 +72,7 @@
           <ion-item-sliding *ngFor="let player of playersList">
             <ion-item class="fixedBorder">
               <ion-row on-tap="showPlayer(player)" align-items-center>
-                <p class="chip {{player.position}}">
+                <p class="mychip {{player.position}}">
                   {{player.position}}
                 </p>
                 <ion-avatar padding-right>
@@ -86,8 +86,8 @@
                 </ion-col>
               </ion-row>
             </ion-item>
-            <ion-item-options *ngIf="this.team.captain != player.$key && isCaptain == true" side="left">
-              <button (click)="removePlayer(player)" ion-button icon-only color="danger">
+            <ion-item-options *ngIf="this.team.captain != player.$key && isCaptain == true" (ionSwipe)="removePlayer(player)" side="left">
+              <button (click)="removePlayer(player)" ion-button expandable icon-only color="danger">
                 <ion-icon name="md-trash"></ion-icon>
               </button>
             </ion-item-options>

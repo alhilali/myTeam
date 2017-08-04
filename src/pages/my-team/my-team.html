@@ -27,28 +27,23 @@
   <ion-item-divider>
     جميع الفرق المشارك فيها
   </ion-item-divider>
-  <ion-item-group padding-bottom *ngIf="myTeams?.length > 0 ">
-    <ion-row *ngFor="let team of myTeams">
+  <ion-item-group padding-bottom>
+    <ion-row *ngFor="let team of myTeams | async">
       <team-card style="width: 100%" [team]='team'></team-card>
     </ion-row>
   </ion-item-group>
-  <div padding *ngIf="myTeams?.length == 0">
+  <div padding *ngIf="(myTeams | async)?.length == 0">
     <h6 text-center>ابدأ فريقك الان</h6>
   </div>
   <ion-item-divider>
     مبارياتي القادمة
   </ion-item-divider>
   <ion-list no-margin>
-    <span *ngFor="let month of months">
-    <ion-item-divider class="monthLabel">
-      {{month.name}}
-    </ion-item-divider>
     <span *ngFor="let match of matches">
-      <ion-item *ngIf="match.date.substring(0, 2) == month.num" class="fixedBorder" (click)="openMatchRequest(match)">
+      <ion-item class="fixedBorder" (click)="openMatchRequest(match.$key)">
         <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>
         <date text-center requestID="{{match.$key}}" day="true"></date>
       </ion-item>
-    </span>
     </span>
   </ion-list>
   <div padding *ngIf="matches.length == 0">

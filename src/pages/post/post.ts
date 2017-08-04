@@ -22,7 +22,6 @@ import * as moment from 'moment';
 })
 export class PostPage {
   post = {} as Post
-  authorInfo: any = {}
   comment: string = '';
   comments: FirebaseListObservable<any[]>;
   currentUserID: any
@@ -46,9 +45,6 @@ export class PostPage {
       res = data
       this.post = res
     })
-    this.teamDB.getUserInfo(this.post.by).then(data => {
-      this.authorInfo = data;
-    })
     this.comments = this.db.list('timeline/' + this.post.$key + '/comments', {
       query: {
         orderByChild: 'timestamp'
@@ -57,22 +53,38 @@ export class PostPage {
   }
 
   sendComment() {
-    let time = moment().format("HH:mm:ss");
-    let date = moment().format("L");
-    this.db.list('timeline/' + this.post.$key + '/comments').push({
+    const date = moment.utc().format('YYYY-MM-DD HH:mm:ss')
+    const commentKey = this.db.list('timeline/' + this.post.$key + '/comments').push({
       by: this.currentUserID,
       message: this.comment,
       date: date,
-      time: time,
       timestamp: new Date().getTime()
-    }).then(() => {
+    })
+
+    commentKey.then(() => {
+      // Notify author
+      this.db.object('users/' + this.post.by + '/notifications/' + commentKey.key)
+        .set({
+          player: this.currentUserID,
+          message: this.comment,
+          type: 'postComment',
+          postID: this.post.$key,
+          timestamp: new Date().getTime(),
+          date: date
+        })
+
       this.comment = '';
-      // Refresh comment
     })
   }
 
   deleteComment(comment) {
     this.db.object('timeline/' + this.post.$key + '/comments/' + comment.$key).remove();
+  }
+
+  openPlayer(uid) {
+    this.teamDB.getUserInfo(uid).then(data => {
+      this.navCtrl.push('PlayerPage', { username: data.originalUsername })
+    })
   }
 
   options() {

@@ -1,14 +1,14 @@
 webpackJsonp([12],{
 
-/***/ 1111:
+/***/ 1112:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerPageModule", function() { return PlayerPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(1177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__player__ = __webpack_require__(1180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -20,42 +20,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NotificationPageModule = (function () {
-    function NotificationPageModule() {
+var PlayerPageModule = (function () {
+    function PlayerPageModule() {
     }
-    return NotificationPageModule;
+    return PlayerPageModule;
 }());
-NotificationPageModule = __decorate([
+PlayerPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+            __WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]
+            __WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]
         ]
     })
-], NotificationPageModule);
+], PlayerPageModule);
 
-//# sourceMappingURL=notification.module.js.map
+//# sourceMappingURL=player.module.js.map
 
 /***/ }),
 
-/***/ 1177:
+/***/ 1180:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -105,147 +103,179 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
-
-
 /**
- * Generated class for the NotificationPage page.
+ * Generated class for the PlayerPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var NotificationPage = (function () {
-    function NotificationPage(navCtrl, navParams, db, afAuth, events, modlCtrl, teamDB) {
+var PlayerPage = (function () {
+    function PlayerPage(navCtrl, navParams, afAuth, db, teamDB, modlCtrl, actionSheetCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.db = db;
         this.afAuth = afAuth;
-        this.events = events;
-        this.modlCtrl = modlCtrl;
+        this.db = db;
         this.teamDB = teamDB;
-        this.teamsRequest = [];
-        this.matchRequests = [];
+        this.modlCtrl = modlCtrl;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.player = {};
+        this.myTeams = [];
+        this.section = '0';
+        this.player.username = navParams.get('username');
+        this.player.bg = '';
     }
-    NotificationPage.prototype.ionViewWillEnter = function () {
+    PlayerPage.prototype.ionViewWillLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (data) {
-                            _this.currentUserUid = data;
+                    case 0: return [4 /*yield*/, this.afAuth.auth.onAuthStateChanged(function (user) {
+                            if (user)
+                                _this.currentUID = user.uid;
                         })];
                     case 1:
                         _a.sent();
-                        this.loadTeamRequests();
-                        this.loadMatchRequests();
-                        this.loadUserNotifications();
                         return [2 /*return*/];
                 }
             });
         });
     };
-    NotificationPage.prototype.loadTeamRequests = function () {
-        var _this = this;
-        if (this.requestsSub)
-            this.requestsSub.unsubscribe();
-        var ref = this.db.list('users/' + this.currentUserUid
-            + '/requests');
-        this.requestsSub = ref.subscribe(function (data) {
-            _this.teamsRequest = [];
-            _this.events.publish("tabs-page:badge-update", 'user');
-            data.forEach(function (team) {
-                _this.db.object('teams/' + team.teamId).take(1).subscribe(function (teamInfo) {
-                    _this.teamsRequest.push({ teamInfo: teamInfo, dateRequested: team.dateRequested });
-                });
-            });
-        });
+    PlayerPage.prototype.ngAfterViewInit = function () {
+        this.bottomSlides = this.slides.toArray()[1];
+        this.bottomSlides.lockSwipes(true);
     };
-    NotificationPage.prototype.loadMatchRequests = function () {
-        var _this = this;
-        if (this.matchSub)
-            this.matchSub.unsubscribe();
-        var ref = this.db.list('matches/', {
-            query: {
-                orderByChild: 'toUID',
-                equalTo: this.currentUserUid
-            }
-        });
-        this.matchSub = ref.subscribe(function (data) {
-            _this.events.publish("tabs-page:badge-update", 'match');
-            _this.matchRequests = [];
-            data.forEach(function (request) {
-                if (request.status == 'pending') {
-                    _this.db.object('teams/' + request.homeTeam).take(1).subscribe(function (teamInfo) {
-                        _this.matchRequests.push({ teamInfo: teamInfo, request: request });
-                    });
+    PlayerPage.prototype.ionViewDidLoad = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var userInfo;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.teamDB.findUID(this.player.username).then(function (data) {
+                            userInfo = data;
+                            _this.player = userInfo;
+                            if (!_this.player.bg)
+                                _this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
+                        })];
+                    case 1:
+                        _a.sent();
+                        this.loadMyTeams();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    NotificationPage.prototype.loadUserNotifications = function () {
-        this.userNotification = this.db.list('users/' + this.currentUserUid + '/notifications/', {
-            query: {
-                orderByChild: 'timestamp'
-            }
+    PlayerPage.prototype.loadMyTeams = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.db.list('users/' + this.player.$key
+                    + '/myTeams').take(1).subscribe(function (data) {
+                    _this.myTeams = [];
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        _this.db.object('teams/' + data[i].teamId).take(1).subscribe(function (team) {
+                            _this.myTeams.push(team);
+                        });
+                    }
+                });
+                return [2 /*return*/];
+            });
         });
     };
-    NotificationPage.prototype.doRefresh = function (refresher) {
-        this.loadTeamRequests();
-        this.loadMatchRequests();
-        this.loadUserNotifications();
-        setTimeout(function () {
-            refresher.complete();
-        }, 1000);
+    PlayerPage.prototype.segmentChanged = function (event) {
+        this.bottomSlides.lockSwipes(false);
+        this.bottomSlides.slideTo(event.value, 500);
+        this.bottomSlides.lockSwipes(true);
     };
-    NotificationPage.prototype.acceptTeam = function (team) {
-        // Add player to players list DB
-        var playersList = this.db.object('/playersList/' + team.$key + '/' + this.currentUserUid);
-        playersList.set({ uid: this.currentUserUid, status: 'enrolled' });
-        // Add team to user list DB
-        this.db.object('/users/' + this.currentUserUid + '/myTeams/' + team.$key)
-            .update({ teamId: team.$key });
-        // Remove request from user list DB
-        this.db.object('users/' + this.currentUserUid + '/requests/' + team.$key).remove();
-        // Add notification to current User
-        this.db.list('users/' + this.currentUserUid + '/notifications/').push({
-            type: 'joinedTeam',
-            by: team.$key,
-            timestamps: new Date().getTime(),
-            date: __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
+    PlayerPage.prototype.slideChanged = function () {
+        var currentIndex = this.bottomSlides.getActiveIndex();
+        this.section = currentIndex + '';
+    };
+    PlayerPage.prototype.addPlayer = function () {
+        var modal = this.modlCtrl.create('AddPlayerToTeamPage', { player: this.player });
+        modal.present();
+    };
+    PlayerPage.prototype.options = function () {
+        var _this = this;
+        var actionSheet;
+        var btns;
+        if (this.currentUID != this.player.$key) {
+            btns = [
+                {
+                    text: 'إضافة اللاعب',
+                    handler: function () {
+                        _this.addPlayer();
+                    }
+                },
+                {
+                    text: 'Block',
+                    role: 'destructive',
+                    handler: function () {
+                        _this.db.object('users/' + _this.afAuth.auth.currentUser.uid +
+                            '/blocked/' + _this.player.$key)
+                            .set({ status: 'blocked' });
+                        _this.navCtrl.pop();
+                    }
+                },
+                {
+                    text: 'إلغاء',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                }
+            ];
+        }
+        else {
+            btns = [
+                {
+                    text: 'تعديل بياناتي',
+                    handler: function () {
+                        _this.editProfilePage();
+                    }
+                },
+                {
+                    text: 'إلغاء',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                }
+            ];
+        }
+        actionSheet = this.actionSheetCtrl.create({
+            buttons: btns
         });
+        actionSheet.present();
     };
-    NotificationPage.prototype.declineTeam = function (team) {
-        // Remove request from user list DB
-        this.db.object('users/' + this.currentUserUid + '/requests/' + team.$key).remove();
-        // Remove player from players list DB
-        this.db.object('/playersList/' + team.$key + '/' + this.currentUserUid).remove();
+    PlayerPage.prototype.editProfilePage = function () {
+        var modal = this.modlCtrl.create('EditProfilePage', { player: this.player });
+        modal.present();
     };
-    NotificationPage.prototype.openTeam = function (teamID) {
-        this.navCtrl.push('TeamPage', { id: teamID });
+    PlayerPage.prototype.openTeam = function (team) {
+        this.navCtrl.push('TeamPage', { id: team.$key });
     };
-    NotificationPage.prototype.openMatchRequest = function (request) {
-        this.navCtrl.push('MatchPage', { request: request });
-    };
-    NotificationPage.prototype.ionViewWillLeave = function () {
-        this.requestsSub.unsubscribe();
-        this.matchSub.unsubscribe();
-    };
-    return NotificationPage;
+    return PlayerPage;
 }());
-NotificationPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])(),
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_14" /* ViewChildren */])(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* Slides */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_core__["Y" /* QueryList */])
+], PlayerPage.prototype, "slides", void 0);
+PlayerPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])({
+        segment: 'player/:username'
+    }),
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
-        selector: 'page-notification',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/notification/notification.html"*/'<!--\n  Generated template for the NotificationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>التنبيهات</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n\n  <ion-item-divider color="light">طلبات</ion-item-divider>\n  <h6 text-center *ngIf="teamsRequest?.length == 0 && matchRequests?.length == 0">لا يوجد <span>😴</span></h6>\n  <ion-item-group *ngIf="teamsRequest?.length > 0">\n    <ion-list no-margin>\n      <ion-item class="fixedBorder" *ngFor="let team of teamsRequest">\n        <span item-start>\n          <ion-avatar on-tap=\'openTeam(team.teamInfo.$key)\'>\n            <profile-pic ID="{{team.teamInfo.$key}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n        </span>\n        <ion-icon color="darkBlue" name="ios-person-add-outline" item-start></ion-icon>\n        <h2>{{team.teamInfo.name}}</h2>\n        <span item-end style="margin-bottom: 16px;">\n          <button (click)="acceptTeam(team.teamInfo)" ion-button color="secondary">موافق</button>\n          <button (click)="declineTeam(team.teamInfo)" ion-button color="danger" outline>إلغاء</button>\n        </span>\n      </ion-item>\n    </ion-list>\n  </ion-item-group>\n  <ion-item-group *ngIf="matchRequests?.length > 0">\n    <ion-list no-margin>\n      <ion-item class="fixedBorder" *ngFor="let team of matchRequests">\n        <span item-start>\n          <ion-avatar on-tap=\'openTeam(team.teamInfo.$key)\'>\n            <profile-pic ID="{{team.teamInfo.$key}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n        </span>\n        <ion-icon color="darkBlue" name="ios-calendar-outline" item-start></ion-icon>\n        <h2>{{team.teamInfo.name}}</h2>\n        <span item-end style="margin-bottom: 16px;">\n            <button (click)="openMatchRequest(team.request)" ion-button small outline>تفاصيل المباراة</button>\n          </span>\n      </ion-item>\n    </ion-list>\n  </ion-item-group>\n  <ion-item-divider>اخر التحديثات</ion-item-divider>\n  <ion-list no-margin>\n    <ion-item class="fixedBorder" *ngFor="let notification of userNotification | async">\n      <ion-row align-items-center>\n        <ion-col col-1>\n          <ion-avatar margin-left>\n            <profile-pic ID="{{notification.by}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n        </ion-col>\n        <ion-col col-8>\n          <ion-row>\n            <p class="notificationBody" *ngIf="notification.type == \'joinedTeam\'">\n              اتممت الانضمام لفريق&nbsp;\n              <span on-tap="openTeam(notification.by)" style="color: black">\n                <name ID="{{notification.by}}" type="team">\n                </name>\n              </span>\n            </p>\n          </ion-row>\n        </ion-col>\n        <ion-col col-3>\n          <p style="text-align: end">\n            <date date="{{notification.date}}"></date>\n          </p>\n        </ion-col>\n      </ion-row>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/notification/notification.html"*/,
+        selector: 'page-player',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/player/player.html"*/'<!--\n  Generated template for the PlayerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons *ngIf="teamDB.loggedIn" end>\n      <button (click)="options()" ion-button icon-only>\n        <ion-icon name="md-more" color="white"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>{{player.name}}</ion-title>\n  </ion-navbar>\n\n  <div class="hero" [ngStyle]="{ \'background-image\': \'url(\' + player.bg + \')\'}">\n    <div class="topContent">\n      <ion-slides pager dir="rtl">\n        <ion-slide>\n          <img class="avatar" src="{{player.profilePic}}" alt="">\n          <h3 style="padding-top: 20%;" class="white bold">{{player.name}}</h3>\n          <h5 class="white">{{player.originalUsername}}@</h5>\n        </ion-slide>\n        <ion-slide>\n\n          <player-bar style="line-height: 1;" playerID="{{player.$key}}"></player-bar>\n          <ion-chip color="gold">\n            <ion-label>{{player.position}}</ion-label>\n          </ion-chip>\n          <ion-chip color="lightBlue">\n            <ion-label>صانع العاب</ion-label>\n          </ion-chip>\n          <ion-chip color="darkBlue">\n            <ion-label>مهاري</ion-label>\n          </ion-chip>\n        </ion-slide>\n        <ion-slide>\n          <h5 class="white">تواصل معي:</h5>\n          <div class="socialIcons">\n            <ion-icon class="largeIcon" name="logo-twitter"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-facebook"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-instagram"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-snapchat"></ion-icon>\n          </div>\n        </ion-slide>\n      </ion-slides>\n    </div>\n  </div>\n\n  <ion-toolbar no-padding color="white" mode="md">\n    <ion-segment class="segment" color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">\n      <ion-segment-button value="0">\n        <ion-icon name="md-football"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="1">\n        <ion-icon name="md-trophy"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="2">\n        <ion-icon name="md-medal"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content fullscreen #myContent>\n  <div class="profileBottom">\n    <ion-slides dir="rtl" parallax="true" (ionSlideWillChange)="slideChanged()">\n      <ion-slide>\n        <ion-item-divider>فرق اللاعب</ion-item-divider>\n        <ion-row align-items-start *ngIf="myTeams?.length > 0">\n          <ion-col col-4 col-sm no-padding wrap *ngFor="let team of myTeams">\n            <ion-card class="profileCards">\n              <img class="logo" on-tap=\'openTeam(team)\' src="{{team.logo}}" alt="">\n              <div class="bg" *ngIf=\'team.bg\' on-tap=\'openTeam(team)\' [ngStyle]="{ \'background-image\': \'url(\' + team.bg + \')\'}">\n              </div>\n              <div class="bg" *ngIf=\'!team.bg\' on-tap=\'openTeam(team)\' style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\')">\n              </div>\n              <div class="card-title">\n                {{team.name}}\n              </div>\n            </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-slide>\n      <ion-slide>\n        <ion-item-divider>\n          احصائيات اللاعب\n        </ion-item-divider>\n        <h6 text-center>قريباً</h6>\n      </ion-slide>\n      <ion-slide>\n        <ion-item-divider>\n          ميداليات اللاعب\n        </ion-item-divider>\n        <h6 text-center>قريباً</h6>\n      </ion-slide>\n    </ion-slides>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/player/player.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
         __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* Events */],
+        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */],
         __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */]])
-], NotificationPage);
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* ActionSheetController */]])
+], PlayerPage);
 
-//# sourceMappingURL=notification.js.map
+//# sourceMappingURL=player.js.map
 
 /***/ })
 

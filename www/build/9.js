@@ -1,14 +1,14 @@
 webpackJsonp([9],{
 
-/***/ 1115:
+/***/ 1097:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequestMatchPageModule", function() { return RequestMatchPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(1181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__request_match__ = __webpack_require__(1163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,40 +18,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RegisterPageModule = (function () {
-    function RegisterPageModule() {
+var RequestMatchPageModule = (function () {
+    function RequestMatchPageModule() {
     }
-    return RegisterPageModule;
+    return RequestMatchPageModule;
 }());
-RegisterPageModule = __decorate([
+RequestMatchPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
+            __WEBPACK_IMPORTED_MODULE_2__request_match__["a" /* RequestMatchPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__request_match__["a" /* RequestMatchPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]
+            __WEBPACK_IMPORTED_MODULE_2__request_match__["a" /* RequestMatchPage */]
         ]
     })
-], RegisterPageModule);
+], RequestMatchPageModule);
 
-//# sourceMappingURL=register.module.js.map
+//# sourceMappingURL=request-match.module.js.map
 
 /***/ }),
 
-/***/ 1181:
+/***/ 1163:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequestMatchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__validators_username__ = __webpack_require__(674);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__ = __webpack_require__(676);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -103,111 +104,110 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 /**
- * Generated class for the RegisterPage page.
+ * Generated class for the RequestMatchPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var RegisterPage = (function () {
-    function RegisterPage(afAuth, toast, navCtrl, navParams, db, _form, unameValid, mdlController, loadingCtrl) {
-        this.afAuth = afAuth;
-        this.toast = toast;
+var RequestMatchPage = (function () {
+    function RequestMatchPage(navCtrl, navParams, view, teamDB, _form, calendarCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.db = db;
+        this.view = view;
+        this.teamDB = teamDB;
         this._form = _form;
-        this.unameValid = unameValid;
-        this.mdlController = mdlController;
-        this.loadingCtrl = loadingCtrl;
-        this.user = {};
-        this.submitAttempt = false;
-        this.usedEmail = false;
-        var usernameValidator = function (control) {
-            return unameValid.checkUsername(control);
-        };
-        this.registerForm = this._form.group({
-            "name": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern('[a-zA-Z-ء-ي_ ]*'), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required])],
-            "username": ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
-            "email": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].email],
-            "password": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].minLength(6), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required])]
+        this.calendarCtrl = calendarCtrl;
+        this.myTeams = [];
+        this.matchForm = this._form.group({
+            "selectedTeam": ["", __WEBPACK_IMPORTED_MODULE_5__angular_forms__["f" /* Validators */].required],
+            "time": ["", __WEBPACK_IMPORTED_MODULE_5__angular_forms__["f" /* Validators */].required],
+            "stadium": ["", __WEBPACK_IMPORTED_MODULE_5__angular_forms__["f" /* Validators */].required]
         });
+        this.awayTeam = navParams.get('team');
+        this.date = __WEBPACK_IMPORTED_MODULE_4_moment__().format('L');
+        this.day = __WEBPACK_IMPORTED_MODULE_4_moment__().format('dddd');
+        this.dateFormated = __WEBPACK_IMPORTED_MODULE_4_moment__().locale('ar-sa').format('ll') + ' '
+            + __WEBPACK_IMPORTED_MODULE_4_moment__().locale('ar-sa').format('dddd');
     }
-    RegisterPage.prototype.register = function (user) {
+    RequestMatchPage.prototype.ionViewDidLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var registerLoading, result, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        this.submitAttempt = true;
-                        registerLoading = this.loadingCtrl.create({
-                            dismissOnPageChange: true,
-                            spinner: 'crescent'
-                        });
-                        if (!this.registerForm.valid) return [3 /*break*/, 4];
-                        _a.label = 1;
+                    case 0: return [4 /*yield*/, this.teamDB.getMyTeamsCaptain().then(function (data) {
+                            _this.myTeams = data;
+                        })];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(function (u) {
-                                var userInfo = _this.db.object('/users/' + _this.afAuth.auth.currentUser.uid);
-                                userInfo.set({
-                                    originalUsername: user.username,
-                                    username: user.username.toLowerCase(),
-                                    name: user.name,
-                                    position: 'GK',
-                                    profilePic: 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg'
-                                });
-                                var usernameInfo = _this.db.object('/usernames/' + user.username.toLowerCase());
-                                usernameInfo.set({
-                                    email: user.email
-                                });
-                            })];
-                    case 2:
-                        result = _a.sent();
-                        if (result) {
-                            registerLoading.dismiss();
-                            this.navCtrl.setRoot('TabsPage');
-                        }
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        registerLoading.dismiss();
-                        if (e_1.code == 'auth/email-already-in-use')
-                            this.usedEmail = true;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    RegisterPage.prototype.goBack = function () {
-        this.navCtrl.pop();
+    RequestMatchPage.prototype.openCalendar = function () {
+        var _this = this;
+        var _daysConfig = [
+            {
+                date: new Date(2018, 8, 25),
+                subTitle: 'vs Alhilal',
+                marked: true
+            }
+        ];
+        this.calendarCtrl.openCalendar({
+            title: 'تاريخ المباراة',
+            weekdaysTitle: ["الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت"],
+            cssClass: 'matchCalender',
+            closeIcon: true,
+            closeLabel: 'close',
+            doneLabel: 'md-checkmark',
+            doneIcon: true,
+            daysConfig: _daysConfig
+        })
+            .then(function (res) {
+            var selectedDate = new Date(res.date.time).toDateString();
+            var momentDate = __WEBPACK_IMPORTED_MODULE_4_moment__(selectedDate, 'ddd MMM D YYYY', 'en');
+            _this.date = momentDate.format('L');
+            _this.day = momentDate.format('dddd');
+            _this.dateFormated = momentDate.locale('ar-sa').format('ll') + ' '
+                + momentDate.locale('ar-sa').format('dddd');
+        })
+            .catch(function () {
+            console.log("error");
+        });
     };
-    RegisterPage.prototype.openTerms = function () {
-        this.mdlController.create('TermsPage').present();
+    RequestMatchPage.prototype.sendRequest = function () {
+        this.teamDB.sendMatchRequest({
+            fromUID: this.selectedTeam.captain,
+            toUID: this.awayTeam.captain,
+            homeTeam: this.selectedTeam.$key,
+            awayTeam: this.awayTeam.$key,
+            date: this.date,
+            day: this.day,
+            time: this.time,
+            stadium: this.stadium
+        });
+        // Succesful toast
+        this.view.dismiss();
     };
-    return RegisterPage;
+    RequestMatchPage.prototype.closeModel = function () {
+        this.view.dismiss();
+    };
+    return RequestMatchPage;
 }());
-RegisterPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
-        segment: 'register',
-        defaultHistory: ['WelcomePage']
-    }),
+RequestMatchPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-register',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content>\n  <ion-row justify-content-start>\n    <ion-col col-3 text-start padding>\n      <ion-icon on-tap="goBack()" class="largeIcon" color="grey" name="ios-arrow-back"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <div class="welcomeTop">\n    <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n  </div>\n  <h2 text-center>حساب جديد</h2>\n  <form name="registerForm" novalidate padding>\n    <div class="register" [formGroup]=\'registerForm\' padding>\n      <ion-item>\n        <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!registerForm.controls.name.valid && (registerForm.controls.name.dirty || submitAttempt)"\n          formControlName=\'name\' placeholder="الاسم كامل"></ion-input>\n      </ion-item>\n      <ion-item dir="ltr">\n        <ion-label>\n          <h2>@</h2>\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="user.username" [class.invalid]="!registerForm.controls.username.valid && (registerForm.controls.username.dirty || submitAttempt)"\n          formControlName=\'username\' placeholder="Username"></ion-input>\n      </ion-item>\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon name="ios-mail-outline"></ion-icon>\n        </ion-label>\n        <ion-input class="email" type="text" [(ngModel)]="user.email" [class.invalid]="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)"\n          formControlName=\'email\' placeholder="Email"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-input type="password" [(ngModel)]="user.password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)"\n          formControlName=\'password\' placeholder="الرقم السري"></ion-input>\n      </ion-item>\n\n      <button ion-button block (click)="register(user)" color="gold">التسجيل</button>\n      <p text-right style="margin: 0px;">\n        التسجيل يعني موافقتك على\n        <button style="margin-bottom: 15px;" ion-button clear (click)="openTerms()" no-padding small>الشروط والأحكام.</button>\n      </p>\n      <div class="errorMessages">\n        <p *ngIf="user.username != \'\' && !registerForm.controls.username.valid && !registerForm.controls.username.pending && (submitAttempt || registerForm.controls.username.dirty)"\n          style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.\n        </p>\n        <p *ngIf="usedEmail" style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          الايميل مستخدم من قبل شخص آخر.\n        </p>\n        <p *ngIf="!registerForm.controls.password.valid && (submitAttempt)" style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          يجب ان يكون الرقم السري اكثر من ٦ احرف/ارقام.</p>\n      </div>\n    </div>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/register/register.html"*/,
+        selector: 'page-request-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/'<!--\n  Generated template for the RequestMatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب مباراة مع {{awayTeam.name}}</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-card class="card1">\n    <ion-card-header>\n      تفاصيل المباراة\n    </ion-card-header>\n    <form name="matchForm" novalidate>\n      <div class="register" [formGroup]=\'matchForm\'>\n        <ion-list>\n          <ion-item>\n            <ion-label>فريقي</ion-label>\n            <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">\n              <span *ngFor="let team of myTeams">\n                <ion-option *ngIf="team.$key != awayTeam.$key"  [value]="team">{{team.name}}</ion-option>\n              </span>\n            </ion-select>\n          </ion-item>\n\n          <button ion-item (click)="openCalendar()">\n        <ion-row>\n          <ion-col>\n            التاريخ\n          </ion-col>\n          <ion-col text-end>\n            {{dateFormated}}\n          </ion-col>\n        </ion-row>\n      </button>\n          <ion-item>\n            <ion-label>الساعة</ion-label>\n            <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label>الملعب</ion-label>\n            <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>\n          </ion-item>\n          <p text-center>\n            <button padding ion-button color="secondary" [disabled]="matchForm.invalid" (click)="sendRequest()">إرسال الطلب\n              <ion-icon padding name="ios-calendar-outline"></ion-icon>\n            </button>\n          </p>\n        </ion-list>\n      </div>\n    </form>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_5__validators_username__["a" /* UsernameValidator */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]])
-], RegisterPage);
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__["a" /* CalendarController */]])
+], RequestMatchPage);
 
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=request-match.js.map
 
 /***/ })
 

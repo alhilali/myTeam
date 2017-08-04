@@ -12,12 +12,15 @@ page-player {
     background-color: white;
     background-position: center;
     background-size: cover;
-    border: solid 2px rgba(255, 255, 255, 255);
+    border: solid 2px white;
     border-radius: 50%;
     display: inline-block;
     height: 78px;
-    left: auto;
-    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 15%;
+    position: absolute;
     width: 78px;
   }
   h1,
@@ -65,11 +68,6 @@ page-player {
     padding: 10px;
     letter-spacing: 10px;
     color: #fff;
-  }
-  .editIcon {
-    position: absolute;
-    left: 20%;
-    bottom: 50px;
   }
   .profileBottom {
     background-color: white;

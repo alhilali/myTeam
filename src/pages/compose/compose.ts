@@ -49,7 +49,7 @@ export class ComposePage {
         Validators.minLength(1),
         Validators.required])],
       "info": ["",
-        Validators.compose([Validators.maxLength(150)])]
+        Validators.compose([Validators.maxLength(300)])]
     })
     this.matchDate = moment().format('L')
     this.month = moment().format('MMM')

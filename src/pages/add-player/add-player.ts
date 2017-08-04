@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController,
-   NavParams, ViewController } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
+import {
+  IonicPage, NavController,
+  NavParams, ViewController
+} from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 import { User } from '../../models/user';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -27,23 +28,22 @@ export class AddPlayerPage {
   constructor(private view: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private db: AngularFireDatabase,
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
     private unameValid: UsernameValidator) {
-      this.team = navParams.get('team');
-      let usernameValidator = (control) => {
-          return unameValid.checkValidUsername(control);
-      };
-      let teamValidator = (control) => {
-          return unameValid.checkTeam(control, this.team.$key);
-      };
-      this.requestPlayerForm = _form.group({
-        "username": ['',
+    this.team = navParams.get('team');
+    let usernameValidator = (control) => {
+      return unameValid.checkValidUsername(control);
+    };
+    let teamValidator = (control) => {
+      return unameValid.checkTeam(control, this.team.$key);
+    };
+    this.requestPlayerForm = _form.group({
+      "username": ['',
         Validators.compose([Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.-]*$')]),
         Validators.composeAsync([usernameValidator, teamValidator])]
-      })
+    })
   }
 
   closeModal() {
@@ -57,24 +57,10 @@ export class AddPlayerPage {
     })
     if (this.requestPlayerForm.valid && user.$key) {
 
-      // Add request to player
-      this.db.object('/users/'+user.$key+'/requests/'+this.team.$key)
-      .set({
-        teamId: this.team.$key,
-        dateRequested: new Date().toDateString()
-      });
+      this.teamDB.sendRequestToPlayer(user.$key, this.team.$key)
 
-      // Add player to playersList temporary
-      const playersList = this.db.object('/playersList/'+this.team.$key+'/'+user.$key);
-      playersList.set({uid: user.$key, status: 'pending'});
-
-      this.teamDB.unsubscribeAll();
       this.view.dismiss();
     }
-  }
-
-  ionViewWillLeave() {
-    this.teamDB.unsubscribeAll();
   }
 
 }

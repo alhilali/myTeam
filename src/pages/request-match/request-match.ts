@@ -95,8 +95,7 @@ export class RequestMatchPage {
       date: this.date,
       day: this.day,
       time: this.time,
-      stadium: this.stadium,
-      status: 'pending'
+      stadium: this.stadium
     });
     // Succesful toast
     this.view.dismiss();

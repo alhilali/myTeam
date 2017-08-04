@@ -139,7 +139,7 @@ var ComposePage = (function () {
                     __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(1),
                     __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required])],
             "info": ["",
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].maxLength(150)])]
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].maxLength(300)])]
         });
         this.matchDate = __WEBPACK_IMPORTED_MODULE_5_moment__().format('L');
         this.month = __WEBPACK_IMPORTED_MODULE_5_moment__().format('MMM');

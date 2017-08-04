@@ -20,20 +20,28 @@ export class NameComponent {
   }
 
   async ngAfterViewInit() {
-    let info;
+    this.setData();
+  }
+
+  ngOnChanges() {
+    this.setData();
+  }
+
+  async setData() {
+    let name;
     if (this.type == 'user' && this.id) {
       await this.teamDB.getUserInfo(this.id).then(user => {
-        info = user;
+        name = user.originalUsername;
       })
     } else if (this.type == 'team' && this.id) {
       await this.teamDB.getTeamInfo(this.id).then(team => {
-        info = team;
+        name = team.name;
       })
     }
     Promise.resolve().then(() => {
-      if (this.type == 'user') this.name = info.originalUsername + "@";
-      if (this.type == 'team') this.name = info.name;
+      if (!name) this.name = 'غير متوفر'
+      else if (this.type == 'user') this.name = name + '@'
+      else this.name = name;
     });
   }
-
 }

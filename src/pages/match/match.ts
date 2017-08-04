@@ -1,3 +1,4 @@
+import { Request } from "./../../models/request";
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -10,19 +11,17 @@ import { AngularFireAuth } from 'angularfire2/auth';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'match/:id'
+})
 @Component({
   selector: 'page-match',
   templateUrl: 'match.html',
 })
 export class MatchPage {
-  homeTeam: any = {}
-  awayTeam: any = {}
-  date: any
-  time: any
-  stadium: any
-  requestInfo: any
+  requestID: any
   request: FirebaseObjectObservable<any>;
+  requestInfo: any;
   previousGames: any[] = []
   currentUser: boolean = false
 
@@ -32,53 +31,48 @@ export class MatchPage {
     private teamDB: MyTeamDB,
     public db: AngularFireDatabase,
     public afAuth: AngularFireAuth) {
-    this.requestInfo = this.navParams.get('request');
-    this.request = this.db.object('/matches/' + this.requestInfo.$key)
-    if (this.afAuth.auth.currentUser.uid == this.requestInfo.toUID) this.currentUser = true;
+    this.requestID = this.navParams.get('id');
+    this.request = this.db.object('/matches/' + this.requestID)
   }
 
-  ionViewDidLoad() {
-    this.initData();
-  }
-
-  async initData() {
-    await this.teamDB.getTeamInfo(this.requestInfo.homeTeam).then(data => {
-      this.homeTeam = data;
+  async ionViewDidLoad() {
+    await this.teamDB.getMatchInfo(this.requestID).then(data => {
+      this.requestInfo = data;
     })
-
-    await this.teamDB.getTeamInfo(this.requestInfo.awayTeam).then(data => {
-      this.awayTeam = data;
+    await this.teamDB.getLoggedInUser().then(uid => {
+      if (this.requestInfo.toUID == uid) this.currentUser = true;
     })
   }
 
   acceptMatch() {
     // Update request status
-    this.db.object('/matches/' + this.requestInfo.$key).update({ status: 'approved' })
+    this.db.object('/matches/' + this.requestID).update({ status: 'approved' })
+
+    // Remove Request
+    this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
 
     // Add match to home team DB
     this.db.object('/teams/' + this.requestInfo.homeTeam + '/upcomingMatches/'
-      + this.requestInfo.$key).set({
+      + this.requestID).set({
         homeTeam: this.requestInfo.homeTeam,
         awayTeam: this.requestInfo.awayTeam,
-        date: this.requestInfo.date
       })
 
     // Add match to away team DB
     this.db.object('/teams/' + this.requestInfo.awayTeam + '/upcomingMatches/'
-      + this.requestInfo.$key).set({
+      + this.requestID).set({
         homeTeam: this.requestInfo.homeTeam,
         awayTeam: this.requestInfo.awayTeam,
-        date: this.requestInfo.date
       })
   }
 
   declineMatch() {
+    this.db.object('/matches/' + this.requestID).remove();
     this.view.dismiss();
-    this.db.object('/matches/' + this.requestInfo.$key).remove();
   }
 
-  openTeam(team) {
-    this.navCtrl.push('TeamPage', { id: team.$key })
+  openTeam(teamID) {
+    this.navCtrl.push('TeamPage', { id: teamID })
   }
 
   closeModel() {
