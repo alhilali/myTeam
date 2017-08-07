@@ -2,7 +2,7 @@ import { User } from "./../../models/user";
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  ViewController, AlertController
+  ViewController, AlertController, ToastController
 } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 
@@ -28,7 +28,8 @@ export class AddPlayerToTeamPage {
     public navParams: NavParams,
     private view: ViewController,
     private teamDB: MyTeamDB,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private toast: ToastController) {
     this.player = this.navParams.get('player');
   }
 
@@ -64,7 +65,14 @@ export class AddPlayerToTeamPage {
       if (!this.error) this.teamDB.sendRequestToPlayer(this.player.$key, this.teamsSelected[i].$key)
     }
     if (this.teamsSelected.length == 0) this.alert()
-    else if (!this.error) this.view.dismiss();
+    else if (!this.error) {
+      this.toast.create({
+        message: 'تم إرسال الإضافة  بنجاح',
+        duration: 2200,
+        position: 'top'
+      }).present();
+      this.view.dismiss();
+    }
   }
 
   presentAlert(teamName) {

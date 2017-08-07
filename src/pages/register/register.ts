@@ -50,6 +50,7 @@ export class RegisterPage {
       "email": ["", Validators.email],
       "password": ["", Validators.compose([Validators.minLength(6), Validators.required])]
     })
+    this.navCtrl.swipeBackEnabled = true;
   }
 
   async register(user: User) {

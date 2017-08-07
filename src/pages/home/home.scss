@@ -7,8 +7,7 @@ page-home {
     width: 34px;
     height: 34px;
     max-width: unset;
-    border: solid 1px white;
-    position: absolute;
+    border: solid 1px white; //position: absolute;
     left: 0;
     top: -5px;
   }
@@ -37,5 +36,6 @@ page-home {
   }
   .postInfoBar {
     height: 38px;
+    margin-top: 10px;
   }
 }

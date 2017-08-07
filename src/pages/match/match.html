@@ -25,6 +25,9 @@
       </p>
     </ion-col>
   </ion-row>
+  <h6 *ngIf="currentUser && (request | async)?.status == 'declined'" text-center>
+    تم رفض طلب المباراة <span>😞</span>
+  </h6>
   <ion-card class="card1">
     <ion-grid>
       <ion-row>

@@ -24,20 +24,21 @@
 
     </ion-refresher-content>
   </ion-refresher>
-  <ion-item-divider>
+  <h5 padding-horizontal text-start>
     جميع الفرق المشارك فيها
-  </ion-item-divider>
+  </h5>
   <ion-item-group padding-bottom>
-    <ion-row *ngFor="let team of myTeams | async">
+    <ion-row *ngFor="let team of myTeams | async | orderByCaptain:currentUID">
       <team-card style="width: 100%" [team]='team'></team-card>
     </ion-row>
   </ion-item-group>
   <div padding *ngIf="(myTeams | async)?.length == 0">
     <h6 text-center>ابدأ فريقك الان</h6>
   </div>
-  <ion-item-divider>
-    مبارياتي القادمة
-  </ion-item-divider>
+  <hr>
+  <h5 padding-horizontal text-start> مبارياتي القادمة
+
+  </h5>
   <ion-list no-margin>
     <span *ngFor="let match of matches">
       <ion-item class="fixedBorder" (click)="openMatchRequest(match.$key)">

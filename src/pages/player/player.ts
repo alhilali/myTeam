@@ -123,7 +123,7 @@ export class PlayerPage {
         {
           text: 'تعديل بياناتي',
           handler: () => {
-            this.editProfilePage();
+            //this.editProfilePage();
           }
         },
         {
@@ -140,13 +140,12 @@ export class PlayerPage {
     actionSheet.present()
   }
 
-  editProfilePage() {
-    let modal = this.modlCtrl.create('EditProfilePage', { player: this.player });
-    modal.present();
-  }
-
   openTeam(team) {
     this.navCtrl.push('TeamPage', { id: team.$key })
+  }
+
+  openSettings() {
+    this.navCtrl.push('SettingsPage', { player: this.player });
   }
 
 }

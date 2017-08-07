@@ -34,6 +34,7 @@ export class LoginPage {
       "email": ["", Validators.email],
       "password": ["", Validators.compose([Validators.minLength(6), Validators.required])]
     })
+    this.navCtrl.swipeBackEnabled = true;
   }
 
   async login(user: User) {

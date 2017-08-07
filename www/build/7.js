@@ -1,14 +1,14 @@
 webpackJsonp([7],{
 
-/***/ 1109:
+/***/ 1108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StartTeamPageModule", function() { return StartTeamPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__start_team__ = __webpack_require__(1175);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TabsPageModule", function() { return TabsPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tabs__ = __webpack_require__(1178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var StartTeamPageModule = (function () {
-    function StartTeamPageModule() {
+var TabsPageModule = (function () {
+    function TabsPageModule() {
     }
-    return StartTeamPageModule;
+    return TabsPageModule;
 }());
-StartTeamPageModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */],
-        ],
+TabsPageModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
+        declarations: [__WEBPACK_IMPORTED_MODULE_0__tabs__["a" /* TabsPage */]],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */]),
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */]
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_0__tabs__["a" /* TabsPage */])
         ]
     })
-], StartTeamPageModule);
+], TabsPageModule);
 
-//# sourceMappingURL=start-team.module.js.map
+//# sourceMappingURL=tabs.module.js.map
 
 /***/ }),
 
-/***/ 1175:
+/***/ 1178:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StartTeamPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(97);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,71 +60,99 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the StartTeamPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-var StartTeamPage = (function () {
-    function StartTeamPage(view, navCtrl, navParams, afAuth, db, _form) {
-        this.view = view;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.afAuth = afAuth;
+var TabsPage = (function () {
+    function TabsPage(events, db, afAuth, teamDB) {
+        this.events = events;
         this.db = db;
-        this._form = _form;
-        this.team = {};
-        this.teamForm = this._form.group({
-            "name": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
-            "city": ["الرياض"]
-        });
+        this.afAuth = afAuth;
+        this.teamDB = teamDB;
+        this.tab1Root = 'HomePage';
+        this.tab2Root = 'MyTeamPage';
+        this.tab3Root = 'NotificationPage';
+        this.tab4Root = 'SearchPage';
+        this.userRequestsNum = 0;
+        this.matchRequestsNum = 0;
     }
-    StartTeamPage.prototype.closeModal = function () {
-        this.view.dismiss();
+    TabsPage.prototype.ngAfterViewInit = function () {
+        //console.log(this.tabRef);
     };
-    StartTeamPage.prototype.saveTeam = function (team) {
+    TabsPage.prototype.updateBadge = function () {
+        if ((this.userRequestsNum + this.matchRequestsNum) == 0)
+            this.notificationNum = null;
+        else
+            this.notificationNum = this.userRequestsNum + this.matchRequestsNum;
+    };
+    TabsPage.prototype.subscribeToBadgeCountChange = function () {
         var _this = this;
-        var newKey = new Date().getTime();
-        var ref = this.db.object('/teams/' + newKey);
-        var saveSub = this.afAuth.authState.subscribe(function (data) {
-            if (data && data.uid) {
-                var uid = data.uid;
-                ref.set({
-                    captain: uid,
-                    name: team.name,
-                    city: team.city || 'الرياض',
-                    logo: 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png',
-                    bg: 'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png',
-                    estDate: new Date().toDateString()
-                });
-                // Add player to players list DB
-                var playersList = _this.db.object('/playersList/' + newKey + '/' + uid);
-                playersList.set({ uid: uid, status: 'enrolled' });
-                // Add team to user list DB
-                _this.db.object('/users/' + uid + '/myTeams/' + newKey)
-                    .set({ teamId: newKey });
-                saveSub.unsubscribe();
-                _this.closeModal();
+        // Method to run when tab count changes
+        return this.events
+            .subscribe("tabs-page:badge-update", function (type) {
+            if (type == 'match')
+                _this.checkMatchRequests();
+            else if (type == 'user')
+                _this.checkUserRequests();
+        });
+    };
+    TabsPage.prototype.checkUserRequests = function () {
+        var _this = this;
+        this.db.list('users/' + this.afAuth.auth.currentUser.uid
+            + '/requests').take(1).subscribe(function (data) {
+            _this.userRequestsNum = data.length;
+            _this.updateBadge();
+        });
+    };
+    TabsPage.prototype.checkMatchRequests = function () {
+        var _this = this;
+        this.db.list('matches/', {
+            query: {
+                orderByChild: 'toUID',
+                equalTo: this.afAuth.auth.currentUser.uid
+            }
+        }).take(1).subscribe(function (data) {
+            var count = 0;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].status == 'pending')
+                    count++;
+                if (i == data.length - 1) {
+                    _this.matchRequestsNum = count;
+                    _this.updateBadge();
+                }
             }
         });
     };
-    return StartTeamPage;
+    TabsPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
+        this.afAuth.auth.onAuthStateChanged(function (user) {
+            if (!user) {
+                _this.tabRef._tabs[1].show = false;
+                _this.tabRef._tabs[2].show = false;
+            }
+            else {
+                _this.tabRef._tabs[1].show = true;
+                _this.tabRef._tabs[2].show = true;
+            }
+        });
+        // this.checkUserRequests();
+        // this.checkMatchRequests();
+        // this.subscribeToBadgeCountChange();
+    };
+    return TabsPage;
 }());
-StartTeamPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-start-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/start-team/start-team.html"*/'<!--\n  Generated template for the StartTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>إبدأ فريقك</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top btnsRow" align-items-stretch>\n    <ion-col pull-1>\n      <button (click)="closeModal()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="saveTeam(team)" [disabled]=\'!teamForm.valid\' color="gold" ion-button round small>\n            حفظ\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <form name="myForm" novalidate>\n      <ion-list [formGroup]=\'teamForm\'>\n\n\n        <ion-item>\n          <ion-input [(ngModel)]="team.name" name="name" formControlName=\'name\' type="text" placeholder="اسم فريقك" required>\n          </ion-input>\n        </ion-item>\n\n        <ion-item>\n          <ion-label>المدينة</ion-label>\n          <ion-select [(ngModel)]="team.city" name="city" formControlName=\'city\' interface=\'popover\'>\n            <ion-option value="الرياض" selected>الرياض</ion-option>\n            <ion-option value="جده">جده</ion-option>\n            <ion-option value="الدمام">الدمام</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-list>\n    </form>\n\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/start-team/start-team.html"*/,
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_13" /* ViewChild */])('myTabs'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* Tabs */])
+], TabsPage.prototype, "tabRef", void 0);
+TabsPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])({
+        segment: 'mytabs'
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
-], StartTeamPage);
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/tabs/tabs.html"*/'<ion-tabs #myTabs>\n  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabIcon="football" ></ion-tab>\n  <ion-tab [root]="tab3Root" tabBadge="{{notificationNum}}" tabBadgeStyle="danger" tabIcon="ios-notifications-outline"></ion-tab>\n  <ion-tab [root]="tab4Root" tabIcon="search"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/tabs/tabs.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */]])
+], TabsPage);
 
-//# sourceMappingURL=start-team.js.map
+//# sourceMappingURL=tabs.js.map
 
 /***/ })
 

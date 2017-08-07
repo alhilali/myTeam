@@ -1,4 +1,4 @@
-webpackJsonp([21],{
+webpackJsonp([22],{
 
 /***/ 1093:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -36,19 +36,19 @@ webpackEmptyAsyncContext.id = 223;
 var map = {
 	"../pages/add-player-to-team/add-player-to-team.module": [
 		1099,
-		20
+		21
 	],
 	"../pages/add-player/add-player.module": [
 		1098,
-		19
+		20
 	],
 	"../pages/choose-username/choose-username.module": [
 		1100,
-		18
+		19
 	],
 	"../pages/compose/compose.module": [
 		1101,
-		17
+		18
 	],
 	"../pages/edit-profile/edit-profile.module": [
 		1102,
@@ -60,19 +60,19 @@ var map = {
 	],
 	"../pages/home/home.module": [
 		1104,
-		16
+		17
 	],
 	"../pages/login/login.module": [
 		1106,
-		15
+		16
 	],
 	"../pages/match/match.module": [
 		1107,
-		14
+		15
 	],
 	"../pages/my-team/my-team.module": [
 		1110,
-		13
+		3
 	],
 	"../pages/notification/notification.module": [
 		1111,
@@ -80,43 +80,47 @@ var map = {
 	],
 	"../pages/player/player.module": [
 		1112,
-		12
+		14
 	],
 	"../pages/post/post.module": [
 		1113,
-		11
+		13
 	],
 	"../pages/register/register.module": [
 		1115,
-		10
+		12
 	],
 	"../pages/request-match/request-match.module": [
 		1097,
-		9
+		11
 	],
 	"../pages/search/search.module": [
 		1116,
-		8
+		10
+	],
+	"../pages/settings/settings.module": [
+		1117,
+		9
 	],
 	"../pages/start-team/start-team.module": [
 		1109,
-		7
+		8
 	],
 	"../pages/tabs/tabs.module": [
 		1108,
-		6
+		7
 	],
 	"../pages/team/team.module": [
-		1117,
-		5
+		1118,
+		6
 	],
 	"../pages/terms/terms.module": [
 		1114,
-		4
+		5
 	],
 	"../pages/welcome/welcome.module": [
 		1105,
-		3
+		4
 	]
 };
 function webpackAsyncContext(req) {
@@ -259,7 +263,7 @@ var MyTeamDB = (function () {
         return new Promise(function (resolve) {
             _this.db.list('/playersList/' + teamId)
                 .take(1).subscribe(function (data) {
-                if (data && data.length > 1)
+                if (data && data.length >= 1)
                     resolve(data);
             });
         });
@@ -1018,10 +1022,11 @@ AppModule = __decorate([
                     { loadChildren: '../pages/my-team/my-team.module#MyTeamPageModule', name: 'MyTeamPage', segment: 'myteam', priority: 'low', defaultHistory: ['TabsPage', 'MyTeamPage'] },
                     { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/player/player.module#PlayerPageModule', name: 'PlayerPage', segment: 'player/:username', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/post/post.module#PostPageModule', name: 'PostPage', segment: 'post/:id', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/post/post.module#PostPageModule', name: 'PostPage', segment: 'post/:id', priority: 'low', defaultHistory: ['PostPage', 'HomePage'] },
                     { loadChildren: '../pages/terms/terms.module#TermsPageModule', name: 'TermsPage', segment: 'terms', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: ['WelcomePage'] },
                     { loadChildren: '../pages/search/search.module#SearchPageModule', name: 'SearchPage', segment: 'search', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/settings/settings.module#SettingsPageModule', name: 'SettingsPage', segment: 'settings', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/team/team.module#TeamPageModule', name: 'TeamPage', segment: 'team/:id', priority: 'low', defaultHistory: ['MyTeamPage'] }
                 ]
             }),
@@ -1354,7 +1359,7 @@ __decorate([
 ], PlayerPostCardComponent.prototype, "playerID", void 0);
 PlayerPostCardComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'player-post-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/'<div style="position: relative; padding: 10px;">\n  <div *ngIf=\'userInfo.bg\' class="playerBg" [ngStyle]="{ \'background-image\': \'url(\' + userInfo.bg + \')\'}">\n\n  </div>\n  <div *ngIf=\'!userInfo.bg\' class="playerBg" style="background-image: url(http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg)">\n\n  </div>\n  <div class="playerBar">\n    <player-bar playerID="{{playerID}}"></player-bar>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/
+        selector: 'player-post-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/'<div style="position: relative; padding: 10px; margin-top: 5px">\n  <div *ngIf=\'userInfo.bg\' class="playerBg" [ngStyle]="{ \'background-image\': \'url(\' + userInfo.bg + \')\'}">\n\n  </div>\n  <div *ngIf=\'!userInfo.bg\' class="playerBg" style="background-image: url(http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg)">\n\n  </div>\n  <div class="playerBar">\n    <player-bar playerID="{{playerID}}"></player-bar>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/player-post-card/player-post-card.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__helpers_myTeamDB__["a" /* MyTeamDB */]])
 ], PlayerPostCardComponent);
@@ -1758,10 +1763,9 @@ DateComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'date',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/date/date.html"*/'<!-- Generated template for the DateComponent component -->\n<p>\n  {{formatedDate}}\n</p>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/date/date.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
 ], DateComponent);
 
-var _a;
 //# sourceMappingURL=date.js.map
 
 /***/ }),
@@ -1892,20 +1896,28 @@ var PostComponent = (function () {
         });
     };
     PostComponent.prototype.like = function () {
-        var _this = this;
-        if (this.teamDB.loggedIn) {
-            this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key)
-                .set({
-                player: this.teamDB.userInfo.uid,
-                title: this.postInfo.title,
-                type: 'likedPost',
-                postID: this.postInfo.$key,
-                timestamp: new Date().getTime(),
-                date: __WEBPACK_IMPORTED_MODULE_4_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
-            }).then(function () {
-                _this.teamDB.like(_this.postInfo.$key);
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.teamDB.loggedIn) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.teamDB.like(this.postInfo.$key)];
+                    case 1:
+                        _a.sent();
+                        this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key + this.teamDB.userInfo.uid)
+                            .set({
+                            player: this.teamDB.userInfo.uid,
+                            title: this.postInfo.title,
+                            type: 'likedPost',
+                            postID: this.postInfo.$key,
+                            timestamp: new Date().getTime(),
+                            date: __WEBPACK_IMPORTED_MODULE_4_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
+                        });
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
             });
-        }
+        });
     };
     PostComponent.prototype.unlike = function () {
         if (this.teamDB.loggedIn) {
@@ -1936,7 +1948,7 @@ var PostComponent = (function () {
     };
     PostComponent.prototype.requestMatch = function () {
         if (this.teamDB.loggedIn) {
-            this.modal.create('RequestMatchPage', { team: this.teamInfo }).present();
+            this.modal.create('RequestMatchPage', { team: this.teamInfo, givenDate: this.postInfo.matchDate }).present();
         }
     };
     return PostComponent;
@@ -1959,7 +1971,7 @@ __decorate([
 ], PostComponent.prototype, "postID", void 0);
 PostComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
-        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <ion-row justify-content-baseline>\n      <h2 style="margin: 4px 0;">{{user.name}}</h2>&nbsp;\n      <p>{{user.originalUsername}}@</p>\n    </ion-row>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" *ngIf="postInfo.info" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row class="postInfoBar">\n    <ion-col class="likes">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>\n         <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        </button>\n        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>\n          <ion-icon name="md-heart" color="danger"></ion-icon>\n        </button>\n        <p class="likesNum">{{(likes | async)?.length}}</p>\n        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">\n          <ion-slides dir="rtl" slidesPerView="6">\n            <ion-slide *ngFor="let player of likes | async">\n              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>\n            </ion-slide>\n          </ion-slides>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n    <ion-col class="comments">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="openPost()" ion-button icon-left clear small>\n          <ion-icon name="text" color="gold"></ion-icon>\n        </button>\n        <p>{{(commentsNum | async)?.length}}</p>\n      </ion-row>\n    </ion-col>\n    <ion-col col-2 class="date" center text-end>\n      <ion-note dir="ltr">\n        <date date="{{postInfo.date}}"></date>\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
+        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <p class="author">\n      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}@\n    </p>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" *ngIf="postInfo.info" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row class="postInfoBar">\n    <ion-col class="likes">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>\n         <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        </button>\n        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>\n          <ion-icon name="md-heart" color="danger"></ion-icon>\n        </button>\n        <p class="likesNum">{{(likes | async)?.length}}</p>\n        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">\n          <ion-slides dir="rtl" slidesPerView="6">\n            <ion-slide *ngFor="let player of likes | async">\n              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>\n            </ion-slide>\n          </ion-slides>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n    <ion-col class="comments">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="openPost()" ion-button icon-left clear small>\n          <ion-icon name="text" color="gold"></ion-icon>\n        </button>\n        <p>{{(commentsNum | async)?.length}}</p>\n      </ion-row>\n    </ion-col>\n    <ion-col col-2 class="date" center text-end>\n      <ion-note dir="ltr">\n        <date date="{{postInfo.date}}"></date>\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_32" /* trigger */])('fadeInOut', [
                 Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_30" /* style */])({ opacity: '0' })),
@@ -2235,7 +2247,7 @@ __decorate([
 ], TeamCardComponent.prototype, "team", void 0);
 TeamCardComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'team-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/team-card/team-card.html"*/'<!-- Generated template for the TeamCardComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item>\n    <span *ngIf="isCaptain" class="ribbon">كابتن</span>\n    <ion-avatar item-start>\n      <img on-tap=\'openTeam(teamInfo)\' src="{{teamInfo.logo}}" alt="">\n    </ion-avatar>\n    <h2>{{teamInfo.name}}</h2>\n    <p>{{teamInfo.city}}</p>\n    <div padding class="more" text-left>\n      <button ion-button (click)=\'presentActionSheet(teamInfo)\' clear>\n        <ion-icon class="mdIcon" name="ios-more"></ion-icon>\n      </button>\n    </div>\n  </ion-item>\n  <div *ngIf=\'teamInfo.bg\' class="bg" on-tap=\'openTeam(teamInfo)\' [ngStyle]="{ \'background-image\': \'url(\' + teamInfo.bg + \')\'}">\n\n  </div>\n  <div *ngIf=\'!teamInfo.bg\' class="bg" on-tap=\'openTeam(teamInfo)\' style="background-image: url(https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">\n\n  </div>\n  <div class="card-content" text-center>\n    <team-bar teamID="{{team.$key}}"></team-bar>\n  </div>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/team-card/team-card.html"*/,
+        selector: 'team-card',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/team-card/team-card.html"*/'<!-- Generated template for the TeamCardComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item>\n    <ion-avatar item-start>\n      <img on-tap=\'openTeam(teamInfo)\' src="{{teamInfo.logo}}" alt="">\n    </ion-avatar>\n    <ion-row>\n      <h2>{{teamInfo.name}}</h2>\n      <span *ngIf="isCaptain" class="captain">C</span>\n    </ion-row>\n    <p>{{teamInfo.city}}</p>\n    <div class="more" text-left>\n      <button ion-button (click)=\'presentActionSheet(teamInfo)\' clear>\n        <ion-icon class="mdIcon" name="ios-more"></ion-icon>\n      </button>\n    </div>\n  </ion-item>\n  <div *ngIf=\'teamInfo.bg\' class="bg" on-tap=\'openTeam(teamInfo)\' [ngStyle]="{ \'background-image\': \'url(\' + teamInfo.bg + \')\'}">\n\n  </div>\n  <div *ngIf=\'!teamInfo.bg\' class="bg" on-tap=\'openTeam(teamInfo)\' style="background-image: url(https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png">\n\n  </div>\n  <div class="card-content" text-center>\n    <team-bar teamID="{{team.$key}}"></team-bar>\n  </div>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/team-card/team-card.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* trigger */])('fadeInOut', [
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* style */])({ opacity: '0' })),

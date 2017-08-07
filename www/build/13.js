@@ -1,14 +1,14 @@
 webpackJsonp([13],{
 
-/***/ 1110:
+/***/ 1113:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyTeamPageModule", function() { return MyTeamPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostPageModule", function() { return PostPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_team__ = __webpack_require__(1176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__post__ = __webpack_require__(1183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -20,40 +20,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MyTeamPageModule = (function () {
-    function MyTeamPageModule() {
+var PostPageModule = (function () {
+    function PostPageModule() {
     }
-    return MyTeamPageModule;
+    return PostPageModule;
 }());
-MyTeamPageModule = __decorate([
+PostPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__my_team__["a" /* MyTeamPage */]
+            __WEBPACK_IMPORTED_MODULE_2__post__["a" /* PostPage */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__my_team__["a" /* MyTeamPage */])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__post__["a" /* PostPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__my_team__["a" /* MyTeamPage */]
+            __WEBPACK_IMPORTED_MODULE_2__post__["a" /* PostPage */]
         ]
     })
-], MyTeamPageModule);
+], PostPageModule);
 
-//# sourceMappingURL=my-team.module.js.map
+//# sourceMappingURL=post.module.js.map
 
 /***/ }),
 
-/***/ 1176:
+/***/ 1183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyTeamPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_social_sharing__ = __webpack_require__(679);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -103,113 +106,191 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+
+
 /**
- * Generated class for the MyTeamPage page.
+ * Generated class for the PostPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var MyTeamPage = (function () {
-    function MyTeamPage(modal, navCtrl, navParams, db, afAuth, teamDB, actionSheetCtrl, alertCtrl) {
-        this.modal = modal;
+var PostPage = (function () {
+    function PostPage(navCtrl, navParams, teamDB, afAuth, db, actionSheetCtrl, socialSharing, alertCtrl, events, toast) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.db = db;
-        this.afAuth = afAuth;
         this.teamDB = teamDB;
+        this.afAuth = afAuth;
+        this.db = db;
         this.actionSheetCtrl = actionSheetCtrl;
+        this.socialSharing = socialSharing;
         this.alertCtrl = alertCtrl;
-        this.currentLength = 0;
-        this.hasNoTeams = false;
-        this.matches = [];
-        this.months = [];
-        this.blur = false;
+        this.events = events;
+        this.toast = toast;
+        this.post = {};
+        this.comment = '';
+        this.post.$key = this.navParams.get('id');
+        this.afAuth.auth.onAuthStateChanged(function (user) {
+            if (user)
+                _this.currentUserID = user.uid;
+        });
     }
-    MyTeamPage.prototype.ionViewDidLoad = function () {
+    PostPage.prototype.ionViewDidLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
+            var res;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (uid) {
-                            if (uid)
-                                _this.currentUID = uid;
+                    case 0: return [4 /*yield*/, this.teamDB.getPostInfo(this.post.$key).then(function (data) {
+                            res = data;
+                            _this.post = res;
+                            if (!_this.post.by)
+                                _this.postNotFound();
                         })];
                     case 1:
                         _a.sent();
-                        this.loadTeams();
-                        this.loadGames();
+                        this.comments = this.db.list('timeline/' + this.post.$key + '/comments', {
+                            query: {
+                                orderByChild: 'timestamp'
+                            }
+                        });
                         return [2 /*return*/];
                 }
             });
         });
     };
-    MyTeamPage.prototype.loadTeams = function () {
-        this.myTeams = this.db.list('users/' + this.currentUID + '/myTeams');
-    };
-    MyTeamPage.prototype.loadGames = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.matches = [];
-                this.db.list('users/' + this.currentUID + '/myTeams/').take(1)
-                    .subscribe(function (teams) {
-                    teams.forEach(function (team) {
-                        _this.db.list('teams/' + team.$key + '/upcomingMatches/').take(1).subscribe(function (matches) {
-                            matches.forEach(function (match) {
-                                var matchIndex = _this.matches.map(function (e) { return e.$key; }).indexOf(match.$key);
-                                if (matchIndex == -1)
-                                    _this.matches.push(match);
-                            });
-                        });
-                    });
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    MyTeamPage.prototype.doRefresh = function (refresher) {
-        this.loadGames();
-        this.loadTeams();
-        setTimeout(function () {
-            refresher.complete();
-        }, 1000);
-    };
-    MyTeamPage.prototype.startTeam = function () {
+    PostPage.prototype.postNotFound = function () {
         var _this = this;
-        var myModal = this.modal.create('StartTeamPage');
-        myModal.present();
-        this.blur = true;
-        myModal.onWillDismiss(function (data) {
-            _this.blur = false;
+        var alert = this.alertCtrl.create({
+            title: 'خطأ',
+            subTitle: 'يبدو ان المشاركة محذوفة',
+            buttons: [{
+                    text: 'حسناً',
+                    handler: function () {
+                        var redirect;
+                        if (_this.navCtrl.getPrevious())
+                            redirect = _this.navCtrl.getPrevious();
+                        else
+                            redirect = 'HomePage';
+                        _this.navCtrl.setRoot(redirect);
+                    }
+                }]
+        });
+        alert.present();
+    };
+    PostPage.prototype.sendComment = function () {
+        var _this = this;
+        var date = __WEBPACK_IMPORTED_MODULE_6_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss');
+        var commentKey = this.db.list('timeline/' + this.post.$key + '/comments').push({
+            by: this.currentUserID,
+            message: this.comment,
+            date: date,
+            timestamp: new Date().getTime()
+        });
+        commentKey.then(function () {
+            // Notify author
+            _this.db.object('users/' + _this.post.by + '/notifications/' + commentKey.key)
+                .set({
+                player: _this.currentUserID,
+                message: _this.comment,
+                type: 'postComment',
+                postID: _this.post.$key,
+                timestamp: new Date().getTime(),
+                date: date
+            });
+            _this.comment = '';
         });
     };
-    MyTeamPage.prototype.openMatchRequest = function (requestID) {
-        this.navCtrl.push('MatchPage', { id: requestID });
+    PostPage.prototype.deleteComment = function (comment) {
+        // Remove notigication
+        this.db.object('users/' + this.post.by + '/notifications/' + comment.$key).remove();
+        // Remove comment
+        this.db.object('timeline/' + this.post.$key + '/comments/' + comment.$key).remove();
     };
-    MyTeamPage.prototype.ionViewWillLeave = function () {
-        this.teamDB.unsubscribeAll();
+    PostPage.prototype.openPlayer = function (uid) {
+        var _this = this;
+        this.teamDB.getUserInfo(uid).then(function (data) {
+            _this.navCtrl.push('PlayerPage', { username: data.originalUsername });
+        });
     };
-    return MyTeamPage;
+    PostPage.prototype.options = function () {
+        var _this = this;
+        var actionSheet;
+        var btns;
+        if (this.post.by == this.currentUserID) {
+            btns = [
+                {
+                    text: 'مشاركة',
+                    handler: function () {
+                        _this.socialSharing.share(_this.post.info, _this.post.title, "https://firebasestorage.googleapis.com/v0/b/myteam-29a5b.appspot.com/o/1500455988652%2Fbg.jpg?alt=media&token=88cee9ee-6b3e-4942-a756-99242b5fcbac", "felmel3ab://");
+                    }
+                },
+                {
+                    text: 'حذف',
+                    role: 'destructive',
+                    handler: function () {
+                        _this.events.publish('post:deleted', _this.post.$key);
+                        _this.db.object('timeline/' + _this.post.$key).remove();
+                        _this.toast.create({
+                            message: 'تم حذف المشاركة',
+                            duration: 2200,
+                            position: 'top',
+                            cssClass: 'failure'
+                        }).present();
+                        _this.navCtrl.pop();
+                    }
+                },
+                {
+                    text: 'إلغاء',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                }
+            ];
+        }
+        else {
+            btns = [
+                {
+                    text: 'مشاركة',
+                    handler: function () {
+                        _this.socialSharing.share(_this.post.info, _this.post.title, "https://firebasestorage.googleapis.com/v0/b/myteam-29a5b.appspot.com/o/1500455988652%2Fbg.jpg?alt=media&token=88cee9ee-6b3e-4942-a756-99242b5fcbac", "felmel3ab://");
+                    }
+                },
+                {
+                    text: 'Report',
+                    role: 'destructive',
+                    handler: function () {
+                        _this.db.list('reports/').push(_this.post);
+                    }
+                },
+                {
+                    text: 'إلغاء',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                }
+            ];
+        }
+        actionSheet = this.actionSheetCtrl.create({
+            buttons: btns
+        });
+        actionSheet.present();
+    };
+    return PostPage;
 }());
-MyTeamPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
-        segment: 'myteam',
-        defaultHistory: ['TabsPage', 'MyTeamPage']
+PostPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])({
+        segment: 'post/:id',
+        defaultHistory: ['PostPage', 'HomePage']
     }),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-my-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/my-team/my-team.html"*/'<!--\n  Generated template for the MyTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>فريقي</ion-title>\n    <ion-buttons end>\n      <button (click)=\'startTeam()\' ion-button icon-only color="royal">\n        <ion-icon name="add"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content [ngClass]="blur ? \'blur\' : \'unblur\'">\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n  <ion-item-divider>\n    جميع الفرق المشارك فيها\n  </ion-item-divider>\n  <ion-item-group padding-bottom>\n    <ion-row *ngFor="let team of myTeams | async">\n      <team-card style="width: 100%" [team]=\'team\'></team-card>\n    </ion-row>\n  </ion-item-group>\n  <div padding *ngIf="(myTeams | async)?.length == 0">\n    <h6 text-center>ابدأ فريقك الان</h6>\n  </div>\n  <ion-item-divider>\n    مبارياتي القادمة\n  </ion-item-divider>\n  <ion-list no-margin>\n    <span *ngFor="let match of matches">\n      <ion-item class="fixedBorder" (click)="openMatchRequest(match.$key)">\n        <match-item text-center home="{{match.homeTeam}}" away="{{match.awayTeam}}"></match-item>\n        <date text-center requestID="{{match.$key}}" day="true"></date>\n      </ion-item>\n    </span>\n  </ion-list>\n  <div padding *ngIf="matches.length == 0">\n    <h6 text-center>ابحث عن مباريات في الرئيسية</h6>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/my-team/my-team.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
+        selector: 'page-post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/post/post.html"*/'<!--\n  Generated template for the PostPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>التفاصيل</ion-title>\n    <ion-buttons end>\n      <button (click)="options()" ion-button clear icon-only>\n        <ion-icon name="md-more" color="white"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <post [postID]="post.$key" className="postCard">\n  </post>\n  <h5 padding-horizontal text-start>\n    التعليقات\n  </h5>\n  <hr no-margin>\n  <h6 *ngIf="(comments | async)?.length == 0" text-center>\n    كن اول من يعلق\n  </h6>\n  <ion-list style="margin-bottom: 128px;" no-margin>\n    <ion-item-sliding *ngFor="let comment of comments | async">\n      <ion-item>\n        <ion-avatar on-tap="openPlayer(comment.by)" item-start>\n          <profile-pic ID="{{comment.by}}" type="user"></profile-pic>\n        </ion-avatar>\n        <h3>\n          <name ID="{{comment.by}}" type="user"></name>\n        </h3>\n        <date id="date" date="{{comment.date}}"></date>\n        <h5 text-right>\n          {{comment.message}}\n        </h5>\n      </ion-item>\n      <ion-item-options *ngIf="currentUserID == comment.by" side="left" (ionSwipe)="deleteComment(comment)">\n        <button (click)="deleteComment(comment)" ion-button expandable icon-only color="danger">\n          <ion-icon name="md-trash"></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n</ion-content>\n\n<ion-footer>\n  <ion-row align-items-center dir="rtl" class="bottomBar">\n    <ion-col col-9>\n      <ion-input [(ngModel)]="comment" placeholder="ادخل تعليقك" type="text"></ion-input>\n    </ion-col>\n    <ion-col col-3>\n      <ion-buttons end>\n        <button ion-button (click)="sendComment()" round color="gold" [disabled]="comment.length == 0" small>\n          <ion-icon name="md-checkmark" class="largeIcon" color="green"></ion-icon>\n        </button>\n      </ion-buttons>\n    </ion-col>\n  </ion-row>\n</ion-footer>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/post/post.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
-], MyTeamPage);
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* ActionSheetController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_0__ionic_native_social_sharing__["a" /* SocialSharing */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__ionic_native_social_sharing__["a" /* SocialSharing */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* Events */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* ToastController */]) === "function" && _k || Object])
+], PostPage);
 
-//# sourceMappingURL=my-team.js.map
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+//# sourceMappingURL=post.js.map
 
 /***/ })
 

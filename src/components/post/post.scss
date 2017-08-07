@@ -51,13 +51,14 @@ post {
     border-radius: 10px;
   }
   .card-content {
-    padding: 0px 16px 0px;
-    position: absolute;
-    right: 54px;
-    top: 45px;
+    padding: 0px 16px;
+    text-align: start;
+    /**position: absolute;
+    right: 53px;
+    top: 55px;**/
   }
   ion-card-content h2 {
-    color: dimgray;
+    //color: dimgray;
   }
   .postAvatar {
     width: 44px !important;
@@ -73,7 +74,7 @@ post {
     font-size: smaller;
   }
   .gold {
-    background-color: #AF6916;
+    background-color: #FFD034;
   }
   .red {
     background-color: orangered;
@@ -92,6 +93,18 @@ post {
   }
   .date p {
     text-align: start;
+  }
+  .author {
+    line-height: 1.2;
+  }
+  .author>#name {
+    color: black;
+    font-size: 1.6rem;
+  }
+  .postInfoBar {
+    border-top: 1px solid #e6e9ec;
+    margin-left: 16px;
+    margin-right: 16px;
   }
   /** Calendar CSS **/
   .topLeft {

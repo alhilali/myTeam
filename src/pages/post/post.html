@@ -21,33 +21,29 @@
 <ion-content>
   <post [postID]="post.$key" className="postCard">
   </post>
-  <ion-item-divider>التعليقات</ion-item-divider>
-  <ion-list style="margin-bottom: 48px;" no-margin>
+  <h5 padding-horizontal text-start>
+    التعليقات
+  </h5>
+  <hr no-margin>
+  <h6 *ngIf="(comments | async)?.length == 0" text-center>
+    كن اول من يعلق
+  </h6>
+  <ion-list style="margin-bottom: 128px;" no-margin>
     <ion-item-sliding *ngFor="let comment of comments | async">
-      <ion-item class="fixedBorder">
-        <ion-row align-items-center>
-          <ion-col col-2 no-padding>
-            <ion-avatar on-tap="openPlayer(comment.by)">
-              <profile-pic ID="{{comment.by}}" type="user"></profile-pic>
-            </ion-avatar>
-          </ion-col>
-          <ion-col col-7 style="margin-right: -12px">
-            <h3 no-margin>
-              <name ID="{{comment.by}}" type="user"></name>
-            </h3>
-            <p no-margin text-right>
-              {{comment.message}}
-            </p>
-          </ion-col>
-          <ion-col col-3>
-            <p style="text-align: end">
-              <date date="{{comment.date}}"></date>
-            </p>
-          </ion-col>
-        </ion-row>
+      <ion-item>
+        <ion-avatar on-tap="openPlayer(comment.by)" item-start>
+          <profile-pic ID="{{comment.by}}" type="user"></profile-pic>
+        </ion-avatar>
+        <h3>
+          <name ID="{{comment.by}}" type="user"></name>
+        </h3>
+        <date id="date" date="{{comment.date}}"></date>
+        <h5 text-right>
+          {{comment.message}}
+        </h5>
       </ion-item>
-      <ion-item-options *ngIf="currentUserID == comment.by" side="left">
-        <button (click)="deleteComment(comment)" ion-button icon-only color="danger">
+      <ion-item-options *ngIf="currentUserID == comment.by" side="left" (ionSwipe)="deleteComment(comment)">
+        <button (click)="deleteComment(comment)" ion-button expandable icon-only color="danger">
           <ion-icon name="md-trash"></ion-icon>
         </button>
       </ion-item-options>

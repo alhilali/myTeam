@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ViewController, ToastController
+} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -25,7 +28,8 @@ export class StartTeamPage {
     public navParams: NavParams,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
-    private _form: FormBuilder) {
+    private _form: FormBuilder,
+    private toast: ToastController) {
     this.team = {};
     this.teamForm = this._form.group({
       "name": ["", Validators.required],
@@ -58,8 +62,14 @@ export class StartTeamPage {
 
         // Add team to user list DB
         this.db.object('/users/' + uid + '/myTeams/' + newKey)
-          .set({ teamId: newKey });
+          .set({ teamId: newKey, captain: uid });
         saveSub.unsubscribe();
+        this.toast.create({
+          message: 'تم انشاء فريق جديد بنجاح',
+          duration: 2200,
+          dismissOnPageChange: true,
+          position: 'top'
+        }).present();
         this.closeModal();
       }
     });

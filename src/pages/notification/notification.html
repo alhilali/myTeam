@@ -75,12 +75,13 @@
       <ion-item class="fixedBorder">
         <ion-row align-items-center>
           <ion-col col-1 no-padding>
-            <ion-avatar *ngIf="notification.type == 'joinedTeam'" on-tap="openTeam(notification.team)" margin-left>
+            <ion-avatar *ngIf="notification.type == 'joinedTeam' || notification.type == 'matchAccepted' ||  notification.type == 'matchDeclined'"
+              on-tap="openTeam(notification.team)" margin-left>
               <profile-pic ID="{{notification.team}}" type="team">
               </profile-pic>
             </ion-avatar>
-            <ion-avatar *ngIf="notification.type == 'playerJoined' || notification.type == 'declinedTeamInvite' || notification.type == 'postComment' || notification.type == 'likedPost'" on-tap="openPlayer(notification.player)"
-              margin-left>
+            <ion-avatar *ngIf="notification.type == 'playerJoined' || notification.type == 'declinedTeamInvite' || notification.type == 'postComment' || notification.type == 'likedPost'"
+              on-tap="openPlayer(notification.player)" margin-left>
               <profile-pic ID="{{notification.player}}" type="user">
               </profile-pic>
             </ion-avatar>
@@ -92,7 +93,35 @@
                 <span on-tap="openTeam(notification.team)" style="color: black">
                 <name ID="{{notification.team}}" type="team">
                 </name>
-              </span>
+                </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'matchAccepted'">
+                فريق
+                <span on-tap="openTeam(notification.team)" style="color: black">
+                <name ID="{{notification.team}}" type="team">
+                </name>
+                </span> وافق على طلب
+                <span on-tap="openMatchRequest(notification.matchID)" style="color: black">
+                  المباراة
+                </span> مع
+                <span on-tap="openTeam(notification.otherTeam)" style="color: black">
+                <name ID="{{notification.otherTeam}}" type="team">
+                </name>
+                </span>
+              </p>
+              <p class="notificationBody" *ngIf="notification.type == 'matchDeclined'">
+                فريق
+                <span on-tap="openTeam(notification.team)" style="color: black">
+                <name ID="{{notification.team}}" type="team">
+                </name>
+                </span> لم يوافق على طلب
+                <span on-tap="openMatchRequest(notification.matchID)" style="color: black">
+                  المباراة
+                </span> مع
+                <span on-tap="openTeam(notification.otherTeam)" style="color: black">
+                <name ID="{{notification.otherTeam}}" type="team">
+                </name>
+                </span>
               </p>
               <p class="notificationBody" *ngIf="notification.type == 'playerJoined'">
                 اللاعب
@@ -103,7 +132,7 @@
                 <span on-tap="openTeam(notification.team)" style="color: black">
                 <name ID="{{notification.team}}" type="team">
                 </name>
-              </span>
+                </span>
               </p>
               <p class="notificationBody" *ngIf="notification.type == 'declinedTeamInvite'">
                 اللاعب
@@ -114,13 +143,12 @@
                 <span on-tap="openTeam(notification.team)" style="color: black">
                 <name ID="{{notification.team}}" type="team">
                 </name>
-              </span>
+                </span>
               </p>
               <p class="notificationBody" *ngIf="notification.type == 'postComment'">
                 <span on-tap="openPost(notification.postID)" style="color: black">
                   "{{notification.message}}"
-                </span>
-                تعليق جديد من
+                </span> تعليق جديد من
                 <span on-tap="openPlayer(notification.player)" style="color: black">
                   <name ID="{{notification.player}}" type="user">
                   </name>

@@ -1,10 +1,8 @@
 page-post {
   .postCard {
     margin: 0;
-    box-shadow: 0px 14px 0px #0072bb;
     width: 100%;
-    margin-bottom: 14px;
-    padding-top: 8px;
+    box-shadow: unset;
   }
   .comments {
     display: none;
@@ -25,17 +23,27 @@ page-post {
     margin: 0;
   }
   ion-item-sliding h3 {
-    margin: 0 !important;
-    line-height: 1 !important;
+    margin: 0px !important;
+    line-height: 1.9 !important
   }
   post .card-content {
-    top: 50px;
+    top: 60px;
   }
   .label {
-    margin: 0;
+    margin: 1px;
+  }
+  #date p {
+    line-height: 10px;
+  }
+  .item-inner {
+    border-bottom: 0.55px solid #e8e8e8;
+  }
+  .item-wrapper:last-child .item-block {
+    border-bottom: 0.55px solid #e8e8e8;
   }
   .postInfoBar {
     padding: 4px 0;
+    margin-top: 50px;
   }
   .likeAvatar {
     width: 35px;
@@ -47,5 +55,8 @@ page-post {
     border-radius: 10px;
     position: absolute;
     right: 60px;
+  }
+  .content {
+    background-color: #f7f7f7;
   }
 }

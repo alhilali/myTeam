@@ -16,10 +16,22 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding-vertical>
+  <ion-row class="padding-top" align-items-stretch text-center>
+    <ion-col pull-1>
+      <button (click)="closeModel()" color="orange" ion-button round small>
+          إلغاء
+        </button>
+    </ion-col>
+    <ion-col push-1>
+      <button [disabled]="matchForm.invalid" (click)="sendRequest()" color="gold" ion-button round small>
+             ارسل
+        </button>
+    </ion-col>
+  </ion-row>
   <ion-card class="card1">
     <ion-card-header>
-      تفاصيل المباراة
+      طلب مباراة مع {{awayTeam.name}}
     </ion-card-header>
     <form name="matchForm" novalidate>
       <div class="register" [formGroup]='matchForm'>
@@ -34,15 +46,15 @@
           </ion-item>
 
           <button ion-item (click)="openCalendar()">
-        <ion-row>
-          <ion-col>
-            التاريخ
-          </ion-col>
-          <ion-col text-end>
-            {{dateFormated}}
-          </ion-col>
-        </ion-row>
-      </button>
+            <ion-row>
+              <ion-col>
+                التاريخ
+              </ion-col>
+              <ion-col text-end>
+                {{dateFormated}}
+              </ion-col>
+            </ion-row>
+          </button>
           <ion-item>
             <ion-label>الساعة</ion-label>
             <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">
@@ -52,11 +64,6 @@
             <ion-label>الملعب</ion-label>
             <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>
           </ion-item>
-          <p text-center>
-            <button padding ion-button color="secondary" [disabled]="matchForm.invalid" (click)="sendRequest()">إرسال الطلب
-              <ion-icon padding name="ios-calendar-outline"></ion-icon>
-            </button>
-          </p>
         </ion-list>
       </div>
     </form>

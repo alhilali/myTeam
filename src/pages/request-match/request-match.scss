@@ -1,1 +1,8 @@
-page-request-match {}
+page-request-match {
+  ion-header {
+    display: none;
+  }
+  ion-content {
+    background-color: rgba(255, 255, 255, 0) !important;
+  }
+}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  ViewController
+  ViewController, ToastController
 } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB'
 import { CalendarController } from "ion2-calendar/dist";
@@ -35,17 +35,23 @@ export class RequestMatchPage {
     public view: ViewController,
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
-    public calendarCtrl: CalendarController) {
+    public calendarCtrl: CalendarController,
+    private toast: ToastController) {
     this.matchForm = this._form.group({
       "selectedTeam": ["", Validators.required],
       "time": ["", Validators.required],
       "stadium": ["", Validators.required]
     })
     this.awayTeam = navParams.get('team');
-    this.date = moment().format('L')
-    this.day = moment().format('dddd');
-    this.dateFormated = moment().locale('ar-sa').format('ll') + ' '
-      + moment().locale('ar-sa').format('dddd');
+
+    let _date;
+    if (navParams.get('givenDate')) _date = moment(navParams.get('givenDate'), 'MM/DD/YYYY');
+    else _date = moment()
+
+    this.date = _date.format('L');
+    this.day = _date.format('ddd')
+    this.dateFormated = _date.locale('ar-sa').format('ll') + ' '
+      + _date.locale('ar-sa').format('dddd');
   }
 
   async ionViewDidLoad() {
@@ -98,6 +104,11 @@ export class RequestMatchPage {
       stadium: this.stadium
     });
     // Succesful toast
+    this.toast.create({
+      message: 'تم إرسال طلب المباراة بنجاح',
+      duration: 2200,
+      position: 'top'
+    }).present();
     this.view.dismiss();
   }
 

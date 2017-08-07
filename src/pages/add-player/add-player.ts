@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {
-  IonicPage, NavController,
+  IonicPage, NavController, ToastController,
   NavParams, ViewController
 } from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB'
@@ -30,7 +30,8 @@ export class AddPlayerPage {
     public navParams: NavParams,
     private teamDB: MyTeamDB,
     private _form: FormBuilder,
-    private unameValid: UsernameValidator) {
+    private unameValid: UsernameValidator,
+    private toast: ToastController) {
     this.team = navParams.get('team');
     let usernameValidator = (control) => {
       return unameValid.checkValidUsername(control);
@@ -58,6 +59,12 @@ export class AddPlayerPage {
     if (this.requestPlayerForm.valid && user.$key) {
 
       this.teamDB.sendRequestToPlayer(user.$key, this.team.$key)
+
+      this.toast.create({
+        message: 'تم إرسال الإضافة  بنجاح',
+        duration: 2200,
+        position: 'top'
+      }).present();
 
       this.view.dismiss();
     }

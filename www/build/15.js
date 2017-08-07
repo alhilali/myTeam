@@ -1,14 +1,15 @@
 webpackJsonp([15],{
 
-/***/ 1106:
+/***/ 1107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchPageModule", function() { return MatchPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(1172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__match__ = __webpack_require__(1177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +19,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var LoginPageModule = (function () {
-    function LoginPageModule() {
+
+var MatchPageModule = (function () {
+    function MatchPageModule() {
     }
-    return LoginPageModule;
+    return MatchPageModule;
 }());
-LoginPageModule = __decorate([
+MatchPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */],
+            __WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]),
+            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
+            __WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */]
         ]
     })
-], LoginPageModule);
+], MatchPageModule);
 
-//# sourceMappingURL=login.module.js.map
+//# sourceMappingURL=match.module.js.map
 
 /***/ }),
 
-/***/ 1172:
+/***/ 1177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MatchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -100,163 +105,161 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+
 /**
- * Generated class for the LoginPage page.
+ * Generated class for the MatchPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var LoginPage = (function () {
-    function LoginPage(afAuth, loadingCtrl, toast, alertCtrl, navCtrl, navParams, myTeamDB, _form) {
-        this.afAuth = afAuth;
-        this.loadingCtrl = loadingCtrl;
-        this.toast = toast;
-        this.alertCtrl = alertCtrl;
+var MatchPage = (function () {
+    function MatchPage(navCtrl, navParams, view, teamDB, db, afAuth) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.myTeamDB = myTeamDB;
-        this._form = _form;
-        this.user = {};
-        this.loginForm = this._form.group({
-            "email": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email],
-            "password": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])]
-        });
+        this.view = view;
+        this.teamDB = teamDB;
+        this.db = db;
+        this.afAuth = afAuth;
+        this.previousGames = [];
+        this.currentUser = false;
+        this.requestID = this.navParams.get('id');
+        this.request = this.db.object('/matches/' + this.requestID);
     }
-    LoginPage.prototype.login = function (user) {
+    MatchPage.prototype.ionViewDidLoad = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var loginLoading, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        loginLoading = this.loadingCtrl.create({
-                            dismissOnPageChange: true,
-                            cssClass: 'loginLoading',
-                            spinner: 'crescent'
-                        });
-                        loginLoading.present();
-                        _a.label = 1;
+                    case 0: return [4 /*yield*/, this.teamDB.getMatchInfo(this.requestID).then(function (data) {
+                            _this.requestInfo = data;
+                        })];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(function () {
-                                _this.navCtrl.setRoot('TabsPage');
+                        _a.sent();
+                        return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (uid) {
+                                if (_this.requestInfo.toUID == uid)
+                                    _this.currentUser = true;
                             })];
                     case 2:
                         _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        this.myTeamDB.findEmail(user.email).then(function (data) {
-                            _this.afAuth.auth.signInWithEmailAndPassword(data, user.password).then(function () {
-                                _this.navCtrl.setRoot('TabsPage');
-                            })
-                                .catch(function (err) {
-                                loginLoading.dismiss();
-                                _this.showErrorToast();
-                            });
-                        }).catch(function () {
-                            loginLoading.dismiss();
-                            _this.showErrorToast();
-                        });
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    LoginPage.prototype.goBack = function () {
-        this.navCtrl.pop();
-    };
-    LoginPage.prototype.showErrorToast = function () {
-        this.toast.create({
-            message: 'الرجاء التأكد من الايميل او الرقم السري',
-            duration: 1500,
-            showCloseButton: true,
-            dismissOnPageChange: true,
-            closeButtonText: 'حسناً'
-        }).present();
-    };
-    LoginPage.prototype.resetPassword = function () {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'نسيت الرقم السري؟',
-            message: 'سيتم ارسال رقم سري جديد الى بريدك الالكتروني',
-            inputs: [
-                {
-                    name: 'email',
-                    placeholder: 'البريد الإلكتروني'
-                }
-            ],
-            buttons: [
-                {
-                    text: 'تم',
-                    handler: function (data) {
-                        var loading = _this.loadingCtrl.create({
-                            dismissOnPageChange: true,
-                            content: 'إعادة تعيين الرقم السري..'
+    MatchPage.prototype.acceptMatch = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var date, timestamp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        date = __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss');
+                        timestamp = new Date().getTime();
+                        // Add notification to home team players
+                        return [4 /*yield*/, this.teamDB.getTeamPlayers(this.requestInfo.homeTeam).then(function (players) {
+                                var playersList = [];
+                                playersList = players;
+                                playersList.forEach(function (player) {
+                                    if (player.status == 'enrolled') {
+                                        _this.db.list('users/' + player.$key + '/notifications/').push({
+                                            type: 'matchAccepted',
+                                            team: _this.requestInfo.awayTeam,
+                                            otherTeam: _this.requestInfo.homeTeam,
+                                            matchID: _this.requestID,
+                                            timestamp: timestamp,
+                                            date: date
+                                        });
+                                    }
+                                });
+                            })
+                            // Add notification to away team players
+                        ];
+                    case 1:
+                        // Add notification to home team players
+                        _a.sent();
+                        // Add notification to away team players
+                        return [4 /*yield*/, this.teamDB.getTeamPlayers(this.requestInfo.awayTeam).then(function (players) {
+                                var playersList = [];
+                                playersList = players;
+                                playersList.forEach(function (player) {
+                                    if (player.status == 'enrolled') {
+                                        _this.db.list('users/' + player.$key + '/notifications/').push({
+                                            type: 'matchAccepted',
+                                            team: _this.requestInfo.homeTeam,
+                                            otherTeam: _this.requestInfo.awayTeam,
+                                            matchID: _this.requestID,
+                                            timestamp: timestamp,
+                                            date: date
+                                        });
+                                    }
+                                });
+                            })
+                            // Update request status
+                        ];
+                    case 2:
+                        // Add notification to away team players
+                        _a.sent();
+                        // Update request status
+                        this.db.object('/matches/' + this.requestID).update({ status: 'approved' });
+                        // Remove Request
+                        this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
+                        // Add match to home team DB
+                        this.db.object('/teams/' + this.requestInfo.homeTeam + '/upcomingMatches/'
+                            + this.requestID).set({
+                            homeTeam: this.requestInfo.homeTeam,
+                            awayTeam: this.requestInfo.awayTeam,
                         });
-                        loading.present();
-                        _this.afAuth.auth.sendPasswordResetEmail(data.email).then(function () {
-                            loading.dismiss().then(function () {
-                                _this.alertUserSuccess('راجع بريدك الالكتروني', 'تم إعادة تعيين الرقم السري');
-                            });
-                        }, function (error) {
-                            _this.alertUserError(error);
-                            loading.dismiss();
+                        // Add match to away team DB
+                        this.db.object('/teams/' + this.requestInfo.awayTeam + '/upcomingMatches/'
+                            + this.requestID).set({
+                            homeTeam: this.requestInfo.homeTeam,
+                            awayTeam: this.requestInfo.awayTeam,
                         });
-                    }
-                },
-                {
-                    text: 'إلغاء',
-                    role: 'cancel',
-                    handler: function (data) {
-                        //console.log('Cancel clicked');
-                    }
+                        return [2 /*return*/];
                 }
-            ]
+            });
         });
-        alert.present();
     };
-    LoginPage.prototype.alertUserError = function (error) {
-        var message = error;
-        switch (error.code) {
-            case 'auth/invalid-email':
-                message = 'الرجاء التأكد من صيغة الايميل.';
-                break;
-            case 'auth/user-not-found':
-                message = 'لا يوجد حساب مسجل بهذا البريد الالكتروني.';
-                break;
-        }
-        this.alertCtrl.create({
-            title: 'خطأ في اعادة تعيين الرقم السري',
-            subTitle: message,
-            buttons: ['حسناً'],
-        }).present();
+    MatchPage.prototype.declineMatch = function () {
+        // Add notification to home team captain
+        this.db.list('users/' + this.requestInfo.fromUID + '/notifications/').push({
+            type: 'matchDeclined',
+            team: this.requestInfo.awayTeam,
+            otherTeam: this.requestInfo.homeTeam,
+            matchID: this.requestID,
+            timestamp: new Date().getTime(),
+            date: __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
+        });
+        // Update request status
+        this.db.object('/matches/' + this.requestID).update({ status: 'declined' });
+        // Remove Request
+        this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
+        this.view.dismiss();
     };
-    LoginPage.prototype.alertUserSuccess = function (title, message) {
-        this.alertCtrl.create({
-            title: title,
-            subTitle: message,
-            buttons: ['حسناً'],
-        }).present();
+    MatchPage.prototype.openTeam = function (teamID) {
+        this.navCtrl.push('TeamPage', { id: teamID });
     };
-    return LoginPage;
+    MatchPage.prototype.closeModel = function () {
+        this.view.dismiss();
+    };
+    return MatchPage;
 }());
-LoginPage = __decorate([
+MatchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
-        segment: 'login',
-        defaultHistory: ['WelcomePage']
+        segment: 'match/:id'
     }),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content>\n  <ion-row justify-content-start>\n    <ion-col col-3 text-start padding>\n      <ion-icon on-tap="goBack()" class="largeIcon" color="grey" name="ios-arrow-back"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <div class="login" padding>\n    <div class="welcomeTop">\n      <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n    </div>\n    <h2 text-center>تسجيل الدخول</h2>\n    <form [formGroup]="loginForm" novalidate padding>\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="Username/Email"></ion-input>\n      </ion-item>\n\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="password" [(ngModel)]="user.password" formControlName=\'password\' placeholder="Password"></ion-input>\n      </ion-item>\n      <button color="orange" ion-button block (click)="login(user)">الدخول</button>\n      <p text-right style="margin: 0px;">\n        <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>\n      </p>\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/,
+        selector: 'page-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/'<!--\n  Generated template for the MatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>تفاصيل المباراة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-row *ngIf="(request | async)?.status == \'pending\' && currentUser" align-items-stretch>\n    <ion-col col-7>\n      <p text-start>هل ترغب بالموافقه على المباراة؟</p>\n    </ion-col>\n    <ion-col no-padding style="padding-left: 10px">\n      <p text-left>\n        <button (click)="acceptMatch()" ion-button color="secondary" small>موافق</button>\n        <button (click)="declineMatch()" ion-button color="danger" outline small>إلغاء</button>\n      </p>\n    </ion-col>\n  </ion-row>\n  <h6 *ngIf="currentUser && (request | async)?.status == \'declined\'" text-center>\n    تم رفض طلب المباراة <span>😞</span>\n  </h6>\n  <ion-card class="card1">\n    <ion-grid>\n      <ion-row>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.homeTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.homeTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.homeTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n        <ion-col text-center style="padding-top: 60px;">\n          <h3>VS</h3>\n          <date requestID="{{requestID}}" day="true"></date>\n          <p>{{(request | async)?.time}}<br> {{(request | async)?.stadium}}\n          </p>\n        </ion-col>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.awayTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.awayTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.awayTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-card>\n  <ion-item-divider>\n    المباريات السابقه\n  </ion-item-divider>\n  <ion-list no-margin>\n    <ion-item class="fixedBorder">\n      <div *ngIf="previousGames.length == 0" text-center>\n        لا توجد مباريات سابقة\n      </div>\n      <ion-item *ngIf="previousGames.length != 0" class="fixedBorder">\n\n      </ion-item>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]])
-], LoginPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]])
+], MatchPage);
 
-//# sourceMappingURL=login.js.map
+//# sourceMappingURL=match.js.map
 
 /***/ })
 

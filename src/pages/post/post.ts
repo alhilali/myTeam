@@ -1,7 +1,10 @@
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { Post } from "./../../models/post";
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, ToastController,
+  ActionSheetController, AlertController, Events
+} from 'ionic-angular';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -14,7 +17,8 @@ import * as moment from 'moment';
  * on Ionic pages and navigation.
  */
 @IonicPage({
-  segment: 'post/:id'
+  segment: 'post/:id',
+  defaultHistory: ['PostPage', 'HomePage']
 })
 @Component({
   selector: 'page-post',
@@ -25,14 +29,16 @@ export class PostPage {
   comment: string = '';
   comments: FirebaseListObservable<any[]>;
   currentUserID: any
-
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private teamDB: MyTeamDB,
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private actionSheetCtrl: ActionSheetController,
-    private socialSharing: SocialSharing) {
+    private socialSharing: SocialSharing,
+    private alertCtrl: AlertController,
+    private events: Events,
+    private toast: ToastController) {
     this.post.$key = this.navParams.get('id');
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) this.currentUserID = user.uid;
@@ -44,12 +50,30 @@ export class PostPage {
     await this.teamDB.getPostInfo(this.post.$key).then(data => {
       res = data
       this.post = res
+      if (!this.post.by) this.postNotFound();
     })
     this.comments = this.db.list('timeline/' + this.post.$key + '/comments', {
       query: {
         orderByChild: 'timestamp'
       }
     });
+  }
+
+  postNotFound() {
+    let alert = this.alertCtrl.create({
+      title: 'خطأ',
+      subTitle: 'يبدو ان المشاركة محذوفة',
+      buttons: [{
+        text: 'حسناً',
+        handler: () => {
+          let redirect;
+          if (this.navCtrl.getPrevious()) redirect = this.navCtrl.getPrevious();
+          else redirect = 'HomePage';
+          this.navCtrl.setRoot(redirect)
+        }
+      }]
+    });
+    alert.present();
   }
 
   sendComment() {
@@ -78,6 +102,10 @@ export class PostPage {
   }
 
   deleteComment(comment) {
+    // Remove notigication
+    this.db.object('users/' + this.post.by + '/notifications/' + comment.$key).remove()
+
+    // Remove comment
     this.db.object('timeline/' + this.post.$key + '/comments/' + comment.$key).remove();
   }
 
@@ -103,7 +131,16 @@ export class PostPage {
           text: 'حذف',
           role: 'destructive',
           handler: () => {
+            this.events.publish('post:deleted', this.post.$key);
             this.db.object('timeline/' + this.post.$key).remove();
+
+            this.toast.create({
+              message: 'تم حذف المشاركة',
+              duration: 2200,
+              position: 'top',
+              cssClass: 'failure'
+            }).present();
+
             this.navCtrl.pop();
           }
         },

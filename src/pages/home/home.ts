@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage, NavController, ActionSheetController,
-  ModalController, Slides
+  ModalController, Slides, Events
 } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -22,7 +22,10 @@ export class HomePage {
   currentUser: any = {}
   constructor(private afAuth: AngularFireAuth, private modal: ModalController,
     public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
-    public navCtrl: NavController) {
+    public navCtrl: NavController, public events: Events) {
+    events.subscribe("post:deleted", (postID) => {
+      this.deletePost(postID)
+    });
   }
 
   ngAfterViewInit() {
@@ -80,6 +83,18 @@ export class HomePage {
     }
   }
 
+  deletePost(postID) {
+    const postIndex = this.allPosts.map(e => { return e.$key }).indexOf(postID);
+    this.allPosts.splice(postIndex, 1)
+    if (this.type == 'match') {
+      const postIndex = this.matchPosts.map(e => { return e.$key }).indexOf(postID);
+      this.matchPosts.splice(postIndex, 1)
+    } else if (this.type == 'player') {
+      const postIndex = this.playerPosts.map(e => { return e.$key }).indexOf(postID);
+      this.playerPosts.splice(postIndex, 1)
+    }
+  }
+
   doRefresh(refresher) {
     this.loadPosts(this.type);
     setTimeout(() => {
@@ -95,10 +110,14 @@ export class HomePage {
   async compose() {
     const myModal = this.modal.create('ComposePage', { player: this.currentUser })
     myModal.present();
-    this.blur = true;
+    //this.blur = true;
     myModal.onWillDismiss(data => {
-      this.blur = false;
-      if (data.postDone) this.loadPosts(this.type);
+      //this.blur = false;
+      if (data.postDone) {
+        this.loadPosts('all');
+        this.loadPosts('match');
+        this.loadPosts('player');
+      }
     })
   }
 

@@ -8,17 +8,18 @@
 
   <ion-navbar>
     <ion-buttons *ngIf="teamDB.loggedIn" end>
-      <button (click)="options()" ion-button icon-only>
-        <ion-icon name="md-more" color="white"></ion-icon>
+      <button *ngIf="currentUID != player.$key" (click)="options()" ion-button icon-only>
+        <ion-icon name="ios-more" color="white"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>{{player.name}}</ion-title>
   </ion-navbar>
-
+  <ion-icon *ngIf="currentUID == player.$key" on-tap="openSettings()" class="editIcon mdIcon" color="light" name="ios-cog"></ion-icon>
   <div class="hero" [ngStyle]="{ 'background-image': 'url(' + player.bg + ')'}">
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>
+
           <img class="avatar" src="{{player.profilePic}}" alt="">
           <h3 style="padding-top: 20%;" class="white bold">{{player.name}}</h3>
           <h5 class="white">{{player.originalUsername}}@</h5>

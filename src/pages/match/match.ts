@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import * as moment from 'moment';
 /**
  * Generated class for the MatchPage page.
  *
@@ -44,7 +44,46 @@ export class MatchPage {
     })
   }
 
-  acceptMatch() {
+  async acceptMatch() {
+    const date = moment.utc().format('YYYY-MM-DD HH:mm:ss')
+    const timestamp = new Date().getTime()
+
+    // Add notification to home team players
+    await this.teamDB.getTeamPlayers(this.requestInfo.homeTeam).then(players => {
+      let playersList = []
+      playersList = players
+      playersList.forEach(player => {
+        if (player.status == 'enrolled') {
+          this.db.list('users/' + player.$key + '/notifications/').push({
+            type: 'matchAccepted',
+            team: this.requestInfo.awayTeam,
+            otherTeam: this.requestInfo.homeTeam,
+            matchID: this.requestID,
+            timestamp: timestamp,
+            date: date
+          })
+        }
+      })
+    })
+
+    // Add notification to away team players
+    await this.teamDB.getTeamPlayers(this.requestInfo.awayTeam).then(players => {
+      let playersList = []
+      playersList = players
+      playersList.forEach(player => {
+        if (player.status == 'enrolled') {
+          this.db.list('users/' + player.$key + '/notifications/').push({
+            type: 'matchAccepted',
+            team: this.requestInfo.homeTeam,
+            otherTeam: this.requestInfo.awayTeam,
+            matchID: this.requestID,
+            timestamp: timestamp,
+            date: date
+          })
+        }
+      })
+    })
+
     // Update request status
     this.db.object('/matches/' + this.requestID).update({ status: 'approved' })
 
@@ -67,7 +106,22 @@ export class MatchPage {
   }
 
   declineMatch() {
-    this.db.object('/matches/' + this.requestID).remove();
+    // Add notification to home team captain
+    this.db.list('users/' + this.requestInfo.fromUID + '/notifications/').push({
+      type: 'matchDeclined',
+      team: this.requestInfo.awayTeam,
+      otherTeam: this.requestInfo.homeTeam,
+      matchID: this.requestID,
+      timestamp: new Date().getTime(),
+      date: moment.utc().format('YYYY-MM-DD HH:mm:ss')
+    })
+
+    // Update request status
+    this.db.object('/matches/' + this.requestID).update({ status: 'declined' })
+
+    // Remove Request
+    this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
+
     this.view.dismiss();
   }
 

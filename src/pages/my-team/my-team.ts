@@ -83,9 +83,9 @@ export class MyTeamPage {
   startTeam() {
     const myModal = this.modal.create('StartTeamPage');
     myModal.present();
-    this.blur = true;
+    //this.blur = true;
     myModal.onWillDismiss(data => {
-      this.blur = false;
+      //this.blur = false;
     })
   }
 

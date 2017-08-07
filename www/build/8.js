@@ -1,14 +1,14 @@
 webpackJsonp([8],{
 
-/***/ 1116:
+/***/ 1109:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchPageModule", function() { return SearchPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StartTeamPageModule", function() { return StartTeamPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__search__ = __webpack_require__(1184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__start_team__ = __webpack_require__(1179);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var SearchPageModule = (function () {
-    function SearchPageModule() {
+var StartTeamPageModule = (function () {
+    function StartTeamPageModule() {
     }
-    return SearchPageModule;
+    return StartTeamPageModule;
 }());
-SearchPageModule = __decorate([
+StartTeamPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__search__["a" /* SearchPage */],
+            __WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__search__["a" /* SearchPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__search__["a" /* SearchPage */]
+            __WEBPACK_IMPORTED_MODULE_2__start_team__["a" /* StartTeamPage */]
         ]
     })
-], SearchPageModule);
+], StartTeamPageModule);
 
-//# sourceMappingURL=search.module.js.map
+//# sourceMappingURL=start-team.module.js.map
 
 /***/ }),
 
-/***/ 1184:
+/***/ 1179:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StartTeamPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -64,75 +64,75 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
- * Generated class for the SearchPage page.
+ * Generated class for the StartTeamPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var SearchPage = (function () {
-    function SearchPage(navCtrl, navParams, db) {
+var StartTeamPage = (function () {
+    function StartTeamPage(view, navCtrl, navParams, afAuth, db, _form, toast) {
+        this.view = view;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.afAuth = afAuth;
         this.db = db;
-        this.type = 'teams';
-        this.query = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["Subject"]();
-        this.searchTeams();
+        this._form = _form;
+        this.toast = toast;
+        this.team = {};
+        this.teamForm = this._form.group({
+            "name": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required],
+            "city": ["الرياض"]
+        });
     }
-    SearchPage.prototype.searchTeams = function () {
-        this.items = this.db.list('teams/', {
-            query: {
-                orderByChild: 'name',
-                startAt: this.query,
-                limitToFirst: 5
+    StartTeamPage.prototype.closeModal = function () {
+        this.view.dismiss();
+    };
+    StartTeamPage.prototype.saveTeam = function (team) {
+        var _this = this;
+        var newKey = new Date().getTime();
+        var ref = this.db.object('/teams/' + newKey);
+        var saveSub = this.afAuth.authState.subscribe(function (data) {
+            if (data && data.uid) {
+                var uid = data.uid;
+                ref.set({
+                    captain: uid,
+                    name: team.name,
+                    city: team.city || 'الرياض',
+                    logo: 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png',
+                    bg: 'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png',
+                    estDate: new Date().toDateString()
+                });
+                // Add player to players list DB
+                var playersList = _this.db.object('/playersList/' + newKey + '/' + uid);
+                playersList.set({ uid: uid, status: 'enrolled' });
+                // Add team to user list DB
+                _this.db.object('/users/' + uid + '/myTeams/' + newKey)
+                    .set({ teamId: newKey, captain: uid });
+                saveSub.unsubscribe();
+                _this.toast.create({
+                    message: 'تم انشاء فريق جديد بنجاح',
+                    duration: 2200,
+                    dismissOnPageChange: true,
+                    position: 'top'
+                }).present();
+                _this.closeModal();
             }
         });
     };
-    SearchPage.prototype.searchPlayers = function () {
-        this.items = this.db.list('users/', {
-            query: {
-                orderByChild: 'username',
-                startAt: this.query,
-                limitToFirst: 5
-            }
-        });
-    };
-    SearchPage.prototype.getItems = function (ev) {
-        // set val to the value of the searchbar
-        var query = ev.target.value;
-        if (query && this.type == 'players')
-            query = query.toLowerCase();
-        if (query)
-            this.query.next(query);
-    };
-    SearchPage.prototype.open = function (item) {
-        if (this.type == 'teams')
-            this.navCtrl.push('TeamPage', { id: item.$key });
-        else if (this.type == 'players')
-            this.navCtrl.push('PlayerPage', { username: item.originalUsername });
-    };
-    SearchPage.prototype.segmentChanged = function (ev) {
-        this.queryString = '';
-        if (ev.value == 'teams')
-            this.searchTeams();
-        if (ev.value == 'players')
-            this.searchPlayers();
-        //this.query.next(this.queryString)
-    };
-    SearchPage.prototype.onClear = function (event) {
-    };
-    return SearchPage;
+    return StartTeamPage;
 }());
-SearchPage = __decorate([
+StartTeamPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-search',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-searchbar [(ngModel)]="queryString" (ionInput)="getItems($event)" placeholder=\'بحث\'></ion-searchbar>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-segment color="orange" mode="md" [(ngModel)]="type" (ionChange)="segmentChanged($event)">\n    <ion-segment-button value="teams">\n      فريق\n    </ion-segment-button>\n    <ion-segment-button value="players">\n      لاعب\n    </ion-segment-button>\n  </ion-segment>\n  <ion-list *ngIf="queryString && queryString.length>0">\n    <button ion-item clear *ngFor="let item of items | async" (click)="open(item)">\n      <ion-row>\n          <ion-avatar padding-right>\n            <img *ngIf="type == \'players\'" src="{{item.profilePic}}" alt="">\n            <img *ngIf="type == \'teams\'" src="{{item.logo}}" alt="">\n          </ion-avatar>\n          <h2 style="margin: 0 0 8px;" id="itemInfo" margin-bottom>{{ item.name }}</h2>\n          <p *ngIf="type == \'players\'" color="orange">&nbsp;{{item.username}}@</p>\n          <p *ngIf="type == \'teams\'" color="orange">&nbsp;{{item.city}}</p>\n      </ion-row>\n    </button>\n  </ion-list>\n  <p text-center *ngIf=\'((items | async)?.length == 0) && queryString && (queryString.length != 0)\'>\n    لا يوجد نتائج\n  </p>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/,
+        selector: 'page-start-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/start-team/start-team.html"*/'<!--\n  Generated template for the StartTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons start>\n      <button ion-button (click)="closeModal()">إغلاق</button>\n    </ion-buttons>\n    <ion-title>إبدأ فريقك</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top" align-items-stretch text-center>\n    <ion-col pull-1>\n      <button (click)="closeModal()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="saveTeam(team)" [disabled]=\'!teamForm.valid\' color="gold" ion-button round small>\n            حفظ\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <form name="myForm" novalidate>\n      <ion-list [formGroup]=\'teamForm\'>\n\n\n        <ion-item>\n          <ion-input [(ngModel)]="team.name" name="name" formControlName=\'name\' type="text" placeholder="اسم فريقك" required>\n          </ion-input>\n        </ion-item>\n\n        <ion-item>\n          <ion-label>المدينة</ion-label>\n          <ion-select [(ngModel)]="team.city" name="city" formControlName=\'city\' interface=\'popover\'>\n            <ion-option value="الرياض" selected>الرياض</ion-option>\n            <ion-option value="جده">جده</ion-option>\n            <ion-option value="الدمام">الدمام</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-list>\n    </form>\n\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/start-team/start-team.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
-], SearchPage);
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]) === "function" && _g || Object])
+], StartTeamPage);
 
-//# sourceMappingURL=search.js.map
+var _a, _b, _c, _d, _e, _f, _g;
+//# sourceMappingURL=start-team.js.map
 
 /***/ })
 

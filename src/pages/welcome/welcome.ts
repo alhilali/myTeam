@@ -27,11 +27,12 @@ export class WelcomePage {
     afAuth.auth.onAuthStateChanged(user => {
       if (user && !this.twitterSubmit) this.navCtrl.setRoot('TabsPage')
     })
+
     this.navCtrl.swipeBackEnabled = false;
   }
 
   loginPage() {
-    this.navCtrl.push('LoginPage');
+    this.navCtrl.push('LoginPage')
   }
 
   registerPage() {

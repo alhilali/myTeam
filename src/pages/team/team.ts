@@ -1,6 +1,6 @@
 import { Component, ViewChildren, QueryList } from '@angular/core';
 import {
-  IonicPage, NavController, Slides,
+  IonicPage, NavController, Slides, ToastController,
   NavParams, ModalController, AlertController
 } from 'ionic-angular';
 import { Team } from '../../models/team';
@@ -41,7 +41,8 @@ export class TeamPage {
     private afAuth: AngularFireAuth,
     private modal: ModalController,
     private teamDB: MyTeamDB,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private toast: ToastController) {
     this.team.logo = '';
     this.team.bg = '';
     this.team.$key = this.navParams.get('id');
@@ -116,16 +117,6 @@ export class TeamPage {
   }
 
   removePlayer(player) {
-    if (player.$key == this.team.captain) {
-      this.alertCtrl.create({
-        title: 'خطأ في حذف لاعب',
-        subTitle: 'لا يمكنك حذف كابتن الفريق',
-        buttons: ['حسناً'],
-      }).present();
-    } else this.showConfirm(player)
-  }
-
-  showConfirm(player) {
     let confirm = this.alertCtrl.create({
       title: 'هل انت متأكد من حذف اللاعب؟',
       message: 'لا يمكن التراجع بعد تنفيذ العملية',
@@ -141,6 +132,13 @@ export class TeamPage {
           handler: () => {
             this.db.object('users/' + player.$key + '/myTeams/' + this.team.$key).remove();
             this.db.object('playersList/' + this.team.$key + '/' + player.$key).remove();
+            this.toast.create({
+              message: 'تم حذف اللاعب',
+              duration: 2200,
+              dismissOnPageChange: true,
+              position: 'top',
+              cssClass: 'failure'
+            }).present();
           }
         }
       ]

@@ -80,9 +80,10 @@ export class PostComponent {
     });
   }
 
-  like() {
+  async like() {
     if (this.teamDB.loggedIn) {
-      this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key)
+      await this.teamDB.like(this.postInfo.$key)
+      this.db.object('users/' + this.postInfo.by + '/notifications/' + this.postInfo.$key + this.teamDB.userInfo.uid)
         .set({
           player: this.teamDB.userInfo.uid,
           title: this.postInfo.title,
@@ -90,8 +91,6 @@ export class PostComponent {
           postID: this.postInfo.$key,
           timestamp: new Date().getTime(),
           date: moment.utc().format('YYYY-MM-DD HH:mm:ss')
-        }).then(() => {
-          this.teamDB.like(this.postInfo.$key);
         })
     }
   }
@@ -130,7 +129,7 @@ export class PostComponent {
 
   requestMatch() {
     if (this.teamDB.loggedIn) {
-      this.modal.create('RequestMatchPage', { team: this.teamInfo }).present()
+      this.modal.create('RequestMatchPage', { team: this.teamInfo, givenDate: this.postInfo.matchDate }).present()
     }
   }
 

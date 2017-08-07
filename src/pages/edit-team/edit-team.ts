@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,
-   ViewController, ActionSheetController } from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams,
+  ViewController, ActionSheetController, ToastController
+} from 'ionic-angular';
 import firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -27,19 +29,26 @@ export class EditTeamPage {
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private actionSheetCtrl: ActionSheetController,
-    private camera: Camera) {
+    private camera: Camera,
+    private toast: ToastController) {
   }
 
   ionViewDidLoad() {
-    this.teamSub = this.db.object('teams/'+this.navParams.get('team').$key)
-    .subscribe(data=>{
-      this.team = data;
-    })
+    this.teamSub = this.db.object('teams/' + this.navParams.get('team').$key)
+      .subscribe(data => {
+        this.team = data;
+      })
   }
 
   update(team) {
-    this.db.object('teams/'+this.navParams.get('team').$key)
-    .update({name: team.name, city: team.city})
+    this.db.object('teams/' + this.navParams.get('team').$key)
+      .update({ name: team.name, city: team.city })
+    this.toast.create({
+      message: 'تم التحديث  بنجاح',
+      duration: 2200,
+      dismissOnPageChange: true,
+      position: 'top'
+    }).present();
   }
 
   changePhoto(type) {
@@ -54,22 +63,22 @@ export class EditTeamPage {
       targetHeight: 300
     }
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64:
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-     let storageRef = firebase.storage().ref();
-     const filename = this.navParams.get('team').$key;
-     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
+      let storageRef = firebase.storage().ref();
+      const filename = this.navParams.get('team').$key;
+      const imageRef = storageRef.child(`${filename}/${type}.jpg`)
 
-     imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
-     .then((snap)=>{
-       const ref = this.db.object('/teams/'+this.navParams.get('team').$key)
-       if (type == 'logo') ref.update({logo: snap.downloadURL})
-       else ref.update({bg: snap.downloadURL})
-     })
+      imageRef.putString(base64Image, firebase.storage.StringFormat.DATA_URL)
+        .then((snap) => {
+          const ref = this.db.object('/teams/' + this.navParams.get('team').$key)
+          if (type == 'logo') ref.update({ logo: snap.downloadURL })
+          else ref.update({ bg: snap.downloadURL })
+        })
     }, (err) => {
-     // Handle error
+      // Handle error
     });
   }
 
@@ -77,17 +86,17 @@ export class EditTeamPage {
     let storageRef = firebase.storage().ref();
     const filename = this.navParams.get('team').$key;
     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
-    imageRef.delete().then(()=> {
+    imageRef.delete().then(() => {
       if (type == 'logo') {
-        this.db.object('/teams/'+this.navParams.get('team').$key+'/logo')
-        .set('http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png');
+        this.db.object('/teams/' + this.navParams.get('team').$key + '/logo')
+          .set('http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png');
       }
       else {
-        this.db.object('/teams/'+this.navParams.get('team').$key+'/bg')
-        .remove();
+        this.db.object('/teams/' + this.navParams.get('team').$key + '/bg')
+          .remove();
       }
 
-    }).catch((error)=> {
+    }).catch((error) => {
       // Uh-oh, an error occurred!
       console.log(error)
     });
@@ -95,20 +104,19 @@ export class EditTeamPage {
 
   presentActionSheet(type) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'إعدادات الفريق',
       buttons: [
         {
-          text: 'تغيير الصورة',
+          text: type == 'logo' ? 'تغيير الشعار' : 'تغيير الخلفية',
           handler: () => {
             this.changePhoto(type);
           }
-        },{
+        }, {
           text: 'حذف',
           role: 'destructive',
           handler: () => {
             this.deletePic(type);
           }
-        },{
+        }, {
           text: 'إلغاء',
           role: 'cancel',
           handler: () => {

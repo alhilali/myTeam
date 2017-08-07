@@ -1,15 +1,14 @@
 webpackJsonp([16],{
 
-/***/ 1104:
+/***/ 1106:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePageModule", function() { return HomePageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageModule", function() { return LoginPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(1170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login__ = __webpack_require__(1176);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,38 +18,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-var HomePageModule = (function () {
-    function HomePageModule() {
+var LoginPageModule = (function () {
+    function LoginPageModule() {
     }
-    return HomePageModule;
+    return LoginPageModule;
 }());
-HomePageModule = __decorate([
+LoginPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */]],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */],
+        ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */]
+            __WEBPACK_IMPORTED_MODULE_2__login__["a" /* LoginPage */]
         ]
     })
-], HomePageModule);
+], LoginPageModule);
 
-//# sourceMappingURL=home.module.js.map
+//# sourceMappingURL=login.module.js.map
 
 /***/ }),
 
-/***/ 1170:
+/***/ 1176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,139 +99,163 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
-var HomePage = (function () {
-    function HomePage(afAuth, modal, teamDB, actionSheetCtrl, navCtrl) {
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var LoginPage = (function () {
+    function LoginPage(afAuth, loadingCtrl, toast, alertCtrl, navCtrl, navParams, myTeamDB, _form) {
         this.afAuth = afAuth;
-        this.modal = modal;
-        this.teamDB = teamDB;
-        this.actionSheetCtrl = actionSheetCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.toast = toast;
+        this.alertCtrl = alertCtrl;
         this.navCtrl = navCtrl;
-        this.blur = false;
-        this.type = 'all';
-        this.currentUser = {};
+        this.navParams = navParams;
+        this.myTeamDB = myTeamDB;
+        this._form = _form;
+        this.user = {};
+        this.loginForm = this._form.group({
+            "email": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].email],
+            "password": ["", __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].minLength(6), __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required])]
+        });
+        this.navCtrl.swipeBackEnabled = true;
     }
-    HomePage.prototype.ngAfterViewInit = function () {
-        this.slides.autoHeight = true;
-    };
-    HomePage.prototype.ionViewWillEnter = function () {
+    LoginPage.prototype.login = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
+            var loginLoading, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (data) {
-                            _this.currentUserId = data;
-                        })];
+                    case 0:
+                        loginLoading = this.loadingCtrl.create({
+                            dismissOnPageChange: true,
+                            cssClass: 'loginLoading',
+                            spinner: 'crescent'
+                        });
+                        loginLoading.present();
+                        _a.label = 1;
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
-                                _this.currentUser = data;
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(function () {
+                                _this.navCtrl.setRoot('TabsPage');
                             })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        this.myTeamDB.findEmail(user.email).then(function (data) {
+                            _this.afAuth.auth.signInWithEmailAndPassword(data, user.password).then(function () {
+                                _this.navCtrl.setRoot('TabsPage');
+                            })
+                                .catch(function (err) {
+                                loginLoading.dismiss();
+                                _this.showErrorToast();
+                            });
+                        }).catch(function () {
+                            loginLoading.dismiss();
+                            _this.showErrorToast();
+                        });
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    HomePage.prototype.segmentChanged = function (event) {
-        if (event.value == 'all')
-            this.slides.slideTo(0, 500);
-        else if (event.value == 'match')
-            this.slides.slideTo(1, 500);
-        else if (event.value == 'player')
-            this.slides.slideTo(2, 500);
+    LoginPage.prototype.goBack = function () {
+        this.navCtrl.pop();
     };
-    HomePage.prototype.slideChanged = function () {
-        var currentIndex = this.slides.getActiveIndex();
-        if (currentIndex == 0)
-            this.type = 'all';
-        if (currentIndex == 1)
-            this.type = 'match';
-        if (currentIndex == 2)
-            this.type = 'player';
+    LoginPage.prototype.showErrorToast = function () {
+        this.toast.create({
+            message: 'الرجاء التأكد من الايميل او الرقم السري',
+            duration: 1500,
+            showCloseButton: true,
+            dismissOnPageChange: true,
+            closeButtonText: 'حسناً'
+        }).present();
     };
-    HomePage.prototype.ionViewWillLoad = function () {
-        this.loadPosts('all');
-        this.loadPosts('match');
-        this.loadPosts('player');
-    };
-    HomePage.prototype.loadPosts = function (type) {
+    LoginPage.prototype.resetPassword = function () {
         var _this = this;
-        var result;
-        if (type == 'all') {
-            this.teamDB.getAllPosts().then(function (data) {
-                result = data;
-                _this.allPosts = result;
-                _this.allPosts.reverse();
-            });
-        }
-        else if (type == 'match') {
-            this.teamDB.getPosts(type).then(function (data) {
-                result = data;
-                _this.matchPosts = result;
-                _this.matchPosts.reverse();
-            });
-        }
-        else if (type == 'player') {
-            this.teamDB.getPosts(type).then(function (data) {
-                result = data;
-                _this.playerPosts = result;
-                _this.playerPosts.reverse();
-            });
-        }
-    };
-    HomePage.prototype.doRefresh = function (refresher) {
-        this.loadPosts(this.type);
-        setTimeout(function () {
-            //console.log('Async operation has ended');
-            refresher.complete();
-        }, 1000);
-    };
-    HomePage.prototype.openModal = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
-                return [2 /*return*/];
-            });
+        var alert = this.alertCtrl.create({
+            title: 'نسيت الرقم السري؟',
+            message: 'سيتم ارسال رقم سري جديد الى بريدك الالكتروني',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'البريد الإلكتروني'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'تم',
+                    handler: function (data) {
+                        var loading = _this.loadingCtrl.create({
+                            dismissOnPageChange: true,
+                            content: 'إعادة تعيين الرقم السري..'
+                        });
+                        loading.present();
+                        _this.afAuth.auth.sendPasswordResetEmail(data.email).then(function () {
+                            loading.dismiss().then(function () {
+                                _this.alertUserSuccess('راجع بريدك الالكتروني', 'تم إعادة تعيين الرقم السري');
+                            });
+                        }, function (error) {
+                            _this.alertUserError(error);
+                            loading.dismiss();
+                        });
+                    }
+                },
+                {
+                    text: 'إلغاء',
+                    role: 'cancel',
+                    handler: function (data) {
+                        //console.log('Cancel clicked');
+                    }
+                }
+            ]
         });
+        alert.present();
     };
-    HomePage.prototype.compose = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var myModal;
-            return __generator(this, function (_a) {
-                myModal = this.modal.create('ComposePage', { player: this.currentUser });
-                myModal.present();
-                this.blur = true;
-                myModal.onWillDismiss(function (data) {
-                    _this.blur = false;
-                    if (data.postDone)
-                        _this.loadPosts(_this.type);
-                });
-                return [2 /*return*/];
-            });
-        });
+    LoginPage.prototype.alertUserError = function (error) {
+        var message = error;
+        switch (error.code) {
+            case 'auth/invalid-email':
+                message = 'الرجاء التأكد من صيغة الايميل.';
+                break;
+            case 'auth/user-not-found':
+                message = 'لا يوجد حساب مسجل بهذا البريد الالكتروني.';
+                break;
+        }
+        this.alertCtrl.create({
+            title: 'خطأ في اعادة تعيين الرقم السري',
+            subTitle: message,
+            buttons: ['حسناً'],
+        }).present();
     };
-    HomePage.prototype.loginPage = function () {
-        this.navCtrl.push('WelcomePage');
+    LoginPage.prototype.alertUserSuccess = function (title, message) {
+        this.alertCtrl.create({
+            title: title,
+            subTitle: message,
+            buttons: ['حسناً'],
+        }).present();
     };
-    return HomePage;
+    return LoginPage;
 }());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */])
-], HomePage.prototype, "slides", void 0);
-HomePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-buttons *ngIf=\'teamDB.loggedIn\' end>\n      <button (click)="openModal()" ion-button icon-only>\n        <profile-pic className="avatar" type="user" ID="{{teamDB.userInfo.uid}}"></profile-pic>\n      </button>\n    </ion-buttons>\n    <ion-buttons *ngIf=\'!teamDB.loggedIn\' end>\n      <button (click)="loginPage()" ion-button icon-only>\n        <ion-icon name="ios-log-in"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-buttons *ngIf=\'teamDB.loggedIn\' start>\n      <button padding-right (click)="compose()" ion-button icon-only>\n        <ion-icon name="ios-albums-outline"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>الرئيسية</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content [ngClass]="blur ? \'blur\' : \'unblur\'">\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n  <ion-segment padding-horizontal [(ngModel)]="type" color="orange" mode="md" (ionChange)="segmentChanged($event)">\n    <ion-segment-button value="all">عام</ion-segment-button>\n    <ion-segment-button value="match">مباريات</ion-segment-button>\n    <ion-segment-button value="player">لاعبين</ion-segment-button>\n  </ion-segment>\n  <div>\n    <ion-slides dir="rtl" (ionSlideWillChange)="slideChanged()">\n\n      <ion-slide>\n        <post *ngFor="let post of allPosts" [post]="post"></post>\n      </ion-slide>\n\n      <ion-slide>\n        <post *ngFor="let post of matchPosts" [post]="post">\n        </post>\n      </ion-slide>\n\n      <ion-slide>\n        <post *ngFor="let post of playerPosts" [post]="post">\n        </post>\n      </ion-slide>\n\n    </ion-slides>\n\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/home/home.html"*/
+LoginPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
+        segment: 'login',
+        defaultHistory: ['WelcomePage']
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]])
-], HomePage);
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-login',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content>\n  <ion-row justify-content-start>\n    <ion-col col-3 text-start padding>\n      <ion-icon on-tap="goBack()" class="largeIcon" color="grey" name="ios-arrow-back"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <div class="login" padding>\n    <div class="welcomeTop">\n      <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n    </div>\n    <h2 text-center>تسجيل الدخول</h2>\n    <form [formGroup]="loginForm" novalidate padding>\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-person-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="user.email" formControlName=\'email\' placeholder="Username/Email"></ion-input>\n      </ion-item>\n\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon class="largeIcon" name="ios-key-outline"></ion-icon>\n        </ion-label>\n        <ion-input type="password" [(ngModel)]="user.password" formControlName=\'password\' placeholder="Password"></ion-input>\n      </ion-item>\n      <button color="orange" ion-button block (click)="login(user)">الدخول</button>\n      <p text-right style="margin: 0px;">\n        <button ion-button clear (click)="resetPassword()" small>نسيت الرقم السري؟</button>\n      </p>\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/login/login.html"*/,
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _h || Object])
+], LoginPage);
 
-//# sourceMappingURL=home.js.map
+var _a, _b, _c, _d, _e, _f, _g, _h;
+//# sourceMappingURL=login.js.map
 
 /***/ })
 

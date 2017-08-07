@@ -6,16 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-
-    <ion-buttons start>
-      <button ion-button (click)="closeModal()">إغلاق</button>
-    </ion-buttons>
     <ion-title>تعديل بياناتي</ion-title>
-    <ion-buttons end>
-      <button (click)="logout()" ion-button icon-only>
-        <ion-icon name="log-out"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -34,20 +25,20 @@
         </button>
         <ion-item>
           <ion-label>
-            <ion-icon class="largeIcon" name="ios-person"></ion-icon>
+            <ion-icon class="mdIcon" name="ios-person"></ion-icon>
           </ion-label>
           <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!editForm.controls.name.valid && (editForm.controls.name.dirty || submitAttempt)"
             formControlName='name' placeholder="الاسم كامل"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>
-            <ion-icon class="largeIcon" name="ios-at"></ion-icon>
+            <ion-icon class="mdIcon" name="ios-at"></ion-icon>
           </ion-label>
           <ion-input dir="ltr" type="text" [(ngModel)]="user.originalUsername" formControlName='username' placeholder="username"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>
-            <ion-icon class="largeIcon" name="ios-analytics"></ion-icon>
+            <ion-icon class="mdIcon" name="ios-analytics"></ion-icon>
           </ion-label>
           <ion-select [(ngModel)]="user.position" formControlName='position' name="position" interface='popover'>
             <ion-option value="GK" selected>حارس</ion-option>
@@ -58,7 +49,7 @@
         </ion-item>
         <ion-item *ngIf="user.email">
           <ion-label>
-            <ion-icon class="largeIcon" name="ios-mail"></ion-icon>
+            <ion-icon class="mdIcon" name="ios-mail"></ion-icon>
           </ion-label>
           <ion-input dir='ltr' type="text" [(ngModel)]="user.email" formControlName='email' placeholder="البريد الالكتروني"></ion-input>
         </ion-item>
@@ -69,10 +60,7 @@
             style="color: #ea6153;">
             اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.
           </p>
-          <p *ngIf="!editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>
-          <p *ngIf="usedEmail" style="color: #ea6153;">
-            الايميل مستخدم من قبل شخص آخر.
-          </p>
+          <p *ngIf="user.email && !editForm.controls.email.valid && (submitAttempt)" style="color: #ea6153;">الرجاء ادخال ايميل صحيح.</p>
           <p *ngIf="editForm.controls.username.pending">
             جاري التأكد من اسم المستخدم...
           </p>

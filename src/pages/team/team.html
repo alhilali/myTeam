@@ -71,7 +71,7 @@
           <ion-item-divider>لاعبي الفريق</ion-item-divider>
           <ion-item-sliding *ngFor="let player of playersList">
             <ion-item class="fixedBorder">
-              <ion-row on-tap="showPlayer(player)" align-items-center>
+              <ion-row on-tap="showPlayer(player)" align-items-center nowrap>
                 <p class="mychip {{player.position}}">
                   {{player.position}}
                 </p>

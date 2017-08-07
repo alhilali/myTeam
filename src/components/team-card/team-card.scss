@@ -14,6 +14,19 @@ team-card {
     font-weight: bold;
     color: white;
   }
+  .captain {
+    margin-right: 10px;
+    left: 26px;
+    top: 5px;
+    width: 30px;
+    line-height: 1.1;
+    color: #ffffff;
+    text-align: -webkit-center;
+    height: 22px;
+    font-weight: bolder;
+    background-color: #ffd034;
+    border-radius: 5px;
+  }
   ion-card {
     position: relative;
     text-align: center;
@@ -27,9 +40,8 @@ team-card {
   }
   .more {
     position: absolute;
-    width: 10px;
-    left: 12%;
-    top: 0;
+    left: 4%;
+    top: 13%;
   }
   .card-content {
     position: absolute;

@@ -31961,7 +31961,7 @@ ion-navbar.toolbar {
 }
 
 .toolbar-background-ios {
-  background: #0072bb;
+  background: #0077B5;
 }
 
 .header-ios .toolbar-background-ios,
@@ -41965,7 +41965,7 @@ ion-navbar.toolbar {
 
 .toolbar-background-md {
   border-color: #b2b2b2;
-  background: #0072bb;
+  background: #0077B5;
 }
 
 .header-md::after,
@@ -51404,7 +51404,7 @@ ion-navbar.toolbar {
 
 .toolbar-background-wp {
   border-color: #b2b2b2;
-  background: #0072bb;
+  background: #0077B5;
 }
 
 .toolbar-content-wp {
@@ -60398,8 +60398,8 @@ ion-refresher {
 }
 
 ion-card-header {
-  font-size: 1.7rem !important;
-  background-color: rgba(0, 114, 187, 0.14);
+  padding: 5px !important;
+  background-color: #ffd035;
 }
 
 .card1 {
@@ -60422,9 +60422,31 @@ ion-card-header {
   border-bottom: 0 !important;
 }
 
-.toolbar-ios {
-  height: 64px;
-  padding-top: 20px;
+.padding-top {
+  padding-top: 40px;
+}
+
+/**.toolbar-ios {
+  height: 44px + $cordova-ios-statusbar-padding;
+  padding-top: $cordova-ios-statusbar-padding;
+}**/
+/** Toast Theme **/
+.toast-wrapper {
+  background-color: #01ACFF !important;
+  border-radius: 10px !important;
+  opacity: 0.95 !important;
+}
+
+.failure .toast-wrapper {
+  background-color: #f53d3d !important;
+}
+
+.toast-message {
+  padding: .8rem !important;
+}
+
+ion-toast {
+  top: 65px !important;
 }
 
 ion-calendar-modal.matchCalender ion-header .toolbar-background-md,
@@ -60594,14 +60616,11 @@ post .infoPlaceholder {
 }
 
 post .card-content {
-  padding: 0px 16px 0px;
-  position: absolute;
-  right: 54px;
-  top: 45px;
-}
-
-post ion-card-content h2 {
-  color: dimgray;
+  padding: 0px 16px;
+  text-align: start;
+  /**position: absolute;
+    right: 53px;
+    top: 55px;**/
 }
 
 post .postAvatar {
@@ -60621,7 +60640,7 @@ post .chip {
 }
 
 post .gold {
-  background-color: #AF6916;
+  background-color: #FFD034;
 }
 
 post .red {
@@ -60646,6 +60665,21 @@ post .date > ion-note {
 
 post .date p {
   text-align: start;
+}
+
+post .author {
+  line-height: 1.2;
+}
+
+post .author > #name {
+  color: black;
+  font-size: 1.6rem;
+}
+
+post .postInfoBar {
+  border-top: 1px solid #e6e9ec;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 post .topLeft {
@@ -61017,6 +61051,20 @@ team-card .ribbon {
   color: white;
 }
 
+team-card .captain {
+  margin-right: 10px;
+  left: 26px;
+  top: 5px;
+  width: 30px;
+  line-height: 1.1;
+  color: #ffffff;
+  text-align: -webkit-center;
+  height: 22px;
+  font-weight: bolder;
+  background-color: #ffd034;
+  border-radius: 5px;
+}
+
 team-card ion-card {
   position: relative;
   text-align: center;
@@ -61033,9 +61081,8 @@ team-card .bg {
 
 team-card .more {
   position: absolute;
-  width: 10px;
-  left: 12%;
-  top: 0;
+  left: 4%;
+  top: 13%;
 }
 
 team-card .card-content {
@@ -61044,14 +61091,22 @@ team-card .card-content {
   width: 100%;
 }
 
+page-add-player ion-header {
+  display: none;
+}
+
+page-add-player ion-content {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
 page-add-player-to-team .teamsList {
-  height: 23vh;
+  height: 20vh;
 }
 
 page-add-player-to-team .checkbox-ios {
   height: 0px;
   position: absolute;
-  right: 5px;
+  right: 12px;
 }
 
 page-add-player-to-team .swiper-slide img {
@@ -61065,8 +61120,7 @@ page-add-player-to-team .logo {
   border: solid 1px white;
   border-radius: 50%;
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  width: 55px;
   z-index: 10;
 }
 
@@ -61074,6 +61128,14 @@ page-add-player-to-team .card-title {
   font-size: 0.6em;
   text-align: center;
   line-height: 1;
+}
+
+page-add-player-to-team ion-header {
+  display: none;
+}
+
+page-add-player-to-team ion-content {
+  background-color: rgba(255, 255, 255, 0) !important;
 }
 
 page-choose-username ion-content:after {
@@ -61121,14 +61183,6 @@ page-compose ion-content {
 
 page-compose .red {
   color: red;
-}
-
-page-compose .padding-top {
-  padding-top: 40px;
-}
-
-page-compose .btnsRow {
-  text-align: -webkit-center;
 }
 
 page-compose .infoArea {
@@ -61308,7 +61362,6 @@ page-home .avatar {
   height: 34px;
   max-width: unset;
   border: solid 1px white;
-  position: absolute;
   left: 0;
   top: -5px;
 }
@@ -61355,6 +61408,7 @@ page-home .likeAvatar {
 
 page-home .postInfoBar {
   height: 38px;
+  margin-top: 10px;
 }
 
 page-login ion-content:after {
@@ -61428,6 +61482,10 @@ page-my-team .monthLabel {
   background: #FFD034;
   text-align: left;
   font-weight: 300;
+}
+
+page-my-team .content {
+  background-color: #f7f7f7;
 }
 
 page-notification .listAvatar {
@@ -61607,13 +61665,19 @@ page-player .logo {
   z-index: 10;
 }
 
+page-player .editIcon {
+  position: absolute;
+  left: 1.5%;
+  top: 66px;
+  opacity: .80;
+  z-index: 99;
+}
+
 page-post .postCard {
   margin: 0;
-  -webkit-box-shadow: 0px 14px 0px #0072bb;
-  box-shadow: 0px 14px 0px #0072bb;
   width: 100%;
-  margin-bottom: 14px;
-  padding-top: 8px;
+  -webkit-box-shadow: unset;
+  box-shadow: unset;
 }
 
 page-post .comments {
@@ -61639,20 +61703,33 @@ page-post .text-input {
 }
 
 page-post ion-item-sliding h3 {
-  margin: 0 !important;
-  line-height: 1 !important;
+  margin: 0px !important;
+  line-height: 1.9 !important;
 }
 
 page-post post .card-content {
-  top: 50px;
+  top: 60px;
 }
 
 page-post .label {
-  margin: 0;
+  margin: 1px;
+}
+
+page-post #date p {
+  line-height: 10px;
+}
+
+page-post .item-inner {
+  border-bottom: 0.55px solid #e8e8e8;
+}
+
+page-post .item-wrapper:last-child .item-block {
+  border-bottom: 0.55px solid #e8e8e8;
 }
 
 page-post .postInfoBar {
   padding: 4px 0;
+  margin-top: 50px;
 }
 
 page-post .likeAvatar {
@@ -61665,6 +61742,10 @@ page-post .likesPreview {
   border-radius: 10px;
   position: absolute;
   right: 60px;
+}
+
+page-post .content {
+  background-color: #f7f7f7;
 }
 
 page-register ion-content:after {
@@ -61709,6 +61790,14 @@ page-register ion-item {
   margin-bottom: 10px !important;
 }
 
+page-request-match ion-header {
+  display: none;
+}
+
+page-request-match ion-content {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
 page-search #itemInfo {
   margin-bottom: 15px;
   -webkit-align-self: center;
@@ -61725,20 +61814,20 @@ page-search .chip {
   background-color: #969696;
 }
 
+page-settings .content {
+  background-color: #f7f7f7;
+}
+
+page-settings .item {
+  font-size: 1.4rem;
+}
+
 page-start-team ion-header {
   display: none;
 }
 
 page-start-team ion-content {
   background-color: rgba(255, 255, 255, 0) !important;
-}
-
-page-start-team .padding-top {
-  padding-top: 40px;
-}
-
-page-start-team .btnsRow {
-  text-align: -webkit-center;
 }
 
 page-team .hero {
@@ -61858,7 +61947,6 @@ page-team .captainChip {
 }
 
 page-team .mychip {
-  padding: 0 4px 0px;
   border-radius: 6px;
   color: white;
   margin-top: 6px;
@@ -61869,7 +61957,7 @@ page-team .mychip {
 }
 
 page-team .CM {
-  background-color: #AF6916;
+  background-color: #FFD034;
 }
 
 page-team .GK {

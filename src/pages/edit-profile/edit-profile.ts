@@ -120,7 +120,7 @@ export class EditProfilePage {
       message: ' تم تحديث ' + word + ' بنجاح',
       duration: 2200,
       dismissOnPageChange: true,
-      position: 'middle'
+      position: 'top'
     });
     this.toastMessage.present();
     this.shown = true;
@@ -274,13 +274,6 @@ export class EditProfilePage {
       ]
     })
     actionSheet.present()
-  }
-
-  logout() {
-    if (this.editSub) this.editSub.unsubscribe();
-    if (this.editUnameSub) this.editUnameSub.unsubscribe();
-    this.navCtrl.push('WelcomePage')
-    this.afAuth.auth.signOut();
   }
 
 }

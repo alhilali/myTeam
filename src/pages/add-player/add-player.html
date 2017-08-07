@@ -16,8 +16,19 @@
 </ion-header>
 
 
-<ion-content>
-
+<ion-content padding-vertical>
+  <ion-row class="padding-top" align-items-stretch text-center>
+    <ion-col pull-1>
+      <button (click)="closeModal()" color="orange" ion-button round small>
+          إلغاء
+        </button>
+    </ion-col>
+    <ion-col push-1>
+      <button (click)="requestAddPlayer(player)" [disabled]="requestPlayerForm.invalid" color="gold" ion-button round small>
+             إضافة
+        </button>
+    </ion-col>
+  </ion-row>
   <ion-card class="card1">
     <ion-card-header>
       المعرف الشخصي للاعب الذي تريد اضافته
@@ -26,20 +37,14 @@
       <div [formGroup]='requestPlayerForm'>
         <ion-item dir="ltr">
           <ion-label>
-            <h1>@</h1></ion-label>
+            <h1>@</h1>
+          </ion-label>
           <ion-input type="text" [(ngModel)]="player.username" formControlName='username' placeholder="username"></ion-input>
         </ion-item>
 
-        <ion-row>
-          <ion-col center text-center>
-            <button ion-button color="secondary" (click)="requestAddPlayer(player)" [disabled]="requestPlayerForm.invalid">إضافة
-              <ion-icon padding name="person-add"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-
         <div padding>
-          <p *ngIf="!requestPlayerForm.controls.username.valid && !requestPlayerForm.controls.username.pending && (requestPlayerForm.controls.username.dirty)" style="color: #ea6153;">
+          <p *ngIf="!requestPlayerForm.controls.username.valid && !requestPlayerForm.controls.username.pending && (requestPlayerForm.controls.username.dirty)"
+            style="color: #ea6153;">
             {{requestPlayerForm.controls.username.errors.message}}
           </p>
           <p *ngIf="requestPlayerForm.controls.username.pending">

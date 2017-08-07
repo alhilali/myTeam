@@ -4,10 +4,9 @@
     <ion-avatar margin-top item-start>
       <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">
     </ion-avatar>
-    <ion-row justify-content-baseline>
-      <h2 style="margin: 4px 0;">{{user.name}}</h2>&nbsp;
-      <p>{{user.originalUsername}}@</p>
-    </ion-row>
+    <p class="author">
+      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}@
+    </p>
     <div class="topLeft">
       <div *ngIf="postInfo.type == 'match'" on-tap="requestMatch()" class="icon_calendar">
         <em></em><em></em>

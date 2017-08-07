@@ -1,11 +1,11 @@
 page-add-player-to-team {
   .teamsList {
-    height: 23vh;
+    height: 20vh;
   }
   .checkbox-ios {
     height: 0px;
     position: absolute;
-    right: 5px;
+    right: 12px;
   }
   .swiper-slide img {
     max-height: 55px !important;
@@ -17,13 +17,18 @@ page-add-player-to-team {
     border: solid 1px rgba(255, 255, 255, 255);
     border-radius: 50%;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    width: 55px;
     z-index: 10;
   }
   .card-title {
     font-size: 0.6em;
     text-align: center;
     line-height: 1;
+  }
+  ion-header {
+    display: none;
+  }
+  ion-content {
+    background-color: rgba(255, 255, 255, 0) !important;
   }
 }

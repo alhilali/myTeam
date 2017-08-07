@@ -48,8 +48,8 @@ ion-refresher {
 }
 
 ion-card-header {
-  font-size: 1.7rem !important;
-  background-color: rgba(#0072bb, 0.14);
+  padding: 5px !important;
+  background-color: rgb(255, 208, 53);
 }
 
 .card1 {
@@ -71,10 +71,36 @@ ion-card-header {
   border-bottom: 0 !important;
 }
 
+.padding-top {
+  padding-top: 40px;
+}
+
 // Hopefully temp until bug gets fixed (pushing page from modal cuts statusbar)
-.toolbar-ios {
+
+/**.toolbar-ios {
   height: 44px + $cordova-ios-statusbar-padding;
   padding-top: $cordova-ios-statusbar-padding;
+}**/
+
+
+/** Toast Theme **/
+
+.toast-wrapper {
+  background-color: #01ACFF !important;
+  border-radius: 10px !important;
+  opacity: 0.95 !important;
+}
+
+.failure .toast-wrapper {
+  background-color: #f53d3d !important;
+}
+
+.toast-message {
+  padding: .8rem !important;
+}
+
+ion-toast {
+  top: 65px !important;
 }
 
 // Calendar

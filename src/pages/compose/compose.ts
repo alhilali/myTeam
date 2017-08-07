@@ -3,7 +3,7 @@ import { MyTeamDB } from "./../../helpers/myTeamDB";
 import { Component } from '@angular/core';
 import {
   IonicPage, NavController, NavParams,
-  ViewController, AlertController
+  ViewController, AlertController, ToastController
 } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -41,7 +41,8 @@ export class ComposePage {
     private db: AngularFireDatabase,
     private teamDB: MyTeamDB,
     private calendarCtrl: CalendarController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private toast: ToastController) {
     this.player = this.navParams.get('player');
     this.composeForm = _form.group({
       "title": ["",
@@ -106,6 +107,11 @@ export class ComposePage {
       this.post.matchDate = this.matchDate;
     }
     this.db.list('timeline/').push(this.post).then(() => {
+      this.toast.create({
+        message: 'تم الارسال بنجاح',
+        duration: 2200,
+        position: 'top'
+      }).present();
       this.view.dismiss({ postDone: true });
     })
   }

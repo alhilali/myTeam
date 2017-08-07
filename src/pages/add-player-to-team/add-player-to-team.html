@@ -16,10 +16,22 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding-vertical>
+  <ion-row class="padding-top" align-items-stretch text-center>
+    <ion-col pull-1>
+      <button (click)="closeModel()" color="orange" ion-button round small>
+          إلغاء
+        </button>
+    </ion-col>
+    <ion-col push-1>
+      <button (click)="requestAddPlayer()" color="gold" ion-button round small>
+             إضافة
+        </button>
+    </ion-col>
+  </ion-row>
   <ion-card class="card1">
     <ion-card-header>
-      اختر الفريق الذي ترغب بإضافة اللاعب اليه
+      طلب اضافة @{{player.originalUsername}}
     </ion-card-header>
     <ion-item-group class="teamsList" *ngIf="myTeams?.length > 0 ">
       <ion-slides pager dir="rtl" slidesPerView="3">
@@ -32,11 +44,6 @@
         </ion-slide>
       </ion-slides>
     </ion-item-group>
-    <p text-center>
-      <button padding ion-button color="secondary" (click)="requestAddPlayer()">إرسال الإضافة
-        <ion-icon padding name="person-add"></ion-icon>
-      </button>
-    </p>
   </ion-card>
 
 </ion-content>

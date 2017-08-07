@@ -83,9 +83,12 @@ export class NotificationPage {
     this.db.object('/playersList/' + teamID + '/' + this.currentUserUid)
       .set({ uid: this.currentUserUid, status: 'enrolled' });
 
-    // Add team to user list DB
-    this.db.object('/users/' + this.currentUserUid + '/myTeams/' + teamID)
-      .update({ teamId: teamID });
+    this.teamDB.gettTeamInfo(teamID).then(data => {
+      // Add team to user list DB
+      this.db.object('/users/' + this.currentUserUid + '/myTeams/' + teamID)
+        .update({ teamId: teamID, captain: data.captain });
+    })
+
 
     // Remove request from user list DB
     this.db.object('users/' + this.currentUserUid + '/requests/' + key).remove();
@@ -143,7 +146,7 @@ export class NotificationPage {
   }
 
   openPost(postID) {
-    this.navCtrl.push('PostPage', { id: postID})
+    this.navCtrl.push('PostPage', { id: postID })
   }
 
 }

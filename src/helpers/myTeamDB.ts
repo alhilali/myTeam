@@ -70,7 +70,7 @@ export class MyTeamDB {
     return new Promise(resolve => {
       this.db.list('/playersList/' + teamId)
         .take(1).subscribe(data => {
-          if (data && data.length > 1) resolve(data);
+          if (data && data.length >= 1) resolve(data);
         })
     })
   }
