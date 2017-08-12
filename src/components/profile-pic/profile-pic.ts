@@ -40,7 +40,8 @@ export class ProfilePicComponent {
       })
     }
     Promise.resolve().then(() => {
-      if (!pic) this.profilePic = 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png';
+      if (this.type == 'team' && !pic) this.profilePic = 'http://playerleague.it/uploads/club/242d7e5ff1bd143ca11fd4d4b0dd1f8a.png';
+      else if (this.type == 'user' && !pic) this.profilePic = 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg';
       else this.profilePic = pic;
     });
   }

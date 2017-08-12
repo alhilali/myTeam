@@ -5,7 +5,7 @@
       <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">
     </ion-avatar>
     <p class="author">
-      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}@
+      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}
     </p>
     <div class="topLeft">
       <div *ngIf="postInfo.type == 'match'" on-tap="requestMatch()" class="icon_calendar">

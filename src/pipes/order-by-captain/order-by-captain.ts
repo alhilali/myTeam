@@ -29,12 +29,6 @@ export class OrderByCaptainPipe implements PipeTransform {
       this.cashed = arr.sort((a, b) => {
         const AisCaptain = (a.captain == currentUID);
         const BisCaptain = (b.captain == currentUID);
-        console.log('a:', a);
-        console.log('a captain:', AisCaptain);
-        console.log('b:', b);
-        console.log('b captain:', BisCaptain);
-
-
         if (AisCaptain && !BisCaptain) return -1;
         else if (BisCaptain && !AisCaptain) return 1;
         return 0;

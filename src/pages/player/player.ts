@@ -5,7 +5,7 @@ import {
   NavParams, ModalController, Slides, Content
 } from 'ionic-angular';
 import { User } from '../../models/user';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 /**
@@ -22,12 +22,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'player.html',
 })
 export class PlayerPage {
-  player = {} as User
-  myTeams: any[] = []
-  section: string = '0';
   @ViewChildren(Slides) slides: QueryList<Slides>;
   bottomSlides: Slides
+  playerInfo: FirebaseObjectObservable<any>
+  myTeams: any[] = []
+  section: string = '0';
   currentUID: any
+  playerUID: any
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,8 +37,6 @@ export class PlayerPage {
     public teamDB: MyTeamDB,
     private modlCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController) {
-    this.player.username = navParams.get('username')
-    this.player.bg = '';
   }
 
   async ionViewWillLoad() {
@@ -52,17 +51,15 @@ export class PlayerPage {
   }
 
   async ionViewDidLoad() {
-    let userInfo;
-    await this.teamDB.findUID(this.player.username).then(data => {
-      userInfo = data;
-      this.player = userInfo;
-      if (!this.player.bg) this.player.bg = 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg';
+    await this.teamDB.findUID(this.navParams.get('username')).then(data => {
+      this.playerUID = (data as any).$key
     })
+    this.playerInfo = this.db.object('users/' + this.playerUID);
     this.loadMyTeams();
   }
 
   async loadMyTeams() {
-    this.db.list('users/' + this.player.$key
+    this.db.list('users/' + this.playerUID
       + '/myTeams').take(1).subscribe(data => {
         this.myTeams = []
         let i;
@@ -86,14 +83,14 @@ export class PlayerPage {
   }
 
   addPlayer() {
-    let modal = this.modlCtrl.create('AddPlayerToTeamPage', { player: this.player });
+    let modal = this.modlCtrl.create('AddPlayerToTeamPage', { id: this.playerUID });
     modal.present();
   }
 
   options() {
     let actionSheet;
     let btns;
-    if (this.currentUID != this.player.$key) {
+    if (this.currentUID != this.playerUID) {
       btns = [
         {
           text: 'إضافة اللاعب',
@@ -106,7 +103,7 @@ export class PlayerPage {
           role: 'destructive',
           handler: () => {
             this.db.object('users/' + this.afAuth.auth.currentUser.uid +
-              '/blocked/' + this.player.$key)
+              '/blocked/' + this.playerUID)
               .set({ status: 'blocked' })
             this.navCtrl.pop();
           }
@@ -145,7 +142,7 @@ export class PlayerPage {
   }
 
   openSettings() {
-    this.navCtrl.push('SettingsPage', { player: this.player });
+    this.navCtrl.push('SettingsPage', { id: this.playerUID });
   }
 
 }

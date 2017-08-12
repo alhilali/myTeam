@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage, NavController, ActionSheetController,
-  ModalController, Slides, Events
+  ModalController, Slides, Events, Platform
 } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 @IonicPage()
 @Component({
@@ -20,12 +21,56 @@ export class HomePage {
   blur: boolean = false;
   type: string = 'all';
   currentUser: any = {}
-  constructor(private afAuth: AngularFireAuth, private modal: ModalController,
+  constructor(private platform: Platform, private modal: ModalController,
     public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
-    public navCtrl: NavController, public events: Events) {
+    public navCtrl: NavController, public events: Events, public push: Push) {
     events.subscribe("post:deleted", (postID) => {
       this.deletePost(postID)
     });
+
+    this.initPushNotification();
+  }
+
+  initPushNotification() {
+    if (!this.platform.is('cordova')) {
+      console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
+      return;
+    }
+    const options: PushOptions = {
+      android: {
+        senderID: '1091890097761'
+      },
+      ios: {
+        alert: 'true',
+        badge: true,
+        sound: 'true',
+        clearBadge: true
+      },
+      windows: {}
+    };
+
+    const pushObject: PushObject = this.push.init(options);
+
+    pushObject.on('registration').subscribe((registration: any) => {
+      console.log('Device registered');
+      this.teamDB.saveToken(registration.registrationId)
+    })
+
+    pushObject.on('notification').subscribe((notification) => {
+      console.log('message', notification.message);
+      let self = this;
+      //if user using app and push notification comes
+      if (notification.additionalData.foreground) {
+        // if application open, show popup
+        console.log(notification);
+      } else {
+        console.log(notification);
+        //if user NOT using app and push notification comes
+        this.navCtrl.push('NotificationPage')
+        console.log("Push notification clicked");
+      }
+    });
+    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
   ngAfterViewInit() {
@@ -103,11 +148,11 @@ export class HomePage {
     }, 1000);
   }
 
-  async openModal() {
+  openModal() {
     this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
   }
 
-  async compose() {
+  compose() {
     const myModal = this.modal.create('ComposePage', { player: this.currentUser })
     myModal.present();
     //this.blur = true;

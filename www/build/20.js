@@ -1,14 +1,15 @@
 webpackJsonp([20],{
 
-/***/ 1098:
+/***/ 1107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddPlayerPageModule", function() { return AddPlayerPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomePageModule", function() { return HomePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player__ = __webpack_require__(1168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(1180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(673);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +19,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AddPlayerPageModule = (function () {
-    function AddPlayerPageModule() {
+
+var HomePageModule = (function () {
+    function HomePageModule() {
     }
-    return AddPlayerPageModule;
+    return HomePageModule;
 }());
-AddPlayerPageModule = __decorate([
+HomePageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__add_player__["a" /* AddPlayerPage */],
-        ],
+        declarations: [__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */]],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__add_player__["a" /* AddPlayerPage */]),
+            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */])
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__add_player__["a" /* AddPlayerPage */]
+            __WEBPACK_IMPORTED_MODULE_2__home__["a" /* HomePage */]
         ]
     })
-], AddPlayerPageModule);
+], HomePageModule);
 
-//# sourceMappingURL=add-player.module.js.map
+//# sourceMappingURL=home.module.js.map
 
 /***/ }),
 
-/***/ 1168:
+/***/ 1180:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPlayerPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validators_username__ = __webpack_require__(674);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_push__ = __webpack_require__(214);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,78 +99,190 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
-
-/**
- * Generated class for the AddPlayerPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-var AddPlayerPage = (function () {
-    function AddPlayerPage(view, navCtrl, navParams, teamDB, _form, unameValid, toast) {
+var HomePage = (function () {
+    function HomePage(platform, modal, teamDB, actionSheetCtrl, navCtrl, events, push) {
         var _this = this;
-        this.view = view;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
+        this.platform = platform;
+        this.modal = modal;
         this.teamDB = teamDB;
-        this._form = _form;
-        this.unameValid = unameValid;
-        this.toast = toast;
-        this.player = {};
-        this.user = {};
-        this.team = navParams.get('team');
-        var usernameValidator = function (control) {
-            return unameValid.checkValidUsername(control);
-        };
-        var teamValidator = function (control) {
-            return unameValid.checkTeam(control, _this.team.$key);
-        };
-        this.requestPlayerForm = _form.group({
-            "username": ['',
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern('^[a-zA-Z0-9_.-]*$')]),
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].composeAsync([usernameValidator, teamValidator])]
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.navCtrl = navCtrl;
+        this.events = events;
+        this.push = push;
+        this.blur = false;
+        this.type = 'all';
+        this.currentUser = {};
+        events.subscribe("post:deleted", function (postID) {
+            _this.deletePost(postID);
         });
+        this.initPushNotification();
     }
-    AddPlayerPage.prototype.closeModal = function () {
-        this.view.dismiss();
+    HomePage.prototype.initPushNotification = function () {
+        var _this = this;
+        if (!this.platform.is('cordova')) {
+            console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
+            return;
+        }
+        var options = {
+            android: {
+                senderID: '1091890097761'
+            },
+            ios: {
+                alert: 'true',
+                badge: true,
+                sound: 'true',
+                clearBadge: true
+            },
+            windows: {}
+        };
+        var pushObject = this.push.init(options);
+        pushObject.on('registration').subscribe(function (registration) {
+            console.log('Device registered');
+            _this.teamDB.saveToken(registration.registrationId);
+        });
+        pushObject.on('notification').subscribe(function (notification) {
+            console.log('message', notification.message);
+            var self = _this;
+            //if user using app and push notification comes
+            if (notification.additionalData.foreground) {
+                // if application open, show popup
+                console.log(notification);
+            }
+            else {
+                console.log(notification);
+                //if user NOT using app and push notification comes
+                _this.navCtrl.push('NotificationPage');
+                console.log("Push notification clicked");
+            }
+        });
+        pushObject.on('error').subscribe(function (error) { return console.error('Error with Push plugin', error); });
     };
-    AddPlayerPage.prototype.requestAddPlayer = function (player) {
+    HomePage.prototype.ngAfterViewInit = function () {
+        this.slides.autoHeight = true;
+    };
+    HomePage.prototype.ionViewWillEnter = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.findUID(player.username.toLowerCase()).then(function (data) {
-                            user = data;
+                    case 0: return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (data) {
+                            _this.currentUserId = data;
                         })];
                     case 1:
                         _a.sent();
-                        if (this.requestPlayerForm.valid && user.$key) {
-                            this.teamDB.sendRequestToPlayer(user.$key, this.team.$key);
-                            this.toast.create({
-                                message: 'تم إرسال الإضافة  بنجاح',
-                                duration: 2200,
-                                position: 'top'
-                            }).present();
-                            this.view.dismiss();
-                        }
+                        return [4 /*yield*/, this.teamDB.getUserInfo(this.currentUserId).then(function (data) {
+                                _this.currentUser = data;
+                            })];
+                    case 2:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
         });
     };
-    return AddPlayerPage;
+    HomePage.prototype.segmentChanged = function (event) {
+        if (event.value == 'all')
+            this.slides.slideTo(0, 500);
+        else if (event.value == 'match')
+            this.slides.slideTo(1, 500);
+        else if (event.value == 'player')
+            this.slides.slideTo(2, 500);
+    };
+    HomePage.prototype.slideChanged = function () {
+        var currentIndex = this.slides.getActiveIndex();
+        if (currentIndex == 0)
+            this.type = 'all';
+        if (currentIndex == 1)
+            this.type = 'match';
+        if (currentIndex == 2)
+            this.type = 'player';
+    };
+    HomePage.prototype.ionViewWillLoad = function () {
+        this.loadPosts('all');
+        this.loadPosts('match');
+        this.loadPosts('player');
+    };
+    HomePage.prototype.loadPosts = function (type) {
+        var _this = this;
+        var result;
+        if (type == 'all') {
+            this.teamDB.getAllPosts().then(function (data) {
+                result = data;
+                _this.allPosts = result;
+                _this.allPosts.reverse();
+            });
+        }
+        else if (type == 'match') {
+            this.teamDB.getPosts(type).then(function (data) {
+                result = data;
+                _this.matchPosts = result;
+                _this.matchPosts.reverse();
+            });
+        }
+        else if (type == 'player') {
+            this.teamDB.getPosts(type).then(function (data) {
+                result = data;
+                _this.playerPosts = result;
+                _this.playerPosts.reverse();
+            });
+        }
+    };
+    HomePage.prototype.deletePost = function (postID) {
+        var postIndex = this.allPosts.map(function (e) { return e.$key; }).indexOf(postID);
+        this.allPosts.splice(postIndex, 1);
+        if (this.type == 'match') {
+            var postIndex_1 = this.matchPosts.map(function (e) { return e.$key; }).indexOf(postID);
+            this.matchPosts.splice(postIndex_1, 1);
+        }
+        else if (this.type == 'player') {
+            var postIndex_2 = this.playerPosts.map(function (e) { return e.$key; }).indexOf(postID);
+            this.playerPosts.splice(postIndex_2, 1);
+        }
+    };
+    HomePage.prototype.doRefresh = function (refresher) {
+        this.loadPosts(this.type);
+        setTimeout(function () {
+            //console.log('Async operation has ended');
+            refresher.complete();
+        }, 1000);
+    };
+    HomePage.prototype.openModal = function () {
+        this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
+    };
+    HomePage.prototype.compose = function () {
+        var _this = this;
+        var myModal = this.modal.create('ComposePage', { player: this.currentUser });
+        myModal.present();
+        //this.blur = true;
+        myModal.onWillDismiss(function (data) {
+            //this.blur = false;
+            if (data.postDone) {
+                _this.loadPosts('all');
+                _this.loadPosts('match');
+                _this.loadPosts('player');
+            }
+        });
+    };
+    HomePage.prototype.loginPage = function () {
+        this.navCtrl.push('WelcomePage');
+    };
+    return HomePage;
 }());
-AddPlayerPage = __decorate([
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */])
+], HomePage.prototype, "slides", void 0);
+HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-add-player',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player/add-player.html"*/'<!--\n  Generated template for the AddPlayerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <button start (click)="closeModal()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n    <ion-title>اضف لاعب</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top" align-items-stretch text-center>\n    <ion-col pull-1>\n      <button (click)="closeModal()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="requestAddPlayer(player)" [disabled]="requestPlayerForm.invalid" color="gold" ion-button round small>\n             إضافة\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <ion-card-header>\n      المعرف الشخصي للاعب الذي تريد اضافته\n    </ion-card-header>\n    <form name="requestPlayerForm" novalidate>\n      <div [formGroup]=\'requestPlayerForm\'>\n        <ion-item dir="ltr">\n          <ion-label>\n            <h1>@</h1>\n          </ion-label>\n          <ion-input type="text" [(ngModel)]="player.username" formControlName=\'username\' placeholder="username"></ion-input>\n        </ion-item>\n\n        <div padding>\n          <p *ngIf="!requestPlayerForm.controls.username.valid && !requestPlayerForm.controls.username.pending && (requestPlayerForm.controls.username.dirty)"\n            style="color: #ea6153;">\n            {{requestPlayerForm.controls.username.errors.message}}\n          </p>\n          <p *ngIf="requestPlayerForm.controls.username.pending">\n            جاري التأكد من اسم المستخدم...\n          </p>\n        </div>\n\n      </div>\n    </form>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player/add-player.html"*/,
+        selector: 'page-home',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-buttons *ngIf=\'teamDB.loggedIn && currentUser.originalUsername\' end>\n      <button (click)="openModal()" style="height: 35px;" ion-button icon-only>\n        <profile-pic className="avatar" type="user" ID="{{teamDB.userInfo.uid}}"></profile-pic>\n      </button>\n    </ion-buttons>\n    <ion-buttons *ngIf=\'!teamDB.loggedIn\' end>\n      <button (click)="loginPage()" ion-button icon-only>\n        <ion-icon name="ios-log-in"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-buttons *ngIf=\'teamDB.loggedIn\' start>\n      <button padding-right (click)="compose()" ion-button icon-only>\n        <ion-icon name="ios-albums-outline"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>الرئيسية</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content [ngClass]="blur ? \'blur\' : \'unblur\'">\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n  <ion-segment padding-horizontal [(ngModel)]="type" color="orange" mode="md" (ionChange)="segmentChanged($event)">\n    <ion-segment-button value="all">عام</ion-segment-button>\n    <ion-segment-button value="match">مباريات</ion-segment-button>\n    <ion-segment-button value="player">لاعبين</ion-segment-button>\n  </ion-segment>\n  <div>\n    <ion-slides dir="rtl" (ionSlideWillChange)="slideChanged()">\n\n      <ion-slide>\n        <post *ngFor="let post of allPosts" [post]="post"></post>\n      </ion-slide>\n\n      <ion-slide>\n        <post *ngFor="let post of matchPosts" [post]="post">\n        </post>\n      </ion-slide>\n\n      <ion-slide>\n        <post *ngFor="let post of playerPosts" [post]="post">\n        </post>\n      </ion-slide>\n\n    </ion-slides>\n\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__validators_username__["a" /* UsernameValidator */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__validators_username__["a" /* UsernameValidator */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]) === "function" && _g || Object])
-], AddPlayerPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_push__["a" /* Push */]])
+], HomePage);
 
-var _a, _b, _c, _d, _e, _f, _g;
-//# sourceMappingURL=add-player.js.map
+//# sourceMappingURL=home.js.map
 
 /***/ })
 

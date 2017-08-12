@@ -19,7 +19,7 @@ import * as tzMoment from 'moment-timezone'
     trigger('fadeInOut', [
       state('void', style({ opacity: '0' })),
       state('*', style({ opacity: '1' })),
-      transition('void <=> *', animate('400ms ease-in'))
+      transition('void <=> *', animate('300ms ease-in'))
     ])
   ]
 })

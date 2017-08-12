@@ -6,7 +6,7 @@ import {
 } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { MyTeamDB } from '../../helpers/myTeamDB';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username'
@@ -24,16 +24,12 @@ import firebase from 'firebase';
   templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-  user = {} as User
-  cpyUser: any = {}
-  shown = false;
-  toastMessage: any;
-  editSub: any;
-  editUnameSub: any;
   editForm: any;
   submitAttempt: boolean = false;
-  currentUsername: string
-  same: boolean = true
+  playerUID: string;
+  playerInfo: FirebaseObjectObservable<any>
+  newPlayerInfo = {} as User
+  currentUsername: string;
 
   constructor(public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -47,83 +43,72 @@ export class EditProfilePage {
     private unameValid: UsernameValidator,
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera) {
-    this.user = this.navParams.get('player');
+    this.playerUID = navParams.get('id');
+    this.setUpValidation();
+    this.playerInfo = db.object('users/' + this.playerUID)
+  }
+
+  async setUpValidation() {
+    await this.teamDB.getUserInfo(this.playerUID).then(data => {
+      this.newPlayerInfo = data;
+      this.currentUsername = data.originalUsername;
+    })
+
     let usernameValidator = (control) => {
-      return unameValid.checkEditUsername(control, this.user.username);
+      return this.unameValid.checkEditUsername(control, this.newPlayerInfo.username);
     };
-    this.cpyUser = Object.assign({}, this.user)
     this.editForm = this._form.group({
       "name": ["", Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z-ء-ي_ ]*'), Validators.required])],
       "username": ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
       "email": ["", Validators.email],
       "position": ["GK"]
     })
+
   }
 
   closeModal() {
-    if (!this.submitAttempt) {
-      this.user.name = this.cpyUser.name;
-      this.user.originalUsername = this.cpyUser.originalUsername;
-      this.user.position = this.cpyUser.position;
-    }
     this.view.dismiss();
-  }
-
-  ionViewWillLoad() {
-    this.currentUsername = this.user.originalUsername
-    this.user.email = this.afAuth.auth.currentUser.email;
   }
 
   update(user) {
     this.submitAttempt = true;
     const currUser = this.afAuth.auth.currentUser;
-    if (this.editForm.controls.name.valid && this.editForm.controls.email.valid) {
-      if (currUser && currUser.email && currUser.uid) {
-        const userRef = this.db.object('/users/' + currUser.uid, { preserveSnapshot: true });
-        this.editSub = userRef.subscribe(snap => {
-          if (snap.val().name != user.name) {
-            userRef.update({ name: user.name })
-            this.user.name = user.name;
-            this.updateNotification('الاسم');
-          }
-          if (snap.val().position != user.position) {
-            userRef.update({ position: user.position }).then()
-            //this.user.position = user.position;
-            this.updateNotification('المركز');
-          }
-        })
-        if (user.email && user.email != currUser.email) {
-          this.updateEmail(currUser.email, user.email);
+    if (this.editForm.controls.name.valid && this.editForm.controls.username.valid && currUser && currUser.uid) {
+      const userRef = this.db.object('/users/' + currUser.uid, { preserveSnapshot: true });
+      userRef.take(1).subscribe(snap => {
+        if (snap.val().name != user.name) {
+          userRef.update({ name: user.name })
+          this.displayToast();
         }
-      }
-    }
-
-    if (this.editForm.controls.username.valid && currUser) {
-      this.db.object('/users/' + currUser.uid)
-        .update({
-          originalUsername: user.originalUsername,
-          username: user.originalUsername.toLowerCase()
-        })
-
-      if (this.currentUsername != user.originalUsername) this.updateNotification('المعرف الشخصي');
-      if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()) {
-        this.db.object('usernames/' + user.originalUsername.toLowerCase()).set({ email: user.email });
-        this.db.object('usernames/' + this.currentUsername.toLowerCase()).remove();
-        this.currentUsername = user.originalUsername;
-      }
+        if (snap.val().position != user.position) {
+          userRef.update({ position: user.position }).then()
+          //this.user.position = user.position;
+          this.displayToast();
+        }
+        if (snap.val().originalUsername != user.originalUsername) {
+          userRef.update({
+            originalUsername: user.originalUsername,
+            username: user.originalUsername.toLowerCase()
+          })
+          if (this.currentUsername.toLowerCase() != user.originalUsername.toLowerCase()) {
+            let email = currUser.email
+            if (!email) email = 'twitter'
+            this.db.object('usernames/' + user.originalUsername.toLowerCase()).set({ email: email });
+            this.db.object('usernames/' + this.currentUsername.toLowerCase()).remove();
+            this.currentUsername = user.originalUsername;
+          }
+        }
+      })
     }
   }
 
-  updateNotification(word) {
-    if (this.shown) this.toastMessage.dismiss();
-    this.toastMessage = this.toast.create({
-      message: ' تم تحديث ' + word + ' بنجاح',
+  displayToast() {
+    this.toast.create({
+      message: 'تم تحديث معلوماتك بنجاح',
       duration: 2200,
       dismissOnPageChange: true,
       position: 'top'
-    });
-    this.toastMessage.present();
-    this.shown = true;
+    }).present();
   }
 
   updateEmail(oldEmail, newEmail) {
@@ -145,7 +130,7 @@ export class EditProfilePage {
             this.afAuth.auth.signInWithEmailAndPassword(oldEmail, data.password)
               .then(function (user) {
                 user.updateEmail(newEmail).then(() => {
-                  bind.updateNotification('الايميل');
+                  //bind.updateNotification('الايميل');
                 }).catch(err => {
                   console.log(err);
                   bind.alertUserError(err);
@@ -165,11 +150,6 @@ export class EditProfilePage {
       ]
     });
     prompt.present();
-  }
-
-  ionViewWillLeave() {
-    if (this.editSub) this.editSub.unsubscribe();
-    if (this.editUnameSub) this.editUnameSub.unsubscribe();
   }
 
   alertUserError(error) {
@@ -221,7 +201,7 @@ export class EditProfilePage {
 
           if (type == 'profilePic') ref.update({ profilePic: snap.downloadURL })
           else ref.update({ bg: snap.downloadURL })
-          this.updateNotification('الصورة الشخصية')
+          this.displayToast()
         })
     }, (err) => {
       // Handle error
@@ -233,21 +213,20 @@ export class EditProfilePage {
     const filename = this.afAuth.auth.currentUser.uid;
     const imageRef = storageRef.child(`${filename}/${type}.jpg`)
     imageRef.delete().then(() => {
-      this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/profilePic')
-        .remove();
-      this.user.profilePic = null;
-      if (type == 'profilePic') {
-        this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/profilePic')
-          .set('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');
-      }
-      else {
-        this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/bg')
-          .set('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');
-      }
+
     }).catch((error) => {
       // Uh-oh, an error occurred!
       console.log(error)
     });
+    if (type == 'profilePic') {
+      this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/profilePic')
+        .set('http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg');
+    }
+    else {
+      this.db.object('/users/' + this.afAuth.auth.currentUser.uid + '/bg')
+        .set('http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg');
+    }
+    this.displayToast();
   }
 
   presentActionSheet(type) {
@@ -275,5 +254,4 @@ export class EditProfilePage {
     })
     actionSheet.present()
   }
-
 }

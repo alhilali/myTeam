@@ -17,17 +17,11 @@ import * as firebase from 'firebase/app';
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
-  twitterSubmit: boolean = false;
-
   constructor(public navCtrl: NavController,
     private afAuth: AngularFireAuth,
     private twitter: TwitterConnect,
     private db: AngularFireDatabase,
     private loadingCtrl: LoadingController) {
-    afAuth.auth.onAuthStateChanged(user => {
-      if (user && !this.twitterSubmit) this.navCtrl.setRoot('TabsPage')
-    })
-
     this.navCtrl.swipeBackEnabled = false;
   }
 
@@ -40,7 +34,6 @@ export class WelcomePage {
   }
 
   twitterLogin() {
-    this.twitterSubmit = true;
     let loginLoading = this.loadingCtrl.create({
       dismissOnPageChange: true,
       spinner: 'crescent'
@@ -61,7 +54,8 @@ export class WelcomePage {
               userInfo.set({
                 name: userProfile.displayName,
                 position: 'GK',
-                profilePic: imageURL ? imageURL : 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg'
+                profilePic: imageURL ? imageURL : 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg',
+                bg: 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg'
               }).then(() => {
                 this.navCtrl.push('ChooseUsernamePage', { user: userProfile, twitterUsername: response.userName })
               })
@@ -70,9 +64,11 @@ export class WelcomePage {
             }
           })
         }, error => {
+          loginLoading.dismiss();
           console.log(error);
         });
     }, error => {
+      loginLoading.dismiss();
       console.log("Error connecting to twitter: ", error);
     });
   }

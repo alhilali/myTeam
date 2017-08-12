@@ -40,7 +40,6 @@ export class NameComponent {
     }
     Promise.resolve().then(() => {
       if (!name) this.name = 'غير متوفر'
-      else if (this.type == 'user') this.name = name + '@'
       else this.name = name;
     });
   }

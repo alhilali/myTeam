@@ -14,16 +14,16 @@ import { NavController, NavParams, IonicPage } from 'ionic-angular';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-  player: any
+  playerUID: string
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private afAuth: AngularFireAuth) {
-    this.player = navParams.get('player');
+    this.playerUID = navParams.get('id');
   }
 
   editProfile() {
-    this.navCtrl.push('EditProfilePage', { player: this.player });
+    this.navCtrl.push('EditProfilePage', { id: this.playerUID });
   }
 
   changePassword() {

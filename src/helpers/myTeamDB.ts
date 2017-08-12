@@ -407,6 +407,20 @@ export class MyTeamDB {
     })
   }
 
+  saveToken(token) {
+    return new Promise((resolve, reject) => {
+      this.getLoggedInUser().then((uid) => {
+        this.db.object('users/' + uid).update({
+          token: token
+        }).then(() => {
+          resolve({ success: true })
+        }).catch((err) => {
+          reject(err)
+        })
+      })
+    })
+  }
+
   ionViewWillLeave() {
     this.unsubscribeAll();
   }

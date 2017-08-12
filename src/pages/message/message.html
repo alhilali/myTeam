@@ -1,0 +1,57 @@
+<!--
+  Generated template for the MessagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      <ion-row justify-content-center align-items-center>
+        <name ID="{{toUID}}" type="user"></name>
+        <profile-pic class="userThumb" className="userThumb" ID="{{toUID}}" type="user"></profile-pic>
+      </ion-row>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content #content>
+  <div class="chatwindow" padding-top>
+    <ion-list no-lines>
+      <span *ngFor="let message of allMessages | async">
+        <ion-item *ngIf="message.message" text-wrap>
+          <ion-avatar item-left *ngIf="message.sentBy === currentUID">
+            <profile-pic className="avatar" type="user" ID="{{currentUID}}"></profile-pic>
+          </ion-avatar>
+          <div class="bubble me" *ngIf="message.sentBy === currentUID">
+            <h3>{{message.message}}</h3>
+          </div>
+          <ion-avatar item-right *ngIf="message.sentBy != currentUID">
+            <profile-pic className="avatar" type="user" ID="{{toUID}}"></profile-pic>
+          </ion-avatar>
+          <div class="bubble you" *ngIf="message.sentBy != currentUID">
+            <h3>{{message.message}}</h3>
+          </div>
+        </ion-item>
+      </span>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-row align-items-center dir="rtl" class="bottomBar">
+    <ion-col col-9>
+      <ion-input [(ngModel)]="newMessage" placeholder="ادخل رسالتك" type="text"></ion-input>
+    </ion-col>
+    <ion-col col-3>
+      <ion-buttons end>
+        <button ion-button (click)="sendMessage()" round color="gold" [disabled]="newMessage.length == 0" small>
+          ارسل
+        </button>
+      </ion-buttons>
+    </ion-col>
+  </ion-row>
+</ion-footer>

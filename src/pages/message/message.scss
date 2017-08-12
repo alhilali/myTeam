@@ -1,0 +1,49 @@
+page-message {
+  .userThumb {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border-radius: 50%;
+  }
+  .bottomBar {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: 99;
+    background-color: #f4f4f4;
+  }
+  ion-input {
+    background-color: white;
+    border-radius: 35px;
+    padding-right: 10px;
+  }
+  .text-input {
+    margin: 0;
+  }
+  ion-avatar {
+    margin: 2px !important;
+  }
+  ion-label {
+    margin: 0px 5px !important;
+  }
+  .bubble {
+    border-radius: 15px;
+    box-shadow: 0 0 1px #B2B2B2;
+    display: inline-block;
+    padding: 2px 18px;
+    position: relative;
+    vertical-align: top;
+  }
+  .me {
+    background-color: #efefef;
+    float: right;
+    margin: 5px;
+  }
+  .you {
+    float: left;
+    margin: 5px;
+  }
+  .chatwindow {
+    padding-bottom: 70px;
+  }
+}

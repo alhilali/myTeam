@@ -149,4 +149,8 @@ export class NotificationPage {
     this.navCtrl.push('PostPage', { id: postID })
   }
 
+  openMessages() {
+    this.navCtrl.push('MessagesPage')
+  }
+
 }

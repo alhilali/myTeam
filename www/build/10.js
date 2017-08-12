@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 1116:
+/***/ 1122:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SearchPageModule", function() { return SearchPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__search__ = __webpack_require__(1186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__search__ = __webpack_require__(1195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,14 +41,14 @@ SearchPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1186:
+/***/ 1195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SearchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -126,7 +126,7 @@ var SearchPage = (function () {
 SearchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-search',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-searchbar [(ngModel)]="queryString" (ionInput)="getItems($event)" placeholder=\'بحث\'></ion-searchbar>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-segment color="orange" mode="md" [(ngModel)]="type" (ionChange)="segmentChanged($event)">\n    <ion-segment-button value="teams">\n      فريق\n    </ion-segment-button>\n    <ion-segment-button value="players">\n      لاعب\n    </ion-segment-button>\n  </ion-segment>\n  <ion-list *ngIf="queryString && queryString.length>0">\n    <button ion-item clear *ngFor="let item of items | async" (click)="open(item)">\n      <ion-row>\n          <ion-avatar padding-right>\n            <img *ngIf="type == \'players\'" src="{{item.profilePic}}" alt="">\n            <img *ngIf="type == \'teams\'" src="{{item.logo}}" alt="">\n          </ion-avatar>\n          <h2 style="margin: 0 0 8px;" id="itemInfo" margin-bottom>{{ item.name }}</h2>\n          <p *ngIf="type == \'players\'" color="orange">&nbsp;{{item.username}}@</p>\n          <p *ngIf="type == \'teams\'" color="orange">&nbsp;{{item.city}}</p>\n      </ion-row>\n    </button>\n  </ion-list>\n  <p text-center *ngIf=\'((items | async)?.length == 0) && queryString && (queryString.length != 0)\'>\n    لا يوجد نتائج\n  </p>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/,
+        selector: 'page-search',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-searchbar [(ngModel)]="queryString" (ionInput)="getItems($event)" placeholder=\'بحث\'></ion-searchbar>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-segment color="orange" mode="md" [(ngModel)]="type" (ionChange)="segmentChanged($event)">\n    <ion-segment-button value="teams">\n      فريق\n    </ion-segment-button>\n    <ion-segment-button value="players">\n      لاعب\n    </ion-segment-button>\n  </ion-segment>\n  <ion-list *ngIf="queryString && queryString.length>0">\n    <button ion-item clear *ngFor="let item of items | async" (click)="open(item)">\n      <ion-row>\n          <ion-avatar padding-right>\n            <img *ngIf="type == \'players\'" src="{{item.profilePic}}" alt="">\n            <img *ngIf="type == \'teams\'" src="{{item.logo}}" alt="">\n          </ion-avatar>\n          <h2 style="margin: 0 0 8px;" id="itemInfo" margin-bottom>{{ item.name }}</h2>\n          <p *ngIf="type == \'players\'" color="orange">&nbsp;{{item.username}}</p>\n          <p *ngIf="type == \'teams\'" color="orange">&nbsp;{{item.city}}</p>\n      </ion-row>\n    </button>\n  </ion-list>\n  <p text-center *ngIf=\'((items | async)?.length == 0) && queryString && (queryString.length != 0)\'>\n    لا يوجد نتائج\n  </p>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/search/search.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])

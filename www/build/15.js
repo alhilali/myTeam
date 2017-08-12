@@ -1,15 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 1107:
+/***/ 1116:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchPageModule", function() { return MatchPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewMessagePageModule", function() { return NewMessagePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__match__ = __webpack_require__(1177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(672);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__new_message__ = __webpack_require__(1189);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,43 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-var MatchPageModule = (function () {
-    function MatchPageModule() {
+var NewMessagePageModule = (function () {
+    function NewMessagePageModule() {
     }
-    return MatchPageModule;
+    return NewMessagePageModule;
 }());
-MatchPageModule = __decorate([
+NewMessagePageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */],
+            __WEBPACK_IMPORTED_MODULE_2__new_message__["a" /* NewMessagePage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__new_message__["a" /* NewMessagePage */]),
         ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__match__["a" /* MatchPage */]
-        ]
     })
-], MatchPageModule);
+], NewMessagePageModule);
 
-//# sourceMappingURL=match.module.js.map
+//# sourceMappingURL=new-message.module.js.map
 
 /***/ }),
 
-/***/ 1177:
+/***/ 1189:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MatchPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewMessagePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -65,201 +58,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
 
 
 
 
 
 /**
- * Generated class for the MatchPage page.
+ * Generated class for the NewMessagePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var MatchPage = (function () {
-    function MatchPage(navCtrl, navParams, view, teamDB, db, afAuth) {
+var NewMessagePage = (function () {
+    function NewMessagePage(navCtrl, navParams, db, afAuth) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.view = view;
-        this.teamDB = teamDB;
         this.db = db;
         this.afAuth = afAuth;
-        this.previousGames = [];
-        this.currentUser = false;
-        this.requestID = this.navParams.get('id');
-        this.request = this.db.object('/matches/' + this.requestID);
+        this.query = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__["Subject"]();
     }
-    MatchPage.prototype.ionViewDidLoad = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getMatchInfo(this.requestID).then(function (data) {
-                            _this.requestInfo = data;
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.teamDB.getLoggedInUser().then(function (uid) {
-                                if (_this.requestInfo.toUID == uid)
-                                    _this.currentUser = true;
-                            })];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
+    NewMessagePage.prototype.ionViewDidLoad = function () {
+        this.currentUID = this.afAuth.auth.currentUser.uid;
+        this.players = this.db.list('users/', {
+            query: {
+                orderByChild: 'username',
+                startAt: this.query,
+                limitToFirst: 10
+            }
         });
     };
-    MatchPage.prototype.acceptMatch = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var date, timestamp;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        date = __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss');
-                        timestamp = new Date().getTime();
-                        // Add notification to home team players
-                        return [4 /*yield*/, this.teamDB.getTeamPlayers(this.requestInfo.homeTeam).then(function (players) {
-                                var playersList = [];
-                                playersList = players;
-                                playersList.forEach(function (player) {
-                                    if (player.status == 'enrolled') {
-                                        _this.db.list('users/' + player.$key + '/notifications/').push({
-                                            type: 'matchAccepted',
-                                            team: _this.requestInfo.awayTeam,
-                                            otherTeam: _this.requestInfo.homeTeam,
-                                            matchID: _this.requestID,
-                                            timestamp: timestamp,
-                                            date: date
-                                        });
-                                    }
-                                });
-                            })
-                            // Add notification to away team players
-                        ];
-                    case 1:
-                        // Add notification to home team players
-                        _a.sent();
-                        // Add notification to away team players
-                        return [4 /*yield*/, this.teamDB.getTeamPlayers(this.requestInfo.awayTeam).then(function (players) {
-                                var playersList = [];
-                                playersList = players;
-                                playersList.forEach(function (player) {
-                                    if (player.status == 'enrolled') {
-                                        _this.db.list('users/' + player.$key + '/notifications/').push({
-                                            type: 'matchAccepted',
-                                            team: _this.requestInfo.homeTeam,
-                                            otherTeam: _this.requestInfo.awayTeam,
-                                            matchID: _this.requestID,
-                                            timestamp: timestamp,
-                                            date: date
-                                        });
-                                    }
-                                });
-                            })
-                            // Update request status
-                        ];
-                    case 2:
-                        // Add notification to away team players
-                        _a.sent();
-                        // Update request status
-                        this.db.object('/matches/' + this.requestID).update({ status: 'approved' });
-                        // Remove Request
-                        this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
-                        // Add match to home team DB
-                        this.db.object('/teams/' + this.requestInfo.homeTeam + '/upcomingMatches/'
-                            + this.requestID).set({
-                            homeTeam: this.requestInfo.homeTeam,
-                            awayTeam: this.requestInfo.awayTeam,
-                        });
-                        // Add match to away team DB
-                        this.db.object('/teams/' + this.requestInfo.awayTeam + '/upcomingMatches/'
-                            + this.requestID).set({
-                            homeTeam: this.requestInfo.homeTeam,
-                            awayTeam: this.requestInfo.awayTeam,
-                        });
-                        return [2 /*return*/];
-                }
-            });
-        });
+    NewMessagePage.prototype.searchUsers = function () {
+        this.query.next(this.input);
     };
-    MatchPage.prototype.declineMatch = function () {
-        // Add notification to home team captain
-        this.db.list('users/' + this.requestInfo.fromUID + '/notifications/').push({
-            type: 'matchDeclined',
-            team: this.requestInfo.awayTeam,
-            otherTeam: this.requestInfo.homeTeam,
-            matchID: this.requestID,
-            timestamp: new Date().getTime(),
-            date: __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss')
-        });
-        // Update request status
-        this.db.object('/matches/' + this.requestID).update({ status: 'declined' });
-        // Remove Request
-        this.db.object('users/' + this.requestInfo.toUID + '/requests/' + this.requestID).remove();
-        this.view.dismiss();
+    NewMessagePage.prototype.openMessage = function (player) {
+        this.navCtrl.push('MessagePage', { toUID: player.$key });
     };
-    MatchPage.prototype.openTeam = function (teamID) {
-        this.navCtrl.push('TeamPage', { id: teamID });
-    };
-    MatchPage.prototype.closeModel = function () {
-        this.view.dismiss();
-    };
-    return MatchPage;
+    return NewMessagePage;
 }());
-MatchPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
-        segment: 'match/:id'
+NewMessagePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
+        selector: 'page-new-message',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/new-message/new-message.html"*/'<!--\n  Generated template for the NewMessagePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>رسالة جديدة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-item class="fixedBorder">\n    <ion-label>إلى:</ion-label>\n    <ion-input type="text" value="" placeholder="ابحث..." (input)="searchUsers()" [(ngModel)]="input"></ion-input>\n  </ion-item>\n\n  <h5 *ngIf="input && input.length > 0 && (players | async)?.length == 0" text-center>\n    لا يوجد\n  </h5>\n\n  <ion-list *ngIf="input && input.length > 0" no-margin>\n    <span *ngFor="let player of players | async">\n      <button *ngIf="player.$key != currentUID" ion-item clear (click)="openMessage(player)">\n        <ion-row>\n          <ion-avatar padding-right>\n            <img src="{{player.profilePic}}" alt="">\n          </ion-avatar>\n          <h2 style="margin: 0 0 8px;" id="info" margin-bottom>{{ player.name }}</h2>\n          <p>&nbsp;{{player.username}}</p>\n        </ion-row>\n      </button>\n    </span>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/new-message/new-message.html"*/,
     }),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/'<!--\n  Generated template for the MatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>تفاصيل المباراة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-row *ngIf="(request | async)?.status == \'pending\' && currentUser" align-items-stretch>\n    <ion-col col-7>\n      <p text-start>هل ترغب بالموافقه على المباراة؟</p>\n    </ion-col>\n    <ion-col no-padding style="padding-left: 10px">\n      <p text-left>\n        <button (click)="acceptMatch()" ion-button color="secondary" small>موافق</button>\n        <button (click)="declineMatch()" ion-button color="danger" outline small>إلغاء</button>\n      </p>\n    </ion-col>\n  </ion-row>\n  <h6 *ngIf="currentUser && (request | async)?.status == \'declined\'" text-center>\n    تم رفض طلب المباراة <span>😞</span>\n  </h6>\n  <ion-card class="card1">\n    <ion-grid>\n      <ion-row>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.homeTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.homeTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.homeTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n        <ion-col text-center style="padding-top: 60px;">\n          <h3>VS</h3>\n          <date requestID="{{requestID}}" day="true"></date>\n          <p>{{(request | async)?.time}}<br> {{(request | async)?.stadium}}\n          </p>\n        </ion-col>\n        <ion-col text-center>\n          <ion-avatar on-tap="openTeam(requestInfo.awayTeam)">\n            <profile-pic className="logo" ID="{{(request | async)?.awayTeam}}" type="team">\n            </profile-pic>\n          </ion-avatar>\n          <h2>\n            <name ID="{{(request | async)?.awayTeam}}" type="team"></name>\n          </h2>\n          <h1>0</h1>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </ion-card>\n  <ion-item-divider>\n    المباريات السابقه\n  </ion-item-divider>\n  <ion-list no-margin>\n    <ion-item class="fixedBorder">\n      <div *ngIf="previousGames.length == 0" text-center>\n        لا توجد مباريات سابقة\n      </div>\n      <ion-item *ngIf="previousGames.length != 0" class="fixedBorder">\n\n      </ion-item>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/match/match.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
-        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]])
-], MatchPage);
+        __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]])
+], NewMessagePage);
 
-//# sourceMappingURL=match.js.map
+//# sourceMappingURL=new-message.js.map
 
 /***/ })
 

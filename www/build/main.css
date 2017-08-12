@@ -60445,10 +60445,6 @@ ion-card-header {
   padding: .8rem !important;
 }
 
-ion-toast {
-  top: 65px !important;
-}
-
 ion-calendar-modal.matchCalender ion-header .toolbar-background-md,
 ion-calendar-modal.matchCalender ion-header .toolbar-background-ios {
   background-color: #0072bb;
@@ -60696,7 +60692,7 @@ post .icon_calendar {
   background-color: white;
   margin: auto;
   border-radius: 10px;
-  width: 55px;
+  width: 60px;
   -webkit-box-shadow: 0px 2px 5px 0px #cfcfcf;
   -o-box-shadow: 0px 2px 5px 0px #cfcfcf;
   box-shadow: 0px 2px 5px 0px #cfcfcf;
@@ -61456,6 +61452,77 @@ page-match .logo {
   width: 50px;
 }
 
+page-message .userThumb {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+
+page-message .bottomBar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 99;
+  background-color: #f4f4f4;
+}
+
+page-message ion-input {
+  background-color: white;
+  border-radius: 35px;
+  padding-right: 10px;
+}
+
+page-message .text-input {
+  margin: 0;
+}
+
+page-message ion-avatar {
+  margin: 2px !important;
+}
+
+page-message ion-label {
+  margin: 0px 5px !important;
+}
+
+page-message .bubble {
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 1px #B2B2B2;
+  box-shadow: 0 0 1px #B2B2B2;
+  display: inline-block;
+  padding: 2px 18px;
+  position: relative;
+  vertical-align: top;
+}
+
+page-message .me {
+  background-color: #efefef;
+  float: right;
+  margin: 5px;
+}
+
+page-message .you {
+  float: left;
+  margin: 5px;
+}
+
+page-message .chatwindow {
+  padding-bottom: 70px;
+}
+
+page-messages .avatar {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+page-messages ion-item {
+  padding-right: 10px;
+}
+
+page-messages h3 {
+  line-height: 1.4 !important;
+}
+
 page-my-team .blur {
   -webkit-filter: blur(1px);
   filter: blur(1px);
@@ -61486,6 +61553,13 @@ page-my-team .monthLabel {
 
 page-my-team .content {
   background-color: #f7f7f7;
+}
+
+page-new-message #info {
+  margin-bottom: 15px;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
 }
 
 page-notification .listAvatar {

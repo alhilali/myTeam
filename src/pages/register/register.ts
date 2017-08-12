@@ -69,7 +69,8 @@ export class RegisterPage {
               username: user.username.toLowerCase(),
               name: user.name,
               position: 'GK',
-              profilePic: 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg'
+              profilePic: 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg',
+              bg: 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg'
             });
             const usernameInfo = this.db.object('/usernames/' + user.username.toLowerCase());
             usernameInfo.set({

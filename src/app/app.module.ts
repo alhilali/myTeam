@@ -21,10 +21,12 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
 import { CalendarModule } from "ion2-calendar";
+import { Push } from '@ionic-native/push';
 
 import { ComponentsModule } from '../components/components.module'
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MessageProvider } from '../providers/message/message';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -63,7 +65,9 @@ const cloudSettings: CloudSettings = {
     Keyboard,
     TwitterConnect,
     SocialSharing,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    Push,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    MessageProvider
   ]
 })
 export class AppModule { }

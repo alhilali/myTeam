@@ -1,6 +1,6 @@
 webpackJsonp([11],{
 
-/***/ 1097:
+/***/ 1100:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequestMatchPageModule", function() { return RequestMatchPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__request_match__ = __webpack_require__(1167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__request_match__ = __webpack_require__(1173);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -41,15 +41,15 @@ RequestMatchPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1167:
+/***/ 1173:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequestMatchPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__ = __webpack_require__(676);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__ = __webpack_require__(677);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(31);
@@ -210,10 +210,15 @@ RequestMatchPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-request-match',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/'<!--\n  Generated template for the RequestMatchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب مباراة مع {{awayTeam.name}}</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top" align-items-stretch text-center>\n    <ion-col pull-1>\n      <button (click)="closeModel()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button [disabled]="matchForm.invalid" (click)="sendRequest()" color="gold" ion-button round small>\n             ارسل\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <ion-card-header>\n      طلب مباراة مع {{awayTeam.name}}\n    </ion-card-header>\n    <form name="matchForm" novalidate>\n      <div class="register" [formGroup]=\'matchForm\'>\n        <ion-list>\n          <ion-item>\n            <ion-label>فريقي</ion-label>\n            <ion-select [(ngModel)]="selectedTeam" formControlName="selectedTeam" placeholder="اختر الفريق">\n              <span *ngFor="let team of myTeams">\n                <ion-option *ngIf="team.$key != awayTeam.$key"  [value]="team">{{team.name}}</ion-option>\n              </span>\n            </ion-select>\n          </ion-item>\n\n          <button ion-item (click)="openCalendar()">\n            <ion-row>\n              <ion-col>\n                التاريخ\n              </ion-col>\n              <ion-col text-end>\n                {{dateFormated}}\n              </ion-col>\n            </ion-row>\n          </button>\n          <ion-item>\n            <ion-label>الساعة</ion-label>\n            <ion-datetime dir="ltr" [(ngModel)]="time" formControlName="time" displayFormat="h:mm A">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label>الملعب</ion-label>\n            <ion-input type="text" [(ngModel)]="stadium" formControlName="stadium" placeholder="اين ستقام المباراة" value=""></ion-input>\n          </ion-item>\n        </ion-list>\n      </div>\n    </form>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/request-match/request-match.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__["a" /* CalendarController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__["a" /* CalendarController */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_3_ion2_calendar_dist__["a" /* CalendarController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]])
 ], RequestMatchPage);
 
-var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=request-match.js.map
 
 /***/ })

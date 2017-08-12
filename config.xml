@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.felmal3ab.saud" version="0.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <name>Felmal3ab</name>
+    <description>برنامج يجمع محبي لعب كرة القدم</description>
+    <author email="saudalhilali@gmail.com" href="http://thesaud.com">Saud Alhelali</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -30,6 +30,8 @@
     <preference name="ShowSplashScreen" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+    <preference name="TwitterConsumerKey" value="KduCDAFyYaNnXh5nrwUKxOfV3" />
+    <preference name="TwitterConsumerSecret" value="1XsUYE3f1gzHWXVKSuM7id7Ukxiygt0lcLgf1HPPu3ZFYRJwtM" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -84,9 +86,8 @@
         <splash height="1024" src="resources/ios/splash/Default-Portrait~ipad.png" width="768" />
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
+        <resource-file src="GoogleService-Info.plist" />
     </platform>
-    <preference name="TwitterConsumerKey" value="KduCDAFyYaNnXh5nrwUKxOfV3" />
-    <preference name="TwitterConsumerSecret" value="1XsUYE3f1gzHWXVKSuM7id7Ukxiygt0lcLgf1HPPu3ZFYRJwtM" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
@@ -119,6 +120,9 @@
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="phonegap-plugin-push" spec="^2.0.0">
+        <variable name="SENDER_ID" value="1091890097761" />
+    </plugin>
     <plugin name="twitter-connect-plugin" spec="^0.6.0">
         <variable name="FABRIC_KEY" value="931f2ae22e473a4298ae99d0ebf81bbefdc00a43" />
     </plugin>

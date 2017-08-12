@@ -22,7 +22,7 @@ export class AddPlayerToTeamPage {
   teamsSelected = []
   error: boolean = false
   status: boolean
-  player = {} as User
+  playerUID: string
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,7 +30,7 @@ export class AddPlayerToTeamPage {
     private teamDB: MyTeamDB,
     private alertCtrl: AlertController,
     private toast: ToastController) {
-    this.player = this.navParams.get('player');
+    this.playerUID = navParams.get('id');
   }
 
   async ionViewDidLoad() {
@@ -41,7 +41,7 @@ export class AddPlayerToTeamPage {
 
   async updateTeamsSelected(team) {
     const index = this.teamsSelected.indexOf(team);
-    await this.teamDB.checkTeamPlayers(team.$key, this.player.$key).then(data => {
+    await this.teamDB.checkTeamPlayers(team.$key, this.playerUID).then(data => {
       if (data && index < 0) {
         this.presentAlert(team.name)
       }
@@ -56,13 +56,13 @@ export class AddPlayerToTeamPage {
   async requestAddPlayer() {
     this.error = false;
     for (let i = 0; i < this.teamsSelected.length; i++) {
-      await this.teamDB.checkTeamPlayers(this.teamsSelected[i].$key, this.player.$key).then(data => {
+      await this.teamDB.checkTeamPlayers(this.teamsSelected[i].$key, this.playerUID).then(data => {
         if (data) {
           this.presentAlert(this.teamsSelected[i].name);
           this.error = true;
         }
       })
-      if (!this.error) this.teamDB.sendRequestToPlayer(this.player.$key, this.teamsSelected[i].$key)
+      if (!this.error) this.teamDB.sendRequestToPlayer(this.playerUID, this.teamsSelected[i].$key)
     }
     if (this.teamsSelected.length == 0) this.alert()
     else if (!this.error) {

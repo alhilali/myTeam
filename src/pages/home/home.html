@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons *ngIf='teamDB.loggedIn' end>
-      <button (click)="openModal()" ion-button icon-only>
+    <ion-buttons *ngIf='teamDB.loggedIn && currentUser.originalUsername' end>
+      <button (click)="openModal()" style="height: 35px;" ion-button icon-only>
         <profile-pic className="avatar" type="user" ID="{{teamDB.userInfo.uid}}"></profile-pic>
       </button>
     </ion-buttons>

@@ -24,7 +24,7 @@
             <img *ngIf="type == 'teams'" src="{{item.logo}}" alt="">
           </ion-avatar>
           <h2 style="margin: 0 0 8px;" id="itemInfo" margin-bottom>{{ item.name }}</h2>
-          <p *ngIf="type == 'players'" color="orange">&nbsp;{{item.username}}@</p>
+          <p *ngIf="type == 'players'" color="orange">&nbsp;{{item.username}}</p>
           <p *ngIf="type == 'teams'" color="orange">&nbsp;{{item.city}}</p>
       </ion-row>
     </button>

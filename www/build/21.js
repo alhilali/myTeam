@@ -1,14 +1,15 @@
 webpackJsonp([21],{
 
-/***/ 1099:
+/***/ 1104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddPlayerToTeamPageModule", function() { return AddPlayerToTeamPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_player_to_team__ = __webpack_require__(1169);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ComposePageModule", function() { return ComposePageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_components_module__ = __webpack_require__(673);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__compose__ = __webpack_require__(1177);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,37 +19,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AddPlayerToTeamPageModule = (function () {
-    function AddPlayerToTeamPageModule() {
+
+var ComposePageModule = (function () {
+    function ComposePageModule() {
     }
-    return AddPlayerToTeamPageModule;
+    return ComposePageModule;
 }());
-AddPlayerToTeamPageModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
+ComposePageModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__add_player_to_team__["a" /* AddPlayerToTeamPage */],
+            __WEBPACK_IMPORTED_MODULE_3__compose__["a" /* ComposePage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__add_player_to_team__["a" /* AddPlayerToTeamPage */]),
+            __WEBPACK_IMPORTED_MODULE_0__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_3__compose__["a" /* ComposePage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__add_player_to_team__["a" /* AddPlayerToTeamPage */]
+            __WEBPACK_IMPORTED_MODULE_3__compose__["a" /* ComposePage */]
         ]
     })
-], AddPlayerToTeamPageModule);
+], ComposePageModule);
 
-//# sourceMappingURL=add-player-to-team.module.js.map
+//# sourceMappingURL=compose.module.js.map
 
 /***/ }),
 
-/***/ 1169:
+/***/ 1177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPlayerToTeamPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(38);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComposePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ion2_calendar_dist__ = __webpack_require__(677);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -96,152 +104,145 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+
+
+
+
 /**
- * Generated class for the AddPlayerToTeamPage page.
+ * Generated class for the ComposePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var AddPlayerToTeamPage = (function () {
-    function AddPlayerToTeamPage(navCtrl, navParams, view, teamDB, alertCtrl, toast) {
+var ComposePage = (function () {
+    function ComposePage(navCtrl, navParams, view, _form, db, teamDB, calendarCtrl, alertCtrl, toast) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.view = view;
+        this._form = _form;
+        this.db = db;
         this.teamDB = teamDB;
+        this.calendarCtrl = calendarCtrl;
         this.alertCtrl = alertCtrl;
         this.toast = toast;
         this.myTeams = [];
-        this.teamsSelected = [];
-        this.error = false;
-        this.player = {};
+        this.post = {};
+        this.date = new Date().toLocaleDateString();
+        this.title = '';
+        this.info = '';
+        this.type = 'general';
+        this.month = '';
+        this.day = '';
         this.player = this.navParams.get('player');
-    }
-    AddPlayerToTeamPage.prototype.ionViewDidLoad = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.getMyTeamsCaptain().then(function (data) {
-                            _this.myTeams = data;
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
+        this.composeForm = _form.group({
+            "title": ["",
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].maxLength(30),
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(1),
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required])],
+            "info": ["",
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].maxLength(300)])]
         });
-    };
-    AddPlayerToTeamPage.prototype.updateTeamsSelected = function (team) {
+        this.matchDate = __WEBPACK_IMPORTED_MODULE_5_moment__().format('L');
+        this.month = __WEBPACK_IMPORTED_MODULE_5_moment__().format('MMM');
+        this.day = __WEBPACK_IMPORTED_MODULE_5_moment__().format('D');
+    }
+    ComposePage.prototype.segmentChanged = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var index;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        index = this.teamsSelected.indexOf(team);
-                        return [4 /*yield*/, this.teamDB.checkTeamPlayers(team.$key, this.player.$key).then(function (data) {
-                                if (data && index < 0) {
-                                    _this.presentAlert(team.name);
-                                }
+                        if (!(this.type == 'match')) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.teamDB.getMyTeamsCaptain().then(function (data) {
+                                _this.myTeams = data;
                             })];
                     case 1:
                         _a.sent();
-                        if (index > -1)
-                            this.teamsSelected.splice(index, 1);
-                        else
-                            this.teamsSelected.push(team);
-                        // No teams selected then disable button
-                        if (this.teamsSelected.length == 0)
-                            this.error = false;
-                        return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
         });
     };
-    AddPlayerToTeamPage.prototype.requestAddPlayer = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var _loop_1, this_1, i;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.error = false;
-                        _loop_1 = function (i) {
-                            return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4 /*yield*/, this_1.teamDB.checkTeamPlayers(this_1.teamsSelected[i].$key, this_1.player.$key).then(function (data) {
-                                            if (data) {
-                                                _this.presentAlert(_this.teamsSelected[i].name);
-                                                _this.error = true;
-                                            }
-                                        })];
-                                    case 1:
-                                        _a.sent();
-                                        if (!this_1.error)
-                                            this_1.teamDB.sendRequestToPlayer(this_1.player.$key, this_1.teamsSelected[i].$key);
-                                        return [2 /*return*/];
-                                }
-                            });
-                        };
-                        this_1 = this;
-                        i = 0;
-                        _a.label = 1;
-                    case 1:
-                        if (!(i < this.teamsSelected.length)) return [3 /*break*/, 4];
-                        return [5 /*yield**/, _loop_1(i)];
-                    case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3:
-                        i++;
-                        return [3 /*break*/, 1];
-                    case 4:
-                        if (this.teamsSelected.length == 0)
-                            this.alert();
-                        else if (!this.error) {
-                            this.toast.create({
-                                message: 'تم إرسال الإضافة  بنجاح',
-                                duration: 2200,
-                                position: 'top'
-                            }).present();
-                            this.view.dismiss();
-                        }
-                        return [2 /*return*/];
-                }
-            });
+    ComposePage.prototype.selectTeam = function (team) {
+        this.selectedTeam = team;
+    };
+    ComposePage.prototype.openCalendar = function () {
+        var _this = this;
+        this.calendarCtrl.openCalendar({
+            title: 'تاريخ المباراة',
+            weekdaysTitle: ["الاحد", "الاثنين", "الثلاثاء", "الاربعاء", "الخميس", "الجمعة", "السبت"],
+            cssClass: 'matchCalender',
+            closeIcon: true,
+            closeLabel: 'close',
+            doneLabel: 'md-checkmark',
+            doneIcon: true
+        })
+            .then(function (res) {
+            var selectedDate = new Date(res.date.time).toDateString();
+            var momentDate = __WEBPACK_IMPORTED_MODULE_5_moment__(selectedDate, 'ddd MMM D YYYY', 'en');
+            _this.matchDate = momentDate.format('L');
+            _this.month = momentDate.format('MMM');
+            _this.day = momentDate.format('D');
+        })
+            .catch(function () {
+            console.log("error");
         });
     };
-    AddPlayerToTeamPage.prototype.presentAlert = function (teamName) {
-        var alert = this.alertCtrl.create({
+    ComposePage.prototype.submit = function () {
+        var _this = this;
+        if (this.type == 'match' && !this.selectedTeam) {
+            this.showError();
+            return;
+        }
+        this.post.by = this.player.$key;
+        this.post.title = this.title;
+        this.post.info = this.info;
+        this.post.date = __WEBPACK_IMPORTED_MODULE_5_moment__["utc"]().format('YYYY-MM-DD HH:mm:ss');
+        this.post.type = this.type;
+        this.post.timestamp = new Date().getTime();
+        if (this.type == 'match') {
+            this.post.teamID = this.selectedTeam.$key;
+            this.post.matchDate = this.matchDate;
+        }
+        this.db.list('timeline/').push(this.post).then(function () {
+            _this.toast.create({
+                message: 'تم الارسال بنجاح',
+                duration: 2200,
+                position: 'top'
+            }).present();
+            _this.view.dismiss({ postDone: true });
+        });
+    };
+    ComposePage.prototype.showError = function () {
+        this.alertCtrl.create({
             title: 'خطأ',
-            subTitle: 'سبق وتم اضافة اللاعب في فريق ' + teamName + "، الرجاء ازالة اختيار الفريق لإتمام العملية",
-            buttons: ['حسناً']
-        });
-        alert.present();
+            subTitle: 'يجب اختيار فريق',
+            buttons: ['حسناً'],
+        }).present();
     };
-    AddPlayerToTeamPage.prototype.alert = function () {
-        var alert = this.alertCtrl.create({
-            title: 'خطأ',
-            subTitle: "الرجاء اختيار فريق واحد على الأقل",
-            buttons: ['حسناً']
-        });
-        alert.present();
+    ComposePage.prototype.closeModal = function () {
+        this.view.dismiss({ postDone: false });
     };
-    AddPlayerToTeamPage.prototype.closeModel = function () {
-        this.view.dismiss();
-    };
-    return AddPlayerToTeamPage;
+    return ComposePage;
 }());
-AddPlayerToTeamPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-add-player-to-team',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/'<!--\n  Generated template for the AddPlayerToTeamPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>طلب اضافة @{{player.originalUsername}}</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top" align-items-stretch text-center>\n    <ion-col pull-1>\n      <button (click)="closeModel()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="requestAddPlayer()" color="gold" ion-button round small>\n             إضافة\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1">\n    <ion-card-header>\n      طلب اضافة @{{player.originalUsername}}\n    </ion-card-header>\n    <ion-item-group class="teamsList" *ngIf="myTeams?.length > 0 ">\n      <ion-slides pager dir="rtl" slidesPerView="3">\n        <ion-slide *ngFor="let team of myTeams">\n          <ion-checkbox item-start checked="false" (ionChange)="updateTeamsSelected(team)"></ion-checkbox>\n          <img class="logo" src="{{team.logo}}" alt="">\n          <div class="card-title">\n            {{team.name}}\n          </div>\n        </ion-slide>\n      </ion-slides>\n    </ion-item-group>\n  </ion-card>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/add-player-to-team/add-player-to-team.html"*/,
+ComposePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
+        selector: 'page-compose',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/compose/compose.html"*/'<!--\n  Generated template for the ComposePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons end>\n      <button end (click)="submit()" [disabled]="composeForm.invalid" color="white" ion-button clear>\n        ارسل\n      </button>\n    </ion-buttons>\n    <ion-title>مشاركة جديده</ion-title>\n    <button start (click)="closeModal()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-vertical>\n  <ion-row class="padding-top" align-items-stretch text-center>\n    <ion-col pull-1>\n      <button (click)="closeModal()" color="orange" ion-button round small>\n          إلغاء\n        </button>\n    </ion-col>\n    <ion-col push-1>\n      <button (click)="submit()" [disabled]="composeForm.invalid" color="gold" ion-button round small>\n            ارسل\n        </button>\n    </ion-col>\n  </ion-row>\n  <ion-card class="card1" style="margin-top: 0; margin-bottom: 0;">\n    <ion-segment class="typeSegment" [(ngModel)]="type" (ionChange)="segmentChanged()" color="orange" mode="md">\n      <ion-segment-button value="general">عام</ion-segment-button>\n      <ion-segment-button value="match">مباريات</ion-segment-button>\n      <ion-segment-button value="player">لاعبين</ion-segment-button>\n    </ion-segment>\n    <form [formGroup]="composeForm">\n      <div *ngIf="type == \'match\' && selectedTeam" style="position: relative; padding: 10px;">\n        <img class="bg" src="{{selectedTeam.bg}}" alt="">\n        <img class="teamLogo" src="{{selectedTeam.logo}}" alt="">\n        <h1 class="teamName">{{selectedTeam.name}}</h1>\n        <div class="teamBar">\n          <team-bar teamID="{{selectedTeam.$key}}"></team-bar>\n        </div>\n      </div>\n      <player-post-card *ngIf="type == \'player\'" playerID="{{player.$key}}"></player-post-card>\n      <ion-item>\n        <ion-avatar item-start>\n          <profile-pic ID="{{player.$key}}" type="user"></profile-pic>\n        </ion-avatar>\n        <h2>{{player.name}}</h2>\n        <p>{{player.originalUsername}}@</p>\n      </ion-item>\n      <ion-card-content>\n        <div padding-bottom>\n          <ion-item>\n            <ion-input no-margin [(ngModel)]="title" style="font-size: large;" placeholder="العنوان" type="text" formControlName="title"></ion-input>\n          </ion-item>\n          <ion-note [ngClass]="{\'red\': (!composeForm.controls.title.valid && composeForm.controls.title.dirty)}" style="position: absolute;"\n            *ngIf="title.length > 0">\n            {{title.length}}/30\n          </ion-note>\n        </div>\n        <hr/>\n        <ion-row *ngIf="type == \'match\' && myTeams?.length > 0">\n          <ion-col col-9>\n            <ion-slides class="teamsList" dir="rtl" slidesPerView="4">\n              <ion-slide *ngFor="let team of myTeams">\n                <img on-tap="selectTeam(team)" class="logo" src="{{team.logo}}" alt="">\n                <div class="card-title">\n                  {{team.name}}\n                </div>\n              </ion-slide>\n            </ion-slides>\n          </ion-col>\n          <ion-col col-3>\n            <div on-tap="openCalendar()" class="icon_calendar">\n              <em></em><em></em>\n              <label>{{month}}</label>\n              <span>{{day}}</span>\n            </div>\n          </ion-col>\n        </ion-row>\n        <ion-item>\n          <ion-textarea class="infoArea" [(ngModel)]="info" rows="2" placeholder="معلومات اخرى (اختياري)" type="text" formControlName="info"></ion-textarea>\n        </ion-item>\n      </ion-card-content>\n    </form>\n    <ion-row>\n      <ion-col text-center>\n        <ion-note [ngClass]="{\'red\': (!composeForm.controls.info.valid && composeForm.controls.info.dirty)}" *ngIf="info.length > 0">\n          {{info.length}}/300\n        </ion-note>\n      </ion-col>\n      <ion-col>\n\n      </ion-col>\n      <ion-col center text-center>\n        <ion-note>\n          {{date}}\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  </ion-card>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/compose/compose.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__["a" /* MyTeamDB */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */]) === "function" && _f || Object])
-], AddPlayerToTeamPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */],
+        __WEBPACK_IMPORTED_MODULE_6_ion2_calendar_dist__["a" /* CalendarController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* ToastController */]])
+], ComposePage);
 
-var _a, _b, _c, _d, _e, _f;
-//# sourceMappingURL=add-player-to-team.js.map
+//# sourceMappingURL=compose.js.map
 
 /***/ })
 

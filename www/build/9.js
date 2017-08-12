@@ -1,12 +1,12 @@
 webpackJsonp([9],{
 
-/***/ 1117:
+/***/ 1123:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SettingsPageModule", function() { return SettingsPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__settings__ = __webpack_require__(1187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__settings__ = __webpack_require__(1196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -41,12 +41,12 @@ SettingsPageModule = __decorate([
 
 /***/ }),
 
-/***/ 1187:
+/***/ 1196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -72,10 +72,10 @@ var SettingsPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.afAuth = afAuth;
-        this.player = navParams.get('player');
+        this.playerUID = navParams.get('id');
     }
     SettingsPage.prototype.editProfile = function () {
-        this.navCtrl.push('EditProfilePage', { player: this.player });
+        this.navCtrl.push('EditProfilePage', { id: this.playerUID });
     };
     SettingsPage.prototype.changePassword = function () {
     };
@@ -94,10 +94,11 @@ SettingsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
         selector: 'page-settings',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/settings/settings.html"*/'<!--\n  Generated template for the SettingsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>الإعدادات</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding-top>\n  <ion-list padding-top>\n    <button ion-item (click)="editProfile()">تعديل بياناتي</button>\n    <button ion-item (click)="changePassword()">تغيير الباسوورد</button>\n    <ion-item>\n      <ion-toggle checked="true"></ion-toggle>\n      <ion-label>الإشعارات</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list>\n    <button ion-item (click)="contactUs()">تواصل معنا</button>\n    <button ion-item (click)="aboutUs()">عن البرنامج</button>\n  </ion-list>\n  <ion-list>\n    <button ion-item (click)="logOut()" style="color: red">تسجيل الخروج</button>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/settings/settings.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]])
 ], SettingsPage);
 
-var _a, _b, _c;
 //# sourceMappingURL=settings.js.map
 
 /***/ })

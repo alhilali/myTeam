@@ -1,0 +1,15 @@
+page-messages {
+  .avatar {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  ion-item {
+    padding-right: 10px;
+  }
+  h3 {
+    line-height: 1.4 !important;
+  }
+  .list>.item-wrapper:last-child .item-block {
+    //border-bottom: 0 !important;
+  }
+}
