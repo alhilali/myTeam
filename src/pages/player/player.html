@@ -15,7 +15,7 @@
     <ion-title>{{(playerInfo | async)?.name}}</ion-title>
   </ion-navbar>
   <ion-icon *ngIf="currentUID == playerUID" on-tap="openSettings()" class="editIcon mdIcon" color="light" name="ios-cog"></ion-icon>
-  <div class="hero" [ngStyle]="{ 'background-image': 'url(' + (playerInfo | async)?.bg + ')'}">
+  <div class="hero" [ngStyle]="(playerInfo | async)?.bg !== null && { 'background-image': 'url(' + (playerInfo | async)?.bg + ')'}">
     <div class="topContent">
       <ion-slides pager dir="rtl">
         <ion-slide>

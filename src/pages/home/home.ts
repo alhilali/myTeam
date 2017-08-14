@@ -1,7 +1,8 @@
+import { Keyboard } from "@ionic-native/keyboard";
 import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage, NavController, ActionSheetController,
-  ModalController, Slides, Events, Platform
+  ModalController, Slides, Events, Platform, ToastController
 } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MyTeamDB } from '../../helpers/myTeamDB';
@@ -23,10 +24,15 @@ export class HomePage {
   currentUser: any = {}
   constructor(private platform: Platform, private modal: ModalController,
     public teamDB: MyTeamDB, private actionSheetCtrl: ActionSheetController,
-    public navCtrl: NavController, public events: Events, public push: Push) {
+    public navCtrl: NavController, public events: Events, public push: Push,
+    public toast: ToastController, private keyboard: Keyboard) {
     events.subscribe("post:deleted", (postID) => {
       this.deletePost(postID)
     });
+
+    if (this.keyboard) {
+      this.keyboard.hideKeyboardAccessoryBar(true);
+    }
 
     this.initPushNotification();
   }
@@ -62,6 +68,12 @@ export class HomePage {
       //if user using app and push notification comes
       if (notification.additionalData.foreground) {
         // if application open, show popup
+        this.toast.create({
+          message: notification.title + ': ' + notification.message,
+          duration: 2200,
+          position: 'top',
+          dismissOnPageChange: true
+        }).present();
         console.log(notification);
       } else {
         console.log(notification);
@@ -149,7 +161,7 @@ export class HomePage {
   }
 
   openModal() {
-    this.navCtrl.push('PlayerPage', { username: this.currentUser.originalUsername });
+    this.navCtrl.push('PlayerPage', { id: this.currentUserId });
   }
 
   compose() {

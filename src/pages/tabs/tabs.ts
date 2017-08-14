@@ -1,7 +1,7 @@
 import { MyTeamDB } from "./../../helpers/myTeamDB";
 import { Component, ViewChild } from '@angular/core';
 import { Events, IonicPage, Tabs } from 'ionic-angular';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage({
@@ -16,71 +16,40 @@ export class TabsPage {
   tab2Root = 'MyTeamPage';
   tab3Root = 'NotificationPage';
   tab4Root = 'SearchPage';
-  notificationNum: number;
-  userRequestsNum: number = 0;
-  matchRequestsNum: number = 0;
+  requests: FirebaseListObservable<any[]>
+  messages: FirebaseListObservable<any[]>
+  currentUID: string
 
   constructor(public events: Events, private db: AngularFireDatabase,
     private afAuth: AngularFireAuth, public teamDB: MyTeamDB) {
   }
 
-  ngAfterViewInit() {
-    //console.log(this.tabRef);
-  }
-
-  updateBadge() {
-    if ((this.userRequestsNum + this.matchRequestsNum) == 0)
-      this.notificationNum = null;
-    else this.notificationNum = this.userRequestsNum + this.matchRequestsNum;
-  }
-
-  subscribeToBadgeCountChange() {
-    // Method to run when tab count changes
-    return this.events
-      .subscribe("tabs-page:badge-update", (type) => {
-        if (type == 'match') this.checkMatchRequests();
-        else if (type == 'user') this.checkUserRequests();
-      });
-  }
-
   checkUserRequests() {
-    this.db.list('users/' + this.afAuth.auth.currentUser.uid
-      + '/requests').take(1).subscribe(data => {
-        this.userRequestsNum = data.length;
-        this.updateBadge();
-      })
+    this.requests = this.db.list('users/' + this.currentUID
+      + '/requests');
   }
 
-  checkMatchRequests() {
-    this.db.list('matches/', {
+  checkMessages() {
+    this.messages = this.db.list('users/' + this.currentUID + '/messages/', {
       query: {
-        orderByChild: 'toUID',
-        equalTo: this.afAuth.auth.currentUser.uid
+        orderByChild: 'read',
+        equalTo: false
       }
-    }).take(1).subscribe(data => {
-      let count = 0;
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].status == 'pending') count++;
-        if (i == data.length - 1) {
-          this.matchRequestsNum = count;
-          this.updateBadge();
-        }
-      }
-    })
+    });
   }
 
-  ionViewWillEnter() {
-    this.afAuth.auth.onAuthStateChanged(user => {
+  async ionViewWillEnter() {
+    await this.afAuth.auth.onAuthStateChanged(user => {
       if (!user) {
         this.tabRef._tabs[1].show = false;
         this.tabRef._tabs[2].show = false;
       } else {
         this.tabRef._tabs[1].show = true;
         this.tabRef._tabs[2].show = true;
+        this.currentUID = user.uid;
       }
     })
-    // this.checkUserRequests();
-    // this.checkMatchRequests();
-    // this.subscribeToBadgeCountChange();
+    this.checkUserRequests();
+    this.checkMessages();
   }
 }

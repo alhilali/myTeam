@@ -23,6 +23,11 @@
   font-family: "Helvetica Neue";
 }
 
+.smIcon {
+  font-size: 20px;
+  color: gray
+}
+
 .mdIcon {
   font-size: 27px;
 }
@@ -75,6 +80,15 @@ ion-card-header {
   padding-top: 40px;
 }
 
+.textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 35px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
 // Hopefully temp until bug gets fixed (pushing page from modal cuts statusbar)
 
 /**.toolbar-ios {
@@ -123,7 +137,7 @@ ion-calendar-modal.matchCalender {
   }
   ion-content {
     .month-box {
-      background-color: #white;
+      background-color: #fff;
     }
     .days-btn,
     .month-title {

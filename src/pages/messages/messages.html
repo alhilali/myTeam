@@ -37,7 +37,7 @@
           <name ID="{{messages.$key}}" type="user"></name>
         </h3>
         <ion-row now-wrap>
-          <h5 text-right>
+          <h5 text-right [ngStyle]="{color: (messages.read == true) ? 'grey' : 'black'}">
             {{messages.recentMessage}}
           </h5> &nbsp;
           <date id="date" date="{{messages.recentDate}}"></date>

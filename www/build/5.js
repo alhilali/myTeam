@@ -1,14 +1,16 @@
 webpackJsonp([5],{
 
-/***/ 1120:
+/***/ 1111:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermsPageModule", function() { return TermsPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terms__ = __webpack_require__(1193);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessagePageModule", function() { return MessagePageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__directives_directives_module__ = __webpack_require__(1170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__message__ = __webpack_require__(1186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_components_module__ = __webpack_require__(673);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,36 +20,70 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var TermsPageModule = (function () {
-    function TermsPageModule() {
+
+
+var MessagePageModule = (function () {
+    function MessagePageModule() {
     }
-    return TermsPageModule;
+    return MessagePageModule;
 }());
-TermsPageModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
+MessagePageModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */],
+            __WEBPACK_IMPORTED_MODULE_3__message__["a" /* MessagePage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */]),
+            __WEBPACK_IMPORTED_MODULE_4__components_components_module__["a" /* ComponentsModule */],
+            __WEBPACK_IMPORTED_MODULE_0__directives_directives_module__["a" /* DirectivesModule */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_3__message__["a" /* MessagePage */]),
         ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__terms__["a" /* TermsPage */]
-        ]
     })
-], TermsPageModule);
+], MessagePageModule);
 
-//# sourceMappingURL=terms.module.js.map
+//# sourceMappingURL=message.module.js.map
 
 /***/ }),
 
-/***/ 1193:
+/***/ 1170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TermsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DirectivesModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__flexible_keyboard_flexible_keyboard__ = __webpack_require__(1171);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var DirectivesModule = (function () {
+    function DirectivesModule() {
+    }
+    return DirectivesModule;
+}());
+DirectivesModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
+        declarations: [__WEBPACK_IMPORTED_MODULE_1__flexible_keyboard_flexible_keyboard__["a" /* FlexibleKeyboardDirective */]],
+        imports: [],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__flexible_keyboard_flexible_keyboard__["a" /* FlexibleKeyboardDirective */]]
+    })
+], DirectivesModule);
+
+//# sourceMappingURL=directives.module.js.map
+
+/***/ }),
+
+/***/ 1171:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FlexibleKeyboardDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_keyboard__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,33 +95,203 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 /**
- * Generated class for the TermsPage page.
+ * Generated class for the FlexibleKeyboardDirective directive.
+ *
+ * See https://angular.io/docs/ts/latest/api/core/index/DirectiveMetadata-class.html
+ * for more info on Angular Directives.
+ */
+var FlexibleKeyboardDirective = (function () {
+    function FlexibleKeyboardDirective(element, renderer, platform, keyboard) {
+        this.element = element;
+        this.renderer = renderer;
+        this.platform = platform;
+        this.keyboard = keyboard;
+        this.millis = 200;
+        this.scrollTimeout = this.millis + 50;
+    }
+    FlexibleKeyboardDirective.prototype.ngAfterViewInit = function () {
+        if (this.platform.is('ios')) {
+            this.addKeyboardListeners();
+        }
+        this.scrollContentElelment = this.content.getScrollElement();
+        this.footerElement = document.getElementsByTagName('ion-footer')[0];
+        this.inputElement = document.getElementsByClassName('textarea')[0];
+        this.footerElement.style.cssText = this.footerElement.style.cssText + "transition: all " + this.millis + "ms; -webkit-transition: all " +
+            this.millis + "ms; -webkit-transition-timing-function: ease-out; transition-timing-function: ease-out;";
+        this.scrollContentElelment.style.cssText = this.scrollContentElelment.style.cssText + "transition: all " + this.millis + "ms; -webkit-transition: all " +
+            this.millis + "ms; -webkit-transition-timing-function: ease-out; transition-timing-function: ease-out;";
+        this.textareaHeight = Number(this.inputElement.style.height.replace('px', ''));
+        this.initialTextAreaHeight = this.textareaHeight;
+        this.updateScroll('load', 500);
+    };
+    FlexibleKeyboardDirective.prototype.addKeyboardListeners = function () {
+        var _this = this;
+        this.keyboardHideSub = this.keyboard.onKeyboardHide().subscribe(function () {
+            var newHeight = _this.textareaHeight - _this.initialTextAreaHeight + 28;
+            var marginBottom = newHeight + 'px';
+            _this.renderer.setElementStyle(_this.scrollContentElelment, 'marginBottom', marginBottom);
+            _this.renderer.setElementStyle(_this.footerElement, 'marginBottom', '0px');
+        });
+        this.keybaordShowSub = this.keyboard.onKeyboardShow().subscribe(function (e) {
+            var newHeight = (e['keyboardHeight']) + _this.textareaHeight - _this.initialTextAreaHeight;
+            var marginBottom = newHeight + 28 + 'px';
+            _this.renderer.setElementStyle(_this.scrollContentElelment, 'marginBottom', marginBottom);
+            _this.renderer.setElementStyle(_this.footerElement, 'marginBottom', e['keyboardHeight'] + 'px');
+            _this.updateScroll('keybaord show', _this.scrollTimeout);
+        });
+    };
+    FlexibleKeyboardDirective.prototype.contentMouseDown = function (event) {
+        //console.log('blurring input element :- > event type:', event.type);
+        this.inputElement.blur();
+    };
+    FlexibleKeyboardDirective.prototype.updateScroll = function (from, timeout) {
+        var _this = this;
+        setTimeout(function () {
+            _this.content.scrollToBottom();
+        }, timeout);
+    };
+    return FlexibleKeyboardDirective;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["r" /* ContentChild */])('content'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Content */])
+], FlexibleKeyboardDirective.prototype, "content", void 0);
+FlexibleKeyboardDirective = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["t" /* Directive */])({
+        selector: '[flexible-keyboard]',
+        host: {
+            '(tab)': 'contentMouseDown($event)'
+        }
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_core__["u" /* ElementRef */], __WEBPACK_IMPORTED_MODULE_2__angular_core__["_0" /* Renderer */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__ionic_native_keyboard__["a" /* Keyboard */]])
+], FlexibleKeyboardDirective);
+
+//# sourceMappingURL=flexible-keyboard.js.map
+
+/***/ }),
+
+/***/ 1186:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessagePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ionic_native_keyboard__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_message_message__ = __webpack_require__(679);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(31);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the MessagePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var TermsPage = (function () {
-    function TermsPage(navCtrl, navParams, view) {
+var MessagePage = (function () {
+    function MessagePage(navCtrl, navParams, keyboard, db, afAuth, msgService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.view = view;
+        this.keyboard = keyboard;
+        this.db = db;
+        this.afAuth = afAuth;
+        this.msgService = msgService;
+        this.newMessage = '';
+        this.toUID = navParams.get('toUID');
+        if (this.keyboard) {
+            this.keyboard.hideKeyboardAccessoryBar(true);
+            this.keyboard.disableScroll(true);
+        }
     }
-    TermsPage.prototype.closeModel = function () {
-        this.view.dismiss();
+    MessagePage.prototype.ionViewDidLoad = function () {
+        this.currentUID = this.afAuth.auth.currentUser.uid;
+        this.allMessages = this.db.list('users/' + this.currentUID +
+            '/messages/' + this.toUID, {
+            query: {
+                orderByChild: 'timestamp'
+            }
+        });
+        this.messageStatus = this.db.object('users/' + this.toUID +
+            '/messages/' + this.currentUID + '/read');
+        this.markAllMessagesRead();
     };
-    return TermsPage;
+    MessagePage.prototype.markAllMessagesRead = function () {
+        var _this = this;
+        this.allMessagesSub = this.db.list('users/' + this.currentUID +
+            '/messages/' + this.toUID, {
+            query: {
+                orderByChild: 'timestamp'
+            }
+        }).subscribe(function (data) {
+            data.forEach(function (msg) {
+                if (msg.sentBy && msg.sentBy != _this.currentUID) {
+                    _this.msgService.markMsgRead(msg.$key, _this.toUID);
+                }
+            });
+        });
+    };
+    MessagePage.prototype.ionViewWillLeave = function () {
+        this.msgService.markRead(this.toUID);
+        this.allMessagesSub.unsubscribe();
+    };
+    MessagePage.prototype.sendMessage = function () {
+        var _this = this;
+        if (this.newMessage !== '') {
+            this.msgService.sendMessage(this.newMessage, this.toUID).then(function () {
+                _this.content.scrollToBottom();
+                _this.newMessage = '';
+            });
+        }
+    };
+    MessagePage.prototype.openUser = function () {
+        this.navCtrl.push('PlayerPage', { id: this.toUID });
+    };
+    MessagePage.prototype.footerTouchStart = function (event) {
+        if (event.target.localName !== "textarea") {
+            event.preventDefault();
+        }
+    };
+    MessagePage.prototype.touchSendButton = function (event) {
+        event.preventDefault();
+        this.sendMessage();
+    };
+    return MessagePage;
 }());
-TermsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-terms',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/terms/terms.html"*/'<!--\n  Generated template for the TermsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Terms of Use</ion-title>\n    <button start (click)="closeModel()" ion-button clear icon-only style="height: 22px">\n      <ion-icon color="light" name="close"></ion-icon>\n    </button>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding="">\n  <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n  <hr>\n  <p dir="ltr">\n    <strong>Felmal3ab</strong> App End User License Agreement<br clear="all"> This End User License Agreement (“Agreement”)\n    is between you and <strong>Felmal3ab</strong> and governs use of this app made available through the Apple App Store.\n    By installing the <strong>Felmal3ab</strong> App, you agree to be bound by this Agreement and understand that there is\n    no tolerance for objectionable content. If you do not agree with the terms and conditions of this Agreement, you are\n    not entitled to use the <strong>Felmal3ab</strong> App.<br clear="all">\n    <br clear="all"> In order to ensure <strong>Felmal3ab</strong> provides the best experience possible for everyone, we\n    strongly enforce a no tolerance policy for objectionable content. If you see inappropriate content, please use the "Report"\n    feature found on the top left corner after clicking the <br> "\n    <ion-icon class="largeIcon" name="md-more"></ion-icon>&nbsp;" &nbsp;icon inside each post\'s details. <br clear="all">\n    <br clear="all"> 1. Parties This Agreement is between you and <strong>Felmal3ab</strong> only, and not Apple, Inc. (“Apple”).\n    Notwithstanding the foregoing, you acknowledge that Apple and its subsidiaries are third party beneficiaries of this\n    Agreement and Apple has the right to enforce this Agreement against you. <strong>Felmal3ab</strong>, not Apple, is solely\n    responsible for the <strong>Felmal3ab</strong> App and its content.<br>\n    <br clear="all"> 2. Privacy <strong>Felmal3ab</strong> may collect and use information about your usage of the <strong>Felmal3ab</strong>    App, including certain types of information from and about your device. <strong>Felmal3ab</strong> may use this information,\n    as long as it is in a form that does not personally identify you, to measure the use and performance of the <strong>Felmal3ab</strong>    App.<br>\n    <br clear="all"> 3. Limited License <strong>Felmal3ab</strong> grants you a limited, non-exclusive, non-transferable,\n    revocable license to use the<strong>Felmal3ab</strong> App for your personal, non-commercial purposes. You may only use\n    the\n    <strong>Felmal3ab</strong> App on Apple devices that you own or control and as permitted by the App Store Terms of Service.\n    <br clear="all"><br clear="all"> 4. Age Restrictions By using the <strong>Felmal3ab</strong> App, you represent and warrant\n    that (a) you are 17 years of age or older and you agree to be bound by this Agreement; (b) if you are under 17 years\n    of age, you have obtained verifiable consent from a parent or legal guardian; and (c) your use of the <strong>Felmal3ab</strong>    App does not violate any applicable law or regulation. Your access to the <strong>Felmal3ab</strong> App may be terminated\n    without warning if <strong>Felmal3ab</strong> believes, in its sole discretion, that you are under the age of 17 years\n    and have not obtained verifiable consent from a parent or legal guardian. If you are a parent or legal guardian and you\n    provide your consent to your child\'s use of the <strong>Felmal3ab</strong> App, you agree to be bound by this Agreement\n    in respect to your child\'s use of the <strong>Felmal3ab</strong> App.<br>\n    <br clear="all"> 5. Objectionable Content Policy Content may not be submitted to <strong>Felmal3ab</strong>, who will\n    moderate all content and ultimately decide whether or not to post a submission to the extent such content includes, is\n    in conjunction with, or alongside any, Objectionable Content. Objectionable Content includes, but is not limited to:\n    (i) sexually explicit materials; (ii) obscene, defamatory, libelous, slanderous, violent and/or unlawful content or profanity;\n    (iii) content that infringes upon the rights of any third party, including copyright, trademark, privacy, publicity or\n    other personal or proprietary right, or that is deceptive or fraudulent; (iv) content that promotes the use or sale of\n    illegal or regulated substances, tobacco products, ammunition and/or firearms; and (v) gambling, including without limitation,\n    any online casino, sports books, bingo or poker.<br>\n    <br clear="all"> 6. Warranty <strong>Felmal3ab</strong> disclaims all warranties about the <strong>Felmal3ab</strong>    App to the fullest extent permitted by law. To the extent any warranty exists under law that cannot be disclaimed, <strong>Felmal3ab</strong>,\n    not Apple, shall be solely responsible for such warranty.<br>\n    <br clear="all"> 7. Maintenance and Support <strong>Felmal3ab</strong> does provide minimal maintenance or support for\n    it but not to the extent that any maintenance or support is required by applicable law, <strong>Felmal3ab</strong>, not\n    Apple, shall be obligated to furnish any such maintenance or support.<br>\n    <br clear="all"> 8. Product Claims <strong>Felmal3ab</strong>, not Apple, is responsible for addressing any claims by\n    you relating to the <strong>Felmal3ab</strong> App or use of it, including, but not limited to: (i) any product liability\n    claim; (ii) any claim that the <strong>Felmal3ab</strong> App fails to conform to any applicable legal or regulatory\n    requirement; and (iii) any claim arising under consumer protection or similar legislation. Nothing in this Agreement\n    shall be deemed an admission that you may have such claims.<br>\n    <br clear="all"> 9. Third Party Intellectual Property Claims <strong>Felmal3ab</strong> shall not be obligated to indemnify\n    or defend you with respect to any third party claim arising out or relating to the <strong>Felmal3ab</strong> App. To\n    the extent <strong>Felmal3ab</strong> is required to provide indemnification by applicable law, <strong>Felmal3ab</strong>,\n    not Apple, shall be solely responsible for the investigation, defense, settlement and discharge of any claim that the\n    <strong>Felmal3ab</strong> App or your use of it infringes any third party intellectual property right.<br clear="all"></p>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/terms/terms.html"*/,
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["_13" /* ViewChild */])('content'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* Content */])
+], MessagePage.prototype, "content", void 0);
+MessagePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["h" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["n" /* Component */])({
+        selector: 'page-message',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/message/message.html"*/'<!--\n  Generated template for the MessagePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>\n      <ion-row justify-content-center align-items-center>\n        <name tappable (click)="openUser()" ID="{{toUID}}" type="user"></name>\n      </ion-row>\n    </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content #content flexible-keyboard ionScrollEnd="hideKeybaord()">\n  <div class="chatwindow">\n    <ion-list no-lines>\n      <span *ngFor="let message of allMessages | async">\n        <ion-item *ngIf="message.message" text-wrap>\n          <ion-avatar item-left *ngIf="message.sentBy === currentUID">\n            <profile-pic className="avatar" type="user" ID="{{currentUID}}"></profile-pic>\n          </ion-avatar>\n          <div class="bubble me" *ngIf="message.sentBy === currentUID">\n            <h3>{{message.message}}</h3>\n          </div>\n          <ion-avatar item-right *ngIf="message.sentBy != currentUID">\n            <profile-pic className="avatar" type="user" ID="{{toUID}}"></profile-pic>\n          </ion-avatar>\n          <div class="bubble you" *ngIf="message.sentBy != currentUID">\n            <h3>{{message.message}}</h3>\n          </div>\n      </ion-item>\n      <div class="status" *ngIf="message.sentBy === currentUID">\n        <ion-icon *ngIf="message.read == true" class="smIcon" ios="ios-checkmark"></ion-icon>\n        <ion-icon *ngIf="message.read == true" class="smIcon" ios="ios-checkmark"></ion-icon>\n        <ion-icon *ngIf="message.read == false" class="smIcon" ios="ios-checkmark"></ion-icon>\n      </div>\n      </span>\n    </ion-list>\n  </div>\n</ion-content>\n\n<ion-footer (touchstart)="footerTouchStart($event)">\n  <ion-row align-items-center dir="rtl" class="bottomBar">\n    <ion-col col-9 no-padding>\n      <textarea class="textarea" rows="1" [(ngModel)]="newMessage" placeholder="ادخل رسالتك..." (keyup.enter)="sendMessage()">\n			</textarea>\n    </ion-col>\n    <ion-col col-3>\n      <ion-buttons end>\n        <button ion-button round color="gold" (touchstart)="touchSendButton($event)" [disabled]="newMessage.length == 0" small>\n          ارسل\n        </button>\n      </ion-buttons>\n    </ion-col>\n  </ion-row>\n</ion-footer>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/message/message.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]])
-], TermsPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_0__ionic_native_keyboard__["a" /* Keyboard */],
+        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
+        __WEBPACK_IMPORTED_MODULE_1__providers_message_message__["a" /* MessageProvider */]])
+], MessagePage);
 
-//# sourceMappingURL=terms.js.map
+//# sourceMappingURL=message.js.map
 
 /***/ })
 

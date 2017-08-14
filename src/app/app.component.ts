@@ -39,10 +39,10 @@ export class MyApp {
       if (this.keyboard) {
         this.keyboard.hideKeyboardAccessoryBar(false);
       }
-      statusBar.styleDefault();
+      statusBar.styleLightContent();
       setTimeout(() => {
         splashScreen.hide();
-      }, 650);
+      }, 700);
       //this.initPushNotification();
       //splashScreen.hide();
     });

@@ -51,9 +51,12 @@ export class PlayerPage {
   }
 
   async ionViewDidLoad() {
-    await this.teamDB.findUID(this.navParams.get('username')).then(data => {
-      this.playerUID = (data as any).$key
-    })
+    if (!this.navParams.get('username')) this.playerUID = this.navParams.get('id')
+    else {
+      await this.teamDB.findUID(this.navParams.get('username')).then(data => {
+        this.playerUID = (data as any).$key
+      })
+    }
     this.playerInfo = this.db.object('users/' + this.playerUID);
     this.loadMyTeams();
   }

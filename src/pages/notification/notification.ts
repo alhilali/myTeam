@@ -21,6 +21,7 @@ export class NotificationPage {
 
   requests: FirebaseListObservable<any[]>
   userNotification: FirebaseListObservable<any[]>;
+  messages: FirebaseListObservable<any[]>;
   currentUserUid: any
 
   constructor(public navCtrl: NavController,
@@ -38,6 +39,7 @@ export class NotificationPage {
     })
     this.loadRequests();
     this.loadUserNotifications();
+    this.loadUserMessages();
   }
 
   loadRequests() {
@@ -51,6 +53,15 @@ export class NotificationPage {
         orderByChild: 'timestamp'
       }
     });
+  }
+
+  loadUserMessages() {
+    this.messages = this.db.list('users/' + this.currentUserUid + '/messages/', {
+      query: {
+        orderByChild: 'read',
+        equalTo: false
+      }
+    })
   }
 
   doRefresh(refresher) {

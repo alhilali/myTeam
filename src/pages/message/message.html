@@ -9,8 +9,7 @@
   <ion-navbar>
     <ion-title>
       <ion-row justify-content-center align-items-center>
-        <name ID="{{toUID}}" type="user"></name>
-        <profile-pic class="userThumb" className="userThumb" ID="{{toUID}}" type="user"></profile-pic>
+        <name tappable (click)="openUser()" ID="{{toUID}}" type="user"></name>
       </ion-row>
     </ion-title>
   </ion-navbar>
@@ -18,8 +17,8 @@
 </ion-header>
 
 
-<ion-content #content>
-  <div class="chatwindow" padding-top>
+<ion-content #content flexible-keyboard ionScrollEnd="hideKeybaord()">
+  <div class="chatwindow">
     <ion-list no-lines>
       <span *ngFor="let message of allMessages | async">
         <ion-item *ngIf="message.message" text-wrap>
@@ -35,20 +34,26 @@
           <div class="bubble you" *ngIf="message.sentBy != currentUID">
             <h3>{{message.message}}</h3>
           </div>
-        </ion-item>
+      </ion-item>
+      <div class="status" *ngIf="message.sentBy === currentUID">
+        <ion-icon *ngIf="message.read == true" class="smIcon" ios="ios-checkmark"></ion-icon>
+        <ion-icon *ngIf="message.read == true" class="smIcon" ios="ios-checkmark"></ion-icon>
+        <ion-icon *ngIf="message.read == false" class="smIcon" ios="ios-checkmark"></ion-icon>
+      </div>
       </span>
     </ion-list>
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer (touchstart)="footerTouchStart($event)">
   <ion-row align-items-center dir="rtl" class="bottomBar">
-    <ion-col col-9>
-      <ion-input [(ngModel)]="newMessage" placeholder="ادخل رسالتك" type="text"></ion-input>
+    <ion-col col-9 no-padding>
+      <textarea class="textarea" rows="1" [(ngModel)]="newMessage" placeholder="ادخل رسالتك..." (keyup.enter)="sendMessage()">
+			</textarea>
     </ion-col>
     <ion-col col-3>
       <ion-buttons end>
-        <button ion-button (click)="sendMessage()" round color="gold" [disabled]="newMessage.length == 0" small>
+        <button ion-button round color="gold" (touchstart)="touchSendButton($event)" [disabled]="newMessage.length == 0" small>
           ارسل
         </button>
       </ion-buttons>

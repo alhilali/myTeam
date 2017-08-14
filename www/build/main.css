@@ -60373,6 +60373,11 @@ ion-navbar.toolbar {
   font-family: "Helvetica Neue";
 }
 
+.smIcon {
+  font-size: 20px;
+  color: gray;
+}
+
 .mdIcon {
   font-size: 27px;
 }
@@ -60426,6 +60431,15 @@ ion-card-header {
   padding-top: 40px;
 }
 
+.textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 35px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
 /**.toolbar-ios {
   height: 44px + $cordova-ios-statusbar-padding;
   padding-top: $cordova-ios-statusbar-padding;
@@ -60468,7 +60482,7 @@ ion-calendar-modal.matchCalender ion-header .week-title {
 }
 
 ion-calendar-modal.matchCalender ion-content .month-box {
-  background-color: #white;
+  background-color: #fff;
 }
 
 ion-calendar-modal.matchCalender ion-content .days-btn,
@@ -61349,6 +61363,11 @@ page-edit-team .avatar {
   width: 50px;
 }
 
+page-home {
+  /* content placeholder */
+  /* Every thing below this is just positioning */
+}
+
 page-home .avatar {
   background-color: grey;
   background-position: center;
@@ -61407,6 +61426,166 @@ page-home .postInfoBar {
   margin-top: 10px;
 }
 
+page-home .timeline-wrapper {
+  margin-top: 10px;
+  -webkit-transition: opacity 300ms;
+  transition: opacity 300ms;
+}
+
+page-home .timeline-item {
+  background: #fff;
+  border: 1px solid;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 0 auto;
+  max-width: 472px;
+  min-height: 140px;
+  -webkit-box-shadow: 0px 20px 150px #d6dee4;
+  box-shadow: 0px 20px 150px #d6dee4;
+}
+
+@-webkit-keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+page-home .animated-background {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: placeHolderShimmer;
+  animation-name: placeHolderShimmer;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 800px 104px;
+  height: 96px;
+  position: relative;
+}
+
+page-home .background-masker {
+  background: #fff;
+  position: absolute;
+}
+
+page-home .background-masker.header-top,
+page-home .background-masker.header-bottom,
+page-home .background-masker.subheader-bottom {
+  top: 0;
+  left: 0px;
+  right: 40px;
+  height: 10px;
+}
+
+page-home .background-masker.header-left,
+page-home .background-masker.subheader-left,
+page-home .background-masker.header-right,
+page-home .background-masker.subheader-right {
+  top: 10px;
+  left: 0px;
+  right: 40px;
+  height: 8px;
+  width: 10px;
+}
+
+page-home .background-masker.header-bottom {
+  top: 18px;
+  height: 6px;
+}
+
+page-home .background-masker.subheader-left,
+page-home .background-masker.subheader-right {
+  top: 24px;
+  height: 6px;
+}
+
+page-home .background-masker.header-right,
+page-home .background-masker.subheader-right {
+  width: auto;
+  left: 0;
+  right: 300px;
+}
+
+page-home .background-masker.subheader-right {
+  left: 230px;
+}
+
+page-home .background-masker.subheader-bottom {
+  top: 30px;
+  height: 10px;
+}
+
+page-home .background-masker.content-top,
+page-home .background-masker.content-second-line,
+page-home .background-masker.content-third-line,
+page-home .background-masker.content-second-end,
+page-home .background-masker.content-third-end,
+page-home .background-masker.content-first-end {
+  top: 40px;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+page-home .background-masker.content-top {
+  height: 20px;
+}
+
+page-home .background-masker.content-first-end,
+page-home .background-masker.content-second-end,
+page-home .background-masker.content-third-end {
+  width: auto;
+  left: 0px;
+  right: 380px;
+  top: 60px;
+  height: 8px;
+}
+
+page-home .background-masker.content-second-line {
+  top: 68px;
+}
+
+page-home .background-masker.content-second-end {
+  left: 420px;
+  top: 74px;
+}
+
+page-home .background-masker.content-third-line {
+  top: 82px;
+}
+
+page-home .background-masker.content-third-end {
+  right: 300px;
+  top: 88px;
+}
+
+page-home .background-masker.round-thumb {
+  height: 40px;
+  width: 40px;
+  right: 0;
+  top: 0;
+  background: radial-gradient(circle closest-side at center, transparent 99%, white 1%, white);
+}
+
 page-login ion-content:after {
   content: '';
   display: block;
@@ -61460,10 +61639,6 @@ page-message .userThumb {
 }
 
 page-message .bottomBar {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  z-index: 99;
   background-color: #f4f4f4;
 }
 
@@ -61477,12 +61652,25 @@ page-message .text-input {
   margin: 0;
 }
 
+page-message .textarea {
+  width: 100%;
+  border: 0;
+  border-radius: 35px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
 page-message ion-avatar {
   margin: 2px !important;
 }
 
 page-message ion-label {
   margin: 0px 5px !important;
+}
+
+page-message ion-item {
+  padding-right: 10px !important;
 }
 
 page-message .bubble {
@@ -61507,7 +61695,19 @@ page-message .you {
 }
 
 page-message .chatwindow {
-  padding-bottom: 70px;
+  padding-top: 10px;
+}
+
+page-message name:hover {
+  color: #e8e8e8;
+}
+
+page-message .status {
+  padding-right: 65px;
+  height: 12px;
+  line-height: 0;
+  margin-top: -7px;
+  word-spacing: -4px;
 }
 
 page-messages .avatar {
@@ -61516,11 +61716,15 @@ page-messages .avatar {
 }
 
 page-messages ion-item {
-  padding-right: 10px;
+  padding-right: 10px !important;
 }
 
 page-messages h3 {
   line-height: 1.4 !important;
+}
+
+page-messages .list > .item-wrapper:last-child .item-block {
+  border-bottom: 0 !important;
 }
 
 page-my-team .blur {
@@ -61593,6 +61797,13 @@ page-notification date > p {
   white-space: initial;
   direction: ltr;
   text-align: -webkit-left;
+}
+
+page-notification .msgsBadge {
+  background-color: red;
+  margin-left: -10px;
+  margin-top: -15px;
+  z-index: 99;
 }
 
 page-player .hero {
@@ -61816,6 +62027,10 @@ page-post .likesPreview {
   border-radius: 10px;
   position: absolute;
   right: 60px;
+}
+
+page-post .slide-zoom {
+  margin-left: 1px;
 }
 
 page-post .content {

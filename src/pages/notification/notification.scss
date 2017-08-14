@@ -28,4 +28,10 @@ page-notification {
     direction: ltr;
     text-align: -webkit-left;
   }
+  .msgsBadge {
+    background-color: red;
+    margin-left: -10px;
+    margin-top: -15px;
+    z-index: 99;
+  }
 }

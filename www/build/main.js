@@ -17,7 +17,7 @@ var FIREBASE_CONFIG = {
 
 /***/ }),
 
-/***/ 224:
+/***/ 225:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -30,11 +30,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 224;
+webpackEmptyAsyncContext.id = 225;
 
 /***/ }),
 
-/***/ 267:
+/***/ 268:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -76,11 +76,11 @@ var map = {
 	],
 	"../pages/message/message.module": [
 		1111,
-		17
+		5
 	],
 	"../pages/messages/messages.module": [
 		1112,
-		16
+		17
 	],
 	"../pages/my-team/my-team.module": [
 		1115,
@@ -88,7 +88,7 @@ var map = {
 	],
 	"../pages/new-message/new-message.module": [
 		1116,
-		15
+		16
 	],
 	"../pages/notification/notification.module": [
 		1117,
@@ -96,47 +96,47 @@ var map = {
 	],
 	"../pages/player/player.module": [
 		1118,
-		14
+		15
 	],
 	"../pages/post/post.module": [
 		1119,
-		13
+		4
 	],
 	"../pages/register/register.module": [
 		1121,
-		12
+		14
 	],
 	"../pages/request-match/request-match.module": [
 		1100,
-		11
+		13
 	],
 	"../pages/search/search.module": [
 		1122,
-		10
+		12
 	],
 	"../pages/settings/settings.module": [
 		1123,
-		9
+		11
 	],
 	"../pages/start-team/start-team.module": [
 		1114,
-		8
+		10
 	],
 	"../pages/tabs/tabs.module": [
 		1113,
-		7
+		9
 	],
 	"../pages/team/team.module": [
 		1124,
-		6
+		8
 	],
 	"../pages/terms/terms.module": [
 		1120,
-		5
+		7
 	],
 	"../pages/welcome/welcome.module": [
 		1108,
-		4
+		6
 	]
 };
 function webpackAsyncContext(req) {
@@ -150,7 +150,7 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 267;
+webpackAsyncContext.id = 268;
 module.exports = webpackAsyncContext;
 
 /***/ }),
@@ -718,7 +718,7 @@ MyTeamDB = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__player_bar_player_bar__ = __webpack_require__(766);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__team_bar_team_bar__ = __webpack_require__(767);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__profile_pic_profile_pic__ = __webpack_require__(768);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__date_date__ = __webpack_require__(769);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__post_post__ = __webpack_require__(770);
@@ -951,7 +951,7 @@ UsernameValidator = __decorate([
 
 /***/ }),
 
-/***/ 680:
+/***/ 679:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -961,6 +961,7 @@ UsernameValidator = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -974,6 +975,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /*
   Generated class for the MessageProvider provider.
 
@@ -981,9 +983,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   for more info on providers and Angular DI.
 */
 var MessageProvider = (function () {
-    function MessageProvider(afAuth, db) {
+    function MessageProvider(afAuth, db, toast) {
         this.afAuth = afAuth;
         this.db = db;
+        this.toast = toast;
     }
     MessageProvider.prototype.sendMessage = function (msg, toUID) {
         var _this = this;
@@ -994,9 +997,10 @@ var MessageProvider = (function () {
                     sentBy: _this.afAuth.auth.currentUser.uid,
                     message: msg,
                     date: date,
+                    read: false,
                     timestamp: new Date().getTime(),
-                }).then(function () {
-                    _this.db.list('users/' + toUID + '/messages/' + _this.afAuth.auth.currentUser.uid).push({
+                }).then(function (snap) {
+                    _this.db.object('users/' + toUID + '/messages/' + _this.afAuth.auth.currentUser.uid + '/' + snap.key).set({
                         sentBy: _this.afAuth.auth.currentUser.uid,
                         message: msg,
                         date: date,
@@ -1021,11 +1025,13 @@ var MessageProvider = (function () {
                 recentMessage: msg,
                 recentDate: date,
                 timestamp: new Date().getTime(),
+                read: true
             }).then(function () {
                 _this.db.object('users/' + toUID + '/messages/' + _this.afAuth.auth.currentUser.uid).update({
                     recentMessage: msg,
                     recentDate: date,
                     timestamp: new Date().getTime(),
+                    read: false
                 }).then(function () {
                     resolve(true);
                 }).catch(function (err) {
@@ -1036,11 +1042,54 @@ var MessageProvider = (function () {
             });
         });
     };
+    MessageProvider.prototype.markRead = function (toUID) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.db.object('users/' + _this.afAuth.auth.currentUser.uid + '/messages/' + toUID).update({
+                read: true
+            }).then(function () {
+                resolve(true);
+            }).catch(function (err) {
+                reject(err);
+            });
+        });
+    };
+    MessageProvider.prototype.markMsgRead = function (key, toUID) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.db.object('users/' + toUID + '/messages/' + _this.afAuth.auth.currentUser.uid + '/' + key).update({
+                read: true
+            }).then(function () {
+                resolve(true);
+            }).catch(function (err) {
+                reject(err);
+            });
+        });
+    };
+    MessageProvider.prototype.removeMessage = function (key) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.db.object('users/' + _this.afAuth.auth.currentUser.uid + '/messages/' + key)
+                .remove().then(function () {
+                // show cofirmation
+                _this.toast.create({
+                    message: 'تم حذف الرسائل',
+                    duration: 2200,
+                    position: 'top',
+                    cssClass: 'failure'
+                }).present();
+                resolve(true);
+            }).catch(function (err) {
+                reject(err);
+            });
+        });
+    };
     return MessageProvider;
 }());
 MessageProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["r" /* ToastController */]])
 ], MessageProvider);
 
 //# sourceMappingURL=message.js.map
@@ -1067,26 +1116,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_component__ = __webpack_require__(798);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__validators_username__ = __webpack_require__(675);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_myTeamDB__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(464);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(640);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_status_bar__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_splash_screen__ = __webpack_require__(641);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_cloud_angular__ = __webpack_require__(1030);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angularfire2__ = __webpack_require__(1095);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_firebase_config__ = __webpack_require__(1096);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_angularfire2_auth__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angularfire2_database__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_twitter_connect__ = __webpack_require__(679);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_twitter_connect__ = __webpack_require__(680);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_social_sharing__ = __webpack_require__(681);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_camera__ = __webpack_require__(678);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_keyboard__ = __webpack_require__(641);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_keyboard__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ion2_calendar__ = __webpack_require__(677);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_push__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_push__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_components_module__ = __webpack_require__(673);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_platform_browser_animations__ = __webpack_require__(1097);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_message_message__ = __webpack_require__(680);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_message_message__ = __webpack_require__(679);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1199,236 +1248,236 @@ AppModule = __decorate([
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 306,
-	"./af.js": 306,
-	"./ar": 307,
-	"./ar-dz": 308,
-	"./ar-dz.js": 308,
-	"./ar-kw": 309,
-	"./ar-kw.js": 309,
-	"./ar-ly": 310,
-	"./ar-ly.js": 310,
-	"./ar-ma": 311,
-	"./ar-ma.js": 311,
-	"./ar-sa": 312,
-	"./ar-sa.js": 312,
-	"./ar-tn": 313,
-	"./ar-tn.js": 313,
-	"./ar.js": 307,
-	"./az": 314,
-	"./az.js": 314,
-	"./be": 315,
-	"./be.js": 315,
-	"./bg": 316,
-	"./bg.js": 316,
-	"./bn": 317,
-	"./bn.js": 317,
-	"./bo": 318,
-	"./bo.js": 318,
-	"./br": 319,
-	"./br.js": 319,
-	"./bs": 320,
-	"./bs.js": 320,
-	"./ca": 321,
-	"./ca.js": 321,
-	"./cs": 322,
-	"./cs.js": 322,
-	"./cv": 323,
-	"./cv.js": 323,
-	"./cy": 324,
-	"./cy.js": 324,
-	"./da": 325,
-	"./da.js": 325,
-	"./de": 326,
-	"./de-at": 327,
-	"./de-at.js": 327,
-	"./de-ch": 328,
-	"./de-ch.js": 328,
-	"./de.js": 326,
-	"./dv": 329,
-	"./dv.js": 329,
-	"./el": 330,
-	"./el.js": 330,
-	"./en-au": 331,
-	"./en-au.js": 331,
-	"./en-ca": 332,
-	"./en-ca.js": 332,
-	"./en-gb": 333,
-	"./en-gb.js": 333,
-	"./en-ie": 334,
-	"./en-ie.js": 334,
-	"./en-nz": 335,
-	"./en-nz.js": 335,
-	"./eo": 336,
-	"./eo.js": 336,
-	"./es": 337,
-	"./es-do": 338,
-	"./es-do.js": 338,
-	"./es.js": 337,
-	"./et": 339,
-	"./et.js": 339,
-	"./eu": 340,
-	"./eu.js": 340,
-	"./fa": 341,
-	"./fa.js": 341,
-	"./fi": 342,
-	"./fi.js": 342,
-	"./fo": 343,
-	"./fo.js": 343,
-	"./fr": 344,
-	"./fr-ca": 345,
-	"./fr-ca.js": 345,
-	"./fr-ch": 346,
-	"./fr-ch.js": 346,
-	"./fr.js": 344,
-	"./fy": 347,
-	"./fy.js": 347,
-	"./gd": 348,
-	"./gd.js": 348,
-	"./gl": 349,
-	"./gl.js": 349,
-	"./gom-latn": 350,
-	"./gom-latn.js": 350,
-	"./he": 351,
-	"./he.js": 351,
-	"./hi": 352,
-	"./hi.js": 352,
-	"./hr": 353,
-	"./hr.js": 353,
-	"./hu": 354,
-	"./hu.js": 354,
-	"./hy-am": 355,
-	"./hy-am.js": 355,
-	"./id": 356,
-	"./id.js": 356,
-	"./is": 357,
-	"./is.js": 357,
-	"./it": 358,
-	"./it.js": 358,
-	"./ja": 359,
-	"./ja.js": 359,
-	"./jv": 360,
-	"./jv.js": 360,
-	"./ka": 361,
-	"./ka.js": 361,
-	"./kk": 362,
-	"./kk.js": 362,
-	"./km": 363,
-	"./km.js": 363,
-	"./kn": 364,
-	"./kn.js": 364,
-	"./ko": 365,
-	"./ko.js": 365,
-	"./ky": 366,
-	"./ky.js": 366,
-	"./lb": 367,
-	"./lb.js": 367,
-	"./lo": 368,
-	"./lo.js": 368,
-	"./lt": 369,
-	"./lt.js": 369,
-	"./lv": 370,
-	"./lv.js": 370,
-	"./me": 371,
-	"./me.js": 371,
-	"./mi": 372,
-	"./mi.js": 372,
-	"./mk": 373,
-	"./mk.js": 373,
-	"./ml": 374,
-	"./ml.js": 374,
-	"./mr": 375,
-	"./mr.js": 375,
-	"./ms": 376,
-	"./ms-my": 377,
-	"./ms-my.js": 377,
-	"./ms.js": 376,
-	"./my": 378,
-	"./my.js": 378,
-	"./nb": 379,
-	"./nb.js": 379,
-	"./ne": 380,
-	"./ne.js": 380,
-	"./nl": 381,
-	"./nl-be": 382,
-	"./nl-be.js": 382,
-	"./nl.js": 381,
-	"./nn": 383,
-	"./nn.js": 383,
-	"./pa-in": 384,
-	"./pa-in.js": 384,
-	"./pl": 385,
-	"./pl.js": 385,
-	"./pt": 386,
-	"./pt-br": 387,
-	"./pt-br.js": 387,
-	"./pt.js": 386,
-	"./ro": 388,
-	"./ro.js": 388,
-	"./ru": 389,
-	"./ru.js": 389,
-	"./sd": 390,
-	"./sd.js": 390,
-	"./se": 391,
-	"./se.js": 391,
-	"./si": 392,
-	"./si.js": 392,
-	"./sk": 393,
-	"./sk.js": 393,
-	"./sl": 394,
-	"./sl.js": 394,
-	"./sq": 395,
-	"./sq.js": 395,
-	"./sr": 396,
-	"./sr-cyrl": 397,
-	"./sr-cyrl.js": 397,
-	"./sr.js": 396,
-	"./ss": 398,
-	"./ss.js": 398,
-	"./sv": 399,
-	"./sv.js": 399,
-	"./sw": 400,
-	"./sw.js": 400,
-	"./ta": 401,
-	"./ta.js": 401,
-	"./te": 402,
-	"./te.js": 402,
-	"./tet": 403,
-	"./tet.js": 403,
-	"./th": 404,
-	"./th.js": 404,
-	"./tl-ph": 405,
-	"./tl-ph.js": 405,
-	"./tlh": 406,
-	"./tlh.js": 406,
-	"./tr": 407,
-	"./tr.js": 407,
-	"./tzl": 408,
-	"./tzl.js": 408,
-	"./tzm": 409,
-	"./tzm-latn": 410,
-	"./tzm-latn.js": 410,
-	"./tzm.js": 409,
-	"./uk": 411,
-	"./uk.js": 411,
-	"./ur": 412,
-	"./ur.js": 412,
-	"./uz": 413,
-	"./uz-latn": 414,
-	"./uz-latn.js": 414,
-	"./uz.js": 413,
-	"./vi": 415,
-	"./vi.js": 415,
-	"./x-pseudo": 416,
-	"./x-pseudo.js": 416,
-	"./yo": 417,
-	"./yo.js": 417,
-	"./zh-cn": 418,
-	"./zh-cn.js": 418,
-	"./zh-hk": 419,
-	"./zh-hk.js": 419,
-	"./zh-tw": 420,
-	"./zh-tw.js": 420
+	"./af": 307,
+	"./af.js": 307,
+	"./ar": 308,
+	"./ar-dz": 309,
+	"./ar-dz.js": 309,
+	"./ar-kw": 310,
+	"./ar-kw.js": 310,
+	"./ar-ly": 311,
+	"./ar-ly.js": 311,
+	"./ar-ma": 312,
+	"./ar-ma.js": 312,
+	"./ar-sa": 313,
+	"./ar-sa.js": 313,
+	"./ar-tn": 314,
+	"./ar-tn.js": 314,
+	"./ar.js": 308,
+	"./az": 315,
+	"./az.js": 315,
+	"./be": 316,
+	"./be.js": 316,
+	"./bg": 317,
+	"./bg.js": 317,
+	"./bn": 318,
+	"./bn.js": 318,
+	"./bo": 319,
+	"./bo.js": 319,
+	"./br": 320,
+	"./br.js": 320,
+	"./bs": 321,
+	"./bs.js": 321,
+	"./ca": 322,
+	"./ca.js": 322,
+	"./cs": 323,
+	"./cs.js": 323,
+	"./cv": 324,
+	"./cv.js": 324,
+	"./cy": 325,
+	"./cy.js": 325,
+	"./da": 326,
+	"./da.js": 326,
+	"./de": 327,
+	"./de-at": 328,
+	"./de-at.js": 328,
+	"./de-ch": 329,
+	"./de-ch.js": 329,
+	"./de.js": 327,
+	"./dv": 330,
+	"./dv.js": 330,
+	"./el": 331,
+	"./el.js": 331,
+	"./en-au": 332,
+	"./en-au.js": 332,
+	"./en-ca": 333,
+	"./en-ca.js": 333,
+	"./en-gb": 334,
+	"./en-gb.js": 334,
+	"./en-ie": 335,
+	"./en-ie.js": 335,
+	"./en-nz": 336,
+	"./en-nz.js": 336,
+	"./eo": 337,
+	"./eo.js": 337,
+	"./es": 338,
+	"./es-do": 339,
+	"./es-do.js": 339,
+	"./es.js": 338,
+	"./et": 340,
+	"./et.js": 340,
+	"./eu": 341,
+	"./eu.js": 341,
+	"./fa": 342,
+	"./fa.js": 342,
+	"./fi": 343,
+	"./fi.js": 343,
+	"./fo": 344,
+	"./fo.js": 344,
+	"./fr": 345,
+	"./fr-ca": 346,
+	"./fr-ca.js": 346,
+	"./fr-ch": 347,
+	"./fr-ch.js": 347,
+	"./fr.js": 345,
+	"./fy": 348,
+	"./fy.js": 348,
+	"./gd": 349,
+	"./gd.js": 349,
+	"./gl": 350,
+	"./gl.js": 350,
+	"./gom-latn": 351,
+	"./gom-latn.js": 351,
+	"./he": 352,
+	"./he.js": 352,
+	"./hi": 353,
+	"./hi.js": 353,
+	"./hr": 354,
+	"./hr.js": 354,
+	"./hu": 355,
+	"./hu.js": 355,
+	"./hy-am": 356,
+	"./hy-am.js": 356,
+	"./id": 357,
+	"./id.js": 357,
+	"./is": 358,
+	"./is.js": 358,
+	"./it": 359,
+	"./it.js": 359,
+	"./ja": 360,
+	"./ja.js": 360,
+	"./jv": 361,
+	"./jv.js": 361,
+	"./ka": 362,
+	"./ka.js": 362,
+	"./kk": 363,
+	"./kk.js": 363,
+	"./km": 364,
+	"./km.js": 364,
+	"./kn": 365,
+	"./kn.js": 365,
+	"./ko": 366,
+	"./ko.js": 366,
+	"./ky": 367,
+	"./ky.js": 367,
+	"./lb": 368,
+	"./lb.js": 368,
+	"./lo": 369,
+	"./lo.js": 369,
+	"./lt": 370,
+	"./lt.js": 370,
+	"./lv": 371,
+	"./lv.js": 371,
+	"./me": 372,
+	"./me.js": 372,
+	"./mi": 373,
+	"./mi.js": 373,
+	"./mk": 374,
+	"./mk.js": 374,
+	"./ml": 375,
+	"./ml.js": 375,
+	"./mr": 376,
+	"./mr.js": 376,
+	"./ms": 377,
+	"./ms-my": 378,
+	"./ms-my.js": 378,
+	"./ms.js": 377,
+	"./my": 379,
+	"./my.js": 379,
+	"./nb": 380,
+	"./nb.js": 380,
+	"./ne": 381,
+	"./ne.js": 381,
+	"./nl": 382,
+	"./nl-be": 383,
+	"./nl-be.js": 383,
+	"./nl.js": 382,
+	"./nn": 384,
+	"./nn.js": 384,
+	"./pa-in": 385,
+	"./pa-in.js": 385,
+	"./pl": 386,
+	"./pl.js": 386,
+	"./pt": 387,
+	"./pt-br": 388,
+	"./pt-br.js": 388,
+	"./pt.js": 387,
+	"./ro": 389,
+	"./ro.js": 389,
+	"./ru": 390,
+	"./ru.js": 390,
+	"./sd": 391,
+	"./sd.js": 391,
+	"./se": 392,
+	"./se.js": 392,
+	"./si": 393,
+	"./si.js": 393,
+	"./sk": 394,
+	"./sk.js": 394,
+	"./sl": 395,
+	"./sl.js": 395,
+	"./sq": 396,
+	"./sq.js": 396,
+	"./sr": 397,
+	"./sr-cyrl": 398,
+	"./sr-cyrl.js": 398,
+	"./sr.js": 397,
+	"./ss": 399,
+	"./ss.js": 399,
+	"./sv": 400,
+	"./sv.js": 400,
+	"./sw": 401,
+	"./sw.js": 401,
+	"./ta": 402,
+	"./ta.js": 402,
+	"./te": 403,
+	"./te.js": 403,
+	"./tet": 404,
+	"./tet.js": 404,
+	"./th": 405,
+	"./th.js": 405,
+	"./tl-ph": 406,
+	"./tl-ph.js": 406,
+	"./tlh": 407,
+	"./tlh.js": 407,
+	"./tr": 408,
+	"./tr.js": 408,
+	"./tzl": 409,
+	"./tzl.js": 409,
+	"./tzm": 410,
+	"./tzm-latn": 411,
+	"./tzm-latn.js": 411,
+	"./tzm.js": 410,
+	"./uk": 412,
+	"./uk.js": 412,
+	"./ur": 413,
+	"./ur.js": 413,
+	"./uz": 414,
+	"./uz-latn": 415,
+	"./uz-latn.js": 415,
+	"./uz.js": 414,
+	"./vi": 416,
+	"./vi.js": 416,
+	"./x-pseudo": 417,
+	"./x-pseudo.js": 417,
+	"./yo": 418,
+	"./yo.js": 418,
+	"./zh-cn": 419,
+	"./zh-cn.js": 419,
+	"./zh-hk": 420,
+	"./zh-hk.js": 420,
+	"./zh-tw": 421,
+	"./zh-tw.js": 421
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -1914,7 +1963,7 @@ DateComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_database__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_myTeamDB__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_moment__);
@@ -2108,7 +2157,7 @@ __decorate([
 ], PostComponent.prototype, "postID", void 0);
 PostComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
-        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [@fadeInOut] [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <p class="author">\n      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}\n    </p>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" *ngIf="postInfo.info" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row class="postInfoBar">\n    <ion-col class="likes">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>\n         <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        </button>\n        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>\n          <ion-icon name="md-heart" color="danger"></ion-icon>\n        </button>\n        <p class="likesNum">{{(likes | async)?.length}}</p>\n        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">\n          <ion-slides dir="rtl" slidesPerView="6">\n            <ion-slide *ngFor="let player of likes | async">\n              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>\n            </ion-slide>\n          </ion-slides>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n    <ion-col class="comments">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="openPost()" ion-button icon-left clear small>\n          <ion-icon name="text" color="gold"></ion-icon>\n        </button>\n        <p>{{(commentsNum | async)?.length}}</p>\n      </ion-row>\n    </ion-col>\n    <ion-col col-2 class="date" center text-end>\n      <ion-note dir="ltr">\n        <date date="{{postInfo.date}}"></date>\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
+        selector: 'post',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/'<!-- Generated template for the PostComponent component -->\n<ion-card [ngClass]="className ? className : \'card1\'">\n  <ion-item style="height: 70px;">\n    <ion-avatar margin-top item-start>\n      <img class="postAvatar" on-tap="openPlayer()" src="{{user.profilePic}}" alt="">\n    </ion-avatar>\n    <p class="author">\n      <span id="name">{{user.name}}</span><br> {{user.originalUsername}}\n    </p>\n    <div class="topLeft">\n      <div *ngIf="postInfo.type == \'match\'" on-tap="requestMatch()" class="icon_calendar">\n        <em></em><em></em>\n        <label>{{month}}</label>\n        <span><h1>{{day}}</h1></span>\n      </div>\n      <div *ngIf="postInfo.type == \'player\'" on-tap="requestPlayer()">\n        <span [ngSwitch]="user.position">\n          <span *ngSwitchCase="\'GK\'" class="chip red">حارس</span>\n\n        <span *ngSwitchCase="\'DF\'" class="chip green">دفاع</span>\n\n        <span *ngSwitchCase="\'CM\'" class="chip gold">وسط</span>\n\n        <span *ngSwitchCase="\'AT\'" class="chip blue">مهاجم</span>\n        </span>\n      </div>\n    </div>\n  </ion-item>\n  <ion-card-content>\n    <h2>{{postInfo.title}}</h2>\n    <ng-content></ng-content>\n  </ion-card-content>\n  <div *ngIf="postInfo.type == \'match\'" [@fadeInOut] class="infoPlaceholder">\n    <img *ngIf="teamInfo.bg" on-tap="openTeam()" class="bg" src="{{teamInfo.bg}}" alt="">\n    <img on-tap="openTeam()" class="logo" src="{{teamInfo.logo}}" alt="">\n    <h1 class="teamName">{{teamInfo.name}}</h1>\n    <div class="teamBar">\n      <team-bar teamID="{{postInfo.teamID}}"></team-bar>\n    </div>\n  </div>\n  <player-post-card *ngIf="postInfo.type == \'player\'" playerID="{{postInfo.by}}"></player-post-card>\n  <p class="postInfo" *ngIf="postInfo.info" padding>\n    {{postInfo.info}}\n  </p>\n  <ion-row class="postInfoBar">\n    <ion-col class="likes">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="like()" *ngIf="(liked | async)?.length == 0" ion-button icon-left clear small>\n         <ion-icon name="md-heart-outline" color="danger"></ion-icon>\n        </button>\n        <button no-padding (click)="unlike()" *ngIf="(liked | async)?.length > 0" ion-button icon-left clear small>\n          <ion-icon name="md-heart" color="danger"></ion-icon>\n        </button>\n        <p class="likesNum">{{(likes | async)?.length}}</p>\n        <ion-col *ngIf="(likes | async)?.length > 0" col-9 class="likesPreview">\n          <ion-slides dir="rtl" slidesPerView="6">\n            <ion-slide *ngFor="let player of likes | async">\n              <profile-pic on-tap="openPlayerLike(player.id)" className="likeAvatar" ID="{{player.id}}" type="user"></profile-pic>\n            </ion-slide>\n          </ion-slides>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n    <ion-col class="comments">\n      <ion-row padding-left align-items-center>\n        <button no-padding (click)="openPost()" ion-button icon-left clear small>\n          <ion-icon name="text" color="gold"></ion-icon>\n        </button>\n        <p>{{(commentsNum | async)?.length}}</p>\n      </ion-row>\n    </ion-col>\n    <ion-col col-2 class="date" center text-end>\n      <ion-note dir="ltr">\n        <date date="{{postInfo.date}}"></date>\n      </ion-note>\n    </ion-col>\n  </ion-row>\n</ion-card>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/components/post/post.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_32" /* trigger */])('fadeInOut', [
                 Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_29" /* state */])('void', Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_30" /* style */])({ opacity: '0' })),
@@ -2199,7 +2248,7 @@ ShrinkingSegmentHeader = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamCardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_myTeamDB__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_database__ = __webpack_require__(44);
@@ -2661,15 +2710,15 @@ NameComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(465);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_native__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(640);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(641);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_web_animations_js_web_animations_min__ = __webpack_require__(1029);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_web_animations_js_web_animations_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_web_animations_js_web_animations_min__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_angularfire2_auth__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_push__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_keyboard__ = __webpack_require__(641);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_push__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_keyboard__ = __webpack_require__(213);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2713,10 +2762,10 @@ var MyApp = (function () {
             if (_this.keyboard) {
                 _this.keyboard.hideKeyboardAccessoryBar(false);
             }
-            statusBar.styleDefault();
+            statusBar.styleLightContent();
             setTimeout(function () {
                 splashScreen.hide();
-            }, 650);
+            }, 700);
             //this.initPushNotification();
             //splashScreen.hide();
         });

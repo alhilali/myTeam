@@ -6,10 +6,6 @@ page-message {
     border-radius: 50%;
   }
   .bottomBar {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    z-index: 99;
     background-color: #f4f4f4;
   }
   ion-input {
@@ -20,11 +16,22 @@ page-message {
   .text-input {
     margin: 0;
   }
+  .textarea {
+    width: 100%;
+    border: 0;
+    border-radius: 35px;
+    padding-right: 10px;
+    margin-top: 10px;
+    margin-right: 5px;
+  }
   ion-avatar {
     margin: 2px !important;
   }
   ion-label {
     margin: 0px 5px !important;
+  }
+  ion-item {
+    padding-right: 10px !important;
   }
   .bubble {
     border-radius: 15px;
@@ -44,6 +51,16 @@ page-message {
     margin: 5px;
   }
   .chatwindow {
-    padding-bottom: 70px;
+    padding-top: 10px;
+  }
+  name:hover {
+    color: #e8e8e8;
+  }
+  .status {
+    padding-right: 65px;
+    height: 12px;
+    line-height: 0;
+    margin-top: -7px;
+    word-spacing: -4px;
   }
 }

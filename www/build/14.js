@@ -1,15 +1,14 @@
 webpackJsonp([14],{
 
-/***/ 1118:
+/***/ 1121:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerPageModule", function() { return PlayerPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__player__ = __webpack_require__(1191);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(673);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(1196);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,41 +18,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-var PlayerPageModule = (function () {
-    function PlayerPageModule() {
+var RegisterPageModule = (function () {
+    function RegisterPageModule() {
     }
-    return PlayerPageModule;
+    return RegisterPageModule;
 }());
-PlayerPageModule = __decorate([
+RegisterPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]
+            __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__player__["a" /* PlayerPage */]
+            __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]
         ]
     })
-], PlayerPageModule);
+], RegisterPageModule);
 
-//# sourceMappingURL=player.module.js.map
+//# sourceMappingURL=register.module.js.map
 
 /***/ }),
 
-/***/ 1191:
+/***/ 1196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlayerPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__validators_username__ = __webpack_require__(675);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -103,172 +101,115 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 
 
+
 /**
- * Generated class for the PlayerPage page.
+ * Generated class for the RegisterPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var PlayerPage = (function () {
-    function PlayerPage(navCtrl, navParams, afAuth, db, teamDB, modlCtrl, actionSheetCtrl) {
+var RegisterPage = (function () {
+    function RegisterPage(afAuth, toast, navCtrl, navParams, db, _form, unameValid, mdlController, loadingCtrl) {
+        this.afAuth = afAuth;
+        this.toast = toast;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.afAuth = afAuth;
         this.db = db;
-        this.teamDB = teamDB;
-        this.modlCtrl = modlCtrl;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.myTeams = [];
-        this.section = '0';
+        this._form = _form;
+        this.unameValid = unameValid;
+        this.mdlController = mdlController;
+        this.loadingCtrl = loadingCtrl;
+        this.user = {};
+        this.submitAttempt = false;
+        this.usedEmail = false;
+        var usernameValidator = function (control) {
+            return unameValid.checkUsername(control);
+        };
+        this.registerForm = this._form.group({
+            "name": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].maxLength(30), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern('[a-zA-Z-ء-ي_ ]*'), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required])],
+            "username": ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern('^[a-zA-Z0-9_.-]*$')]), usernameValidator],
+            "email": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].email],
+            "password": ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].minLength(6), __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required])]
+        });
+        this.navCtrl.swipeBackEnabled = true;
     }
-    PlayerPage.prototype.ionViewWillLoad = function () {
+    RegisterPage.prototype.register = function (user) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
+            var registerLoading, result, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.afAuth.auth.onAuthStateChanged(function (user) {
-                            if (user)
-                                _this.currentUID = user.uid;
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PlayerPage.prototype.ngAfterViewInit = function () {
-        this.bottomSlides = this.slides.toArray()[1];
-        this.bottomSlides.lockSwipes(true);
-    };
-    PlayerPage.prototype.ionViewDidLoad = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.teamDB.findUID(this.navParams.get('username')).then(function (data) {
-                            _this.playerUID = data.$key;
-                        })];
-                    case 1:
-                        _a.sent();
-                        this.playerInfo = this.db.object('users/' + this.playerUID);
-                        this.loadMyTeams();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    PlayerPage.prototype.loadMyTeams = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                this.db.list('users/' + this.playerUID
-                    + '/myTeams').take(1).subscribe(function (data) {
-                    _this.myTeams = [];
-                    var i;
-                    for (i = 0; i < data.length; i++) {
-                        _this.db.object('teams/' + data[i].teamId).take(1).subscribe(function (team) {
-                            _this.myTeams.push(team);
+                    case 0:
+                        this.submitAttempt = true;
+                        registerLoading = this.loadingCtrl.create({
+                            dismissOnPageChange: true,
+                            spinner: 'crescent'
                         });
-                    }
-                });
-                return [2 /*return*/];
+                        if (!this.registerForm.valid) return [3 /*break*/, 4];
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(function (u) {
+                                var userInfo = _this.db.object('/users/' + _this.afAuth.auth.currentUser.uid);
+                                userInfo.set({
+                                    originalUsername: user.username,
+                                    username: user.username.toLowerCase(),
+                                    name: user.name,
+                                    position: 'GK',
+                                    profilePic: 'http://www.gscadvisory.com/wp-content/uploads/2016/04/blank.jpg',
+                                    bg: 'http://www.publicdomainpictures.net/pictures/50000/nahled/sunset-profile-background.jpg'
+                                });
+                                var usernameInfo = _this.db.object('/usernames/' + user.username.toLowerCase());
+                                usernameInfo.set({
+                                    email: user.email
+                                });
+                            })];
+                    case 2:
+                        result = _a.sent();
+                        if (result) {
+                            registerLoading.dismiss();
+                            this.navCtrl.setRoot('TabsPage');
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        registerLoading.dismiss();
+                        if (e_1.code == 'auth/email-already-in-use')
+                            this.usedEmail = true;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
             });
         });
     };
-    PlayerPage.prototype.segmentChanged = function (event) {
-        this.bottomSlides.lockSwipes(false);
-        this.bottomSlides.slideTo(event.value, 500);
-        this.bottomSlides.lockSwipes(true);
+    RegisterPage.prototype.goBack = function () {
+        this.navCtrl.pop();
     };
-    PlayerPage.prototype.slideChanged = function () {
-        var currentIndex = this.bottomSlides.getActiveIndex();
-        this.section = currentIndex + '';
+    RegisterPage.prototype.openTerms = function () {
+        this.mdlController.create('TermsPage').present();
     };
-    PlayerPage.prototype.addPlayer = function () {
-        var modal = this.modlCtrl.create('AddPlayerToTeamPage', { id: this.playerUID });
-        modal.present();
-    };
-    PlayerPage.prototype.options = function () {
-        var _this = this;
-        var actionSheet;
-        var btns;
-        if (this.currentUID != this.playerUID) {
-            btns = [
-                {
-                    text: 'إضافة اللاعب',
-                    handler: function () {
-                        _this.addPlayer();
-                    }
-                },
-                {
-                    text: 'Block',
-                    role: 'destructive',
-                    handler: function () {
-                        _this.db.object('users/' + _this.afAuth.auth.currentUser.uid +
-                            '/blocked/' + _this.playerUID)
-                            .set({ status: 'blocked' });
-                        _this.navCtrl.pop();
-                    }
-                },
-                {
-                    text: 'إلغاء',
-                    role: 'cancel',
-                    handler: function () {
-                    }
-                }
-            ];
-        }
-        else {
-            btns = [
-                {
-                    text: 'تعديل بياناتي',
-                    handler: function () {
-                        //this.editProfilePage();
-                    }
-                },
-                {
-                    text: 'إلغاء',
-                    role: 'cancel',
-                    handler: function () {
-                    }
-                }
-            ];
-        }
-        actionSheet = this.actionSheetCtrl.create({
-            buttons: btns
-        });
-        actionSheet.present();
-    };
-    PlayerPage.prototype.openTeam = function (team) {
-        this.navCtrl.push('TeamPage', { id: team.$key });
-    };
-    PlayerPage.prototype.openSettings = function () {
-        this.navCtrl.push('SettingsPage', { id: this.playerUID });
-    };
-    return PlayerPage;
+    return RegisterPage;
 }());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_14" /* ViewChildren */])(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* Slides */]),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__angular_core__["Y" /* QueryList */])
-], PlayerPage.prototype, "slides", void 0);
-PlayerPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])({
-        segment: 'player/:username'
+RegisterPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])({
+        segment: 'register',
+        defaultHistory: ['WelcomePage']
     }),
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
-        selector: 'page-player',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/player/player.html"*/'<!--\n  Generated template for the PlayerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons *ngIf="teamDB.loggedIn" end>\n      <button *ngIf="currentUID != playerUID" (click)="options()" ion-button icon-only>\n        <ion-icon name="ios-more" color="white"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>{{(playerInfo | async)?.name}}</ion-title>\n  </ion-navbar>\n  <ion-icon *ngIf="currentUID == playerUID" on-tap="openSettings()" class="editIcon mdIcon" color="light" name="ios-cog"></ion-icon>\n  <div class="hero" [ngStyle]="{ \'background-image\': \'url(\' + (playerInfo | async)?.bg + \')\'}">\n    <div class="topContent">\n      <ion-slides pager dir="rtl">\n        <ion-slide>\n\n          <img class="avatar" src="{{(playerInfo | async)?.profilePic}}" alt="">\n          <h3 style="padding-top: 20%;" class="white bold">{{(playerInfo | async)?.name}}</h3>\n          <h5 class="white">{{(playerInfo | async)?.originalUsername}}</h5>\n        </ion-slide>\n        <ion-slide>\n\n          <player-bar style="line-height: 1;" playerID="{{playerUID}}"></player-bar>\n          <ion-chip color="gold">\n            <ion-label>{{(playerInfo | async)?.position}}</ion-label>\n          </ion-chip>\n          <ion-chip color="lightBlue">\n            <ion-label>صانع العاب</ion-label>\n          </ion-chip>\n          <ion-chip color="darkBlue">\n            <ion-label>مهاري</ion-label>\n          </ion-chip>\n        </ion-slide>\n        <ion-slide>\n          <h5 class="white">تواصل معي:</h5>\n          <div class="socialIcons">\n            <ion-icon class="largeIcon" name="logo-twitter"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-facebook"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-instagram"></ion-icon>\n            <ion-icon class="largeIcon" name="logo-snapchat"></ion-icon>\n          </div>\n        </ion-slide>\n      </ion-slides>\n    </div>\n  </div>\n\n  <ion-toolbar no-padding color="white" mode="md">\n    <ion-segment class="segment" color="orange" mode="md" [(ngModel)]="section" (ionChange)="segmentChanged($event)">\n      <ion-segment-button value="0">\n        <ion-icon name="md-football"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="1">\n        <ion-icon name="md-trophy"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="2">\n        <ion-icon name="md-medal"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content fullscreen #myContent>\n  <div class="profileBottom">\n    <ion-slides dir="rtl" parallax="true" (ionSlideWillChange)="slideChanged()">\n      <ion-slide>\n        <ion-item-divider>فرق اللاعب</ion-item-divider>\n        <ion-row align-items-start *ngIf="myTeams?.length > 0">\n          <ion-col col-4 col-sm no-padding wrap *ngFor="let team of myTeams">\n            <ion-card class="profileCards">\n              <img class="logo" on-tap=\'openTeam(team)\' src="{{team.logo}}" alt="">\n              <div class="bg" *ngIf=\'team.bg\' on-tap=\'openTeam(team)\' [ngStyle]="{ \'background-image\': \'url(\' + team.bg + \')\'}">\n              </div>\n              <div class="bg" *ngIf=\'!team.bg\' on-tap=\'openTeam(team)\' style="background-image: url(\'https://www.buscandonomes.com.br/_img/xthumb-default.gif.pagespeed.ic.yQYWf40TN9.png\')">\n              </div>\n              <div class="card-title">\n                {{team.name}}\n              </div>\n            </ion-card>\n          </ion-col>\n        </ion-row>\n      </ion-slide>\n      <ion-slide>\n        <ion-item-divider>\n          احصائيات اللاعب\n        </ion-item-divider>\n        <h6 text-center>قريباً</h6>\n      </ion-slide>\n      <ion-slide>\n        <ion-item-divider>\n          ميداليات اللاعب\n        </ion-item-divider>\n        <h6 text-center>قريباً</h6>\n      </ion-slide>\n    </ion-slides>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/player/player.html"*/,
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-register',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/register/register.html"*/'<!--\n  Generated template for the RegisterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-bounce>\n  <ion-row justify-content-start>\n    <ion-col col-3 text-start padding>\n      <ion-icon on-tap="goBack()" class="largeIcon" color="grey" name="ios-arrow-back"></ion-icon>\n    </ion-col>\n  </ion-row>\n  <div class="welcomeTop">\n    <img class="AppLogo" src="https://image.ibb.co/ih434a/logo_main_dark.png" alt="">\n  </div>\n  <h2 text-center>حساب جديد</h2>\n  <form name="registerForm" novalidate padding>\n    <div class="register" [formGroup]=\'registerForm\' padding>\n      <ion-item>\n        <ion-input type="text" [(ngModel)]="user.name" [class.invalid]="!registerForm.controls.name.valid && (registerForm.controls.name.dirty || submitAttempt)"\n          formControlName=\'name\' placeholder="الاسم كامل"></ion-input>\n      </ion-item>\n      <ion-item dir="ltr">\n        <ion-label>\n          <h2>@</h2>\n        </ion-label>\n        <ion-input type="text" [(ngModel)]="user.username" [class.invalid]="!registerForm.controls.username.valid && (registerForm.controls.username.dirty || submitAttempt)"\n          formControlName=\'username\' placeholder="Username"></ion-input>\n      </ion-item>\n      <ion-item dir="ltr">\n        <ion-label>\n          <ion-icon name="ios-mail-outline"></ion-icon>\n        </ion-label>\n        <ion-input class="email" type="text" [(ngModel)]="user.email" [class.invalid]="!registerForm.controls.email.valid && (registerForm.controls.email.dirty || submitAttempt)"\n          formControlName=\'email\' placeholder="Email"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-input type="password" [(ngModel)]="user.password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)"\n          formControlName=\'password\' placeholder="الرقم السري"></ion-input>\n      </ion-item>\n\n      <button ion-button block (click)="register(user)" color="gold">التسجيل</button>\n      <p text-right style="margin: 0px;">\n        التسجيل يعني موافقتك على\n        <button style="margin-bottom: 15px;" ion-button clear (click)="openTerms()" no-padding small>الشروط والأحكام.</button>\n      </p>\n      <div class="errorMessages">\n        <p *ngIf="user.username != \'\' && !registerForm.controls.username.valid && !registerForm.controls.username.pending && (submitAttempt || registerForm.controls.username.dirty)"\n          style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          اسم المستخدم غير متاح، الرجاء اختيار اسم آخر.\n        </p>\n        <p *ngIf="usedEmail" style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          الايميل مستخدم من قبل شخص آخر.\n        </p>\n        <p *ngIf="!registerForm.controls.password.valid && (submitAttempt)" style="color: #ea6153;">\n          <ion-icon name="bug"></ion-icon>\n          يجب ان يكون الرقم السري اكثر من ٦ احرف/ارقام.</p>\n      </div>\n    </div>\n  </form>\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/register/register.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
-        __WEBPACK_IMPORTED_MODULE_0__helpers_myTeamDB__["a" /* MyTeamDB */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* ActionSheetController */]])
-], PlayerPage);
+        __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_5__validators_username__["a" /* UsernameValidator */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]])
+], RegisterPage);
 
-//# sourceMappingURL=player.js.map
+//# sourceMappingURL=register.js.map
 
 /***/ })
 

@@ -1,15 +1,14 @@
 webpackJsonp([16],{
 
-/***/ 1112:
+/***/ 1116:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessagesPageModule", function() { return MessagesPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewMessagePageModule", function() { return NewMessagePageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__messages__ = __webpack_require__(1185);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_components_module__ = __webpack_require__(673);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__new_message__ = __webpack_require__(1191);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,37 +18,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-var MessagesPageModule = (function () {
-    function MessagesPageModule() {
+var NewMessagePageModule = (function () {
+    function NewMessagePageModule() {
     }
-    return MessagesPageModule;
+    return NewMessagePageModule;
 }());
-MessagesPageModule = __decorate([
+NewMessagePageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__messages__["a" /* MessagesPage */],
+            __WEBPACK_IMPORTED_MODULE_2__new_message__["a" /* NewMessagePage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_3__components_components_module__["a" /* ComponentsModule */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__messages__["a" /* MessagesPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__new_message__["a" /* NewMessagePage */]),
         ],
     })
-], MessagesPageModule);
+], NewMessagePageModule);
 
-//# sourceMappingURL=messages.module.js.map
+//# sourceMappingURL=new-message.module.js.map
 
 /***/ }),
 
-/***/ 1185:
+/***/ 1191:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MessagesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(76);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewMessagePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,49 +62,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
- * Generated class for the MessagesPage page.
+ * Generated class for the NewMessagePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-var MessagesPage = (function () {
-    function MessagesPage(navCtrl, navParams, afAuth, db) {
+var NewMessagePage = (function () {
+    function NewMessagePage(navCtrl, navParams, db, afAuth) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.afAuth = afAuth;
         this.db = db;
+        this.afAuth = afAuth;
+        this.query = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__["Subject"]();
     }
-    MessagesPage.prototype.ionViewDidLoad = function () {
-        this.messagesList = this.db.list('users/' + this.afAuth.auth.currentUser.uid
-            + '/messages/');
+    NewMessagePage.prototype.ionViewDidLoad = function () {
+        this.currentUID = this.afAuth.auth.currentUser.uid;
+        this.players = this.db.list('users/', {
+            query: {
+                orderByChild: 'username',
+                startAt: this.query,
+                limitToFirst: 10
+            }
+        });
     };
-    MessagesPage.prototype.doRefresh = function (refresher) {
-        setTimeout(function () {
-            //console.log('Async operation has ended');
-            refresher.complete();
-        }, 500);
+    NewMessagePage.prototype.searchUsers = function () {
+        this.query.next(this.input);
     };
-    MessagesPage.prototype.newMessage = function () {
-        this.navCtrl.push('NewMessagePage');
+    NewMessagePage.prototype.openMessage = function (player) {
+        this.navCtrl.push('MessagePage', { toUID: player.$key });
     };
-    MessagesPage.prototype.openMessage = function (messages) {
-        this.navCtrl.push('MessagePage', { toUID: messages.$key });
-    };
-    return MessagesPage;
+    return NewMessagePage;
 }());
-MessagesPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPage */])(),
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-messages',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/messages/messages.html"*/'<!--\n  Generated template for the MessagesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons end>\n      <button (click)=\'newMessage()\' ion-button icon-only color="royal">\n        <ion-icon name="ios-send"></ion-icon>\n      </button>\n    </ion-buttons>\n    <ion-title>الرسائل الخاصة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب للتحديث" refreshingSpinner="dots" refreshingText="جاري التحديث...">\n\n    </ion-refresher-content>\n  </ion-refresher>\n  <h6 *ngIf="(messagesList | async)?.length == 0" text-center>\n    لا توجد رسائل\n  </h6>\n  <ion-list no-margin>\n    <ion-item-sliding *ngFor="let messages of messagesList | async" on-tap="openMessage(messages)">\n      <ion-item no-lines>\n        <ion-avatar class="avatar" item-start>\n          <profile-pic className="avatar" ID="{{messages.$key}}" type="user"></profile-pic>\n        </ion-avatar>\n        <h3>\n          <name ID="{{messages.$key}}" type="user"></name>\n        </h3>\n        <ion-row now-wrap>\n          <h5 text-right>\n            {{messages.recentMessage}}\n          </h5> &nbsp;\n          <date id="date" date="{{messages.recentDate}}"></date>\n        </ion-row>\n      </ion-item>\n      <ion-item-options side="left" (ionSwipe)="deleteMessage(messages.$key)">\n        <button (click)="deleteMessage(messages.$key)" ion-button expandable icon-only color="danger">\n          <ion-icon name="md-trash"></ion-icon>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/messages/messages.html"*/,
+NewMessagePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* IonicPage */])(),
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["n" /* Component */])({
+        selector: 'page-new-message',template:/*ion-inline-start:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/new-message/new-message.html"*/'<!--\n  Generated template for the NewMessagePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>رسالة جديدة</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-item class="fixedBorder">\n    <ion-label>إلى:</ion-label>\n    <ion-input type="text" value="" placeholder="ابحث..." (input)="searchUsers()" [(ngModel)]="input"></ion-input>\n  </ion-item>\n\n  <h5 *ngIf="input && input.length > 0 && (players | async)?.length == 0" text-center>\n    لا يوجد\n  </h5>\n\n  <ion-list *ngIf="input && input.length > 0" no-margin>\n    <span *ngFor="let player of players | async">\n      <button *ngIf="player.$key != currentUID" ion-item clear (click)="openMessage(player)">\n        <ion-row>\n          <ion-avatar padding-right>\n            <img src="{{player.profilePic}}" alt="">\n          </ion-avatar>\n          <h2 style="margin: 0 0 8px;" id="info" margin-bottom>{{ player.name }}</h2>\n          <p>&nbsp;{{player.username}}</p>\n        </ion-row>\n      </button>\n    </span>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/saudalhilali/Desktop/startUp/myTeam/src/pages/new-message/new-message.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__["a" /* AngularFireAuth */],
-        __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]])
-], MessagesPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */],
+        __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__["a" /* AngularFireAuth */]])
+], NewMessagePage);
 
-//# sourceMappingURL=messages.js.map
+//# sourceMappingURL=new-message.js.map
 
 /***/ })
 

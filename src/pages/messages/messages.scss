@@ -4,12 +4,12 @@ page-messages {
     height: 50px !important;
   }
   ion-item {
-    padding-right: 10px;
+    padding-right: 10px !important;
   }
   h3 {
     line-height: 1.4 !important;
   }
   .list>.item-wrapper:last-child .item-block {
-    //border-bottom: 0 !important;
+    border-bottom: 0 !important;
   }
 }

@@ -77,28 +77,30 @@ export class PostPage {
   }
 
   sendComment() {
-    const date = moment.utc().format('YYYY-MM-DD HH:mm:ss')
-    const commentKey = this.db.list('timeline/' + this.post.$key + '/comments').push({
-      by: this.currentUserID,
-      message: this.comment,
-      date: date,
-      timestamp: new Date().getTime()
-    })
+    if (this.comment !== '') {
+      const date = moment.utc().format('YYYY-MM-DD HH:mm:ss')
+      const commentKey = this.db.list('timeline/' + this.post.$key + '/comments').push({
+        by: this.currentUserID,
+        message: this.comment,
+        date: date,
+        timestamp: new Date().getTime()
+      })
 
-    commentKey.then(() => {
-      // Notify author
-      this.db.object('users/' + this.post.by + '/notifications/' + commentKey.key)
-        .set({
-          player: this.currentUserID,
-          message: this.comment,
-          type: 'postComment',
-          postID: this.post.$key,
-          timestamp: new Date().getTime(),
-          date: date
-        })
+      commentKey.then(() => {
+        // Notify author
+        this.db.object('users/' + this.post.by + '/notifications/' + commentKey.key)
+          .set({
+            player: this.currentUserID,
+            message: this.comment,
+            type: 'postComment',
+            postID: this.post.$key,
+            timestamp: new Date().getTime(),
+            date: date
+          })
 
-      this.comment = '';
-    })
+        this.comment = '';
+      })
+    }
   }
 
   deleteComment(comment) {
@@ -179,6 +181,17 @@ export class PostPage {
       buttons: btns
     })
     actionSheet.present()
+  }
+
+  footerTouchStart(event) {
+    if (event.target.localName !== "textarea") {
+      event.preventDefault();
+    }
+  }
+
+  touchSendButton(event: Event) {
+    event.preventDefault();
+    this.sendComment();
   }
 
 }

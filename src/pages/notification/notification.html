@@ -9,6 +9,9 @@
   <ion-navbar>
     <ion-buttons end>
       <button (click)='openMessages()' ion-button icon-only color="royal">
+        <ion-badge class="msgsBadge" *ngIf='(messages | async)?.length > 0'>
+          {{(messages | async)?.length}}
+        </ion-badge>
         <ion-icon name="ios-mail"></ion-icon>
       </button>
     </ion-buttons>
